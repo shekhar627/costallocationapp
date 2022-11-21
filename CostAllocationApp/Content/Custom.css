@@ -1,0 +1,854 @@
+﻿/*-----------------
+	1. General
+-----------------------*/
+body {
+    overflow-x: auto;
+}
+
+/*-----------------
+	2. Name List
+-----------------------*/
+#name-list td, th {
+    border: 1px solid;
+}
+
+#name-list {
+    /*width: 100%;*/
+    width: 120%;
+    border-collapse: collapse;
+    /*border: 1px solid;*/
+    font-size: 14px;
+}
+
+.name_list_th {
+    border: none;
+    text-align: center;
+}
+
+#name-list thead tr:nth-of-type(2) th {
+    text-align: center;
+}
+
+.name_list_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#name-list tbody td:nth-of-type(9) {
+    text-align: center;
+}
+
+#name-list tbody td:nth-of-type(10) {
+    width: 62px;
+    text-align: right;
+    padding: 5px;
+}
+
+#name-list thead tr:nth-of-type(2) {
+    background-color: #3c4b5d;
+    color: white;
+}
+
+/*-----------------
+	3. Name Registration
+-----------------------*/
+
+#name_registration td, th {
+    border: 1px solid;
+    padding: 2px;
+}
+
+#name_registration {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+.name_registration_th {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+/*#name_registration input[type='text'], select {
+    height: 25px;
+    border: none;
+    width: 150px !important;
+}*/
+/*#name_registration input[type='text'], select {
+    height: 25px;
+    border: none;
+    width: 112px !important;
+}*/
+
+.input_name {
+    height: 25px;
+    border: none;
+    width: 120px !important;
+}
+.input_memo {
+    height: 25px;
+    border: none;
+    width: 64px !important;
+}
+.select_section {
+    height: 25px;
+    border: none;
+    width: 100px !important;
+}
+.input_code {
+    height: 25px;
+    border: none;
+    width: 50px !important;
+}
+.select_department {
+    height: 25px;
+    border: none;
+    width: 110px !important;
+}
+.select_incharge {
+    height: 25px;
+    border: none;
+    width: 110px !important;
+}
+.select_role {
+    height: 25px;
+    border: none;
+    width: 75px !important;
+}
+.input_explanation {
+    height: 25px;
+    border: none;
+    width: 100px !important;
+}
+.select_company {
+    height: 25px;
+    border: none;
+    width: 90px !important;
+}
+.input_grade {
+    height: 25px;
+    border: none;
+    width: 50px !important;
+}
+.input_unitprice {
+    height: 25px;
+    border: none;
+    width: 65px !important;
+}
+
+
+.name_registration_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#name_registration thead tr:nth-of-type(2) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+#custom_submit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+#custom_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.cutom_button_group {
+    float: right;
+}
+
+#name_registration tbody td i {
+    padding: 10px;
+}
+/*-----------------
+	4. In-Charge Registration
+-----------------------*/
+#incharge_table td, th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+#incharge_table {
+    width: 47%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#incharge_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+
+.cutom_button_group_incharge {
+    float: right;
+    margin-left: 72%;
+}
+
+#incharge_table tbody tr td:last-child {
+    width: 200px;
+    text-align: left;
+    height: 31px;
+}
+
+/*-----------------
+	5. Department Registration
+-----------------------*/
+
+#department_table td, th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+#department_table {
+    width: 57%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+    #department_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
+
+.cutom_button_group_department {
+    float: right;
+    margin-left: 71%;
+}
+
+#department_table tbody tr td:last-child {
+    width: 200px;
+}
+/*-----------------
+	6. Section Registration
+-----------------------*/
+#section_table td, th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+#section_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: left;
+}
+#department_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: left;
+}
+#department_table td:nth-of-type(3) {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: left;
+}
+
+#section_table {
+    width: 65%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#section_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+#section_table thead th:nth-of-type(2) {
+    width: 200px
+}
+#section_table thead th:nth-of-type(3) {
+    width: 100px
+}
+#section_table thead th:nth-of-type(1) {
+width: 45px;
+}
+#section_delete_btn {
+    padding-left: 386px;
+}
+#department_delete_btn {
+    padding-left: 539px;
+}
+#incharge_delete_btn {
+    padding-left: 429px;
+}
+.cutom_button_group_section {
+    float: right;
+    margin-left: 72%;
+}
+
+/*-----------------
+	7. Forecast Create
+-----------------------*/
+
+#forecast_table td, th {
+    border: 1px solid;
+    padding: 2px;
+}
+/*#forecast_table td, th {
+    border: 1px solid;
+    padding: 2px;
+}*/
+#forecast_table td {
+    width: 100px;
+    padding: 5px;
+}
+
+#forecast_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+.forecast_th {
+    text-align: center;
+    padding: 5px !important;
+}
+
+    .forecast_th:nth-of-type(2) {
+        background-color: #f18973;
+    }
+
+    .forecast_th:nth-of-type(3) {
+        background-color: #80ced6;
+    }
+
+#forecast_table input[type='text'], select {
+    height: 25px;
+    border: 1px solid gray;
+    width: 45px;
+}
+
+
+.forecast_table a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#forecast_table thead tr:nth-of-type(2) th {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+    padding: 5px !important;
+}
+
+#forecast_table tbody td[title~='initial'] {
+    padding: 10px !important;
+}
+
+.cutom_button_group_forecast {
+    float: right;
+    margin-left: 33%;
+    display: none;
+}
+
+/*-----------------
+	7. Forecast Search
+-----------------------*/
+
+
+#forecast_search thead th {
+    border: none !important;
+    text-align: center;
+}
+
+#forecast_search tbody td {
+    border: none !important;
+}
+
+#forecast_search {
+    border: none !important;
+    margin-bottom: 20px;
+}
+
+    #forecast_search tbody tr:nth-of-type(1) td input, select {
+        border: 1px solid black !important;
+    }
+
+
+#forecast_search {
+    border: 1px solid black !important;
+}
+
+#forecast_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+/*-----------------
+	8. Add Name
+-----------------------*/
+
+#add_name_search thead th {
+    border: none !important;
+    text-align: center;
+}
+
+#add_name_search tbody td {
+    border: none !important;
+}
+
+#add_name_search {
+    border: none !important;
+    border: 1px solid black !important;
+}
+
+    #add_name_search tbody tr:nth-of-type(1) td input, select {
+        border: 1px solid black !important;
+    }
+
+
+
+
+#add_name_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+
+
+
+#add_name_table_1 th, td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_1 {
+    border: 1px solid black !important;
+    width: 100%;
+}
+
+    #add_name_table_1 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
+
+    #add_name_table_1 thead tr:nth-of-type(2) select, input {
+        /*height:40px !important;*/
+    }
+
+.add_name_btn_group a {
+    display: inline-block;
+    background-color: #3c4b5d;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    margin-right: 20px;
+    margin: 5px;
+}
+
+
+
+#add_name_table_2 th, td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_2 {
+    border: 1px solid black !important;
+    /*display: none;*/
+}
+
+    #add_name_table_2 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
+
+    #add_name_table_2 tbody tr:nth-of-type(1) {
+        background-color: #F2F2F2;
+    }
+
+
+
+
+
+#add_name_table_3 th, td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_3 {
+    border: 1px solid black !important;
+    width: 100%;
+}
+
+    #add_name_table_3 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
+
+
+
+.custom_add_name {
+    margin-bottom: 50px;
+}
+
+#add_name_add {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#add_name_edit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#add_name_cancel {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
+/*-----------------
+	9. Name List
+-----------------------*/
+/*#name-list tbody {
+    display: none;
+}
+.page-header {
+    display: none;
+}
+#namelist_tbl_header {
+    display: none;
+}*/
+#name_list_body {
+    display: none;
+}
+
+#name_list_search thead th {
+    border: none !important;
+    text-align: center;
+}
+
+#name_list_search tbody td {
+    border: none !important;
+}
+
+#name_list_search tbody tr:nth-of-type(1) td input, select {
+    border: 1px solid black !important;
+    width:auto;
+}
+
+
+#name_list_search {
+    border: 1px solid black;
+}
+
+
+#name_list_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+/*------------------------------------Add/Edit/Delete Links-----------------------------------------*/
+#edit_button {
+    background: cornflowerblue;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#delete_button {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#add_name {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+/*------------------------------------Edit Informaton-----------------------------------------*/
+#edit_employee_name {
+    border: none;
+    width: 119px;
+}
+
+#edit_section {
+    /*border: none;
+    width: 86px !important;*/
+}
+
+#edit_department {
+    /*border: none;
+    width: 117px !important;*/
+}
+
+#edit_incharge {
+    /*border: none;
+    width: 105px !important;*/
+}
+
+#edit_role {
+    border: none;
+    width: 70px !important;
+}
+
+#edit_company {
+    border: none;
+    width: 98px !important;
+}
+
+#edit_price {
+    border: none;
+    width: 57px !important;
+}
+
+/*------------------------------------Entry Pages: Input Field Error Message-----------------------------------------*/
+.division-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.department-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+/*------------------------------------Section List: tbody-----------------------------------------*/
+#section_list_tbody {
+    text-align: center;
+    height: 133px;
+}
+#section_name_lbl{
+    padding-top:10px;
+}
+/*------------------------------------Section body resize-----------------------------------------*/
+#section_body {
+    width: 59% !important;
+}
+#department_body {
+    width: 59% !important;
+}
+#incharge_body {
+    width: 59% !important;
+}
+/*------------------------------------Department List-----------------------------------------*/
+#department_list_tbody {
+    text-align: center;
+    height: 133px;
+}
+#department_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+#department_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#department_table thead th:nth-of-type(3) {
+    width: 100px
+}
+
+/*------------------------------------In-Charge List-----------------------------------------*/
+#incharge_list_tbody {
+    text-align: center;
+    height: 133px;
+}
+
+#incharge_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+#incharge_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+/*------------------------------------Section Modal-----------------------------------------*/
+.cutom_button_group_section_modal {
+    float: right;
+    margin-left: 45%;
+}
+/*------------------------------------Name list: Dropdown check -----------------------------------------*/
+.multiselect {
+    position: absolute;
+    /*background-color: aliceblue;*/
+    margin: -12px;
+    padding-left: 13px;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    font-weight: normal;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+/*------Section -------*/
+#sectionChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+#sectionChks label {
+    display: block;
+}
+#sectionChks label:hover {
+    background-color: #1e90ff;
+}
+/*------Department -------*/
+#departmentChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#departmentChks label {
+display: block;
+}
+
+#departmentChks label:hover {
+    background-color: #1e90ff;
+}
+/*------Incharge -------*/
+#inchargeChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#inchargeChks label {
+display: block;
+}
+
+#inchargeChks label:hover {
+    background-color: #1e90ff;
+}
+/*------Role -------*/
+#RoleChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#RoleChks label {
+display: block;
+}
+
+#RoleChks label:hover {
+    background-color: #1e90ff;
+}
+/*------Company -------*/
+#CompanyChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#CompanyChks label {
+display: block;
+}
+
+#CompanyChks label:hover {
+    background-color: #1e90ff;
+}
+
+.commonselect {
+    font-weight: normal !important;
+    background-color: aliceblue;
+}
+/*------Name List: Edit -------*/
+#name_list_edit_modal{
+    width: 100% !important;
+}
+#name_list_edit_modal thead tr {
+    text-align:center;
+}
