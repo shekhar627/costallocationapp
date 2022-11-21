@@ -9,22 +9,41 @@ namespace CostAllocationApp
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-3.5.1.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                            "~/Scripts/popper.min.js",
+                            "~/Scripts/bootstrap.min.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/others").Include(
+                            "~/Scripts/jquery.slimscroll.min.js",
+                            "~/Scripts/select2.min.js",
+                            "~/Scripts/moment.min.js",
+                            "~/Scripts/bootstrap-datetimepicker.min.js",
+                            "~/Scripts/jquery.dataTables.min.js",
+                            "~/Scripts/dataTables.bootstrap4.min.js",
+                            "~/Scripts/toastr.min.js",
+                            "~/Scripts/Custome.js",
+                            "~/Scripts/loader.js",
+                            "~/Scripts/Chart.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
+                            "~/Scripts/app.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/line-awesome.min.css",
+                      "~/Content/dataTables.bootstrap4.min.css",
+                      "~/Content/select2.min.css",
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/toastr.min.css",
+                      "~/Content/style.css",
+                      "~/Content/custom.css"));
+
         }
     }
 }
