@@ -23,6 +23,7 @@ namespace CostAllocationApp.Controllers.Api
             {
                 section.CreateBy = "";
                 section.CreateDate = DateTime.Now;
+                section.IsActive = true;
 
 
                 SectionDAL sectionDal = new SectionDAL();
@@ -48,6 +49,21 @@ namespace CostAllocationApp.Controllers.Api
             SectionDAL sectionDal = new SectionDAL();
             List<Section> sections = sectionDal.GetAllSections();
             return Ok(sections);
+        }
+
+        [HttpPut]
+        public IHttpActionResult EditSection(int sectionId)
+        {
+            SectionDAL sectionDal = new SectionDAL();
+            int result = sectionDal.RemoveSection(sectionId);
+            if (result > 0)
+            {
+                return Ok("Data Removed Successfully!");
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

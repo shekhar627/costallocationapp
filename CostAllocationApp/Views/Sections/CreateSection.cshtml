@@ -79,9 +79,24 @@
                     $('#section_list_tbody').empty();
                     $.each(data, function (key, item) {
                         // Add a list item for the product.
-                        $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" /></td><td>${item.SectionName}</td></tr>`);
+                        $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
                     });
                 });
+
+
+            $('#confirm_delete').on('click', function () {
+
+                //var elements = $("#section_list_tbody tr input[type='checkbox']:checked");
+                //$.each(elements, function (index,data) {
+                //    console.log(data['id']);
+                //});
+
+                var receiptNos2 = $("#section_list_tbody tr input[type='checkbox']:checked").map(function () {
+                    return $(this).data('id')
+                }).get();
+
+                console.log(receiptNos2);
+            });
         });
         function AddDivision() {
             var apiurl = "/api/sections/";
@@ -130,7 +145,7 @@
                                 $('#section_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" /></td><td>${item.SectionName}</td></tr>`);
+                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
                                 });
                             });
                     },
@@ -202,7 +217,7 @@
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
                         </div>
                     </div>
                 </div>

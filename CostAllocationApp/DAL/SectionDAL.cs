@@ -13,7 +13,7 @@ namespace CostAllocationApp.DAL
         public int CreateSection(Section section)
         {
             int result = 0;
-            string query = $@"insert into Sections(Name,CreatedBy,CreatedDate) values(@sectionName,@createBy,@createDate)";
+            string query = $@"insert into Sections(Name,CreatedBy,CreatedDate,IsActive) values(@sectionName,@createBy,@createDate,@isActive)";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -21,6 +21,7 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@sectionName",section.SectionName);
                 cmd.Parameters.AddWithValue("@createBy", section.CreateBy);
                 cmd.Parameters.AddWithValue("@createDate", section.CreateDate);
+                cmd.Parameters.AddWithValue("@isActive", section.IsActive);
                 try
                 {
                     result = cmd.ExecuteNonQuery();
@@ -37,7 +38,7 @@ namespace CostAllocationApp.DAL
         public List<Section> GetAllSections()
         {
             List<Section> sections = new List<Section>();
-            string query = "select * from Sections";
+            string query = "select * from Sections where isactive=1";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -66,6 +67,29 @@ namespace CostAllocationApp.DAL
 
                 return sections;
             }
+        }
+
+        public int RemoveSection(int sectionId)
+        {
+            int result = 0;
+            string query = $@"update sections set isactive=0 where id=@id";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@id", sectionId);
+                try
+                {
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+
         }
     }
 }
