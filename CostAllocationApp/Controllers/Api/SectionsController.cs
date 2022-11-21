@@ -14,23 +14,40 @@ namespace CostAllocationApp.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateSection(Section section)
         {
-            //Section section = new Section();
-            //section.SectionName = sectionName.ToString();
-            //section.CreateBy = "";
-            //.CreateDate = DateTime.Now;
 
-            SectionDAL sectionDal = new SectionDAL();
-            int result = sectionDal.CreateSection(section);
-            if (result>0)
+            if (String.IsNullOrEmpty(section.SectionName))
             {
-                return Ok();
+                return BadRequest("Section Name Required");
             }
             else
             {
-                return BadRequest();
+                section.CreateBy = "";
+                section.CreateDate = DateTime.Now;
+
+
+                SectionDAL sectionDal = new SectionDAL();
+                int result = sectionDal.CreateSection(section);
+                if (result > 0)
+                {
+                    return Ok("Data Saved Successfully!");
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
 
+
+
             
+        }
+
+        [HttpGet]
+        public IHttpActionResult Sections()
+        {
+            SectionDAL sectionDal = new SectionDAL();
+            List<Section> sections = sectionDal.GetAllSections();
+            return Ok(sections);
         }
     }
 }

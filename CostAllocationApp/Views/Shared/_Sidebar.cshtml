@@ -1,0 +1,231 @@
+﻿        <!-- Sidebar -->
+<style>
+    .sidebar-menu ul a.active {
+        background-color: #ffebda;
+        color: #000;
+        text-decoration: underline;
+    }
+</style>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                @*<li class="menu-title">
+                        <span>Main</span>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="index.html">Admin Dashboard</a></li>
+                            <li><a href="employee-dashboard.html">Employee Dashboard</a></li>
+                        </ul>
+                    </li>*@
+
+                @*<li class="submenu">
+                        <a href="#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="chat.html">Chat</a></li>
+                            <li class="submenu">
+                                <a href="#"><span> Calls</span> <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li><a href="voice-call.html">Voice Call</a></li>
+                                    <li><a href="video-call.html">Video Call</a></li>
+                                    <li><a href="outgoing-call.html">Outgoing Call</a></li>
+                                    <li><a href="incoming-call.html">Incoming Call</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="events.html">Calendar</a></li>
+                            <li><a href="contacts.html">Contacts</a></li>
+                            <li><a href="inbox.html">Email</a></li>
+                            <li><a href="file-manager.html">File Manager</a></li>
+                        </ul>
+                    </li>*@
+
+                <li class="menu-title">
+                    <span>Cost Management</span>
+                </li>
+                @{
+                    //string url = HttpContext.Current.Request.Url.AbsoluteUri;
+                    string fullPath = HttpContext.Current.Request.Url.AbsolutePath;
+                    string url = System.IO.Path.GetFileName(fullPath);
+                    //Response.Write("url: " + url);
+                    if (url.ToLower().Contains("login") || string.IsNullOrEmpty(url))
+                    {
+                        <li>
+                            <a href="/Home/Login" class="active"><i class="la la-user"></i> <span>Login</span></a>
+                        </li>
+                    }
+                    else
+                    {
+                        if (url.ToLower().Contains("namelist"))
+                        {
+                            <li>
+                                <a href="/Home/NameList" class="active"><i class="la la-cube"></i> <span>Name List</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/Home/NameList"><i class="la la-cube"></i> <span>Name List</span></a>
+                            </li>
+                        }
+                        if (url.ToLower().Contains("addname"))
+                        {
+                            <li>
+                                <a href="/Home/AddName" class="active"><i class="la la-cube"></i> <span>Add Name</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/Home/AddName"><i class="la la-cube"></i> <span>Add Name</span></a>
+                            </li>
+                        }
+                        if (url.ToLower().Contains("forecasting"))
+                        {
+                            <li>
+                                <a href="/Home/Forecasting" class="active"><i class="la la-bullhorn"></i> <span>Create Forcast</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/Home/Forecasting"><i class="la la-bullhorn"></i> <span>Create Forcast</span></a>
+                            </li>
+                        }
+                        <li>
+                            <a href="javascript:void(0);"><i class="la la-files-o"></i> <span>Data Export</span></a>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <i class="la la-files-o"></i>
+                                <span> Master Setting</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: none;">
+                                @{
+                                    if (url.ToLower().Contains("createdivision"))
+                                    {
+                                        <li><a href="/Division/CreateDivision" class="active">Section Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/Division/CreateDivision">Section Master</a>
+                                        </li>
+                                    }
+                                    if (url.ToLower().Contains("createdepartment"))
+                                    {
+                                        <li><a href="/Department/CreateDepartment" class="active">Department Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Department/CreateDepartment">Department Master</a></li>
+                                    }
+                                    if (url.ToLower().Contains("incharge"))
+                                    {
+                                        <li><a href="/Home/InCharge" class="active">In-Charge Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Home/InCharge">In-Charge Master</a></li>
+                                    }
+
+                                    if (url.ToLower().Contains("createrole"))
+                                    {
+                                        <li><a href="/Roles/CreateRole" class="active">Role Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Roles/CreateRole">Role Master</a></li>
+                                    }
+                                    if (url.ToLower().Contains("explanation"))
+                                    {
+                                        <li><a href="/Home/Explanation" class="active">Explanation Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Home/Explanation">Explanation Master</a></li>
+                                    }
+                                    if (url.ToLower().Contains("createcompany"))
+                                    {
+                                        <li><a href="/Company/CreateCompany" class="active">Company Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Company/CreateCompany">Company Master</a></li>
+                                    }
+                                    if (url.ToLower().Contains("salaryregister"))
+                                    {
+                                        <li><a href="/Home/SalaryRegister" class="active">Salary Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Home/SalaryRegister">Salary Master</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                        @*<li>
+                                <a href="/Home/Login"><i class="la la-user"></i> <span>Logout</span></a>
+                            </li>*@
+                    }
+                }
+                @*<li class="submenu">
+                        <a href="javascript:void(0);" class="noti-dot"><i class="la la-files-o"></i> <span> Department</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/Department/CreateDepartment">Add Department</a></li>
+                            <li><a href="/Department/DepartmentList">Department List</a></li>
+                        </ul>
+                    </li>*@
+                @*<li>
+                        <a href="/Gender/CreateGender"><i class="la la-user"></i> <span>Gender</span></a>
+                    </li>*@
+                @*<li class="submenu">
+                        <a href="javascript:void(0);"><i class="la la-user"></i> <span> Employee</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/Employee/AddEmployee">Add Employee</a></li>
+                            <li><a href="/Employee/EmployeeList">Employee List</a></li>
+                        </ul>
+                    </li>*@
+                @*<li class="submenu">
+                        <a href="javascript:void(0);"><i class="la la-graduation-cap"></i> <span> Roles</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/Roles/CreateRole">Add Roles</a></li>
+                            <li><a href="/Roles/RolesList">Roles List</a></li>
+                        </ul>
+                    </li>*@
+                @*<li class="submenu">
+                        <a href="javascript:void(0);"><i class="la la-users"></i> <span> Company</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/Company/CreateCompany">Add Company</a></li>
+                            <li><a href="/Company/CompanyList">Company List</a></li>
+                        </ul>
+                    </li>*@
+                @*<li class="submenu">
+                        <a href="javascript:void(0);"><i class="la la-money"></i> <span> Employee Assignments</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/EmployeeAssignments/CreateEmployeeAssignments">Add Employee Assignments</a></li>
+                            <li><a href="/EmployeeAssignments/EmployeeAssignmentsList">Employee Assignments List</a></li>
+                        </ul>
+                    </li>*@
+                @*<li class="submenu">
+                        <a href="javascript:void(0);"><i class="la la-bullhorn"></i> <span> Grade</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/Grade/AddGrade">Add Grade</a></li>
+                            <li><a href="/Grade/GradeList">Grade List</a></li>
+                        </ul>
+                    </li>*@
+                @*<li class="submenu">
+                        <a href="javascript:void(0);"><i class="la la-money"></i> <span> Costs</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="/Costs/AddCosts">Add Costs</a></li>
+                            <li><a href="/Costs/CostsList">Costs List</a></li>
+                        </ul>
+                    </li>*@
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Sidebar -->
