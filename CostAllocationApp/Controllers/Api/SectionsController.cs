@@ -34,7 +34,7 @@ namespace CostAllocationApp.Controllers.Api
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("Something Went Wrong!!!");
                 }
             }
 
@@ -51,19 +51,36 @@ namespace CostAllocationApp.Controllers.Api
             return Ok(sections);
         }
 
-        [HttpPut]
-        public IHttpActionResult EditSection(int sectionId)
+        [HttpDelete]
+        public IHttpActionResult RemoveSection([FromUri] string sectionIds)
         {
-            SectionDAL sectionDal = new SectionDAL();
-            int result = sectionDal.RemoveSection(sectionId);
-            if (result > 0)
+            int result = 0;
+            
+
+            if (!String.IsNullOrEmpty(sectionIds))
             {
-                return Ok("Data Removed Successfully!");
+                string[] ids = sectionIds.Split(',');
+
+                SectionDAL sectionDal = new SectionDAL();
+                foreach (var item in ids)
+                {
+                    result += sectionDal.RemoveSection(Convert.ToInt32(item));
+                }
+                
+                if (result == ids.Length)
+                {
+                    return Ok("Data Removed Successfully!");
+                }
+                else
+                {
+                    return BadRequest("Something Went Wrong!!!");
+                }
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Select Section Id!");
             }
+
         }
     }
 }
