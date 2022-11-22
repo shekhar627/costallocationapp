@@ -5,10 +5,12 @@ using System.Web;
 
 namespace CostAllocationApp.Models
 {
-    public class Section : Common
+    public class Department : Common
     {
         public int Id { get; set; }
-        public string SectionName { get; set; }
+        public string DepartmentName { get; set; }
+        public int SectionId { get; set; }
         public bool IsActive { get; set; }
+
     }
 }

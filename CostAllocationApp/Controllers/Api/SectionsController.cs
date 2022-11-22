@@ -5,12 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CostAllocationApp.Models;
-using CostAllocationApp.DAL;
+using CostAllocationApp.BLL;
 
 namespace CostAllocationApp.Controllers.Api
 {
     public class SectionsController : ApiController
     {
+        SectionBLL sectionBLL = null;
+        public SectionsController()
+        {
+            sectionBLL = new SectionBLL();
+        }
         [HttpPost]
         public IHttpActionResult CreateSection(Section section)
         {
@@ -21,19 +26,19 @@ namespace CostAllocationApp.Controllers.Api
             }
             else
             {
-                section.CreateBy = "";
-                section.CreateDate = DateTime.Now;
+                section.CreatedBy = "";
+                section.CreatedDate = DateTime.Now;
+                section.IsActive = true;
 
 
-                SectionDAL sectionDal = new SectionDAL();
-                int result = sectionDal.CreateSection(section);
+                int result = sectionBLL.CreateSection(section);
                 if (result > 0)
                 {
                     return Ok("Data Saved Successfully!");
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("Something Went Wrong!!!");
                 }
             }
 
@@ -45,9 +50,39 @@ namespace CostAllocationApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult Sections()
         {
-            SectionDAL sectionDal = new SectionDAL();
-            List<Section> sections = sectionDal.GetAllSections();
+            List<Section> sections = sectionBLL.GetAllSections();
             return Ok(sections);
+        }
+
+        [HttpDelete]
+        public IHttpActionResult RemoveSection([FromUri] string sectionIds)
+        {
+            int result = 0;
+            
+
+            if (!String.IsNullOrEmpty(sectionIds))
+            {
+                string[] ids = sectionIds.Split(',');
+
+                foreach (var item in ids)
+                {
+                    result += sectionBLL.RemoveSection(Convert.ToInt32(item));
+                }
+                
+                if (result == ids.Length)
+                {
+                    return Ok("Data Removed Successfully!");
+                }
+                else
+                {
+                    return BadRequest("Something Went Wrong!!!");
+                }
+            }
+            else
+            {
+                return BadRequest("Select Section Id!");
+            }
+
         }
     }
 }

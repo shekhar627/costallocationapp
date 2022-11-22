@@ -79,9 +79,87 @@
                     $('#section_list_tbody').empty();
                     $.each(data, function (key, item) {
                         // Add a list item for the product.
-                        $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" /></td><td>${item.SectionName}</td></tr>`);
+                        $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
                     });
                 });
+
+
+            $('#confirm_delete').on('click', function (event) {
+                event.preventDefault();
+                var id = '';
+
+                var sectionIds = $("#section_list_tbody tr input[type='checkbox']:checked").map(function () {
+                    return $(this).data('id')
+                }).get();
+
+                $.each(sectionIds, (index, data) => {
+                    id += data+",";
+                });
+
+                id = id.slice(0, -1);
+                console.log(id);
+
+                $.ajax({
+                    url: '/api/sections?sectionIds=' + id,
+                    type: 'DELETE',
+                    success: function (data) {
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+
+
+                        $.getJSON('/api/sections/')
+                            .done(function (data) {
+                                $('#section_list_tbody').empty();
+                                $.each(data, function (key, item) {
+                                    // Add a list item for the product.
+                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                                });
+                            });
+                    },
+                    error: function (data) {
+                        Command: toastr["warning"](data.responseText, "Warning")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+
+                    }
+                });
+
+                $('#delete_section').modal('toggle');
+
+            });
         });
         function AddDivision() {
             var apiurl = "/api/sections/";
@@ -130,7 +208,7 @@
                                 $('#section_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" /></td><td>${item.SectionName}</td></tr>`);
+                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
                                 });
                             });
                     },
@@ -202,7 +280,7 @@
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
                         </div>
                     </div>
                 </div>
