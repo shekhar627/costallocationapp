@@ -26,8 +26,8 @@ namespace CostAllocationApp.Controllers.Api
             }
             else
             {
-                section.CreateBy = "";
-                section.CreateDate = DateTime.Now;
+                section.CreatedBy = "";
+                section.CreatedDate = DateTime.Now;
                 section.IsActive = true;
 
 

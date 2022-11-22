@@ -133,15 +133,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\DepartmentBLL.cs" />
     <Compile Include="BLL\SectionBLL.cs" />
+    <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="DAL\DbContext.cs" />
+    <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\SectionDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Common.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
