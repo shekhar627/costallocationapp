@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Section Registration";
+    ViewBag.Title = "Explanation Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--Main Body-->
@@ -8,21 +8,20 @@
     <!--List-->
     <h4 style="text-align:left;">List</h4>
     <div class="row">
-        <div class="col-md-8">
-            <div class="table-responsive">
-                <table class="" id="section_table">
+        <div class="col-md-12">
+            <div class="">
+                <table class="" id="incharge_table">
                     <thead>
                         <tr>
                             <th>Check</th>
-                            <th>Section Name</th>
+                            <th>Explanation</th>
                         </tr>
                     </thead>
-                    <tbody id="section_list_tbody">
-                    </tbody> 
+                    <tbody id="incharge_list_tbody">                       
+                    </tbody>
                 </table>
-                <label id="section_delete_btn">
-                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#delete_section">Delete</a>
-                    @*<a id="edit_button" href="javascript:void();" data-toggle="modal" data-target="#edit_section_modal">Edit</a>*@
+                <label id="incharge_delete_btn">
+                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#inactive_incharge_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -36,25 +35,28 @@
         <div class="modal-body">
             <form>
                 <div id="main-div">
+
                     <div class="row">
-                        <div class="col-4 module-label-txt">
-                            <label for="section-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-8">
+                        <div class="col-sm-4 module-label-txt">
                             <div class="form-group">
-                                <input class="form-control" id="section-name" type="text" placeholder="section name..">
-                                <div class="division-name-error">
-                                    Please provide a section name.
+                                <label for="department-name">Explanation <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <input class="form-control" id="explanation_name" type="text" placeholder="explanation  name...">
+                                <div class="department-name-error">
+                                    Please provide a explanation  name.
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
                 <div class="row">
-                    <div class="cutom_button_group_section">
+                    <div class="cutom_button_group_incharge">
                         <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddDivision();">Registration</a>
+                        <a href="javascript:void(0);" id="custom_submit" onclick="AddExplanations();">Registration</a>
                     </div>
                 </div>
                 <style>
@@ -74,12 +76,12 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $.getJSON('/api/sections/')
+            $.getJSON('/api/Explanations/')
                 .done(function (data) {
-                    $('#section_list_tbody').empty();
+                    $('#incharge_list_tbody').empty();
                     $.each(data, function (key, item) {
                         // Add a list item for the product.
-                        $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.ExplanationName}</td></tr>`);
                     });
                 });
 
@@ -88,19 +90,19 @@
                 event.preventDefault();
                 var id = '';
 
-                var sectionIds = $("#section_list_tbody tr input[type='checkbox']:checked").map(function () {
+                var sectionIds = $("#incharge_list_tbody tr input[type='checkbox']:checked").map(function () {
                     return $(this).data('id')
                 }).get();
 
                 $.each(sectionIds, (index, data) => {
-                    id += data+",";
+                    id += data + ",";
                 });
 
                 id = id.slice(0, -1);
                 console.log(id);
 
                 $.ajax({
-                    url: '/api/sections?sectionIds=' + id,
+                    url: '/api/Explanations?explanationIds=' + id,
                     type: 'DELETE',
                     success: function (data) {
                         Command: toastr["success"](data, "Success")
@@ -124,12 +126,12 @@
                         }
 
 
-                        $.getJSON('/api/sections/')
+                        $.getJSON('/api/Explanations/')
                             .done(function (data) {
-                                $('#section_list_tbody').empty();
+                                $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.ExplanationName}</td></tr>`);
                                 });
                             });
                     },
@@ -157,24 +159,22 @@
                     }
                 });
 
-                $('#delete_section').modal('toggle');
+                $('#inactive_incharge_modal').modal('toggle');
 
             });
         });
 
-        
-        function AddDivision() {
-            var apiurl = "/api/sections/";
-            let sectionName = $("#section-name").val().trim();
-            if (sectionName == "") {
-                $(".division-name-error").show();
+        function AddExplanations() {
+            var apiurl = "/api/Explanations/";
+            let explanationName = $("#explanation_name").val().trim();
+            if (explanationName == "") {
+                $(".department-name-error").show();
                 return false;
-
             }
             else {
-
+                $(".department-name-error").hide();
                 var data = {
-                    SectionName: sectionName
+                    ExplanationName: explanationName
                 };
 
                 $.ajax({
@@ -205,12 +205,12 @@
                         }
                         $('#section-name').val('');
 
-                        $.getJSON('/api/sections/')
+                        $.getJSON('/api/Explanations/')
                             .done(function (data) {
-                                $('#section_list_tbody').empty();
+                                $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.ExplanationName}</td></tr>`);
                                 });
                             });
                     },
@@ -268,12 +268,12 @@
 </div>
 <!-- /Edit Salary Modal -->
 <!-- Delete Salary Modal -->
-<div class="modal custom-modal fade" id="delete_section" role="dialog">
+<div class="modal custom-modal fade" id="inactive_incharge_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Section</h3>
+                    <h3>Delete Explanations</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">
