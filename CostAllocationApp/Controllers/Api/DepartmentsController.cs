@@ -25,6 +25,10 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Department Name Required");
             }
+            else if (String.IsNullOrEmpty(department.SectionId.ToString()))
+            {
+                return BadRequest("Section Required");
+            }
             else
             {
                 department.CreatedBy = "";
@@ -42,10 +46,44 @@ namespace CostAllocationApp.Controllers.Api
                     return BadRequest("Something Went Wrong!!!");
                 }
             }
+        }
+        [HttpGet]
+        public IHttpActionResult Departments()
+        {
+            List<Department> departments = departmentBLL.GetAllDepartments();
+            return Ok(departments);
+        }
+
+        [HttpDelete]
+        public IHttpActionResult RemoveDepartment([FromUri] string departmentIds)
+        {
+            int result = 0;
 
 
+            if (!String.IsNullOrEmpty(departmentIds))
+            {
+                string[] ids = departmentIds.Split(',');
 
+                foreach (var item in ids)
+                {
+                    result += departmentBLL.RemoveDepartment(Convert.ToInt32(item));
+                }
+
+                if (result == ids.Length)
+                {
+                    return Ok("Data Removed Successfully!");
+                }
+                else
+                {
+                    return BadRequest("Something Went Wrong!!!");
+                }
+            }
+            else
+            {
+                return BadRequest("Select Department Id!");
+            }
 
         }
+
     }
 }

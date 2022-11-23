@@ -500,6 +500,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Custome-Reporting.js" />
     <Content Include="Scripts\Custome.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\dropfiles.js" />
