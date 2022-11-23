@@ -105,48 +105,48 @@
                             </a>
                             <ul style="display: none;">
                                 @{
-                                    if (url.ToLower().Contains("createdivision"))
+                                    if (url.ToLower().Contains("createsection"))
                                     {
-                                        <li><a href="/Division/CreateDivision" class="active">Section Master</a></li>
+                                        <li><a href="/sections/CreateSection" class="active">Section Master</a></li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="/Division/CreateDivision">Section Master</a>
+                                            <a href="/sections/CreateSection">Section Master</a>
                                         </li>
                                     }
                                     if (url.ToLower().Contains("createdepartment"))
                                     {
-                                        <li><a href="/Department/CreateDepartment" class="active">Department Master</a></li>
+                                        <li><a href="/Departments/CreateDepartment" class="active">Department Master</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Department/CreateDepartment">Department Master</a></li>
+                                        <li><a href="/Departments/CreateDepartment">Department Master</a></li>
                                     }
-                                    if (url.ToLower().Contains("incharge"))
+                                    if (url.ToLower().Contains("createincharge"))
                                     {
-                                        <li><a href="/Home/InCharge" class="active">In-Charge Master</a></li>
+                                        <li><a href="/InCharges/CreateInCharge" class="active">In-Charge Master</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Home/InCharge">In-Charge Master</a></li>
+                                        <li><a href="/InCharges/CreateInCharge">In-Charge Master</a></li>
                                     }
 
-                                    if (url.ToLower().Contains("createrole"))
+                                    if (url.ToLower().Contains("createroles"))
                                     {
-                                        <li><a href="/Roles/CreateRole" class="active">Role Master</a></li>
+                                        <li><a href="/Roles/CreateRoles" class="active">Role Master</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Roles/CreateRole">Role Master</a></li>
+                                        <li><a href="/Roles/CreateRoles">Role Master</a></li>
                                     }
-                                    if (url.ToLower().Contains("explanation"))
+                                    if (url.ToLower().Contains("createexplanation"))
                                     {
-                                        <li><a href="/Home/Explanation" class="active">Explanation Master</a></li>
+                                        <li><a href="/Explanations/CreateExplanation" class="active">Explanation Master</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Home/Explanation">Explanation Master</a></li>
+                                        <li><a href="/Explanations/CreateExplanation">Explanation Master</a></li>
                                     }
                                     if (url.ToLower().Contains("createcompany"))
                                     {

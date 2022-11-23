@@ -11,6 +11,7 @@ namespace CostAllocationApp.Models
         public string DepartmentName { get; set; }
         public int SectionId { get; set; }
         public bool IsActive { get; set; }
+        public string SectionName { get; set; }
 
     }
 }

@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody id="section_list_tbody">
-                    </tbody>
+                    </tbody> 
                 </table>
                 <label id="section_delete_btn">
                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#delete_section">Delete</a>
@@ -37,7 +37,7 @@
             <form>
                 <div id="main-div">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-4 module-label-txt">
                             <label for="section-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
                         </div>
                         <div class="col-8">
@@ -161,6 +161,8 @@
 
             });
         });
+
+        
         function AddDivision() {
             var apiurl = "/api/sections/";
             let sectionName = $("#section-name").val().trim();

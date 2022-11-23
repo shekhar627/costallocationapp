@@ -134,18 +134,34 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\DepartmentBLL.cs" />
+    <Compile Include="BLL\ExplanationsBLL.cs" />
+    <Compile Include="BLL\InChargeBLL.cs" />
+    <Compile Include="BLL\RoleBLL.cs" />
     <Compile Include="BLL\SectionBLL.cs" />
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
+    <Compile Include="Controllers\Api\ExplanationsController.cs" />
+    <Compile Include="Controllers\Api\InChargesController.cs" />
+    <Compile Include="Controllers\Api\RolesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\ExplanationsController.cs" />
+    <Compile Include="Controllers\InChargesController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
+    <Compile Include="DAL\ExplanationDAL.cs" />
+    <Compile Include="DAL\InChargeDAL.cs" />
+    <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\SectionDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Explanation.cs" />
+    <Compile Include="Models\InCharge.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -492,6 +508,7 @@
     <Content Include="img\video-call.jpg" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -499,6 +516,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Custome-Reporting.js" />
     <Content Include="Scripts\Custome.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\dropfiles.js" />
@@ -546,9 +564,16 @@
     <Content Include="Views\Shared\_Reports.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Sections\CreateSection.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\Departments\CreateDepartment.cshtml" />
+    <Content Include="Views\InCharges\CreateInCharge.cshtml" />
+    <Content Include="Views\Roles\CreateRoles.cshtml" />
+    <Content Include="Views\Explanations\CreateExplanation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Explanation\" />
+    <Folder Include="Views\InCharge\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
