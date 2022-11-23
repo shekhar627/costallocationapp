@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Department Registration";
+    ViewBag.Title = "In-Charge Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--Main Body-->
@@ -10,47 +10,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="">
-                <table class="" id="department_table">
+                <table class="" id="incharge_table">
                     <thead>
                         <tr>
                             <th>Check</th>
-                            <th>Department Name</th>
-                            <th>Section</th>
+                            <th>In-Charge Name</th>
                         </tr>
                     </thead>
-                    <tbody id="department_list_tbody">
-                        <tr>
-                            <td><input type="checkbox" class="department_list_chk" /></td>
-                            <td>Marketing</td>
-                            <td>Development</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="department_list_chk" /></td>
-                            <td>Finance</td>
-                            <td>Sales</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="department_list_chk" /></td>
-                            <td>Operations management</td>
-                            <td>Products</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="department_list_chk" /></td>
-                            <td>Human Resource</td>
-                            <td>Industrial</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="department_list_chk" /></td>
-                            <td>IT</td>
-                            <td>Others</td>
-                        </tr>
+                    <tbody id="incharge_list_tbody">
+                        
                     </tbody>
                 </table>
-                <label id="department_delete_btn">
-                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#delDepartmentModal">Delete</a>
-                    @*<a id="edit_button" href="javascript:void();" data-toggle="modal" data-target="#edit_department_modal">Edit</a>*@
+                <label id="incharge_delete_btn">
+                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#del_incharge_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -65,40 +37,25 @@
             <form>
                 <div id="main-div">
                     <div class="row">
-                        <div class="col-4">
-                            <label for="department-name">Department Name <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-8">
-                            <div class="form-group">
-                                <input class="form-control" id="department_name" type="text" placeholder="department name..">
-                                <div class="department-name-error" id="department_name_err">
-                                    Please provide a department name.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="department-name">Section Name <span class="text-danger">*</span></label>
+                                <label for="in_charge_name">In-Charge Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <select id="section_list" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;"></select>
-                                <div class="department-name-error" id="section_ist_error">
-                                    Please select a section!
+                                <input class="form-control" id="in_charge_name" type="text" placeholder="incharge name...">
+                                <div class="department-name-error">
+                                    Please provide a In-Charge name.
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
-                    <div class="cutom_button_group_section">
+                    <div class="cutom_button_group_incharge">
                         <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                        <a href="javascript:void(0);" id="custom_submit" onclick="AddInCharge();">Registration</a>
                     </div>
                 </div>
                 <style>
@@ -118,42 +75,33 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $.getJSON('/api/sections/')
+            $.getJSON('/api/InCharges/')
                 .done(function (data) {
-                    $('#section_list').empty();
-                    $('#section_list').append(`<option value='-1'>Select Section</option>`)
+                    $('#incharge_list_tbody').empty();
                     $.each(data, function (key, item) {
                         // Add a list item for the product.
-                        //$('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
-                        $('#section_list').append(`<option value='${item.Id}'>${item.SectionName}</option>`)
+                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
                     });
                 });
 
-            $.getJSON('/api/departments/')
-                .done(function (data) {
-                    $('#department_list_tbody').empty();
-                    $.each(data, function (key, item) {
-                        $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
-                    });
-                });
 
             $('#confirm_delete').on('click', function (event) {
                 event.preventDefault();
                 var id = '';
 
-                var sectionIds = $("#department_list_tbody tr input[type='checkbox']:checked").map(function () {
+                var sectionIds = $("#incharge_list_tbody tr input[type='checkbox']:checked").map(function () {
                     return $(this).data('id')
                 }).get();
 
                 $.each(sectionIds, (index, data) => {
-                    id += data + ",";
+                    id += data+",";
                 });
 
                 id = id.slice(0, -1);
                 console.log(id);
 
                 $.ajax({
-                    url: '/api/departments?departmentIds=' + id,
+                    url: '/api/InCharges?inChargeIds=' + id,
                     type: 'DELETE',
                     success: function (data) {
                         Command: toastr["success"](data, "Success")
@@ -177,12 +125,12 @@
                         }
 
 
-                        $.getJSON('/api/departments/')
+                        $.getJSON('/api/InCharges/')
                             .done(function (data) {
-                                $('#department_list_tbody').empty();
+                                $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
                                 });
                             });
                     },
@@ -210,36 +158,23 @@
                     }
                 });
 
-                $('#delDepartmentModal').modal('toggle');
+                $('#del_incharge_modal').modal('toggle');
 
             });
         });
 
 
-        function AddDepartment() {
-            var apiurl = "/api/Departments/";
-            let departmentName = $("#department_name").val().trim();
-            let sectionId = $("#section_list").val().trim();
-
-            let isValidRequest = true;
-
-            if (departmentName == "") {
+        function AddInCharge() {
+            var apiurl = "/api/incharges/";
+            let in_charge_name = $("#in_charge_name").val().trim();
+            if (in_charge_name == "") {
                 $(".department-name-error").show();
-                isValidRequest = false;
-            } else {
+                return false;
+            }
+            else {
                 $(".department-name-error").hide();
-            }
-            if (sectionId == "" || sectionId < 0) {
-                $("#section_ist_error").show();
-                isValidRequest = false;
-            } else {
-                $("#section_ist_error").hide();
-            }
-
-            if (isValidRequest) {
                 var data = {
-                    DepartmentName: departmentName,
-                    SectionId: sectionId
+                    InChargeName: in_charge_name
                 };
 
                 $.ajax({
@@ -270,12 +205,12 @@
                         }
                         $('#section-name').val('');
 
-                        $.getJSON('/api/departments/')
+                        $.getJSON('/api/incharges/')
                             .done(function (data) {
-                                $('#department_list_tbody').empty();
+                                $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
                                 });
                             });
                     },
@@ -309,7 +244,7 @@
                         <div class="col-8">
                             <div class="form-group">
                                 <input class="form-control" id="divison-name" type="text" value="Development" placeholder="section name..">
-                                <div class="department-name-error">
+                                <div class="division-name-error">
                                     Please provide a section name.
                                 </div>
                             </div>
@@ -333,12 +268,12 @@
 </div>
 <!-- /Edit Salary Modal -->
 <!-- Delete Salary Modal -->
-<div class="modal custom-modal fade" id="delDepartmentModal" role="dialog">
+<div class="modal custom-modal fade" id="del_incharge_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Department</h3>
+                    <h3>Delete In-Charge</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">
