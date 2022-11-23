@@ -1,10 +1,12 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Department Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!--Main Body-->
 <div class="content container-fluid">
     <!--List-->
-    <h4>List</h4>
+    <h4 style="text-align:left;">List</h4>
     <div class="row">
         <div class="col-md-12">
             <div class="">
@@ -47,31 +49,34 @@
                     </tbody>
                 </table>
                 <label id="department_delete_btn">
-                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#namelist_delete">Delete</a>
+                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#delDepartmentModal">Delete</a>
                     @*<a id="edit_button" href="javascript:void();" data-toggle="modal" data-target="#edit_department_modal">Edit</a>*@
                 </label>
             </div>
         </div>
     </div>
+    <!--Section List End-->
     <br />
-    <div class="modal-content" id="department_body">
+    <!-- Add Designation Modal -->
+    <div class="modal-content" id="section_body">
+        <style>
+        </style>
         <div class="modal-body">
             <form>
                 <div id="main-div">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="department-name">Department Name <span class="text-danger">*</span></label>
-                            </div>
+                        <div class="col-4">
+                            <label for="department-name">Department Name <span class="text-danger">*</span></label>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-8">
                             <div class="form-group">
-                                <input class="form-control" id="department-name" type="text" placeholder="department name...">
-                                <div class="department-name-error">
+                                <input class="form-control" id="department_name" type="text" placeholder="department name..">
+                                <div class="department-name-error" id="department_name_err">
                                     Please provide a department name.
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
@@ -81,27 +86,21 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <select id="section-name" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;">
-                                    <option value="">Select Section</option>
-                                    <option value="">Development</option>
-                                    <option value="">HR</option>
-                                    <option value="">Section-3</option>
-                                </select>
-                                <div class="department-name-error">
-                                    Please provide a Section name.
+                                <select id="section_list" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;"></select>
+                                <div class="department-name-error" id="section_ist_error">
+                                    Please select a section!
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
                 <div class="row">
-                    <div class="cutom_button_group_department">
+                    <div class="cutom_button_group_section">
                         <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
                         <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
                     </div>
                 </div>
-
                 <style>
 
                     #plus-icon {
@@ -111,135 +110,192 @@
             </form>
         </div>
     </div>
+    <br><br>
+    <!--Section Create End-->
 
 </div>
+@section Scripts{
+    <script type="text/javascript">
 
-<script>
-    $(document).ready(function () {
-        $.getJSON('/api/departments/')
-            .done(function (data) {
-                $('#department_list_tbody').empty();
-                $.each(data, function (key, item) {
-                    // Add a list item for the product.
-                    $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+        $(document).ready(function () {
+            $.getJSON('/api/sections/')
+                .done(function (data) {
+                    $('#section_list').empty();
+                    $('#section_list').append(`<option value='-1'>Select Section</option>`)
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        //$('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                        $('#section_list').append(`<option value='${item.Id}'>${item.SectionName}</option>`)
+                    });
                 });
-            });
+
+            $.getJSON('/api/departments/')
+                .done(function (data) {
+                    $('#department_list_tbody').empty();
+                    $.each(data, function (key, item) {
+                        $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                    });
+                });
+
+            $('#confirm_delete').on('click', function (event) {
+                event.preventDefault();
+                var id = '';
+
+                var sectionIds = $("#department_list_tbody tr input[type='checkbox']:checked").map(function () {
+                    return $(this).data('id')
+                }).get();
+
+                $.each(sectionIds, (index, data) => {
+                    id += data + ",";
+                });
+
+                id = id.slice(0, -1);
+                console.log(id);
+
+                $.ajax({
+                    url: '/api/departments?departmentIds=' + id,
+                    type: 'DELETE',
+                    success: function (data) {
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
 
 
-        $('#confirm_delete').on('click', function (event) {
-            event.preventDefault();
-            var id = '';
-
-            var sectionIds = $("#section_list_tbody tr input[type='checkbox']:checked").map(function () {
-                return $(this).data('id')
-            }).get();
-
-            $.each(sectionIds, (index, data) => {
-                id += data + ",";
-            });
-
-            id = id.slice(0, -1);
-            console.log(id);
-
-            $.ajax({
-                url: '/api/sections?sectionIds=' + id,
-                type: 'DELETE',
-                success: function (data) {
-                    Command: toastr["success"](data, "Success")
-
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "3000",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-
-
-                    $.getJSON('/api/sections/')
-                        .done(function (data) {
-                            $('#section_list_tbody').empty();
-                            $.each(data, function (key, item) {
-                                // Add a list item for the product.
-                                $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                        $.getJSON('/api/departments/')
+                            .done(function (data) {
+                                $('#department_list_tbody').empty();
+                                $.each(data, function (key, item) {
+                                    // Add a list item for the product.
+                                    $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                                });
                             });
-                        });
-                },
-                error: function (data) {
-                    Command: toastr["warning"](data.responseText, "Warning")
+                    },
+                    error: function (data) {
+                        Command: toastr["warning"](data.responseText, "Warning")
 
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "3000",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+
                     }
+                });
 
-                }
+                $('#delDepartmentModal').modal('toggle');
+
             });
-
-            $('#delete_section').modal('toggle');
-
         });
-    });
 
-    function AddDepartment() {
-        let departmentName = $("#department-name").val();
-        if (departmentName == "") {
-            $(".department-name-error").show();
 
-            Command: toastr["success"]("Saved", "Success")
-            //Command: toastr["error"]("Failed to Save", "Failed")
+        function AddDepartment() {
+            var apiurl = "/api/Departments/";
+            let departmentName = $("#department_name").val().trim();
+            let sectionId = $("#section_list").val().trim();
 
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "3000",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
+            let isValidRequest = true;
+
+            if (departmentName == "") {
+                $(".department-name-error").show();
+                isValidRequest = false;
+            } else {
+                $(".department-name-error").hide();
             }
-            return false;
-        }
-    }
-</script>
+            if (sectionId == "" || sectionId < 0) {
+                $("#section_ist_error").show();
+                isValidRequest = false;
+            } else {
+                $("#section_ist_error").hide();
+            }
 
+            if (isValidRequest) {
+                var data = {
+                    DepartmentName: departmentName,
+                    SectionId: sectionId
+                };
+
+                $.ajax({
+                    url: apiurl,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (data) {
+
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        $('#section-name').val('');
+
+                        $.getJSON('/api/departments/')
+                            .done(function (data) {
+                                $('#department_list_tbody').empty();
+                                $.each(data, function (key, item) {
+                                    // Add a list item for the product.
+                                    $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                                });
+                            });
+                    },
+                    error: function () {
+                        alert("Error please try again");
+                    }
+                });
+            }
+        }
+    </script>
+
+}
+
+<!-- /Page Content -->
 <!-- Edit Salary Modal -->
-<div id="edit_department_modal" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-md" role="document">
+<div id="edit_section_modal" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Department</h5>
+                <h5 class="modal-title">Edit Section</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -247,48 +303,26 @@
             <div class="modal-body">
                 <form>
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="department-name">Department Name <span class="text-danger">*</span></label>
-                            </div>
+                        <div class="col-4">
+                            <label for="divison-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-8">
                             <div class="form-group">
-                                <input class="form-control" id="department-name" type="text" value="Operations management" placeholder="department name...">
+                                <input class="form-control" id="divison-name" type="text" value="Development" placeholder="section name..">
                                 <div class="department-name-error">
-                                    Please provide a department name.
+                                    Please provide a section name.
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="department-name">Section Name <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <select id="section-name" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;">
-                                    <option value="">Select Section</option>
-                                    <option value="" selected>Development</option>
-                                    <option value="">HR</option>
-                                    <option value="">Section-3</option>
-                                </select>
-                                <div class="department-name-error">
-                                    Please provide a Section name.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
+                    </div>
                     <div class="modal-btn delete-action">
                         <div class="row">
                             <div class="col-6">
                                 <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                             </div>
                             <div class="col-6">
-                                <a href="javascript:void(0);" class="btn btn-primary continue-btn" data-dismiss="modal" onclick="AddDepartment();">Update</a>
+                                <a href="javascript:void(0);" class="btn btn-primary continue-btn" data-dismiss="modal" onclick="AddDivision();">Update</a>
                             </div>
                         </div>
                     </div>
@@ -299,7 +333,7 @@
 </div>
 <!-- /Edit Salary Modal -->
 <!-- Delete Salary Modal -->
-<div class="modal custom-modal fade" id="namelist_delete" role="dialog">
+<div class="modal custom-modal fade" id="delDepartmentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -313,7 +347,7 @@
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
                         </div>
                     </div>
                 </div>

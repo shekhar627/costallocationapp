@@ -25,9 +25,11 @@ namespace CostAllocationApp
                             "~/Scripts/jquery.dataTables.min.js",
                             "~/Scripts/dataTables.bootstrap4.min.js",
                             "~/Scripts/toastr.min.js",
-                            "~/Scripts/Custome.js",
-                            "~/Scripts/loader.js",
-                            "~/Scripts/Chart.min.js"));
+                            "~/Scripts/Custome.js"
+                            //,
+                            //"~/Scripts/loader.js",
+                            //"~/Scripts/Chart.min.js"
+                            ));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                             "~/Scripts/app.js"));
