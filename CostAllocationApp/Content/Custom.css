@@ -92,51 +92,61 @@ body {
     border: none;
     width: 120px !important;
 }
+
 .input_memo {
     height: 25px;
     border: none;
     width: 64px !important;
 }
+
 .select_section {
     height: 25px;
     border: none;
     width: 100px !important;
 }
+
 .input_code {
     height: 25px;
     border: none;
     width: 50px !important;
 }
+
 .select_department {
     height: 25px;
     border: none;
     width: 110px !important;
 }
+
 .select_incharge {
     height: 25px;
     border: none;
     width: 110px !important;
 }
+
 .select_role {
     height: 25px;
     border: none;
     width: 75px !important;
 }
+
 .input_explanation {
     height: 25px;
     border: none;
     width: 100px !important;
 }
+
 .select_company {
     height: 25px;
     border: none;
     width: 90px !important;
 }
+
 .input_grade {
     height: 25px;
     border: none;
     width: 50px !important;
 }
+
 .input_unitprice {
     height: 25px;
     border: none;
@@ -199,11 +209,11 @@ body {
     border: 1px solid;
 }
 
-#incharge_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #incharge_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
 
 .cutom_button_group_incharge {
@@ -212,9 +222,13 @@ body {
 }
 
 #incharge_table tbody tr td:last-child {
-    width: 200px;
+    /*width: 200px;
     text-align: left;
-    height: 31px;
+    height: 31px;*/
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
 }
 
 /*-----------------
@@ -254,20 +268,26 @@ body {
     border: 1px solid;
     padding: 0px !important;
 }
+
 #section_table td:nth-of-type(2) {
     border: 1px solid;
-    padding: 0px !important;
+    padding: 2px !important;
     text-align: left;
+    text-indent:1em;
 }
+
 #department_table td:nth-of-type(2) {
     border: 1px solid;
-    padding: 0px !important;
+    padding: 2px !important;
     text-align: left;
+    text-indent: 1em;
 }
+
 #department_table td:nth-of-type(3) {
     border: 1px solid;
-    padding: 0px !important;
+    padding: 2px !important;
     text-align: left;
+    text-indent: 1em;
 }
 
 #section_table {
@@ -277,30 +297,36 @@ body {
     border: 1px solid;
 }
 
-#section_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #section_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
-#section_table thead th:nth-of-type(2) {
-    width: 200px
-}
-#section_table thead th:nth-of-type(3) {
-    width: 100px
-}
-#section_table thead th:nth-of-type(1) {
-width: 45px;
-}
+    #section_table thead th:nth-of-type(2) {
+        width: 200px
+    }
+
+    #section_table thead th:nth-of-type(3) {
+        width: 100px
+    }
+
+    #section_table thead th:nth-of-type(1) {
+        width: 45px;
+    }
+
 #section_delete_btn {
     padding-left: 386px;
 }
+
 #department_delete_btn {
     padding-left: 539px;
 }
+
 #incharge_delete_btn {
     padding-left: 429px;
 }
+
 .cutom_button_group_section {
     float: right;
     margin-left: 72%;
@@ -590,16 +616,56 @@ width: 45px;
     border: none !important;
 }
 
-#name_list_search tbody tr:nth-of-type(1) td input, select {
+/*#name_list_search tbody tr:nth-of-type(1) td input, select {
     border: 1px solid black !important;
-    width:auto;
+    width: auto;
+    border: 1px solid #ccc !important;
+    border-radius: 13px;
+}*/
+#name_list_search tbody tr:nth-of-type(1) td input, select {
+    /*border: 1px solid black !important;*/
+    width: auto;
+    /*border: 1px solid #ccc !important;*/
+    /*border: 1px solid #C97 !important;*/
+    /*border-radius: 13px;*/
+}
+/*#section, #department, #incharge, #role, #company {
+    border: 1px solid #C97 !important;
+    border-radius: 13px;
+}*/
+.namelist_search {
+    border: 1px solid #ccc !important;
+    border-radius: 13px;
+}
+/*.namelist_listbody,tr,td,#namelist_tbl_search {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}*/
+.namelist_listbody, td {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
 }
 
+.namelist_tbl, td {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
 
 #name_list_search {
-    border: 1px solid black;
+    border: 1px solid #ccc !important;
+    /*border: hidden;
+    border-collapse: collapse;
+    border-radius: 18px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px #ccc;*/
 }
 
+#namelist_search_tr {
+    /*border: hidden !important;*/
+}
 
 #name_list_search_button {
     background-color: #3c4b5d;
@@ -692,6 +758,7 @@ width: 45px;
     font-size: 100%;
     color: #dc3545;
 }
+
 .department-name-error {
     display: none;
     width: 100%;
@@ -705,16 +772,19 @@ width: 45px;
     text-align: center;
     height: 133px;
 }
-#section_name_lbl{
-    padding-top:10px;
+
+#section_name_lbl {
+    padding-top: 10px;
 }
 /*------------------------------------Section body resize-----------------------------------------*/
 #section_body {
     width: 59% !important;
 }
+
 #department_body {
     width: 59% !important;
 }
+
 #incharge_body {
     width: 59% !important;
 }
@@ -723,9 +793,11 @@ width: 45px;
     text-align: center;
     height: 133px;
 }
+
 #department_table thead th:nth-of-type(1) {
     width: 45px;
 }
+
 #department_table thead th:nth-of-type(2) {
     width: 200px
 }
@@ -743,6 +815,7 @@ width: 45px;
 #incharge_table thead th:nth-of-type(1) {
     width: 45px;
 }
+
 #incharge_table thead th:nth-of-type(2) {
     width: 200px
 }
@@ -764,10 +837,10 @@ width: 45px;
     position: relative;
 }
 
-.selectBox select {
-    width: 100%;
-    font-weight: normal;
-}
+    .selectBox select {
+        width: 100%;
+        font-weight: normal;
+    }
 
 .overSelect {
     position: absolute;
@@ -782,73 +855,82 @@ width: 45px;
     display: none;
     border: 1px #dadada solid;
 }
-#sectionChks label {
-    display: block;
-}
-#sectionChks label:hover {
-    background-color: #1e90ff;
-}
+
+    #sectionChks label {
+        display: block;
+    }
+
+        #sectionChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Department -------*/
 #departmentChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#departmentChks label {
-display: block;
-}
+    #departmentChks label {
+        display: block;
+    }
 
-#departmentChks label:hover {
-    background-color: #1e90ff;
-}
+        #departmentChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Incharge -------*/
 #inchargeChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#inchargeChks label {
-display: block;
-}
+    #inchargeChks label {
+        display: block;
+    }
 
-#inchargeChks label:hover {
-    background-color: #1e90ff;
-}
+        #inchargeChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Role -------*/
 #RoleChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#RoleChks label {
-display: block;
-}
+    #RoleChks label {
+        display: block;
+    }
 
-#RoleChks label:hover {
-    background-color: #1e90ff;
-}
+        #RoleChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Company -------*/
 #CompanyChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#CompanyChks label {
-display: block;
-}
+    #CompanyChks label {
+        display: block;
+    }
 
-#CompanyChks label:hover {
-    background-color: #1e90ff;
-}
+        #CompanyChks label:hover {
+            background-color: #1e90ff;
+        }
 
 .commonselect {
     font-weight: normal !important;
     background-color: aliceblue;
 }
 /*------Name List: Edit -------*/
-#name_list_edit_modal{
+#name_list_edit_modal {
     width: 100% !important;
 }
-#name_list_edit_modal thead tr {
-    text-align:center;
+
+    #name_list_edit_modal thead tr {
+        text-align: center;
+    }
+
+
+/*-----------------------------------------------Module Label text align ----------------------------*/
+.module-label-txt {
+    text-align: right;
 }
