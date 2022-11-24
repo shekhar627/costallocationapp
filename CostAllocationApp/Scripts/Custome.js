@@ -165,3 +165,15 @@ function CompanyCheck() {
     }
 }
 
+//---------------------------master setting: get delete id list ------------------------------//
+function GetCheckedIds(department_list_id) {
+    var id = '';
+    var sectionIds = $("#" + department_list_id + " tr input[type='checkbox']:checked").map(function () {
+        return $(this).data('id')
+    }).get();
+
+    $.each(sectionIds, (index, data) => {
+        id += data + ",";
+    });
+    return id;
+}

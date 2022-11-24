@@ -269,12 +269,12 @@ body {
     padding: 0px !important;
 }
 
-#section_table td:nth-of-type(2) {
-    border: 1px solid;
-    padding: 2px !important;
-    text-align: left;
-    text-indent:1em;
-}
+    #section_table td:nth-of-type(2) {
+        border: 1px solid;
+        padding: 2px !important;
+        text-align: left;
+        text-indent: 1em;
+    }
 
 #department_table td:nth-of-type(2) {
     border: 1px solid;
@@ -770,7 +770,8 @@ body {
 /*------------------------------------Section List: tbody-----------------------------------------*/
 #section_list_tbody {
     text-align: center;
-    height: 133px;
+    /*height: 133px;*/
+    /*height: 77px;*/
 }
 
 #section_name_lbl {
@@ -791,7 +792,7 @@ body {
 /*------------------------------------Department List-----------------------------------------*/
 #department_list_tbody {
     text-align: center;
-    height: 133px;
+    /*height: 133px;*/
 }
 
 #department_table thead th:nth-of-type(1) {
@@ -809,7 +810,7 @@ body {
 /*------------------------------------In-Charge List-----------------------------------------*/
 #incharge_list_tbody {
     text-align: center;
-    height: 133px;
+    /*height: 133px;*/
 }
 
 #incharge_table thead th:nth-of-type(1) {

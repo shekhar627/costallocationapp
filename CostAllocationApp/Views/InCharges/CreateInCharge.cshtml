@@ -5,6 +5,7 @@
 }
 <!--Main Body-->
 <div class="content container-fluid">
+    
     <!--List-->
     <h4 style="text-align:left;">List</h4>
     <div class="row">
@@ -27,12 +28,9 @@
             </div>
         </div>
     </div>
-    <!--Section List End-->
     <br />
-    <!-- Add Designation Modal -->
+
     <div class="modal-content" id="section_body">
-        <style>
-        </style>
         <div class="modal-body">
             <form>
                 <div id="main-div">
@@ -79,7 +77,6 @@
                 .done(function (data) {
                     $('#incharge_list_tbody').empty();
                     $.each(data, function (key, item) {
-                        // Add a list item for the product.
                         $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
                     });
                 });
@@ -87,15 +84,7 @@
 
             $('#confirm_delete').on('click', function (event) {
                 event.preventDefault();
-                var id = '';
-
-                var sectionIds = $("#incharge_list_tbody tr input[type='checkbox']:checked").map(function () {
-                    return $(this).data('id')
-                }).get();
-
-                $.each(sectionIds, (index, data) => {
-                    id += data+",";
-                });
+                let id = GetCheckedIds("incharge_list_tbody");
 
                 id = id.slice(0, -1);
                 console.log(id);
@@ -129,7 +118,6 @@
                             .done(function (data) {
                                 $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
-                                    // Add a list item for the product.
                                     $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
                                 });
                             });
@@ -160,6 +148,14 @@
 
                 $('#del_incharge_modal').modal('toggle');
 
+            });
+            $('#delete_button').on('click', function (event) {
+
+                let id = GetCheckedIds("incharge_list_tbody");
+                if (id == "") {
+                    alert("Please check first to delete.");
+                    return false;
+                }
             });
         });
 
@@ -209,7 +205,6 @@
                             .done(function (data) {
                                 $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
-                                    // Add a list item for the product.
                                     $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
                                 });
                             });

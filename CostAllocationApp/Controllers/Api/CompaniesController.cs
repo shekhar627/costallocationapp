@@ -6,30 +6,30 @@ using CostAllocationApp.BLL;
 
 namespace CostAllocationApp.Controllers.Api
 {
-    public class InChargesController : ApiController
+    public class CompaniesController :  ApiController
     {
-        InChargeBLL inChargeBLL = null;
-        public InChargesController()
+        CompanyBLL companyBLL = null;
+        public CompaniesController()
         {
-            inChargeBLL = new InChargeBLL();
-        } 
+            companyBLL = new CompanyBLL();
+        }
 
         [HttpPost]
-        public IHttpActionResult CreateInCharge(InCharge inCharge)
+        public IHttpActionResult CreateCompany(Company company)
         {
 
-            if (String.IsNullOrEmpty(inCharge.InChargeName))
+            if (String.IsNullOrEmpty(company.CompanyName))
             {
-                return BadRequest("InCharge Name Required");
+                return BadRequest("Company Name Required");
             }
             else
             {
-                inCharge.CreatedBy = "";
-                inCharge.CreatedDate = DateTime.Now;
-                inCharge.IsActive = true;
+                company.CreatedBy = "";
+                company.CreatedDate = DateTime.Now;
+                company.IsActive = true;
 
 
-                int result = inChargeBLL.CreateInCharge(inCharge);
+                int result = companyBLL.CreateCompany(company);
                 if (result > 0)
                 {
                     return Ok("Data Saved Successfully!");
@@ -41,25 +41,25 @@ namespace CostAllocationApp.Controllers.Api
             }
         }
         [HttpGet]
-        public IHttpActionResult InCharges()
+        public IHttpActionResult Companies()
         {
-            List<InCharge> inCharges = inChargeBLL.GetAllInCharges();
-            return Ok(inCharges);
+            List<Company> companies = companyBLL.GetAllCompanies();
+            return Ok(companies);
         }
 
         [HttpDelete]
-        public IHttpActionResult RemoveInCharge([FromUri] string inChargeIds)
+        public IHttpActionResult RemoveCompanies([FromUri] string companyIds)
         {
             int result = 0;
 
 
-            if (!String.IsNullOrEmpty(inChargeIds))
+            if (!String.IsNullOrEmpty(companyIds))
             {
-                string[] ids = inChargeIds.Split(',');
+                string[] ids = companyIds.Split(',');
 
                 foreach (var item in ids)
                 {
-                    result += inChargeBLL.RemoveInCharge(Convert.ToInt32(item));
+                    result += companyBLL.RemoveCompanies(Convert.ToInt32(item));
                 }
 
                 if (result == ids.Length)
@@ -77,6 +77,5 @@ namespace CostAllocationApp.Controllers.Api
             }
 
         }
-
     }
 }

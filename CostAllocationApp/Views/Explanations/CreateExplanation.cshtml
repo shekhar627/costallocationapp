@@ -88,15 +88,7 @@
 
             $('#confirm_delete').on('click', function (event) {
                 event.preventDefault();
-                var id = '';
-
-                var sectionIds = $("#incharge_list_tbody tr input[type='checkbox']:checked").map(function () {
-                    return $(this).data('id')
-                }).get();
-
-                $.each(sectionIds, (index, data) => {
-                    id += data + ",";
-                });
+                let id = GetCheckedIds("incharge_list_tbody");
 
                 id = id.slice(0, -1);
                 console.log(id);
@@ -162,6 +154,16 @@
                 $('#inactive_incharge_modal').modal('toggle');
 
             });
+
+            $('#delete_button').on('click', function (event) {
+
+                let id = GetCheckedIds("incharge_list_tbody");
+                if (id == "") {
+                    alert("Please check first to delete.");
+                    return false;
+                }
+            });
+
         });
 
         function AddExplanations() {

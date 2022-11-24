@@ -1,26 +1,25 @@
 ﻿
 @{
-    ViewBag.Title = "Roles Registration";
+    ViewBag.Title = "Company Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!--Main Body-->
+
 <div class="content container-fluid">
+
     <!--List-->
     <h4 style="text-align:left;">List</h4>
     <div class="row">
         <div class="col-md-12">
             <div class="">
-
                 <table class="" id="incharge_table">
                     <thead>
                         <tr>
                             <th>Check</th>
-                            <th>Role Name</th>
+                            <th>Company Name</th>
                         </tr>
                     </thead>
                     <tbody id="incharge_list_tbody"></tbody>
                 </table>
-
                 <label id="incharge_delete_btn">
                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#inactive_incharge_modal">Delete</a>
                 </label>
@@ -38,16 +37,16 @@
                 <div id="main-div">
 
                     <div class="row">
-                        <div class="col-sm-4 module-label-txt">
+                        <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="department-name">Role Name <span class="text-danger">*</span></label>
+                                <label for="department-name">Company Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <input class="form-control" id="role_name" type="text" placeholder="role name...">
+                                <input class="form-control" id="companyName" type="text" placeholder="company name...">
                                 <div class="department-name-error">
-                                    Please provide a role name.
+                                    Please provide a company name.
                                 </div>
                             </div>
                         </div>
@@ -57,7 +56,7 @@
                 <div class="row">
                     <div class="cutom_button_group_incharge">
                         <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddRoles();">Registration</a>
+                        <a href="javascript:void(0);" id="custom_submit" onclick="AddCompany();">Registration</a>
                     </div>
                 </div>
                 <style>
@@ -77,12 +76,12 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $.getJSON('/api/Roles/')
+            $.getJSON('/api/Companies/')
                 .done(function (data) {
                     $('#incharge_list_tbody').empty();
                     $.each(data, function (key, item) {
                         // Add a list item for the product.
-                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
                     });
                 });
 
@@ -95,7 +94,7 @@
                 console.log(id);
 
                 $.ajax({
-                    url: '/api/Roles?roleIds=' + id,
+                    url: '/api/Companies?companyIds=' + id,
                     type: 'DELETE',
                     success: function (data) {
                         Command: toastr["success"](data, "Success")
@@ -119,12 +118,12 @@
                         }
 
 
-                        $.getJSON('/api/Roles/')
+                        $.getJSON('/api/Companies/')
                             .done(function (data) {
                                 $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
                                 });
                             });
                     },
@@ -164,19 +163,20 @@
                     return false;
                 }
             });
+
         });
 
-        function AddRoles() {
-            var apiurl = "/api/Roles/";
-            let roleName = $("#role_name").val().trim();
-            if (roleName == "") {
+        function AddCompany() {
+            var apiurl = "/api/Companies/";
+            let companyName = $("#companyName").val().trim();
+            if (companyName == "") {
                 $(".department-name-error").show();
                 return false;
             }
             else {
                 $(".department-name-error").hide();
                 var data = {
-                    RoleName: roleName
+                    CompanyName: companyName
                 };
 
                 $.ajax({
@@ -207,12 +207,12 @@
                         }
                         $('#section-name').val('');
 
-                        $.getJSON('/api/Roles/')
+                        $.getJSON('/api/companies/')
                             .done(function (data) {
                                 $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
                                     // Add a list item for the product.
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
                                 });
                             });
                     },
@@ -269,14 +269,13 @@
     </div>
 </div>
 <!-- /Edit Salary Modal -->
-
 <!-- Delete Salary Modal -->
 <div class="modal custom-modal fade" id="inactive_incharge_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Roles</h3>
+                    <h3>Delete Company</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

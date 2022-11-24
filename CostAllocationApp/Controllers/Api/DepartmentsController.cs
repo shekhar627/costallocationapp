@@ -27,7 +27,7 @@ namespace CostAllocationApp.Controllers.Api
             }
             else if (String.IsNullOrEmpty(department.SectionId.ToString()))
             {
-                return BadRequest("Section Required");
+                return BadRequest("Please select section");
             }
             else
             {

@@ -42,7 +42,7 @@ namespace CostAllocationApp.DAL
             query = "SELECT dpt.*,sc.Name as SectionName ";
             query = query + "FROM Departments dpt ";
             query = query + "    INNER JOIN Sections sc ON dpt.SectionId = sc.Id ";
-            query = query + "where dpt.isactive=1 ";
+            query = query + "WHERE dpt.isactive=1 ";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();

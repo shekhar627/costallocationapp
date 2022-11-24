@@ -22,9 +22,9 @@ namespace CostAllocationApp.BLL
         {
             return departmentDAL.GetAllDepartments();
         }
-        public int RemoveDepartment(int sectionId)
+        public int RemoveDepartment(int departmentIds)
         {
-            return departmentDAL.RemoveDepartment(sectionId);
+            return departmentDAL.RemoveDepartment(departmentIds);
         }
     }
 }
