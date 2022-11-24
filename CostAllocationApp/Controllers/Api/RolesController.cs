@@ -41,7 +41,7 @@ namespace CostAllocationApp.Controllers.Api
             }
         }
         [HttpGet]
-        public IHttpActionResult InCharges()
+        public IHttpActionResult Roles()
         {
             List<Role> roles = roleBLL.GetAllRoles();
             return Ok(roles);

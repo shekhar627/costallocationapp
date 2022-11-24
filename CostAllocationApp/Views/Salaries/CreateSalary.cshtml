@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Roles Registration";
+    ViewBag.Title = "Salary Unit Price Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--Main Body-->
@@ -10,17 +10,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="">
-
                 <table class="" id="incharge_table">
                     <thead>
                         <tr>
                             <th>Check</th>
-                            <th>Role Name</th>
+                            <th>Salary Unit Price</th>
+                            <th>Grade</th>
                         </tr>
                     </thead>
                     <tbody id="incharge_list_tbody"></tbody>
                 </table>
-
                 <label id="incharge_delete_btn">
                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#inactive_incharge_modal">Delete</a>
                 </label>
@@ -36,28 +35,53 @@
         <div class="modal-body">
             <form>
                 <div id="main-div">
-
                     <div class="row">
-                        <div class="col-sm-4 module-label-txt">
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="department-name">Role Name <span class="text-danger">*</span></label>
+                                <label for="department-name" style="padding-top: 37px;">Unit Price <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <input class="form-control" id="role_name" type="text" placeholder="role name...">
-                                <div class="department-name-error">
-                                    Please provide a role name.
+                                <label>From</label>
+                                <input class="form-control" id="lowUnitPrice" type="text" placeholder="180000 ">
+                                
+                                <div class="department-name-error" id="lowPrice">
+                                    Please provide a unit price.
+                                </div>
+                            </div>
+                        </div>
+                        <label style="padding-top:40px;">～</label>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>To</label>
+                                <input class="form-control" id="hightUnitPrice" type="text" placeholder="229000">
+                                <div class="department-name-error" id="highPrice">
+                                    Please provide a unit price.
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="department-name" style="padding-top:1px;">Grade <span class="text-danger">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <input class="form-control" id="gradePoints" type="text" placeholder="1">
+                            <div class="department-name-error" id="salaryGradePoints">
+                                Please provide a grade.
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="cutom_button_group_incharge">
                         <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddRoles();">Registration</a>
+                        <a href="javascript:void(0);" id="custom_submit" onclick="AddSalary();">Registration</a>
                     </div>
                 </div>
                 <style>
@@ -77,12 +101,11 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $.getJSON('/api/Roles/')
+            $.getJSON('/api/Salaries/')
                 .done(function (data) {
                     $('#incharge_list_tbody').empty();
                     $.each(data, function (key, item) {
-                        // Add a list item for the product.
-                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPoint} ～ ${item.SalaryHighPoint}</td><td>${item.SalaryGrade}</td></tr>`);
                     });
                 });
 
@@ -95,7 +118,7 @@
                 console.log(id);
 
                 $.ajax({
-                    url: '/api/Roles?roleIds=' + id,
+                    url: '/api/Salaries?salaryIds=' + id,
                     type: 'DELETE',
                     success: function (data) {
                         Command: toastr["success"](data, "Success")
@@ -119,12 +142,11 @@
                         }
 
 
-                        $.getJSON('/api/Roles/')
+                        $.getJSON('/api/Salaries/')
                             .done(function (data) {
                                 $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
-                                    // Add a list item for the product.
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPoint} ～ ${item.SalaryHighPoint}</td><td>${item.SalaryGrade}</td></tr>`);
                                 });
                             });
                     },
@@ -164,19 +186,41 @@
                     return false;
                 }
             });
+
         });
 
-        function AddRoles() {
-            var apiurl = "/api/Roles/";
-            let roleName = $("#role_name").val().trim();
-            if (roleName == "") {
-                $(".department-name-error").show();
-                return false;
+        function AddSalary() {
+            var apiurl = "/api/Salaries/";
+            let lowUnitPrice = $("#lowUnitPrice").val().trim();
+            let highUnitPrice = $("#hightUnitPrice").val().trim();
+            let gradePoints = $("#gradePoints").val().trim();
+
+            let isValidRequest = true;
+            if (lowUnitPrice == "") {
+                $("#lowPrice").show();
+                isValidRequest = false;
             }
             else {
-                $(".department-name-error").hide();
+                $("#lowPrice").hide();
+            }
+            if (highUnitPrice == "") {
+                $("#highPrice").show();
+                isValidRequest = false;
+            } else {
+                $("#highPrice").hide();
+            }
+            if (gradePoints == "") {
+                $("#salaryGradePoints").show();
+                isValidRequest = false;
+            } else {
+                $("#salaryGradePoints").hide();
+            }
+
+            if (isValidRequest) {
                 var data = {
-                    RoleName: roleName
+                    SalaryLowPoint: lowUnitPrice,
+                    SalaryHighPoint: highUnitPrice,
+                    SalaryGrade: gradePoints
                 };
 
                 $.ajax({
@@ -207,12 +251,11 @@
                         }
                         $('#section-name').val('');
 
-                        $.getJSON('/api/Roles/')
+                        $.getJSON('/api/Salaries/')
                             .done(function (data) {
                                 $('#incharge_list_tbody').empty();
                                 $.each(data, function (key, item) {
-                                    // Add a list item for the product.
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPoint} ～ ${item.SalaryHighPoint}</td><td>${item.SalaryGrade}</td></tr>`);
                                 });
                             });
                     },
@@ -269,14 +312,13 @@
     </div>
 </div>
 <!-- /Edit Salary Modal -->
-
 <!-- Delete Salary Modal -->
 <div class="modal custom-modal fade" id="inactive_incharge_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Roles</h3>
+                    <h3>Delete Salary</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

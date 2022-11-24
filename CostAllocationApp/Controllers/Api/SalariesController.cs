@@ -4,32 +4,33 @@ using System.Web.Http;
 using CostAllocationApp.Models;
 using CostAllocationApp.BLL;
 
+
 namespace CostAllocationApp.Controllers.Api
 {
-    public class InChargesController : ApiController
+    public class SalariesController :  ApiController
     {
-        InChargeBLL inChargeBLL = null;
-        public InChargesController()
+        SalaryBLL salaryBLL = null;
+        public SalariesController()
         {
-            inChargeBLL = new InChargeBLL();
-        } 
+            salaryBLL = new SalaryBLL();
+        }
 
         [HttpPost]
-        public IHttpActionResult CreateInCharge(InCharge inCharge)
+        public IHttpActionResult CreateSalary(Salary salary)
         {
 
-            if (String.IsNullOrEmpty(inCharge.InChargeName))
+            if (String.IsNullOrEmpty(salary.SalaryGrade))
             {
-                return BadRequest("InCharge Name Required");
+                return BadRequest("Grade Required");
             }
             else
             {
-                inCharge.CreatedBy = "";
-                inCharge.CreatedDate = DateTime.Now;
-                inCharge.IsActive = true;
+                salary.CreatedBy = "";
+                salary.CreatedDate = DateTime.Now;
+                salary.IsActive = true;
 
 
-                int result = inChargeBLL.CreateInCharge(inCharge);
+                int result = salaryBLL.CreateSalary(salary);
                 if (result > 0)
                 {
                     return Ok("Data Saved Successfully!");
@@ -41,25 +42,25 @@ namespace CostAllocationApp.Controllers.Api
             }
         }
         [HttpGet]
-        public IHttpActionResult InCharges()
+        public IHttpActionResult Salaries()
         {
-            List<InCharge> inCharges = inChargeBLL.GetAllInCharges();
-            return Ok(inCharges);
+            List<Salary> salaries = salaryBLL.GetAllSalaryPoints();
+            return Ok(salaries);
         }
 
         [HttpDelete]
-        public IHttpActionResult RemoveInCharge([FromUri] string inChargeIds)
+        public IHttpActionResult RemoveSalary([FromUri] string salaryIds)
         {
             int result = 0;
 
 
-            if (!String.IsNullOrEmpty(inChargeIds))
+            if (!String.IsNullOrEmpty(salaryIds))
             {
-                string[] ids = inChargeIds.Split(',');
+                string[] ids = salaryIds.Split(',');
 
                 foreach (var item in ids)
                 {
-                    result += inChargeBLL.RemoveInCharge(Convert.ToInt32(item));
+                    result += salaryBLL.RemoveSalary(Convert.ToInt32(item));
                 }
 
                 if (result == ids.Length)
@@ -73,10 +74,9 @@ namespace CostAllocationApp.Controllers.Api
             }
             else
             {
-                return BadRequest("Select InCharge Id!");
+                return BadRequest("Select Grade Points!");
             }
 
         }
-
     }
 }

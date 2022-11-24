@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+    <div class="account-content">
+        <div class="container">
+            <!-- Account Logo -->
+            <div class="account-logo">
+                <a href="index.html"><img src="~/img/logo.png" alt="Dreamguy's Technologies"></a>
+            </div>
+            <!-- /Account Logo -->
+            <div class="account-box">
+                <div class="account-wrapper">
+                    <h3 class="account-title">Login</h3>
+                    <p class="account-subtitle">Access to our dashboard</p>
+                    <style>
+
+                        .username-error {
+                            display: none;
+                            width: 100%;
+                            margin-top: 0.25rem;
+                            font-size: 100%;
+                            color: #dc3545;
+                        }
+
+                        .password-error {
+                            display: none;
+                            width: 100%;
+                            margin-top: 0.25rem;
+                            font-size: 100%;
+                            color: #dc3545;
+                        }
+                    </style>
+                    <!-- Account Form -->
+                    <form action="">
+                        <div class="form-group">
+                            <label>Id</label>
+                            <input class="form-control" type="text" id="login_id">
+                            <div class="username-error">
+                                UserName is not correct!
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input class="form-control" type="password" id="login_pass">
+                            <div class="password-error">
+                                Password is not correct!
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button class="btn btn-primary account-btn" type="button" onclick="Login();">Login</button>
+                        </div>
+                    </form>
+                    <!-- /Account Form -->
+                    <script>function Login() {
+                            var loginUserName = $("#login_id").val();
+                            var loginPassword = $("#login_pass").val();
+
+                            if (loginUserName == "123" && loginPassword == "123") {
+                                $(".username-error").hide();
+                                $(".password-error").hide();
+                                window.location.href = "/Dashboard/Index";
+                            } else {
+                                $(".username-error").show();
+                                $(".password-error").show();
+                            }
+                        }</script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Main Wrapper -->

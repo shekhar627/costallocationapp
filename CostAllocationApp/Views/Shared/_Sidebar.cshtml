@@ -10,37 +10,6 @@
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
-                @*<li class="menu-title">
-                        <span>Main</span>
-                    </li>
-                    <li class="submenu">
-                        <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="index.html">Admin Dashboard</a></li>
-                            <li><a href="employee-dashboard.html">Employee Dashboard</a></li>
-                        </ul>
-                    </li>*@
-
-                @*<li class="submenu">
-                        <a href="#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="chat.html">Chat</a></li>
-                            <li class="submenu">
-                                <a href="#"><span> Calls</span> <span class="menu-arrow"></span></a>
-                                <ul style="display: none;">
-                                    <li><a href="voice-call.html">Voice Call</a></li>
-                                    <li><a href="video-call.html">Video Call</a></li>
-                                    <li><a href="outgoing-call.html">Outgoing Call</a></li>
-                                    <li><a href="incoming-call.html">Incoming Call</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="events.html">Calendar</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="inbox.html">Email</a></li>
-                            <li><a href="file-manager.html">File Manager</a></li>
-                        </ul>
-                    </li>*@
-
                 <li class="menu-title">
                     <span>Cost Management</span>
                 </li>
@@ -48,11 +17,10 @@
                     //string url = HttpContext.Current.Request.Url.AbsoluteUri;
                     string fullPath = HttpContext.Current.Request.Url.AbsolutePath;
                     string url = System.IO.Path.GetFileName(fullPath);
-                    //Response.Write("url: " + url);
                     if (url.ToLower().Contains("login") || string.IsNullOrEmpty(url))
                     {
                         <li>
-                            <a href="/Home/Login" class="active"><i class="la la-user"></i> <span>Login</span></a>
+                            <a href="/Registration/Login" class="active"><i class="la la-user"></i> <span>Login</span></a>
                         </li>
                     }
                     else
@@ -60,37 +28,37 @@
                         if (url.ToLower().Contains("namelist"))
                         {
                             <li>
-                                <a href="/Home/NameList" class="active"><i class="la la-cube"></i> <span>Name List</span></a>
+                                <a href="/Employees/NameList;" class="active"><i class="la la-cube"></i> <span>Name List</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Home/NameList"><i class="la la-cube"></i> <span>Name List</span></a>
+                                <a href="/Employees/NameList"><i class="la la-cube"></i> <span>Name List</span></a>
                             </li>
                         }
                         if (url.ToLower().Contains("addname"))
                         {
                             <li>
-                                <a href="/Home/AddName" class="active"><i class="la la-cube"></i> <span>Add Name</span></a>
+                                <a href="javascriopt:void(0);" class="active"><i class="la la-cube"></i> <span>Add Name</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Home/AddName"><i class="la la-cube"></i> <span>Add Name</span></a>
+                                <a href="javascriopt:void(0);"><i class="la la-cube"></i> <span>Add Name</span></a>
                             </li>
                         }
                         if (url.ToLower().Contains("forecasting"))
                         {
                             <li>
-                                <a href="/Home/Forecasting" class="active"><i class="la la-bullhorn"></i> <span>Create Forcast</span></a>
+                                <a href="javascriopt:void(0);" class="active"><i class="la la-bullhorn"></i> <span>Create Forcast</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Home/Forecasting"><i class="la la-bullhorn"></i> <span>Create Forcast</span></a>
+                                <a href="javascriopt:void(0);"><i class="la la-bullhorn"></i> <span>Create Forcast</span></a>
                             </li>
                         }
                         <li>
@@ -107,12 +75,12 @@
                                 @{
                                     if (url.ToLower().Contains("createsection"))
                                     {
-                                        <li><a href="/sections/CreateSection" class="active">Section Master</a></li>
+                                        <li><a href="/Sections/CreateSection" class="active">Section Master</a></li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="/sections/CreateSection">Section Master</a>
+                                            <a href="/Sections/CreateSection">Section Master</a>
                                         </li>
                                     }
                                     if (url.ToLower().Contains("createdepartment"))
@@ -150,19 +118,19 @@
                                     }
                                     if (url.ToLower().Contains("createcompany"))
                                     {
-                                        <li><a href="/Company/CreateCompany" class="active">Company Master</a></li>
+                                        <li><a href="/Companies/CreateCompany" class="active">Company Master</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Company/CreateCompany">Company Master</a></li>
+                                        <li><a href="/Companies/CreateCompany">Company Master</a></li>
                                     }
-                                    if (url.ToLower().Contains("salaryregister"))
+                                    if (url.ToLower().Contains("createsalary"))
                                     {
-                                        <li><a href="/Home/SalaryRegister" class="active">Salary Master</a></li>
+                                        <li><a href="/Salaries/CreateSalary" class="active">Salary Master</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Home/SalaryRegister">Salary Master</a></li>
+                                        <li><a href="/Salaries/CreateSalary">Salary Master</a></li>
                                     }
                                 }
                             </ul>

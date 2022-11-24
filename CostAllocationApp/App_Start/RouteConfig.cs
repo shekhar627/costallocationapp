@@ -16,7 +16,7 @@ namespace CostAllocationApp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Sections", action = "CreateSection", id = UrlParameter.Optional }
+                defaults: new { controller = "Registration", action = "Login", id = UrlParameter.Optional }
             );
         }
     }
