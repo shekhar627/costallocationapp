@@ -1,0 +1,618 @@
+﻿
+@{
+    ViewBag.Title = "Create Assignment";
+}
+
+<div class="content container-fluid">
+    <!-- /Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="add_name_search" class="custom_add_name">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Memo</th>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>In-Charge</th>
+                        <th>Role</th>
+                        <th>Explanation</th>
+                        <th>Company</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" id="identity" value="" placeholder="name">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="identity" value="" placeholder="memo">
+                        </td>
+                        <td>
+                            <select id="section" class="form-control">
+                                <option value="">Select Section</option>
+                                <option value="">Section-1</option>
+                                <option value="">Section-2</option>
+                                <option value="">Section-3</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="section" class="form-control">
+                                <option value="">Select Department</option>
+                                <option value="">Department-1</option>
+                                <option value="">Department-2</option>
+                                <option value="">Department-3</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="section" class="form-control">
+                                <option value="">Select In-Charge</option>
+                                <option value="">Work Domain-1</option>
+                                <option value="">Work Domain-2</option>
+                                <option value="">Work Domain-3</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="section" class="form-control">
+                                <option value="">Select Role</option>
+                                <option value="">Role-1</option>
+                                <option value="">Role-2</option>
+                                <option value="">Role-3</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="explanation" value="" placeholder="explanation">
+                        </td>
+                        <td>
+                            <select id="section" class="form-control">
+                                <option value="">Select Company</option>
+                                <option value="">Company-1</option>
+                                <option value="">Company-2</option>
+                                <option value="">Company-3</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7"></td>
+                        <td>
+                            <a href="javascript:void(0);" class="" id="add_name_search_button">Search</a>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 custom_add_name">
+            <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">add_name</a>
+            <table id="add_name_table_1">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Name</th>
+                        <th>Memo</th>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>In-Charge</th>
+                        <th>Role</th>
+                        <th>Explanation</th>
+                        <th>Company</th>
+                        <th>Grade</th>
+                        <th>Unit Price</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <input type="text" class="form-control col-12" id="edit_employee_name" value="sudipto" placeholder="name">
+                        </th>
+                        <th></th>
+                        <th>
+                            <select id="section" class="form-control col-12">
+                                <option value="">Select Section</option>
+                                <option value="">Section-1</option>
+                                <option value="">Section-2</option>
+                                <option value="">Section-3</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select id="department" class="form-control col-12">
+                                <option value="">Select Department</option>
+                                <option value="">Department-1</option>
+                                <option value="">Department-2</option>
+                                <option value="">Department-3</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select id="incharge" class="form-control col-12">
+                                <option value="">Select In-Charge</option>
+                                <option value="">Work Domain-1</option>
+                                <option value="">Work Domain-2</option>
+                                <option value="">Work Domain-3</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select id="role" class="form-control col-12">
+                                <option value="">Select Role</option>
+                                <option value="">Role-1</option>
+                                <option value="">Role-2</option>
+                                <option value="">Role-3</option>
+                            </select>
+                        </th>
+                        <th></th>
+                        <th>
+                            <select id="company" class="form-control col-12">
+                                <option value="">Select Company</option>
+                                <option value="" selected>Company-1</option>
+                                <option value="">Company-2</option>
+                                <option value="">Company-3</option>
+                            </select>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Chandra Shekhar Das</td>
+                        <td>memo-1</td>
+                        <td>Development</td>
+                        <td>Database</td>
+                        <td>Web</td>
+                        <td>Programmer</td>
+                        <td>Explanation</td>
+                        <td>JABA IT</td>
+                        <td>5</td>
+                        <td>3500</td>
+                        <td class="add_name_btn_group"><a href="javascript:void(0);" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_edit_name">edit</a> <a href="javascript:void(0);" class="link_cancel">cancel</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Modal Add Name -->
+<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-12 modal-body">
+                <table id="add_name_table_2">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Name</th>
+                            <th>Sub Code</th>
+                            <th>Memo</th>
+                            <th>Section</th>
+                            <th>Department</th>
+                            <th>In-Charge</th>
+                            <th>Role</th>
+                            <th>Explanation</th>
+                            <th>Company</th>
+                            <th>Grade</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Chandra Shekhar Das</td>
+                            <td>1</td>
+                            <td>memo-1</td>
+                            <td>Development</td>
+                            <td>Database</td>
+                            <td>Web</td>
+                            <td>Programmer</td>
+                            <td>work on various projects.</td>
+                            <td>JABA IT</td>
+                            <td>5</td>
+                            <td>3500</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                            </td>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="memo" value="memo-1" placeholder="memo">
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Section</option>
+                                    <option value="" selected>Development</option>
+                                    <option value="">Development-2</option>
+                                    <option value="">Development-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Department</option>
+                                    <option value="" selected>Database</option>
+                                    <option value="">Department-2</option>
+                                    <option value="">Department-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select In-Charge</option>
+                                    <option value="" selected>Web</option>
+                                    <option value="">Work Domain-2</option>
+                                    <option value="">Work Domain-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Role</option>
+                                    <option value="" selected>Programmer</option>
+                                    <option value="">Role-2</option>
+                                    <option value="">Role-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="explanation" value="work on various projects." placeholder="explanation">
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Company</option>
+                                    <option value="" selected>JABA IT</option>
+                                    <option value="">Company-2</option>
+                                    <option value="">Company-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="grade" value="1" placeholder="grade">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="unitprice" value="3500" placeholder="unit price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="add_name_tbl_2_btn">
+                    <a href="javascript:void(0);" class="" id="add_name_add">Add</a>
+                    <a href="javascript:void(0);" class="" id="add_name_cancel">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Add Name (New) -->
+<div class="modal fade" id="modal_add_name_new" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-12 modal-body">
+                <table id="add_name_table_new">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Memo</th>
+                            <th>Section</th>
+                            <th>Department</th>
+                            <th>In-Charge</th>
+                            <th>Role</th>
+                            <th>Explanation</th>
+                            <th>Company</th>
+                            <th>Grade</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control col-12" id="identity_new"  placeholder="name">
+                            </td>
+
+                            <td>
+                                <input type="text" class="form-control col-12" id="memo_new"  placeholder="memo">
+                            </td>
+                            <td>
+                                <select id="section_new" class="form-control col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="department_new" class="form-control col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="incharge_new" class="form-control col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="role_new" form-control col-12"></select>
+                            </td>
+                            <td>
+                                <select id="explanation_new" form-control col-12"></select>
+                            </td>
+                            <td>
+                                <select id="company_new" class="form-control col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="grade_new"  placeholder="grade">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="unitprice_new"  placeholder="unit price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="add_name_tbl_2_btn">
+                    <a href="javascript:void(0);" class="" id="add_name_add_new">Add</a>
+                    <a href="javascript:void(0);" class="" id="add_name_cancel">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Name -->
+<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-12 modal-body">
+                <table id="add_name_table_3">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Memo</th>
+                            <th>Section</th>
+                            <th>Department</th>
+                            <th>In-Charge</th>
+                            <th>Role</th>
+                            <th>Explanation</th>
+                            <th>Company</th>
+                            <th>Grade</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="memo" value="memo-1" placeholder="memo">
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Section</option>
+                                    <option value="" selected>Section-1</option>
+                                    <option value="">Section-2</option>
+                                    <option value="">Section-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Department</option>
+                                    <option value="" selected>Department-1</option>
+                                    <option value="">Department-2</option>
+                                    <option value="">Department-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select In-Charge</option>
+                                    <option value="" selected>Work Domain-1</option>
+                                    <option value="">Work Domain-2</option>
+                                    <option value="">Work Domain-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Role</option>
+                                    <option value="" selected>Role-1</option>
+                                    <option value="">Role-2</option>
+                                    <option value="">Role-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="explanation" value="work on full time" placeholder="explanation">
+                            </td>
+                            <td>
+                                <select id="section" class="form-control col-12">
+                                    <option value="">Select Company</option>
+                                    <option value="" selected>Company-1</option>
+                                    <option value="">Company-2</option>
+                                    <option value="">Company-3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="grade" value="1" placeholder="memo">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="unitprice" value="3500" placeholder="unit price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="add_name_tbl_3_btn">
+                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
+                    <a href="javascript:void(0);" class="" id="add_name_cancel">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('.link_add').click(function () {
+            //    // $('#add_name_table_2').show();
+            //    // $('.add_name_tbl_2_btn').show();
+            //});
+            //$('.link_edit').click(function () {
+            //    //$('#add_name_table_3').show();
+            //    // $('.add_name_tbl_3_btn').show();
+            //});
+
+
+            $('#modal_add_name_new').on('click', function () {
+                $.getJSON('/api/Roles/')
+                    .done(function (data) {
+                        $('#role_new').empty();
+                        $('#role_new').append(`<option value=''>Select Role</option>`);
+                        $.each(data, function (key, item) {
+                            $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+                        });
+                    });
+
+                $.getJSON('/api/Explanations/')
+                    .done(function (data) {
+                        $('#explanation_new').empty();
+                        $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
+                        $.each(data, function (key, item) {
+                            $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                        });
+                    });
+
+                $.getJSON('/api/Companies/')
+                    .done(function (data) {
+                        $('#company_new').empty();
+                        $('#company_new').append(`<option value=''>Select Company</option>`);
+                        $.each(data, function (key, item) {
+                            $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+                        });
+                    });
+
+                $.getJSON('/api/incharges/')
+                    .done(function (data) {
+                        $('#incharge_new').empty();
+                        $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
+                        $.each(data, function (key, item) {
+                            $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                        });
+                    });
+                $.getJSON('/api/sections/')
+                    .done(function (data) {
+                        $('#section_new').empty();
+                        $('#section_new').append(`<option value=''>Select Section</option>`);
+                        $.each(data, function (key, item) {
+                            $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                        });
+                    });
+
+            });
+
+            $('#section_new').on('change', function () {
+
+                var sectionId = $(this).val();
+                console.log(sectionId);
+
+                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+                    .done(function (data) {
+                        $('#department_new').empty();
+                        $('#department_new').append(`<option value=''>Select Department</option>`);
+                        $.each(data, function (key, item) {
+                            $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                        });
+                    });
+            });
+
+
+            $('#add_name_add_new').on('click', function () {
+
+                var sectionId = $('#add_name_table_new #section_new').find(":selected").val();
+                var inchargeId = $('#add_name_table_new #incharge_new').find(":selected").val();
+                var departmentId = $('#add_name_table_new #department_new').find(":selected").val();
+                var roleId = $('#add_name_table_new #role_new').find(":selected").val();
+                var companyId = $('#add_name_table_new #company_new').find(":selected").val();
+                var explanationId = $('#add_name_table_new #explanation_new').find(":selected").val();
+                var unitPrice = $('#add_name_table_new #unitprice_new').find(":selected").val();
+                var gradeId = $('#add_name_table_new #grade_new').find(":selected").val();
+
+
+
+                var data = {
+                    SectionId: sectionId,
+                    DepartmentId: departmentId,
+                    InchargeId: inchargeId ,
+                    RoleId: roleId,
+                    ExplanationId: explanationId,
+                    CompanyId: companyId,
+                    UnitPrice: unitPrice,
+                    GradeId: gradeId,
+                    
+                };
+
+                console.log(data);
+
+                $.ajax({
+                    url: '/api/Employees',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (data) {
+
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        $('#modal_add_name_new').modal('toggle');
+                    },
+                    error: function () {
+                        alert("Error please try again");
+                        //$('#modal_add_name_new').modal('toggle');
+                    }
+                });
+
+               
+
+            });
+
+
+    });
+    </script>
+
+}
+
