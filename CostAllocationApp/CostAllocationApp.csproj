@@ -133,35 +133,49 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\CompanyBLL.cs" />
     <Compile Include="BLL\DepartmentBLL.cs" />
     <Compile Include="BLL\ExplanationsBLL.cs" />
     <Compile Include="BLL\InChargeBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
+    <Compile Include="BLL\SalaryBLL.cs" />
     <Compile Include="BLL\SectionBLL.cs" />
+    <Compile Include="Controllers\Api\CompaniesController.cs" />
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
+    <Compile Include="Controllers\Api\EmployeesController.cs" />
     <Compile Include="Controllers\Api\ExplanationsController.cs" />
     <Compile Include="Controllers\Api\InChargesController.cs" />
     <Compile Include="Controllers\Api\RolesController.cs" />
+    <Compile Include="Controllers\Api\SalariesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
+    <Compile Include="Controllers\CompaniesController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ExplanationsController.cs" />
     <Compile Include="Controllers\InChargesController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SalariesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
+    <Compile Include="DAL\CompanyDAL.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\ExplanationDAL.cs" />
     <Compile Include="DAL\InChargeDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
+    <Compile Include="DAL\SalaryDAL.cs" />
     <Compile Include="DAL\SectionDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Common.cs" />
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Explanation.cs" />
     <Compile Include="Models\InCharge.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Salary.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -564,11 +578,15 @@
     <Content Include="Views\Shared\_Reports.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Sections\CreateSection.cshtml" />
-    <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Departments\CreateDepartment.cshtml" />
     <Content Include="Views\InCharges\CreateInCharge.cshtml" />
     <Content Include="Views\Roles\CreateRoles.cshtml" />
     <Content Include="Views\Explanations\CreateExplanation.cshtml" />
+    <Content Include="Views\Registration\Login.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Companies\CreateCompany.cshtml" />
+    <Content Include="Views\Salaries\CreateSalary.cshtml" />
+    <Content Include="Views\Employees\NameList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
