@@ -179,7 +179,7 @@
 
 
 <!-- Modal Add Name -->
-<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@*<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -292,7 +292,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
 <!-- Modal Add Name (New) -->
@@ -343,10 +343,10 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="role_new" form-control col-12"></select>
+                                <select id="role_new" class="form-control col-12"></select>
                             </td>
                             <td>
-                                <select id="explanation_new" form-control col-12"></select>
+                                <select id="explanation_new" class="form-control col-12"></select>
                             </td>
                             <td>
                                 <select id="company_new" class="form-control col-12">
@@ -370,7 +370,7 @@
     </div>
 </div>
 <!-- Modal Edit Name -->
-<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@*<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -462,7 +462,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
 
@@ -482,15 +482,14 @@
             //});
 
 
-            $('#modal_add_name_new').on('click', function () {
-                $.getJSON('/api/Roles/')
-                    .done(function (data) {
-                        $('#role_new').empty();
-                        $('#role_new').append(`<option value=''>Select Role</option>`);
-                        $.each(data, function (key, item) {
-                            $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
-                        });
+            $.getJSON('/api/Roles/')
+                .done(function (data) {
+                    $('#role_new').empty();
+                    $('#role_new').append(`<option value=''>Select Role</option>`);
+                    $.each(data, function (key, item) {
+                        $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
                     });
+                });
 
                 $.getJSON('/api/Explanations/')
                     .done(function (data) {
@@ -517,7 +516,8 @@
                         $.each(data, function (key, item) {
                             $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
                         });
-                    });
+                });
+
                 $.getJSON('/api/sections/')
                     .done(function (data) {
                         $('#section_new').empty();
@@ -527,9 +527,9 @@
                         });
                     });
 
-            });
+     
 
-            $('#section_new').on('change', function () {
+            $(document).on('change','#section_new', function () {
 
                 var sectionId = $(this).val();
                 console.log(sectionId);
@@ -547,14 +547,14 @@
 
             $('#add_name_add_new').on('click', function () {
 
-                var sectionId = $('#add_name_table_new #section_new').find(":selected").val();
-                var inchargeId = $('#add_name_table_new #incharge_new').find(":selected").val();
-                var departmentId = $('#add_name_table_new #department_new').find(":selected").val();
-                var roleId = $('#add_name_table_new #role_new').find(":selected").val();
-                var companyId = $('#add_name_table_new #company_new').find(":selected").val();
-                var explanationId = $('#add_name_table_new #explanation_new').find(":selected").val();
-                var unitPrice = $('#add_name_table_new #unitprice_new').find(":selected").val();
-                var gradeId = $('#add_name_table_new #grade_new').find(":selected").val();
+                var sectionId = $('#section_new').find(":selected").val();
+                var inchargeId = $('#incharge_new').find(":selected").val();
+                var departmentId = $('#department_new').find(":selected").val();
+                var roleId = $('#role_new').find(":selected").val();
+                var companyId = $('#company_new').find(":selected").val();
+                var explanationId = $('#explanation_new').find(":selected").val();
+                var unitPrice = $('#unitprice_new').val();
+                var gradeId = $('#grade_new').val();
 
 
 

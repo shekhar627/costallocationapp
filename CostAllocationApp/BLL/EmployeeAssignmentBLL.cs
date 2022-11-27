@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using CostAllocationApp.DAL;
 using CostAllocationApp.Models;
+using CostAllocationApp.ViewModels;
 
 namespace CostAllocationApp.BLL
 {
@@ -17,6 +18,14 @@ namespace CostAllocationApp.BLL
         public int CreateAssignment(EmployeeAssignment employeeAssignment)
         {
             return employeeAssignmentDAL.CreateAssignment(employeeAssignment);
+        }
+        public int UpdateAssignment(EmployeeAssignment employeeAssignment)
+        {
+            return employeeAssignmentDAL.UpdateAssignment(employeeAssignment);
+        }
+        public List<EmployeeAssignmentViewModel> SearchAssignment(EmployeeAssignment employeeAssignment)
+        {
+            return employeeAssignmentDAL.SearchAssignment(employeeAssignment);
         }
     }
 }
