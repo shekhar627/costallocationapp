@@ -7,6 +7,7 @@ using System.Web.Http;
 using CostAllocationApp.Models;
 using CostAllocationApp.BLL;
 using CostAllocationApp.Dtos;
+using CostAllocationApp.ViewModels;
 
 
 namespace CostAllocationApp.Controllers.Api
@@ -153,7 +154,7 @@ namespace CostAllocationApp.Controllers.Api
 
 
         [HttpPut]
-        public IHttpActionResult UpdateAssignment(EmployeeAssignmentDTO employeeAssignmentDTO)
+        public IHttpActionResult UpdateAssignment([FromBody]  EmployeeAssignmentDTO employeeAssignmentDTO)
         {
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
 
@@ -268,8 +269,8 @@ namespace CostAllocationApp.Controllers.Api
             }
             #endregion
 
-            employeeAssignment.CreatedBy = "";
-            employeeAssignment.CreatedDate = DateTime.Now;
+            employeeAssignment.UpdatedBy = "";
+            employeeAssignment.UpdatedDate = DateTime.Now;
 
 
             int result = employeeAssignmentBLL.UpdateAssignment(employeeAssignment);
@@ -281,6 +282,109 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Something Went Wrong!!!");
             }
+        }
+
+        [HttpGet]
+        public IHttpActionResult SearchAssignment(string SectionId="",string DepartmentId="",string InchargeId="",string RoleId="",string ExplanationId="",string CompanyId="")
+        {
+            int tempValue = 0;
+           // decimal tempUnitPrice = 0;
+
+
+            EmployeeAssignment employeeAssignment = new EmployeeAssignment();
+
+
+            #region validation of inputs
+            if (int.TryParse(SectionId, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+                    employeeAssignment.SectionId = tempValue;
+
+                }
+            }
+            if (int.TryParse(DepartmentId, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+
+                    employeeAssignment.DepartmentId = tempValue;
+                }
+            }
+            if (int.TryParse(InchargeId, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+                    employeeAssignment.InchargeId = tempValue;
+
+                }
+            }
+            if (int.TryParse(RoleId, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+                    employeeAssignment.RoleId = tempValue;
+
+                }
+            }
+            if (int.TryParse(ExplanationId, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+
+                    employeeAssignment.ExplanationId = tempValue;
+                }
+                
+            }
+
+            if (int.TryParse(CompanyId, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+                    employeeAssignment.CompanyId = tempValue;
+
+                }
+            }
+            //if (decimal.TryParse(employeeAssignmentDTO.UnitPrice, out tempUnitPrice))
+            //{
+            //    if (tempValue < 0)
+            //    {
+            //        return BadRequest("Invalid Unit Price");
+
+            //    }
+            //    employeeAssignment.UnitPrice = tempUnitPrice;
+            //}
+            //else
+            //{
+            //    return BadRequest("Invalid Unit Price");
+            //}
+            //if (int.TryParse(employeeAssignmentDTO.GradeId, out tempValue))
+            //{
+            //    if (tempValue <= 0)
+            //    {
+            //        return BadRequest("Invalid Grade Id");
+
+            //    }
+            //    employeeAssignment.GradeId = tempValue;
+            //}
+            //else
+            //{
+            //    return BadRequest("Invalid Grade Id");
+            //}
+            #endregion
+
+            List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.SearchAssignment(employeeAssignment);
+
+            if (employeeAssignmentViewModels.Count>0)
+            {
+                return Ok(employeeAssignmentViewModels);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            
         }
 
     }

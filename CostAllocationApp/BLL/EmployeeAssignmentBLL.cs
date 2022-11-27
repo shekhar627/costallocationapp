@@ -27,5 +27,10 @@ namespace CostAllocationApp.BLL
         {
             return employeeAssignmentDAL.SearchAssignment(employeeAssignment);
         }
+
+        public EmployeeAssignmentViewModel GetAssignmentById(int assignmentId)
+        {
+            return employeeAssignmentDAL.GetAssignmentById(assignmentId);
+        }
     }
 }

@@ -10,8 +10,8 @@
             <table id="add_name_search" class="custom_add_name">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Memo</th>
+                        @*<th>Name</th>
+                        <th>Memo</th>*@
                         <th>Section</th>
                         <th>Department</th>
                         <th>In-Charge</th>
@@ -22,53 +22,34 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
+                        @*<td>
                             <input type="text" class="form-control" id="identity" value="" placeholder="name">
                         </td>
                         <td>
                             <input type="text" class="form-control" id="identity" value="" placeholder="memo">
-                        </td>
+                        </td>*@
                         <td>
-                            <select id="section" class="form-control">
-                                <option value="">Select Section</option>
-                                <option value="">Section-1</option>
-                                <option value="">Section-2</option>
-                                <option value="">Section-3</option>
+                            <select id="section_search" class="form-control">
                             </select>
                         </td>
                         <td>
-                            <select id="section" class="form-control">
-                                <option value="">Select Department</option>
-                                <option value="">Department-1</option>
-                                <option value="">Department-2</option>
-                                <option value="">Department-3</option>
+                            <select id="department_search" class="form-control">
                             </select>
                         </td>
                         <td>
-                            <select id="section" class="form-control">
-                                <option value="">Select In-Charge</option>
-                                <option value="">Work Domain-1</option>
-                                <option value="">Work Domain-2</option>
-                                <option value="">Work Domain-3</option>
+                            <select id="incharge_search" class="form-control">
                             </select>
                         </td>
                         <td>
-                            <select id="section" class="form-control">
-                                <option value="">Select Role</option>
-                                <option value="">Role-1</option>
-                                <option value="">Role-2</option>
-                                <option value="">Role-3</option>
+                            <select id="role_search" class="form-control">
                             </select>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="explanation" value="" placeholder="explanation">
+                            <select id="explanation_search" class="form-control">
+                            </select>
                         </td>
                         <td>
-                            <select id="section" class="form-control">
-                                <option value="">Select Company</option>
-                                <option value="">Company-1</option>
-                                <option value="">Company-2</option>
-                                <option value="">Company-3</option>
+                            <select id="company_search" class="form-control">
                             </select>
                         </td>
                     </tr>
@@ -155,20 +136,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Chandra Shekhar Das</td>
-                        <td>memo-1</td>
-                        <td>Development</td>
-                        <td>Database</td>
-                        <td>Web</td>
-                        <td>Programmer</td>
-                        <td>Explanation</td>
-                        <td>JABA IT</td>
-                        <td>5</td>
-                        <td>3500</td>
-                        <td class="add_name_btn_group"><a href="javascript:void(0);" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_edit_name">edit</a> <a href="javascript:void(0);" class="link_cancel">cancel</a></td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -370,7 +338,7 @@
     </div>
 </div>
 <!-- Modal Edit Name -->
-@*<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -383,8 +351,8 @@
                 <table id="add_name_table_3">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Memo</th>
+                            @*<th>Name</th>
+                            <th>Memo</th>*@
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -397,14 +365,14 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
+                            @*<td>
                                 <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="memo" value="memo-1" placeholder="memo">
-                            </td>
+                            </td>*@
                             <td>
-                                <select id="section" class="form-control col-12">
+                                <select id="section_edit" class="form-control col-12">
                                     <option value="">Select Section</option>
                                     <option value="" selected>Section-1</option>
                                     <option value="">Section-2</option>
@@ -412,7 +380,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="section" class="form-control col-12">
+                                <select id="department_edit" class="form-control col-12">
                                     <option value="">Select Department</option>
                                     <option value="" selected>Department-1</option>
                                     <option value="">Department-2</option>
@@ -420,7 +388,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="section" class="form-control col-12">
+                                <select id="incharge_edit" class="form-control col-12">
                                     <option value="">Select In-Charge</option>
                                     <option value="" selected>Work Domain-1</option>
                                     <option value="">Work Domain-2</option>
@@ -428,7 +396,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="section" class="form-control col-12">
+                                <select id="role_edit" class="form-control col-12">
                                     <option value="">Select Role</option>
                                     <option value="" selected>Role-1</option>
                                     <option value="">Role-2</option>
@@ -436,10 +404,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="explanation" value="work on full time" placeholder="explanation">
-                            </td>
-                            <td>
-                                <select id="section" class="form-control col-12">
+                                <select id="explanation_edit" class="form-control col-12">
                                     <option value="">Select Company</option>
                                     <option value="" selected>Company-1</option>
                                     <option value="">Company-2</option>
@@ -447,10 +412,18 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade" value="1" placeholder="memo">
+                                <select id="company_edit" class="form-control col-12">
+                                    <option value="">Select Company</option>
+                                    <option value="" selected>Company-1</option>
+                                    <option value="">Company-2</option>
+                                    <option value="">Company-3</option>
+                                </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="unitprice" value="3500" placeholder="unit price">
+                                <input type="text" class="form-control col-12" id="grade_edit"  placeholder="grade">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control col-12" id="unitprice_edit"  placeholder="unit price">
                             </td>
                         </tr>
                     </tbody>
@@ -462,7 +435,7 @@
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 
 
@@ -471,6 +444,123 @@
 @section Scripts{
 
     <script type="text/javascript">
+
+        function loadSingleAssignmentData(id) {
+
+            $.ajax({
+                url: '/api/Utilities/AssignmentById/'+id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (assignmentData) {
+
+
+                    $.getJSON('/api/sections/')
+                        .done(function (data) {
+                            $('#section_edit').empty();
+                            $('#section_edit').append(`<option value=''>Select Section</option>`);
+                            $.each(data, function (key, item) {
+                                if (item.Id == assignmentData.SectionId) {
+                                    $('#section_edit').append(`<option value='${item.Id}' selected>${item.SectionName}</option>`);
+                                }
+                                else {
+                                    $('#section_edit').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                                }
+                                
+                            });
+                        });
+
+                    $.getJSON(`/api/departments`)
+                        .done(function (data) {
+                            $('#department_edit').empty();
+                            $('#department_edit').append(`<option value=''>Select Department</option>`);
+                            $.each(data, function (key, item) {
+                                if (item.Id == assignmentData.DepartmentId) {
+                                    $('#department_edit').append(`<option value='${item.Id}' selected>${item.DepartmentName}</option>`);
+                                }
+                                else {
+                                    $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                                }
+                                
+                            });
+                        });
+
+                    $.getJSON('/api/incharges/')
+                        .done(function (data) {
+                            $('#incharge_edit').empty();
+                            $('#incharge_edit').append(`<option value=''>Select In-Charge</option>`);
+                            $.each(data, function (key, item) {
+                                if (item.Id == assignmentData.InchargeId) {
+                                    $('#incharge_edit').append(`<option value='${item.Id}' selected>${item.InChargeName}</option>`);
+                                }
+                                else {
+                                    $('#incharge_edit').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                                }
+                                
+                            });
+                        });
+
+
+                    $.getJSON('/api/Roles/')
+                        .done(function (data) {
+                            $('#role_edit').empty();
+                            $('#role_edit').append(`<option value=''>Select Role</option>`);
+                            $.each(data, function (key, item) {
+                                if (item.Id == assignmentData.RoleId) {
+                                    $('#role_edit').append(`<option value='${item.Id}' selected>${item.RoleName}</option>`);
+                                }
+                                else {
+                                    $('#role_edit').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+                                }
+                                
+                            });
+                        });
+
+
+                    $.getJSON('/api/Explanations/')
+                        .done(function (data) {
+                            $('#explanation_edit').empty();
+                            $('#explanation_edit').append(`<option value=''>Select Explanation</option>`);
+                            $.each(data, function (key, item) {
+                                if (item.Id == assignmentData.ExplanationId) {
+                                    $('#explanation_edit').append(`<option value='${item.Id}' selected>${item.ExplanationName}</option>`);
+                                }
+                                else {
+                                    $('#explanation_edit').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                                }
+                                
+                            });
+                        });
+
+                    $.getJSON('/api/Companies/')
+                        .done(function (data) {
+                            $('#company_edit').empty();
+                            $('#company_edit').append(`<option value=''>Select Company</option>`);
+                            $.each(data, function (key, item) {
+                                if (item.Id == assignmentData.CompanyId) {
+                                    $('#company_edit').append(`<option value='${item.Id}' selected>${item.CompanyName}</option>`);
+                                }
+                                else {
+                                    $('#company_edit').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+                                }
+                                
+                            });
+                        });
+                    $('#unitprice_edit').val(assignmentData.UnitPrice);
+                    $('#grade_edit').val(assignmentData.GradeId);
+                   
+                },
+                error: function () {
+                    //$('#add_name_table_1 tbody').empty();
+                }
+            });
+
+
+
+        }
+
+
+
+
         $(document).ready(function () {
             //$('.link_add').click(function () {
             //    // $('#add_name_table_2').show();
@@ -481,7 +571,7 @@
             //    // $('.add_name_tbl_3_btn').show();
             //});
 
-
+            // for add new
             $.getJSON('/api/Roles/')
                 .done(function (data) {
                     $('#role_new').empty();
@@ -490,7 +580,16 @@
                         $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
                     });
                 });
-
+            // for search
+            $.getJSON('/api/Roles/')
+                .done(function (data) {
+                    $('#role_search').empty();
+                    $('#role_search').append(`<option value=''>Select Role</option>`);
+                    $.each(data, function (key, item) {
+                        $('#role_search').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+                    });
+                });
+            // for add new
                 $.getJSON('/api/Explanations/')
                     .done(function (data) {
                         $('#explanation_new').empty();
@@ -498,8 +597,17 @@
                         $.each(data, function (key, item) {
                             $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                         });
+                });
+            // for search
+            $.getJSON('/api/Explanations/')
+                .done(function (data) {
+                    $('#explanation_search').empty();
+                    $('#explanation_search').append(`<option value=''>Select Explanation</option>`);
+                    $.each(data, function (key, item) {
+                        $('#explanation_search').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                     });
-
+                });
+            // for add new
                 $.getJSON('/api/Companies/')
                     .done(function (data) {
                         $('#company_new').empty();
@@ -507,8 +615,18 @@
                         $.each(data, function (key, item) {
                             $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                         });
+                });
+             // for search
+            $.getJSON('/api/Companies/')
+                .done(function (data) {
+                    $('#company_search').empty();
+                    $('#company_search').append(`<option value=''>Select Company</option>`);
+                    $.each(data, function (key, item) {
+                        $('#company_search').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                     });
+                });
 
+            // for add new
                 $.getJSON('/api/incharges/')
                     .done(function (data) {
                         $('#incharge_new').empty();
@@ -517,7 +635,16 @@
                             $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
                         });
                 });
-
+            // for search
+            $.getJSON('/api/incharges/')
+                .done(function (data) {
+                    $('#incharge_search').empty();
+                    $('#incharge_search').append(`<option value=''>Select In-Charge</option>`);
+                    $.each(data, function (key, item) {
+                        $('#incharge_search').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                    });
+                });
+            // for add new
                 $.getJSON('/api/sections/')
                     .done(function (data) {
                         $('#section_new').empty();
@@ -525,9 +652,33 @@
                         $.each(data, function (key, item) {
                             $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                         });
+                });
+            // for search 
+                $.getJSON('/api/sections/')
+                    .done(function (data) {
+                        $('#section_search').empty();
+                        $('#section_search').append(`<option value=''>Select Section</option>`);
+                        $.each(data, function (key, item) {
+                            $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                        });
                     });
 
-     
+
+            $(document).on('change', '#section_edit', function () {
+
+                var sectionId = $(this).val();
+                console.log(sectionId);
+
+                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+                    .done(function (data) {
+                        $('#department_edit').empty();
+                        $('#department_edit').append(`<option value=''>Select Department</option>`);
+                        $.each(data, function (key, item) {
+                            $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                        });
+                    });
+            });
+
 
             $(document).on('change','#section_new', function () {
 
@@ -544,6 +695,71 @@
                     });
             });
 
+            $(document).on('change', '#section_search', function () {
+
+                var sectionId = $(this).val();
+                console.log(sectionId);
+
+                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+                    .done(function (data) {
+                        $('#department_search').empty();
+                        $('#department_search').append(`<option value=''>Select Department</option>`);
+                        $.each(data, function (key, item) {
+                            $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                        });
+                    });
+            });
+
+
+
+
+
+
+            $('#add_name_search_button').on('click', function () {
+                var sectionId = $('#section_search').find(":selected").val();
+                var inchargeId = $('#incharge_search').find(":selected").val();
+                var departmentId = $('#department_search').find(":selected").val();
+                var roleId = $('#role_search').find(":selected").val();
+                var companyId = $('#company_search').find(":selected").val();
+                var explanationId = $('#explanation_search').find(":selected").val();
+                //var unitPrice = $('#unitprice_new').val();
+                //var gradeId = $('#grade_new').val();
+
+                var data_info = {
+                    SectionId: sectionId,
+                    DepartmentId: departmentId,
+                    InchargeId: inchargeId,
+                    RoleId: roleId,
+                    ExplanationId: explanationId,
+                    CompanyId: companyId,
+
+                };
+
+                $.ajax({
+                    url: '/api/Employees',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: data_info,
+                    success: function (data) {
+
+                        console.log(data);
+                        //$('#modal_add_name_new').modal('toggle');
+                        $('#add_name_table_1 tbody').empty();
+                        var i = 1;
+                        $.each(data, function (index,item) {    
+                            $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
+                            $('#add_name_table_1 tbody').append(`<td>${i}</td><td></td><td></td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                            $('#add_name_table_1 tbody').append('</tr>');
+                            i++;
+                        });
+                    },
+                    error: function () {
+                        $('#add_name_table_1 tbody').empty();
+                    }
+                });
+
+
+            });
 
             $('#add_name_add_new').on('click', function () {
 
@@ -607,6 +823,71 @@
                 });
 
                
+
+            });
+
+            $('#add_name_edit').on('click', function () {
+
+                var sectionId = $('#section_edit').find(":selected").val();
+                var inchargeId = $('#incharge_edit').find(":selected").val();
+                var departmentId = $('#department_edit').find(":selected").val();
+                var roleId = $('#role_edit').find(":selected").val();
+                var companyId = $('#company_edit').find(":selected").val();
+                var explanationId = $('#explanation_edit').find(":selected").val();
+                var unitPrice = $('#unitprice_edit').val();
+                var gradeId = $('#grade_edit').val();
+
+
+
+                var dataSingleAssignmentUpdate = {
+                    SectionId: sectionId,
+                    DepartmentId: departmentId,
+                    InchargeId: inchargeId,
+                    RoleId: roleId,
+                    ExplanationId: explanationId,
+                    CompanyId: companyId,
+                    UnitPrice: unitPrice,
+                    GradeId: gradeId,
+
+                };
+
+                console.log(dataSingleAssignmentUpdate);
+
+                $.ajax({
+                    url: '/api/Employees',
+                    type: 'PUT',
+                    dataType: 'json',
+                    data: dataSingleAssignmentUpdate,
+                    success: function (data) {
+
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        $('#modal_add_name_new').modal('toggle');
+                    },
+                    error: function () {
+                        alert("Error please try again");
+                        //$('#modal_add_name_new').modal('toggle');
+                    }
+                });
+
+
 
             });
 
