@@ -5,7 +5,7 @@
 }
 <!--Main Body-->
 <div class="content container-fluid">
-    
+
     <!--List-->
     <h4 style="text-align:left;">List</h4>
     <div class="row">
@@ -18,9 +18,7 @@
                             <th>In-Charge Name</th>
                         </tr>
                     </thead>
-                    <tbody id="incharge_list_tbody">
-                        
-                    </tbody>
+                    <tbody id="incharge_list_tbody"></tbody>
                 </table>
                 <label id="incharge_delete_btn">
                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#del_incharge_modal">Delete</a>
@@ -158,63 +156,6 @@
                 }
             });
         });
-
-
-        function AddInCharge() {
-            var apiurl = "/api/incharges/";
-            let in_charge_name = $("#in_charge_name").val().trim();
-            if (in_charge_name == "") {
-                $(".department-name-error").show();
-                return false;
-            }
-            else {
-                $(".department-name-error").hide();
-                var data = {
-                    InChargeName: in_charge_name
-                };
-
-                $.ajax({
-                    url: apiurl,
-                    type: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (data) {
-
-                        Command: toastr["success"](data, "Success")
-
-                        toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-                        $('#section-name').val('');
-
-                        $.getJSON('/api/incharges/')
-                            .done(function (data) {
-                                $('#incharge_list_tbody').empty();
-                                $.each(data, function (key, item) {
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
-                                });
-                            });
-                    },
-                    error: function () {
-                        alert("Error please try again");
-                    }
-                });
-            }
-        }
     </script>
 
 }
