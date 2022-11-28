@@ -590,6 +590,7 @@
     <Content Include="Views\Companies\CreateCompany.cshtml" />
     <Content Include="Views\Salaries\CreateSalary.cshtml" />
     <Content Include="Views\Employees\NameList.cshtml" />
+    <Content Include="Views\Employees\CreateEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

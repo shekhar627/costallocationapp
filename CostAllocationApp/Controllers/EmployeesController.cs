@@ -8,6 +8,10 @@ namespace CostAllocationApp.Controllers
 {
     public class EmployeesController : Controller
     {
+        public ActionResult CreateEmployee()
+        {
+            return View();
+        }
         // GET: Employees
         public ActionResult NameList()
         {
