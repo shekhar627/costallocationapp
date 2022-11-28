@@ -218,7 +218,7 @@ body {
 
 .cutom_button_group_incharge {
     float: right;
-    margin-left: 72%;
+    margin-left: 69%;
 }
 
 #incharge_table tbody tr td:last-child {
@@ -255,7 +255,7 @@ body {
 
 .cutom_button_group_department {
     float: right;
-    margin-left: 71%;
+    margin-left: 69%;
 }
 
 #department_table tbody tr td:last-child {
@@ -329,7 +329,7 @@ body {
 
 .cutom_button_group_section {
     float: right;
-    margin-left: 72%;
+    margin-left: 69%;
 }
 
 /*-----------------
@@ -903,6 +903,10 @@ body {
         #RoleChks label:hover {
             background-color: #1e90ff;
         }
+#ExplanationChks {
+    display: none;
+    border: 1px #dadada solid;
+}
 /*------Company -------*/
 #CompanyChks {
     display: none;

@@ -21,53 +21,28 @@
                 <tbody>
                     <tr id="namelist_search_tr">
                         <td>
-                            <input type="text" class="form-control col-12 namelist_search" id="edit_employee_name" value="sudipto" placeholder="name">
+                            <input type="text" class="form-control col-12 namelist_search" id="edit_employee_name" value="" placeholder="name">
                         </td>
                         <td>
-                            <select id="section" class="form-control col-12 namelist_search">
-                                <option value="">Select Section</option>
-                                <option value="">Section-1</option>
-                                <option value="">Section-2</option>
-                                <option value="">Section-3</option>
-                            </select>
+                            <select id="section" class="form-control col-12 namelist_search"></select>
                         </td>
                         <td>
-                            <select id="department" class="form-control col-12 namelist_search">
-                                <option value="">Select Department</option>
-                                <option value="">Department-1</option>
-                                <option value="">Department-2</option>
-                                <option value="">Department-3</option>
-                            </select>
+                            <select id="department" class="form-control col-12 namelist_search"></select>
                         </td>
                         <td>
-                            <select id="incharge" class="form-control col-12 namelist_search">
-                                <option value="">Select In-Charge</option>
-                                <option value="">Work Domain-1</option>
-                                <option value="">Work Domain-2</option>
-                                <option value="">Work Domain-3</option>
-                            </select>
+                            <select id="incharge" class="form-control col-12 namelist_search"></select>
                         </td>
                         <td>
-                            <select id="role" class="form-control col-12 namelist_search">
-                                <option value="">Select Role</option>
-                                <option value="">Role-1</option>
-                                <option value="">Role-2</option>
-                                <option value="">Role-3</option>
-                            </select>
+                            <select id="role" class="form-control col-12 namelist_search"></select>
                         </td>
                         <td>
-                            <select id="company" class="form-control col-12 namelist_search">
-                                <option value="">Select Company</option>
-                                <option value="" selected>Company-1</option>
-                                <option value="">Company-2</option>
-                                <option value="">Company-3</option>
-                            </select>
+                            <select id="company" class="form-control col-12 namelist_search"></select>
                         </td>
                         <td>
-                            <select id="section" class="form-control col-12 namelist_search">
-                                <option value="">Select Status</option>
-                                <option value="" selected>Active</option>
-                                <option value="">Inactive</option>
+                            <select id="active_status" class="form-control col-12 namelist_search">
+                                <option value="-1">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                         </td>
                     </tr>
@@ -110,13 +85,28 @@
                         <thead>
                             <tr>
                                 <th class="name_list_th"></th>
-                                <th class="name_list_th"><a class="" href="/Home/PersonInCharge" target="_blank">Name Reg.</a></th>
-                                <th class="name_list_th"><a class="" href="/Division/CreateDivision" target="_blank" data-toggle="modal" data-target="#section_registration">Section Reg.</a></th>
-                                <th class="name_list_th"><a class="" href="/Department/CreateDepartment" target="_blank" data-toggle="modal" data-target="#department_registration">Dept Reg.</a></th>
-                                <th class="name_list_th"><a class="" href="/Home/InCharge" target="_blank" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a></th>
-                                <th class="name_list_th"><a class="" href="/Roles/CreateRoll" target="_blank" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a></th>
-                                <th class="name_list_th"><a class="" href="/Home/Explanation" target="_blank" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a></th>
-                                <th class="name_list_th"><a class="" href="/Company/CreateCompany" target="_blank" data-toggle="modal" data-target="#company_reg_modal">Com. Reg.</a></th>
+                                @{
+                                    string nameHref = "/Home/PersonInCharge";
+                                    <th class="name_list_th"><a class="" href="@nameHref" target="_blank">Name Reg.</a></th>
+                                }
+                                <th class="name_list_th">
+                                    <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
+                                </th>
+                                <th class="name_list_th">
+                                    <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                                </th>
+                                <th class="name_list_th">
+                                    <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
+                                </th>
+                                <th class="name_list_th">
+                                    <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
+                                </th>
+                                <th class="name_list_th">
+                                    <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
+                                </th>
+                                <th class="name_list_th">
+                                    <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal">Com. Reg.</a>
+                                </th>
                             </tr>
                             <tr id="namelist_tbl_header">
                                 <th style="width:31px;">SL</th>
@@ -145,15 +135,7 @@
                                             <div class="overSelect"></div>
                                         </div>
                                         <div id="sectionChks" class="commonselect">
-                                            <label for="one">
-                                                <input type="checkbox" id="two" /> Development
-                                            </label>
-                                            <label for="two">
-                                                <input type="checkbox" id="two" /> Development
-                                            </label>
-                                            <label for="three">
-                                                <input type="checkbox" id="three" /> Development
-                                            </label>
+                                            
                                         </div>
                                     </div>
                                 </th>
@@ -167,15 +149,7 @@
                                             <div class="overSelect"></div>
                                         </div>
                                         <div id="departmentChks" class="commonselect">
-                                            <label for="one">
-                                                <input type="checkbox" id="one" /> Department-1
-                                            </label>
-                                            <label for="two">
-                                                <input type="checkbox" id="two" /> Department-2
-                                            </label>
-                                            <label for="three">
-                                                <input type="checkbox" id="three" /> Department-3
-                                            </label>
+                                            
                                         </div>
                                     </div>
                                 </th>
@@ -188,25 +162,11 @@
                                             <div class="overSelect"></div>
                                         </div>
                                         <div id="inchargeChks" class="commonselect">
-                                            <label for="one">
-                                                <input type="checkbox" id="one" /> In-Charge-1
-                                            </label>
-                                            <label for="two">
-                                                <input type="checkbox" id="two" /> In-Charge-2
-                                            </label>
-                                            <label for="three">
-                                                <input type="checkbox" id="three" /> In-Charge-3
-                                            </label>
+                                           
                                         </div>
                                     </div>
                                 </th>
                                 <th style="width:139px;">
-                                    @*<select style="border:none;width:115px;">
-                                            <option value="">Select Role</option>
-                                            <option value="">Role-1</option>
-                                            <option value="">Role-2</option>
-                                            <option value="">Role-3</option>
-                                        </select>*@
                                     <div class="multiselect">
                                         <div class="selectBox" onclick="RoleCheck()">
                                             <select>
@@ -215,19 +175,23 @@
                                             <div class="overSelect"></div>
                                         </div>
                                         <div id="RoleChks" class="commonselect">
-                                            <label for="one">
-                                                <input type="checkbox" id="one" /> Role-1
-                                            </label>
-                                            <label for="two">
-                                                <input type="checkbox" id="two" /> Role-2
-                                            </label>
-                                            <label for="three">
-                                                <input type="checkbox" id="three" /> Role-3
-                                            </label>
+                                            
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width:139px;"><input type="text" value="" id="name_search" style="border: 1px solid black; width:131px;" /></th>
+                                <th style="width:139px;">
+                                    <div class="multiselect">
+                                        <div class="selectBox" onclick="ExplanationCheck()">
+                                            <select>
+                                                <option>Select Explanation</option>
+                                            </select>
+                                            <div class="overSelect"></div>
+                                        </div>
+                                        <div id="ExplanationChks" class="commonselect">
+
+                                        </div>
+                                    </div>
+                                </th>
                                 <th style="width:139px;">
                                     <div class="multiselect">
                                         <div class="selectBox" onclick="CompanyCheck()">
@@ -237,15 +201,7 @@
                                             <div class="overSelect"></div>
                                         </div>
                                         <div id="CompanyChks" class="commonselect">
-                                            <label for="one">
-                                                <input type="checkbox" id="one" /> Company-1
-                                            </label>
-                                            <label for="two">
-                                                <input type="checkbox" id="two" /> Company-2
-                                            </label>
-                                            <label for="three">
-                                                <input type="checkbox" id="three" /> Company-3
-                                            </label>
+                                           
                                         </div>
                                     </div>
                                 </th>
@@ -273,7 +229,7 @@
                                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#namelist_delete">Inactive</a>
                                 </td>
                             </tr>
-                            <tr class="namelist_tr">
+                            @*<tr class="namelist_tr">
                                 <td class="namelist_td">2</td>
                                 <td class="namelist_td">Chandra Shekhar Das</td>
                                 <td class="namelist_td">Development</td>
@@ -336,7 +292,7 @@
                                     <a id="edit_button" href="javascript:void();" data-toggle="modal" data-target="#namelst_edit">Edit</a>
                                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#namelist_delete">Inactive</a>
                                 </td>
-                            </tr>
+                            </tr>*@
                         </tbody>
                     </table>
                 </div>
@@ -351,9 +307,113 @@
 
             $('#name_list_search_button').click(function () {
                 $('#name_list_body').show();
+                GetListDropdownValue();
             });
-
+            function GetListDropdownValue(){
+                $.getJSON('/api/sections/')
+                    .done(function (data) {
+                        $('#sectionChks').empty();
+                        //$('#sectionChks').append(`<option value='-1'>Select Section</option>`)
+                        $.each(data, function (key, item) {
+                            $('#sectionChks').append(`<label for='one'><input id="one" type="checkbox"  value='${item.Id}'/>${item.SectionName}</label>`)
+                        });
+                    });
+                $.getJSON('/api/Departments/')
+                    .done(function (data) {
+                        $('#departmentChks').empty();
+                        $.each(data, function (key, item) {
+                            $('#departmentChks').append(`<label for='one'><input id="one" type="checkbox"  value='${item.Id}'/>${item.DepartmentName}</label>`)
+                        });
+                    });
+                $.getJSON('/api/InCharges/')
+                    .done(function (data) {
+                        $('#inchargeChks').empty();
+                        $.each(data, function (key, item) {
+                            $('#inchargeChks').append(`<label for='one'><input id="one" type="checkbox"  value='${item.Id}'/>${item.InChargeName}</label>`)
+                        });
+                    });
+                $.getJSON('/api/Roles/')
+                        .done(function (data) {
+                            $('#RoleChks').empty();
+                            $.each(data, function (key, item) {
+                                $('#RoleChks').append(`<label for='one'><input id="one" type="checkbox"  value='${item.Id}'/>${item.RoleName}</label>`)
+                            });
+                        });
+                $.getJSON('/api/Explanations/')
+                        .done(function (data) {
+                            $('#ExplanationChks').empty();
+                            $.each(data, function (key, item) {
+                                $('#ExplanationChks').append(`<label for='one'><input id="one" type="checkbox"  value='${item.Id}'/>${item.ExplanationName}</label>`)
+                            });
+                        });
+                $.getJSON('/api/Companies/')
+                    .done(function (data) {
+                        $('#CompanyChks').empty();
+                        $.each(data, function (key, item) {
+                            $('#CompanyChks').append(`<label for='one'><input id="one" type="checkbox"  value='${item.Id}'/>${item.CompanyName}</label>`)
+                        });
+                    });
+            }
+            
+            $('#department_modal_href').click(function () {
+                $.getJSON('/api/sections/')
+                    .done(function (data) {
+                        $('#section_list').empty();
+                        $('#section_list').append(`<option value='-1'>Select Section</option>`)
+                        $.each(data, function (key, item) {
+                            $('#section_list').append(`<option value='${item.Id}'>&nbsp;&nbsp; ${item.SectionName}</option>`)
+                        });
+                    });
+            });
             var expanded = false;
+
+            //Search: Get Sections
+            $.getJSON('/api/Sections/')
+                .done(function (data) {
+                    $('#section').empty();
+                    $('#section').append(`<option value='-1'>Select Section</option>`)
+                    $.each(data, function (key, item) {
+                        $('#section').append(`<option value='${item.Id}'>${item.SectionName}</option>`)
+                    });
+                });
+            //Search: Get Department
+            $.getJSON('/api/Departments/')
+                .done(function (data) {
+                    $('#department').empty();
+                    $('#department').append(`<option value='-1'>Select Department</option>`)
+                    $.each(data, function (key, item) {
+                        $('#department').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`)
+                    });
+                });
+            //Search: Get In-Charge
+            $.getJSON('/api/InCharges/')
+                .done(function (data) {
+                    $('#incharge').empty();
+                    $('#incharge').append(`<option value='-1'>Select In-Charge</option>`)
+                    $.each(data, function (key, item) {
+                        $('#incharge').append(`<option value='${item.Id}'>${item.InChargeName}</option>`)
+                    });
+                });
+            //Search: Get Roles
+            $.getJSON('/api/Roles/')
+                .done(function (data) {
+                    $('#role').empty();
+                    $('#role').append(`<option value='-1'>Select Role</option>`)
+                    $.each(data, function (key, item) {
+                        $('#role').append(`<option value='${item.Id}'>${item.RoleName}</option>`)
+                    });
+                });
+            //Search: Get Company
+            $.getJSON('/api/Companies/')
+                .done(function (data) {
+                    $('#company').empty();
+                    $('#company').append(`<option value='-1'>Select Company</option>`)
+                    $.each(data, function (key, item) {
+                        $('#company').append(`<option value='${item.Id}'>${item.CompanyName}</option>`)
+                    });
+                });
+
+
         });
 
     </script>
