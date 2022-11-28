@@ -67,5 +67,12 @@ namespace CostAllocationApp.Controllers.Api
 
 
         }
+        [HttpGet]
+        public IHttpActionResult SearchAssignment22(string employeeName,string sectionId,string departmentId)
+        {
+            return BadRequest("Something Went Wrong!!!");
+
+        }
+
     }
 }

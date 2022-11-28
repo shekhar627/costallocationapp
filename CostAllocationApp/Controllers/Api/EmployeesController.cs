@@ -285,8 +285,9 @@ namespace CostAllocationApp.Controllers.Api
         }
 
         [HttpGet]
-        public IHttpActionResult SearchAssignment(string SectionId = "", string DepartmentId = "", string InchargeId = "", string RoleId = "", string ExplanationId = "", string CompanyId = "")
+        public IHttpActionResult SearchAssignment(string EmployeeName, string SectionId, string DepartmentId, string InchargeId, string RoleId, string ExplanationId, string CompanyId, bool Status)
         {
+
             int tempValue = 0;
             // decimal tempUnitPrice = 0;
 
@@ -384,8 +385,6 @@ namespace CostAllocationApp.Controllers.Api
                 return NotFound();
             }
 
-
         }
-
     }
 }

@@ -21,7 +21,7 @@
                 <tbody>
                     <tr id="namelist_search_tr">
                         <td>
-                            <input type="text" class="form-control col-12 namelist_search" id="employee_name_search" value="" placeholder="name">
+                            <input type="text" class="form-control col-12 namelist_search" id="edit_employee_name" value="" placeholder="name">
                         </td>
                         <td>
                             <select id="section" class="form-control col-12 namelist_search"></select>
@@ -307,28 +307,9 @@
 
             $('#name_list_search_button').click(function () {
                 //get search field value 
-                let employeeName = $("#employee_name_search").val();
-                let sectionId = $("#section").val();
-                let departmentId = $("#department").val();
-                let inchargeId = $("#incharge").val();
-                let roleId = $("#role").val();
-                let companyId = $("#company").val();
-                let status = $("#active_status").val();
-                let explanationId = "";
 
-                var url = '@Url.Action("SearchAssignment22", "/api/utilities")'; // don't hard code your urls!
-                $.getJSON(`/api/utilities/SearchAssignment22`, { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId }, function (data) {
 
-                });
 
-                //$.getJSON(`/api/utilities/SearchAssignment22?${employeeName}`)
-                //    .done(function (data) {
-                //        $('#department_edit').empty();
-                //        $('#department_edit').append(`<option value=''>Select Department</option>`);
-                //        $.each(data, function (key, item) {
-                //            $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                //        });
-                //    });
 
                 $('#name_list_body').show();
                 GetListDropdownValue();

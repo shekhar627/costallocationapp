@@ -953,8 +953,12 @@ body {
         text-align: center;
     }
 
-
 /*-----------------------------------------------Module Label text align ----------------------------*/
 .module-label-txt {
     text-align: right;
+}
+/*---------------------------------------Name List: Search,list,modal--------------------------*/
+#employee_name_search {
+    border: none;
+    width: 119px;
 }

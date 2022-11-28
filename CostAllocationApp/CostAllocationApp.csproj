@@ -135,11 +135,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\CompanyBLL.cs" />
     <Compile Include="BLL\DepartmentBLL.cs" />
-
     <Compile Include="BLL\EmployeeBLL.cs" />
-
     <Compile Include="BLL\EmployeeAssignmentBLL.cs" />
-
     <Compile Include="BLL\ExplanationsBLL.cs" />
     <Compile Include="BLL\InChargeBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
@@ -167,11 +164,8 @@
     <Compile Include="DAL\CompanyDAL.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
-
     <Compile Include="DAL\EmployeeDAL.cs" />
-
     <Compile Include="DAL\EmployeeAssignmentDAL.cs" />
-
     <Compile Include="DAL\ExplanationDAL.cs" />
     <Compile Include="DAL\InChargeDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
@@ -184,11 +178,8 @@
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Department.cs" />
-
     <Compile Include="Models\Employee.cs" />
-
     <Compile Include="Models\EmployeeAssignment.cs" />
-
     <Compile Include="Models\Explanation.cs" />
     <Compile Include="Models\InCharge.cs" />
     <Compile Include="Models\Role.cs" />
@@ -605,6 +596,8 @@
     <Content Include="Views\Companies\CreateCompany.cshtml" />
     <Content Include="Views\Salaries\CreateSalary.cshtml" />
     <Content Include="Views\Employees\NameList.cshtml" />
+    <Content Include="Views\Employees\CreateAssignment.cshtml" />
+    <Content Include="Views\Employees\CreateEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
