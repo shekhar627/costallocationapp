@@ -12,12 +12,12 @@
                 <form>
                     <div id="main-div">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-4 module-label-txt">
                                 <label for="divison-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
                             </div>
                             <div class="col-8">
                                 <div class="form-group">
-                                    <input class="form-control" id="divison-name" type="text" placeholder="section name..">
+                                    <input class="form-control" id="section-name" type="text" placeholder="section name..">
                                     <div class="division-name-error">
                                         Please provide a section name.
                                     </div>
@@ -55,36 +55,32 @@
                 <form>
                     <div id="main-div">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
                                     <label for="department-name">Department Name <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <input class="form-control" id="department-name" type="text" placeholder="department name...">
-                                    <div class="department-name-error">
+                                    <input class="form-control" id="department_name" type="text" placeholder="department name...">
+                                    <div class="department-name-error" id="department_name_err">
                                         Please provide a department name.
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
                                     <label for="department-name">Section Name <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <select id="section-name" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;">
-                                        <option value="">Select Section</option>
-                                        <option value="">Development</option>
-                                        <option value="">HR</option>
-                                        <option value="">Section-3</option>
+                                    <select id="section_list" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;">
                                     </select>
-                                    <div class="department-name-error">
-                                        Please provide a Section name.
+                                    <div class="department-name-error" id="section_ist_error">
+                                        Please select a section!
                                     </div>
                                 </div>
                             </div>
@@ -120,14 +116,14 @@
             <div class="modal-body">
                 <form>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 module-label-txt">
                             <div class="form-group">
-                                <label for="department-name">In-Charge Name <span class="text-danger">*</span></label>
+                                <label for="in_charge_name">In-Charge Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <input class="form-control" id="department-name" type="text" placeholder="incharge name...">
+                                <input class="form-control" id="in_charge_name" type="text" placeholder="incharge name...">
                                 <div class="department-name-error">
                                     Please provide a In-Charge name.
                                 </div>
@@ -137,7 +133,7 @@
                     <div class="row">
                         <div class="cutom_button_group_incharge">
                             <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                            <a href="javascript:void(0);" id="custom_submit" onclick="AddInCharge();">Registration</a>
                         </div>
                     </div>
                 </form>
@@ -164,14 +160,14 @@
                 <form>
                     <div id="main-div">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
-                                    <label for="department-name">Role Name <span class="text-danger">*</span></label>
+                                    <label for="role_name">Role Name <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <input class="form-control" id="department-name" type="text" placeholder="role name...">
+                                    <input class="form-control" id="role_name" type="text" placeholder="role name...">
                                     <div class="department-name-error">
                                         Please provide a role name.
                                     </div>
@@ -182,7 +178,7 @@
                     <div class="row">
                         <div class="cutom_button_group_incharge">
                             <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                            <a href="javascript:void(0);" id="custom_submit" onclick="AddRoles();">Registration</a>
                         </div>
                     </div>
                 </form>
@@ -207,14 +203,14 @@
                 <form>
                     <div id="main-div">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
-                                    <label for="department-name">Explanation <span class="text-danger">*</span></label>
+                                    <label for="explanation_name">Explanation <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <input class="form-control" id="department-name" type="text" placeholder="explanation  name...">
+                                    <input class="form-control" id="explanation_name" type="text" placeholder="explanation  name...">
                                     <div class="department-name-error">
                                         Please provide a explanation  name.
                                     </div>
@@ -225,7 +221,7 @@
                     <div class="row">
                         <div class="cutom_button_group_incharge">
                             <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                            <a href="javascript:void(0);" id="custom_submit" onclick="AddExplanations();">Registration</a>
                         </div>
                     </div>
                 </form>
@@ -250,14 +246,14 @@
                 <form>
                     <div id="main-div">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
-                                    <label for="department-name">Company Name <span class="text-danger">*</span></label>
+                                    <label for="companyName">Company Name <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <input class="form-control" id="department-name" type="text" placeholder="company name...">
+                                    <input class="form-control" id="companyName" type="text" placeholder="company name...">
                                     <div class="department-name-error">
                                         Please provide a company name.
                                     </div>
@@ -268,7 +264,7 @@
                     <div class="row">
                         <div class="cutom_button_group_incharge">
                             <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                            <a href="javascript:void(0);" id="custom_submit" onclick="AddCompany();">Registration</a>
                         </div>
                     </div>
 
