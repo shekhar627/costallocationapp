@@ -26,5 +26,9 @@ namespace CostAllocationApp.BLL
         {
             return departmentDAL.RemoveDepartment(departmentIds);
         }
+        public List<Department> GetAllDepartmentsBySectionId(int sectionId)
+        {
+            return departmentDAL.GetAllDepartmentsBySectionId(sectionId);
+        }
     }
 }

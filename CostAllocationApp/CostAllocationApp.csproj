@@ -135,7 +135,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\CompanyBLL.cs" />
     <Compile Include="BLL\DepartmentBLL.cs" />
+
     <Compile Include="BLL\EmployeeBLL.cs" />
+
+    <Compile Include="BLL\EmployeeAssignmentBLL.cs" />
+
     <Compile Include="BLL\ExplanationsBLL.cs" />
     <Compile Include="BLL\InChargeBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Controllers\Api\RolesController.cs" />
     <Compile Include="Controllers\Api\SalariesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
+    <Compile Include="Controllers\Api\UtilitiesController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
@@ -162,25 +167,35 @@
     <Compile Include="DAL\CompanyDAL.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
+
     <Compile Include="DAL\EmployeeDAL.cs" />
+
+    <Compile Include="DAL\EmployeeAssignmentDAL.cs" />
+
     <Compile Include="DAL\ExplanationDAL.cs" />
     <Compile Include="DAL\InChargeDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\SalaryDAL.cs" />
     <Compile Include="DAL\SectionDAL.cs" />
+    <Compile Include="Dtos\EmployeeAssignmentDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Department.cs" />
+
     <Compile Include="Models\Employee.cs" />
+
+    <Compile Include="Models\EmployeeAssignment.cs" />
+
     <Compile Include="Models\Explanation.cs" />
     <Compile Include="Models\InCharge.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Salary.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EmployeeAssignmentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-combined.min.css" />
@@ -590,7 +605,7 @@
     <Content Include="Views\Companies\CreateCompany.cshtml" />
     <Content Include="Views\Salaries\CreateSalary.cshtml" />
     <Content Include="Views\Employees\NameList.cshtml" />
-    <Content Include="Views\Employees\CreateEmployee.cshtml" />
+    <Content Include="Views\Employees\CreateAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
