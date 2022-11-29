@@ -217,5 +217,123 @@ namespace CostAllocationApp.DAL
             return employeeAssignmentViewModel;
         }
 
+        public List<EmployeeAssignmentViewModel> GetEmployeesBySearchFilter(EmployeeAssignment employeeAssignment)
+        {
+            //HttpContext.Current.Response.Write("employeeAssignment.name: " + employeeAssignment.EmployeeName + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.SectionId: " + employeeAssignment.SectionId + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.DepartmentId: " + employeeAssignment.DepartmentId + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.InchargeId: " + employeeAssignment.InchargeId + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.RoleId: " + employeeAssignment.RoleId + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.ExplanationId: " + employeeAssignment.ExplanationId + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.CompanyId: " + employeeAssignment.CompanyId + "<br>");
+            //HttpContext.Current.Response.Write("employeeAssignment.IsActive: " + employeeAssignment.IsActive + "<br>");
+
+            //HttpContext.Current.Response.End();
+
+            string where = "";
+            if (!string.IsNullOrEmpty(employeeAssignment.EmployeeName))
+            {
+                where += $" ea.EmployeeName='{employeeAssignment.EmployeeName}' and ";
+            }
+            if (employeeAssignment.SectionId > 0)
+            {
+                where += $" ea.SectionId={employeeAssignment.SectionId} and ";
+            }
+            if (employeeAssignment.DepartmentId > 0)
+            {
+                where += $" ea.DepartmentId={employeeAssignment.DepartmentId} and ";
+            }
+            if (employeeAssignment.InchargeId > 0)
+            {
+                where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
+            }
+            if (employeeAssignment.RoleId > 0)
+            {
+                where += $" ea.RoleId={employeeAssignment.RoleId} and ";
+            }
+            if (employeeAssignment.ExplanationId > 0)
+            {
+                where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
+            }
+            if (employeeAssignment.CompanyId > 0)
+            {
+                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
+            }
+            if (employeeAssignment.CompanyId > 0)
+            {
+                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
+            }
+            if (employeeAssignment.IsActive =="0" || employeeAssignment.IsActive == "1")
+            {
+                where += $" ea.IsActive={employeeAssignment.IsActive} and ";
+            }
+            else
+            {
+                where += $" ea.IsActive=1 and ";
+            }
+
+            where += " 1=1 ";
+            string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName,
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ,gd.GradePoints,ea.IsActive
+                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
+                            join Departments dep on ea.DepartmentId = dep.Id
+                            join Companies com on ea.CompanyId = com.Id
+                            join Explanations ex on ea.ExplanationId = ex.Id
+                            join Roles rl on ea.RoleId = rl.Id
+                            join InCharges inc on ea.InChargeId = inc.Id 
+                            join Grades gd on ea.GradeId = gd.Id
+                            where {where}";
+
+            List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
+            //HttpContext.Current.Response.Write("query: " + query + "<br>");
+            //HttpContext.Current.Response.End();
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            EmployeeAssignmentViewModel employeeAssignmentViewModel = new EmployeeAssignmentViewModel();
+                            employeeAssignmentViewModel.Id = Convert.ToInt32(rdr["AssignmentId"]);
+                            employeeAssignmentViewModel.EmployeeName = rdr["EmployeeName"].ToString();
+                            employeeAssignmentViewModel.SectionId = rdr["SectionId"].ToString();
+                            employeeAssignmentViewModel.SectionName = rdr["SectionName"].ToString();
+                            employeeAssignmentViewModel.DepartmentId = rdr["DepartmentId"].ToString();
+                            employeeAssignmentViewModel.DepartmentName = rdr["DepartmentName"].ToString();
+                            employeeAssignmentViewModel.InchargeId = rdr["InchargeId"].ToString();
+                            employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
+                            employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
+                            employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"].ToString();
+                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
+                            employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
+                            employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
+                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
+                            employeeAssignmentViewModel.GradeName = rdr["GradePoints"].ToString();
+                            employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+
+                            //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
+                            //HttpContext.Current.Response.End();
+
+                            employeeAssignments.Add(employeeAssignmentViewModel);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return employeeAssignments;
+        }
+
     }
 }

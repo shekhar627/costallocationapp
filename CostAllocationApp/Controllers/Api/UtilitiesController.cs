@@ -68,10 +68,86 @@ namespace CostAllocationApp.Controllers.Api
 
         }
         [HttpGet]
-        public IHttpActionResult SearchAssignment22(string employeeName,string sectionId,string departmentId)
+        public IHttpActionResult SearchEmployee(string employeeName, string sectionId, string departmentId, string inchargeId, string roleId, string explanationId, string companyId, string status)
         {
-            return BadRequest("Something Went Wrong!!!");
+            EmployeeAssignment employeeAssignment = new EmployeeAssignment();
+            if (!string.IsNullOrEmpty(employeeName))
+            {
+                employeeAssignment.EmployeeName = employeeName;
+            }
+            else
+            {
+                employeeAssignment.EmployeeName = "";
+            }
+            if (!string.IsNullOrEmpty(sectionId))
+            {
+                employeeAssignment.SectionId = Convert.ToInt32(sectionId);
+            }
+            else
+            {
+                employeeAssignment.SectionId = 0;
+            }
+            if (!string.IsNullOrEmpty(departmentId))
+            {
+                employeeAssignment.DepartmentId = Convert.ToInt32(departmentId);
+            }
+            else
+            {
+                employeeAssignment.DepartmentId = 0;
+            }
+            if (!string.IsNullOrEmpty(inchargeId))
+            {
+                employeeAssignment.InchargeId = Convert.ToInt32(inchargeId);
+            }
+            else
+            {
+                employeeAssignment.InchargeId = 0;
+            }
+            if (!string.IsNullOrEmpty(roleId))
+            {
+                employeeAssignment.RoleId = Convert.ToInt32(roleId);
+            }
+            else
+            {
+                employeeAssignment.RoleId = 0;
+            }
+            if (!string.IsNullOrEmpty(explanationId))
+            {
+                employeeAssignment.ExplanationId = Convert.ToInt32(explanationId);
+            }
+            else
+            {
+                employeeAssignment.ExplanationId = 0;
+            }
+            if (!string.IsNullOrEmpty(companyId))
+            {
+                employeeAssignment.CompanyId = Convert.ToInt32(companyId);
+            }
+            else
+            {
+                employeeAssignment.CompanyId = 0;
+            }
 
+            if (!string.IsNullOrEmpty(status))
+            {
+                employeeAssignment.IsActive = status;
+            }
+            else
+            {
+                employeeAssignment.IsActive = "";
+            }
+
+            List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesBySearchFilter(employeeAssignment);
+
+            return Ok(employeeAssignmentViewModels);
+            //if (employeeAssignmentViewModels.Count > 0)
+            //{
+            //    return Ok(employeeAssignmentViewModels);
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
         }
 
     }
