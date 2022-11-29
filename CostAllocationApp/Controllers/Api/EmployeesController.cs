@@ -30,6 +30,14 @@ namespace CostAllocationApp.Controllers.Api
             decimal tempUnitPrice = 0;
 
             #region validation of inputs
+            if (!String.IsNullOrEmpty(employeeAssignmentDTO.EmployeeName))
+            {
+                employeeAssignment.EmployeeName = employeeAssignmentDTO.EmployeeName;
+            }
+            else
+            {
+                return BadRequest("Invalid Employee Name");
+            }
             if (int.TryParse(employeeAssignmentDTO.SectionId, out tempValue))
             {
                 if (tempValue <= 0)
@@ -285,7 +293,7 @@ namespace CostAllocationApp.Controllers.Api
         }
 
         [HttpGet]
-        public IHttpActionResult SearchAssignment(string EmployeeName, string SectionId, string DepartmentId, string InchargeId, string RoleId, string ExplanationId, string CompanyId, bool Status)
+        public IHttpActionResult SearchAssignment(string EmployeeName="", string SectionId="", string DepartmentId="", string InchargeId="", string RoleId="", string ExplanationId="", string CompanyId="", bool Status=true)
         {
 
             int tempValue = 0;

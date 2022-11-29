@@ -10,8 +10,8 @@
             <table id="add_name_search" class="custom_add_name">
                 <thead>
                     <tr>
-                        @*<th>Name</th>
-                        <th>Memo</th>*@
+                        <th>Name</th>
+                        @*<th>Memo</th>*@
                         <th>Section</th>
                         <th>Department</th>
                         <th>In-Charge</th>
@@ -22,10 +22,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        @*<td>
-                            <input type="text" class="form-control" id="identity" value="" placeholder="name">
-                        </td>
                         <td>
+                            <input type="text" class="form-control" id="identity_search" placeholder="name">
+                        </td>
+                        @*<td>
                             <input type="text" class="form-control" id="identity" value="" placeholder="memo">
                         </td>*@
                         <td>
@@ -83,7 +83,7 @@
                         <th>Unit Price</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
+                    @*<tr>
                         <th></th>
                         <th>
                             <input type="text" class="form-control col-12" id="edit_employee_name" value="sudipto" placeholder="name">
@@ -133,7 +133,7 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                    </tr>
+                    </tr>*@
                 </thead>
                 <tbody>
 
@@ -722,21 +722,23 @@
                 var roleId = $('#role_search').find(":selected").val();
                 var companyId = $('#company_search').find(":selected").val();
                 var explanationId = $('#explanation_search').find(":selected").val();
-                //var unitPrice = $('#unitprice_new').val();
-                //var gradeId = $('#grade_new').val();
+                var employeeName = $('#identity_search').val();
 
-                var data_info = {
-                    SectionId: sectionId,
-                    DepartmentId: departmentId,
-                    InchargeId: inchargeId,
-                    RoleId: roleId,
-                    ExplanationId: explanationId,
-                    CompanyId: companyId,
+                //var data_info = {
+                //    SectionId: sectionId,
+                //    DepartmentId: departmentId,
+                //    InchargeId: inchargeId,
+                //    RoleId: roleId,
+                //    ExplanationId: explanationId,
+                //    CompanyId: companyId,
 
-                };
-
+                //};
+                if (departmentId == undefined) {
+                    departmentId = '';
+                }
+                var data_info = { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: '' };
                 $.ajax({
-                    url: '/api/Employees',
+                    url: `/api/utilities/SearchEmployee`,
                     type: 'GET',
                     dataType: 'json',
                     data: data_info,
@@ -748,7 +750,7 @@
                         var i = 1;
                         $.each(data, function (index,item) {    
                             $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                            $('#add_name_table_1 tbody').append(`<td>${i}</td><td></td><td></td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                            $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td></td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
                             $('#add_name_table_1 tbody').append('</tr>');
                             i++;
                         });
@@ -763,6 +765,7 @@
 
             $('#add_name_add_new').on('click', function () {
 
+                var employeeName = $('#identity_new').val();
                 var sectionId = $('#section_new').find(":selected").val();
                 var inchargeId = $('#incharge_new').find(":selected").val();
                 var departmentId = $('#department_new').find(":selected").val();
@@ -775,6 +778,7 @@
 
 
                 var data = {
+                    EmployeeName: employeeName,
                     SectionId: sectionId,
                     DepartmentId: departmentId,
                     InchargeId: inchargeId ,

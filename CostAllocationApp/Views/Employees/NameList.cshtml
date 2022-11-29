@@ -40,7 +40,7 @@
                         </td>
                         <td>
                             <select id="active_status" class="form-control col-12 namelist_search">
-                                <option value="-1">Select Status</option>
+                                <option value="">Select Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
@@ -328,7 +328,7 @@
                 $.getJSON('/api/sections/')
                     .done(function (data) {
                         $('#section_list').empty();
-                        $('#section_list').append(`<option value='-1'>Select Section</option>`)
+                        $('#section_list').append(`<option value=''>Select Section</option>`)
                         $.each(data, function (key, item) {
                             $('#section_list').append(`<option value='${item.Id}'>&nbsp;&nbsp; ${item.SectionName}</option>`)
                         });
@@ -340,7 +340,7 @@
             $.getJSON('/api/Sections/')
                 .done(function (data) {
                     $('#section').empty();
-                    $('#section').append(`<option value='-1'>Select Section</option>`)
+                    $('#section').append(`<option value=''>Select Section</option>`)
                     $.each(data, function (key, item) {
                         $('#section').append(`<option value='${item.Id}'>${item.SectionName}</option>`)
                     });
@@ -349,7 +349,7 @@
             $.getJSON('/api/Departments/')
                 .done(function (data) {
                     $('#department').empty();
-                    $('#department').append(`<option value='-1'>Select Department</option>`)
+                    $('#department').append(`<option value=''>Select Department</option>`)
                     $.each(data, function (key, item) {
                         $('#department').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`)
                     });
@@ -358,7 +358,7 @@
             $.getJSON('/api/InCharges/')
                 .done(function (data) {
                     $('#incharge').empty();
-                    $('#incharge').append(`<option value='-1'>Select In-Charge</option>`)
+                    $('#incharge').append(`<option value=''>Select In-Charge</option>`)
                     $.each(data, function (key, item) {
                         $('#incharge').append(`<option value='${item.Id}'>${item.InChargeName}</option>`)
                     });
@@ -367,7 +367,7 @@
             $.getJSON('/api/Roles/')
                 .done(function (data) {
                     $('#role').empty();
-                    $('#role').append(`<option value='-1'>Select Role</option>`)
+                    $('#role').append(`<option value=''>Select Role</option>`)
                     $.each(data, function (key, item) {
                         $('#role').append(`<option value='${item.Id}'>${item.RoleName}</option>`)
                     });
@@ -376,7 +376,7 @@
             $.getJSON('/api/Companies/')
                 .done(function (data) {
                     $('#company').empty();
-                    $('#company').append(`<option value='-1'>Select Company</option>`)
+                    $('#company').append(`<option value=''>Select Company</option>`)
                     $.each(data, function (key, item) {
                         $('#company').append(`<option value='${item.Id}'>${item.CompanyName}</option>`)
                     });

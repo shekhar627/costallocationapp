@@ -13,11 +13,12 @@ namespace CostAllocationApp.DAL
         public int CreateAssignment(EmployeeAssignment employeeAssignment)
         {
             int result = 0;
-            string query = $@"insert into EmployeesAssignments(SectionId,DepartmentId,InChargeId,RoleId,ExplanationId,CompanyId,UnitPrice,GradeId,CreatedBy,CreatedDate) values(@sectionId,@departmentId,@inChargeId,@roleId,@explanationId,@companyId,@unitPrice,@gradeId,@createdBy,@createdDate)";
+            string query = $@"insert into EmployeesAssignments(EmployeeName,SectionId,DepartmentId,InChargeId,RoleId,ExplanationId,CompanyId,UnitPrice,GradeId,CreatedBy,CreatedDate) values(@employeeName,@sectionId,@departmentId,@inChargeId,@roleId,@explanationId,@companyId,@unitPrice,@gradeId,@createdBy,@createdDate)";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@employeeName", employeeAssignment.EmployeeName);
                 cmd.Parameters.AddWithValue("@sectionId", employeeAssignment.SectionId);
                 cmd.Parameters.AddWithValue("@departmentId", employeeAssignment.DepartmentId);
                 cmd.Parameters.AddWithValue("@inChargeId", employeeAssignment.InchargeId);
