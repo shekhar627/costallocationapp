@@ -1,0 +1,281 @@
+﻿
+@{
+    ViewBag.Title = "Employee Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content container-fluid">
+
+    <!--List-->
+    <h4 style="text-align:left;">List</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <table class="" id="department_table">
+                    <thead>
+                        <tr>
+                            <th>Check</th>
+                            <th>Employee Name</th>
+                            <th>Section</th>
+                        </tr>
+                    </thead>
+                    <tbody id="department_list_tbody"></tbody>
+                </table>
+                <label id="department_delete_btn">
+                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#delDepartmentModal">Delete</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="modal-content" id="section_body">
+        <style>
+        </style>
+        <div class="modal-body">
+            <form>
+                <div id="main-div">
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="department-name">Department Name <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <input class="form-control" id="department_name" type="text" placeholder="department name..">
+                                <div class="department-name-error" id="department_name_err">
+                                    Please provide a department name.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 module-label-txt">
+                            <div class="form-group">
+                                <label for="department-name">Section Name <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <select id="section_list" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;"></select>
+                                <div class="department-name-error" id="section_ist_error">
+                                    Please select a section!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="cutom_button_group_section">
+                        <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                    </div>
+                </div>
+                <style>
+                    #plus-icon {
+                        visibility: hidden;
+                    }
+                </style>
+            </form>
+        </div>
+    </div>
+    <br><br>
+
+</div>
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.getJSON('/api/sections/')
+                .done(function (data) {
+                    $('#section_list').empty();
+                    $('#section_list').append(`<option value='-1'>Select Section</option>`)
+                    $.each(data, function (key, item) {
+                        $('#section_list').append(`<option value='${item.Id}'>${item.SectionName}</option>`)
+                    });
+                });
+
+            $.getJSON('/api/departments/')
+                .done(function (data) {
+                    $('#department_list_tbody').empty();
+                    $.each(data, function (key, item) {
+                        $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                    });
+                });
+
+            $('#confirm_delete').on('click', function (event) {
+                event.preventDefault();
+                let id = GetCheckedIds("department_list_tbody");
+
+                id = id.slice(0, -1);
+                console.log(id);
+
+                $.ajax({
+                    url: '/api/departments?departmentIds=' + id,
+                    type: 'DELETE',
+                    success: function (data) {
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+
+
+                        $.getJSON('/api/departments/')
+                            .done(function (data) {
+                                $('#department_list_tbody').empty();
+                                $.each(data, function (key, item) {
+                                    // Add a list item for the product.
+                                    $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+                                });
+                            });
+                    },
+                    error: function (data) {
+                        Command: toastr["warning"](data.responseText, "Warning")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+
+                    }
+                });
+
+                $('#delDepartmentModal').modal('toggle');
+
+            });
+
+            $('#delete_button').on('click', function (event) {
+
+                let id = GetCheckedIds("department_list_tbody");
+                if (id == "") {
+                    alert("Please check first to delete.");
+                    return false;
+                }
+            });
+        });
+
+        function ShowToastMessage(messageType) {
+            messageType = "Success";
+            messgeText = "Data Saved Successfully";
+            //Command: toastr["error"]("Failed to Save", "Failed")
+            Command: toastr["success"](data, "Success")
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+        }
+
+    </script>
+
+}
+
+<!-- /Page Content -->
+<!-- Edit Salary Modal -->
+<div id="edit_section_modal" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Section</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="divison-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <input class="form-control" id="divison-name" type="text" value="Development" placeholder="section name..">
+                                <div class="department-name-error">
+                                    Please provide a section name.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="javascript:void(0);" class="btn btn-primary continue-btn" data-dismiss="modal" onclick="AddDivision();">Update</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Salary Modal -->
+<!-- Delete Salary Modal -->
+<div class="modal custom-modal fade" id="delDepartmentModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Department</h3>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Delete Salary Modal -->

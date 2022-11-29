@@ -8,6 +8,7 @@ namespace CostAllocationApp.ViewModels
     public class EmployeeAssignmentViewModel
     {
         public int Id { get; set; }
+        public string EmployeeName { get; set; }
         public string SectionId { get; set; }
         public string SectionName { get; set; }
         public string DepartmentId { get; set; }
@@ -23,5 +24,6 @@ namespace CostAllocationApp.ViewModels
         public string UnitPrice { get; set; }
         public string GradeId { get; set; }
         public string GradeName { get; set; }
+        public bool IsActive { get; set; }
     }
 }
