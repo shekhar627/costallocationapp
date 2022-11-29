@@ -32,10 +32,10 @@ namespace CostAllocationApp.Controllers.Api
             #region validation of inputs
             if (int.TryParse(employeeAssignmentDTO.SectionId, out tempValue))
             {
-                if (tempValue<=0)
+                if (tempValue <= 0)
                 {
                     return BadRequest("Invalid Section Id");
-                    
+
                 }
                 employeeAssignment.SectionId = tempValue;
             }
@@ -47,7 +47,7 @@ namespace CostAllocationApp.Controllers.Api
             {
                 if (tempValue <= 0)
                 {
-                    
+
                     return BadRequest("Invalid Department Id");
                 }
                 employeeAssignment.DepartmentId = tempValue;
@@ -56,12 +56,12 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Department Id");
             }
-            if(int.TryParse(employeeAssignmentDTO.InchargeId, out tempValue))
+            if (int.TryParse(employeeAssignmentDTO.InchargeId, out tempValue))
             {
                 if (tempValue <= 0)
                 {
                     return BadRequest("Invalid Incharge Id");
-                    
+
                 }
                 employeeAssignment.InchargeId = tempValue;
             }
@@ -74,7 +74,7 @@ namespace CostAllocationApp.Controllers.Api
                 if (tempValue <= 0)
                 {
                     return BadRequest("Invalid Role Id");
-                    
+
                 }
                 employeeAssignment.RoleId = tempValue;
             }
@@ -86,7 +86,7 @@ namespace CostAllocationApp.Controllers.Api
             {
                 if (tempValue <= 0)
                 {
-                    
+
                     return BadRequest("Invalid Explanation Id");
                 }
                 employeeAssignment.ExplanationId = tempValue;
@@ -101,7 +101,7 @@ namespace CostAllocationApp.Controllers.Api
                 if (tempValue <= 0)
                 {
                     return BadRequest("Invalid Company Id");
-                    
+
                 }
                 employeeAssignment.CompanyId = tempValue;
             }
@@ -114,7 +114,7 @@ namespace CostAllocationApp.Controllers.Api
                 if (tempValue < 0)
                 {
                     return BadRequest("Invalid Unit Price");
-                    
+
                 }
                 employeeAssignment.UnitPrice = tempUnitPrice;
             }
@@ -127,7 +127,7 @@ namespace CostAllocationApp.Controllers.Api
                 if (tempValue <= 0)
                 {
                     return BadRequest("Invalid Grade Id");
-                    
+
                 }
                 employeeAssignment.GradeId = tempValue;
             }
@@ -135,7 +135,7 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Grade Id");
             }
-        #endregion
+            #endregion
 
             employeeAssignment.CreatedBy = "";
             employeeAssignment.CreatedDate = DateTime.Now;
@@ -285,10 +285,11 @@ namespace CostAllocationApp.Controllers.Api
         }
 
         [HttpGet]
-        public IHttpActionResult SearchAssignment(string SectionId="",string DepartmentId="",string InchargeId="",string RoleId="",string ExplanationId="",string CompanyId="")
+        public IHttpActionResult SearchAssignment(string EmployeeName, string SectionId, string DepartmentId, string InchargeId, string RoleId, string ExplanationId, string CompanyId, bool Status)
         {
+
             int tempValue = 0;
-           // decimal tempUnitPrice = 0;
+            // decimal tempUnitPrice = 0;
 
 
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
@@ -334,7 +335,7 @@ namespace CostAllocationApp.Controllers.Api
 
                     employeeAssignment.ExplanationId = tempValue;
                 }
-                
+
             }
 
             if (int.TryParse(CompanyId, out tempValue))
@@ -375,7 +376,7 @@ namespace CostAllocationApp.Controllers.Api
 
             List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.SearchAssignment(employeeAssignment);
 
-            if (employeeAssignmentViewModels.Count>0)
+            if (employeeAssignmentViewModels.Count > 0)
             {
                 return Ok(employeeAssignmentViewModels);
             }
@@ -384,8 +385,6 @@ namespace CostAllocationApp.Controllers.Api
                 return NotFound();
             }
 
-            
         }
-
     }
 }
