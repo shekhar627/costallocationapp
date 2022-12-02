@@ -7,6 +7,7 @@ namespace CostAllocationApp.Dtos
 {
     public class EmployeeAssignmentDTO
     {
+        public int Id { get; set; }
         public string EmployeeName { get; set; }
         public string SectionId { get; set; }
         public string DepartmentId { get; set; }

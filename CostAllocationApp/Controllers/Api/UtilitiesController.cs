@@ -14,11 +14,16 @@ namespace CostAllocationApp.Controllers.Api
     {
         DepartmentBLL departmentBLL = null;
         EmployeeAssignmentBLL employeeAssignmentBLL = null;
+        SalaryBLL salaryBLL = null;
         public UtilitiesController()
         {
             departmentBLL = new DepartmentBLL();
             employeeAssignmentBLL = new EmployeeAssignmentBLL();
+            salaryBLL =new SalaryBLL();
         }
+
+
+        [Route("api/utilities/DepartmentsBySection/{id}")]
         [HttpGet]
         [ActionName("DepartmentsBySection")]
         public IHttpActionResult DepartmentsBySectionId(string id)
@@ -44,6 +49,7 @@ namespace CostAllocationApp.Controllers.Api
 
         }
 
+        [Route("api/utilities/AssignmentById/{id}")]
         [HttpGet]
         public IHttpActionResult AssignmentById(string id)
         {
@@ -148,6 +154,36 @@ namespace CostAllocationApp.Controllers.Api
             //{
             //    return NotFound();
             //}
+        }
+
+        [Route("api/utilities/CompareGrade/{unitPrice}")]
+        [HttpGet]
+        public IHttpActionResult CompareGrade(string unitPrice)
+        {
+            decimal tempVal = 0;
+            if (decimal.TryParse(unitPrice,out tempVal))
+            {
+                if (tempVal>0)
+                {
+                    Salary salary = salaryBLL.CompareSalary(tempVal);
+                    if (salary!=null)
+                    {
+                        return Ok(salary);
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid Unit Price");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Invalid Unit Price");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Unit Price");
+            }
         }
 
     }

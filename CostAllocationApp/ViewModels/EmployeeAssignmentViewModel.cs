@@ -23,7 +23,7 @@ namespace CostAllocationApp.ViewModels
         public string CompanyName { get; set; }
         public string UnitPrice { get; set; }
         public string GradeId { get; set; }
-        public string GradeName { get; set; }
+        public string GradePoint { get; set; }
         public bool IsActive { get; set; }
     }
 }

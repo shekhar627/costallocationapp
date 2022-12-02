@@ -13,7 +13,7 @@ namespace CostAllocationApp.DAL
         public int CreateAssignment(EmployeeAssignment employeeAssignment)
         {
             int result = 0;
-            string query = $@"insert into EmployeesAssignments(EmployeeName,SectionId,DepartmentId,InChargeId,RoleId,ExplanationId,CompanyId,UnitPrice,GradeId,CreatedBy,CreatedDate) values(@employeeName,@sectionId,@departmentId,@inChargeId,@roleId,@explanationId,@companyId,@unitPrice,@gradeId,@createdBy,@createdDate)";
+            string query = $@"insert into EmployeesAssignments(EmployeeName,SectionId,DepartmentId,InChargeId,RoleId,ExplanationId,CompanyId,UnitPrice,GradeId,CreatedBy,CreatedDate,IsActive) values(@employeeName,@sectionId,@departmentId,@inChargeId,@roleId,@explanationId,@companyId,@unitPrice,@gradeId,@createdBy,@createdDate,@isActive)";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -29,6 +29,7 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@gradeId", employeeAssignment.GradeId);
                 cmd.Parameters.AddWithValue("@createdBy", employeeAssignment.CreatedBy);
                 cmd.Parameters.AddWithValue("@createdDate", employeeAssignment.CreatedDate);
+                cmd.Parameters.AddWithValue("@isActive", employeeAssignment.IsActive);
 
                 try
                 {
@@ -47,7 +48,7 @@ namespace CostAllocationApp.DAL
         public int UpdateAssignment(EmployeeAssignment employeeAssignment)
         {
             int result = 0;
-            string query = $@"update EmployeesAssignments set  SectionId=@sectionId,DepartmentId=@departmentId,InChargeId=@inChargeId,RoleId=@roleId,ExplanationId=@explanationId,CompanyId=@companyId,UnitPrice=@unitPrice,GradeId=@gradeId,UpdatedBy=@updatedBy,UpdatedDate=@updatedDate";
+            string query = $@"update EmployeesAssignments set  SectionId=@sectionId,DepartmentId=@departmentId,InChargeId=@inChargeId,RoleId=@roleId,ExplanationId=@explanationId,CompanyId=@companyId,UnitPrice=@unitPrice,GradeId=@gradeId,UpdatedBy=@updatedBy,UpdatedDate=@updatedDate where Id=@id";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -62,6 +63,7 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@gradeId", employeeAssignment.GradeId);
                 cmd.Parameters.AddWithValue("@updatedBy", employeeAssignment.UpdatedBy);
                 cmd.Parameters.AddWithValue("@updatedDate", employeeAssignment.UpdatedDate);
+                cmd.Parameters.AddWithValue("@id", employeeAssignment.Id);
 
                 try
                 {
@@ -166,7 +168,7 @@ namespace CostAllocationApp.DAL
         public EmployeeAssignmentViewModel GetAssignmentById(int assignmentId)
         {
 
-            string query = $@"select ea.id as AssignmentId,ea.SectionId, sec.Name as SectionName,
+            string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice, ea.GradeId 
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
@@ -188,7 +190,7 @@ namespace CostAllocationApp.DAL
                     {
                         while (rdr.Read())
                         {
-                            
+                            employeeAssignmentViewModel.EmployeeName = rdr["EmployeeName"].ToString();
                             employeeAssignmentViewModel.Id = Convert.ToInt32(rdr["AssignmentId"]);
                             employeeAssignmentViewModel.SectionId = rdr["SectionId"].ToString();
                             employeeAssignmentViewModel.SectionName = rdr["SectionName"].ToString();
@@ -317,7 +319,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
-                            employeeAssignmentViewModel.GradeName = rdr["GradePoints"].ToString();
+                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
 
                             //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
