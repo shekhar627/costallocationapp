@@ -396,5 +396,19 @@ namespace CostAllocationApp.Controllers.Api
             }
 
         }
+
+        [HttpPut]
+        public IHttpActionResult RemoveAssignment(int id)
+        {
+            int result =  employeeAssignmentBLL.RemoveAssignment(id);
+            if (result>0)
+            {
+                return Ok("Data Removed Successfully");
+            }
+            else
+            {
+                return BadRequest("Something Went Wrong");
+            }
+        }
     }
 }

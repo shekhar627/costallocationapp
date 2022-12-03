@@ -338,5 +338,28 @@ namespace CostAllocationApp.DAL
             return employeeAssignments;
         }
 
+        public int RemoveAssignment(int rowId)
+        {
+            int result = 0;
+            string query = $@"update EmployeesAssignments set isactive=0 where id=@id";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@id", rowId);
+                try
+                {
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+
+        }
+
     }
 }

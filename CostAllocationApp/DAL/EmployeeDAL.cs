@@ -83,27 +83,6 @@ namespace CostAllocationApp.DAL
                 return employees;
             }
         }
-        public int RemoveEmployee(int employeeIds)
-        {
-            int result = 0;
-            string query = $@"update Departments set isactive=0 where id=@id";
-            using (SqlConnection sqlConnection = this.GetConnection())
-            {
-                sqlConnection.Open();
-                SqlCommand cmd = new SqlCommand(query, sqlConnection);
-                cmd.Parameters.AddWithValue("@id", employeeIds);
-                try
-                {
-                    result = cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
 
-                }
-
-                return result;
-            }
-
-        }
     }
 }

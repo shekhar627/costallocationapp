@@ -36,5 +36,9 @@ namespace CostAllocationApp.BLL
         {
             return employeeAssignmentDAL.GetEmployeesBySearchFilter(employeeAssignment);
         }
+        public int RemoveAssignment(int rowId)
+        {
+            return employeeAssignmentDAL.RemoveAssignment(rowId);
+        }
     }
 }

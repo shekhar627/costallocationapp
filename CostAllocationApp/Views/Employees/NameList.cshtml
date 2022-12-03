@@ -509,6 +509,10 @@
 
         }
 
+        function loadAssignmentRowData(id) {
+            $('#namelist_inactive_rowid').val(id);
+        }
+
 
         $(document).ready(function () {
 
@@ -639,6 +643,46 @@
                     },
                     error: function () {
 
+                    }
+                });
+            });
+
+
+            $('#namelist_inactive').on('click', function () {
+                var rowId = $('#namelist_inactive_rowid').val();
+
+                $.ajax({
+                    url: `/api/Employees/RemoveAssignment/${rowId}`,
+                    type: 'PUT',
+                    dataType: 'json',
+                    //data: {
+                    //    unitPrice: _unitPrice
+                    //},
+                    success: function (data) {
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+
+                        $('#namelist_delete').modal('toggle');
+                    },
+                    error: function () {
+                        alert("Error please try again");
                     }
                 });
             });
@@ -834,10 +878,10 @@
                             $.each(data, function (key, item) {
                                 console.log(item);
                                 if (item.CompanyName.toLowerCase() == "mw") {
-                                    $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                 }
                                 else {
-                                    $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                 }
                                 counter++;
                             });
