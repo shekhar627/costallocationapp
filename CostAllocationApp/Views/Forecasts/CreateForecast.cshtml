@@ -1,0 +1,492 @@
+﻿
+@{
+    ViewBag.Title = "Create Forecast";
+}
+
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h5>Forecast Creation</h5>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="forecast_search">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>In-Charge</th>
+                        <th>Role</th>
+                        <th>Explanation</th>
+                        <th>Company</th>
+                        <th>Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" id="identity_search" placeholder="name">
+                        </td>
+                        <td>
+                            <select id="section_search" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select id="department_search" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select id="incharge_search" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select id="role_search" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select id="explanation_search" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select id="company_search" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select id="period_search" class="form-control col-12">
+                                <option value="">Select Period</option>
+                                <option value="2023">2023</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7"></td>
+                        <td>
+                            <a href="javascript:void(0);" class="" id="forecast_search_button">Search</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="forecast">
+                        <table class="" id="forecast_table">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="add_name_tbl_2_btn">
+                            <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave()">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+        function onSave() {
+            const rows = document.querySelectorAll("#forecast_table > tbody > tr");
+            if (rows.length <= 0) {
+                alert('No Rows Selected');
+                return false;
+            }
+            $.each(rows, function (index, data) {
+                var rowId = data.dataset.rowid;
+                var year = $('#period_search').find(":selected").val();
+                var assignmentId = $('#row_id_' + rowId).val();
+                var oct_point = $('#oct_' + rowId).val();
+                var oct_output = $('#oct_output_' + rowId).val();
+
+                var nov_point = $('#nov_' + rowId).val();
+                var nov_output = $('#nov_output_' + rowId).val();
+
+
+                var dec_point = $('#dec_' + rowId).val();
+                var dec_output = $('#dec_output_' + rowId).val();
+
+                var jan_point = $('#jan_' + rowId).val();
+                var jan_output = $('#jan_output_' + rowId).val();
+
+                var feb_point = $('#feb_' + rowId).val();
+                var feb_output = $('#feb_output_' + rowId).val();
+
+                var mar_point = $('#mar_' + rowId).val();
+                var mar_output = $('#mar_output_' + rowId).val();
+
+                var apr_point = $('#apr_' + rowId).val();
+                var apr_output = $('#apr_output_' + rowId).val();
+
+                var may_point = $('#may_' + rowId).val();
+                var may_output = $('#may_output_' + rowId).val();
+
+                var jun_point = $('#jun_' + rowId).val();
+                var jun_output = $('#jun_output_' + rowId).val();
+
+                var jul_point = $('#jul_' + rowId).val();
+                var jul_output = $('#jul_output_' + rowId).val();
+
+                var aug_point = $('#aug_' + rowId).val();
+                var aug_output = $('#aug_output_' + rowId).val();
+
+                var sep_point = $('#sep_' + rowId).val();
+                var sep_output = $('#sep_output_' + rowId).val();
+
+                var data = `10_${oct_point}_${oct_output},11_${nov_point}_${nov_output},12_${dec_point}_${dec_output},1_${jan_point}_${jan_output},2_${feb_point}_${feb_output},3_${mar_point}_${mar_output},4_${apr_point}_${apr_output},5_${may_point}_${may_output},6_${jun_point}_${jun_output},7_${jul_point}_${jul_output},8_${aug_point}_${aug_output},9_${sep_point}_${sep_output}`;
+
+
+                $.ajax({
+                    url: '/api/Forecasts',
+                    type: 'GET',
+                    async: false,
+                    dataType: 'json',
+                    data: {
+                        data: data,
+                        year: year,
+                        assignmentId: assignmentId
+                    },
+                    success: function (data) {
+
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        //$('#modal_add_name_new').modal('toggle');
+                    },
+                    error: function () {
+                        alert("Error please try again");
+                        //$('#modal_add_name_new').modal('toggle');
+                    }
+                });
+            });
+
+            $('#forecast_table > tbody').empty();
+        }
+
+
+        var employeeInformation = [
+            {
+                Section: 'Development',
+                Department: 'Database',
+                Responsible: 'Web',
+                Role: 'Developer',
+                Explanation: '',
+                Identity: 'John Doe',
+                CompanyName: 'JABA IT',
+                Grade: '1',
+                Unitprice:570
+            },
+            {
+                Section: 'Development',
+                Department: 'Database',
+                Responsible: 'Web',
+                Role: 'Developer',
+                Explanation: '',
+                Identity: 'John Smith',
+                CompanyName: 'JABA IT',
+                Grade: '2',
+                Unitprice: 560
+            },
+            {
+                Section: 'Development',
+                Department: 'Database',
+                Responsible: 'Web',
+                Role: 'Developer',
+                Explanation: '',
+                Identity: 'Flora',
+                CompanyName: 'JABA IT',
+                Grade: '3',
+                Unitprice: 550
+            },
+            {
+                Section: 'Development',
+                Department: 'Database',
+                Responsible: 'Web',
+                Role: 'Developer',
+                Explanation: '',
+                Identity: 'Jimmy',
+                CompanyName: 'JABA IT',
+                Grade: '4',
+                Unitprice: 540
+            }
+        ];
+        $(document).ready(function () {
+
+            $('#forecast_table').on('change', '.input_month', function () {
+
+                var rowId = parseInt($(this).closest('tr').data('rowid'));
+                var month = parseInt($(this).data('month'));
+                var unitPrice = parseFloat($('#up_' + rowId).data('unitprice'));
+                var pointValue = parseFloat($(this).val());
+                let result = 0;
+                switch (month) {
+                    case 1:
+                        result = unitPrice * pointValue;
+                        $('#jan_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 2:
+                        result = unitPrice * pointValue;
+                        $('#feb_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 3:
+                        result = unitPrice * pointValue;
+                        $('#mar_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 4:
+                        result = unitPrice * pointValue;
+                        $('#apr_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 5:
+                        result = unitPrice * pointValue;
+                        $('#may_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 6:
+                        result = unitPrice * pointValue;
+                        $('#jun_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 7:
+                        result = unitPrice * pointValue;
+                        $('#jul_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 8:
+                        result = unitPrice * pointValue;
+                        $('#aug_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 9:
+                        result = unitPrice * pointValue;
+                        $('#sep_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 10:
+                        result = unitPrice * pointValue;
+                        $('#oct_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 11:
+                        result = unitPrice * pointValue;
+                        $('#nov_output_' + rowId).val(result.toFixed(2));
+                        break;
+                    case 12:
+                        result = unitPrice * pointValue;
+                        $('#dec_output_' + rowId).val(result.toFixed(2));
+                        break;
+
+                }
+
+
+            });
+
+
+            $('#forecast_search_button').on('click', function () {
+                var sectionId = $('#section_search').find(":selected").val();
+                var inchargeId = $('#incharge_search').find(":selected").val();
+                var departmentId = $('#department_search').find(":selected").val();
+                var roleId = $('#role_search').find(":selected").val();
+                var companyId = $('#company_search').find(":selected").val();
+                var explanationId = $('#explanation_search').find(":selected").val();
+                var employeeName = $('#identity_search').val();
+                var year = $('#period_search').find(":selected").val();
+
+                if (year == '' || year == undefined) {
+
+                    alert('select year');
+                    return false;
+                }
+
+                if (departmentId == undefined) {
+                    departmentId = '';
+                }
+                var data_info = { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: '' };
+                $.ajax({
+                    url: `/api/utilities/SearchEmployee`,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: data_info,
+                    success: function (data) {
+
+                        console.log(data);
+
+                        $('#forecast_table>thead').empty();
+                        $('#forecast_table>tbody').empty();
+
+                        $('#forecast_table>thead').append(`
+                    <tr>
+                        <th colspan='10' class='forecast_th'>Employee Information</th>
+                        <th colspan='12' class='forecast_th'>${year}</th>
+                        <th colspan='12' class='forecast_th'>${year} Cost</th>
+                    </tr>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Identity</th>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>In-Charge</th>
+                        <th>Role</th>
+                        <th>Explanation</th>
+                        <th>Company Name</th>
+                        <th>Grade</th>
+                        <th>Unit Price</th>
+                        <th>10月</th>
+                        <th>11月</th>
+                        <th>12月</th>
+                        <th>1月</th>
+                        <th>2月</th>
+                        <th>3月</th>
+                        <th>4月</th>
+                        <th>5月</th>
+                        <th>6月</th>
+                        <th>7月</th>
+                        <th>8月</th>
+                        <th>9月</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dec</th>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                        <th>May</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Aug</th>
+                        <th>Sep</th>
+                    </tr>
+                `);
+                        let i = 1;
+                        $.each(data, function (index, value) {
+                            $('#forecast_table>tbody').append(`
+                            <tr data-rowid=${i}>
+                                <td title='initial'>${i}<input type='hidden' id='row_id_${i}' value='${value.Id}'/></td>
+                                <td title='initial'>${value.EmployeeName}</td>
+                                <td title='initial'>${value.SectionName}</td>
+                                <td title='initial'>${value.DepartmentName}</td>
+                                <td title='initial'>${value.InchargeName}</td>
+                                <td title='initial'>${value.RoleName}</td>
+                                <td title='initial'>${value.ExplanationName}</td>
+                                <td title='initial'>${value.CompanyName}</td>
+                                <td title='initial'>${value.GradePoint}</td>
+                                <td id='up_${i}' data-unitprice=${value.UnitPrice}> ${value.UnitPrice}</td>
+                                <td><input type='text' id='oct_${i}' data-month='10' class='input_month'/></td>
+                                <td><input type='text' id='nov_${i}' data-month='11' class='input_month'/></td>
+                                <td><input type='text' id='dec_${i}' data-month='12' class='input_month'/></td>
+                                <td><input type='text' id='jan_${i}' data-month='1' class='input_month'/></td>
+                                <td><input type='text' id='feb_${i}' data-month='2' class='input_month'/></td>
+                                <td><input type='text' id='mar_${i}' data-month='3' class='input_month'/></td>
+                                <td><input type='text' id='apr_${i}' data-month='4' class='input_month'/></td>
+                                <td><input type='text' id='may_${i}' data-month='5' class='input_month'/></td>
+                                <td><input type='text' id='jun_${i}' data-month='6' class='input_month'/></td>
+                                <td><input type='text' id='jul_${i}' data-month='7' class='input_month'/></td>
+                                <td><input type='text' id='aug_${i}' data-month='8' class='input_month'/></td>
+                                <td><input type='text' id='sep_${i}' data-month='9' class='input_month'/></td>
+                                <td><input type='text' id='oct_output_${i}' readonly/></td>
+                                <td><input type='text' id='nov_output_${i}' readonly/></td>
+                                <td><input type='text' id='dec_output_${i}' readonly/></td>
+                                <td><input type='text' id='jan_output_${i}' readonly/></td>
+                                <td><input type='text' id='feb_output_${i}' readonly/></td>
+                                <td><input type='text' id='mar_output_${i}' readonly/></td>
+                                <td><input type='text' id='apr_output_${i}' readonly/></td>
+                                <td><input type='text' id='may_output_${i}' readonly/></td>
+                                <td><input type='text' id='jun_output_${i}' readonly/></td>
+                                <td><input type='text' id='jul_output_${i}' readonly/></td>
+                                <td><input type='text' id='aug_output_${i}' readonly/></td>
+                                <td><input type='text' id='sep_output_${i}' readonly/></td>
+                            </tr>
+
+                            `);
+                            i++;
+                        });
+                    },
+                    error: function () {
+                        $('#add_name_table_1 tbody').empty();
+                    }
+                });
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+            // for search
+            $.getJSON('/api/Roles/')
+                .done(function (data) {
+                    $('#role_search').empty();
+                    $('#role_search').append(`<option value=''>Select Role</option>`);
+                    $.each(data, function (key, item) {
+                        $('#role_search').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+                    });
+                });
+
+            // for search
+            $.getJSON('/api/Explanations/')
+                .done(function (data) {
+                    $('#explanation_search').empty();
+                    $('#explanation_search').append(`<option value=''>Select Explanation</option>`);
+                    $.each(data, function (key, item) {
+                        $('#explanation_search').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                    });
+                });
+
+            // for search
+            $.getJSON('/api/Companies/')
+                .done(function (data) {
+                    $('#company_search').empty();
+                    $('#company_search').append(`<option value=''>Select Company</option>`);
+                    $.each(data, function (key, item) {
+                        $('#company_search').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+                    });
+                });
+
+   
+            // for search
+            $.getJSON('/api/incharges/')
+                .done(function (data) {
+                    $('#incharge_search').empty();
+                    $('#incharge_search').append(`<option value=''>Select In-Charge</option>`);
+                    $.each(data, function (key, item) {
+                        $('#incharge_search').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                    });
+                });
+
+            // for search 
+            $.getJSON('/api/sections/')
+                .done(function (data) {
+                    $('#section_search').empty();
+                    $('#section_search').append(`<option value=''>Select Section</option>`);
+                    $.each(data, function (key, item) {
+                        $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                    });
+                });
+
+
+
+
+
+        });
+    </script>
+
+}
+
+

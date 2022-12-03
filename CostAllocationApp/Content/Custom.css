@@ -575,7 +575,7 @@ body {
     margin-bottom: 50px;
 }
 
-#add_name_add, #add_name_add_new {
+#add_name_add, #add_name_add_new, #save_forecast {
     background-color: #3c4b5d;
     color: white;
     padding: 5px;
@@ -961,4 +961,10 @@ body {
 #employee_name_search {
     border: none;
     width: 119px;
+}
+
+
+/*---------------------------------------add name previous--------------------------*/
+#fixed_employee_info{
+    background-color: khaki;
 }

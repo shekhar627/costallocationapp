@@ -11,7 +11,6 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        @*<th>Memo</th>*@
                         <th>Section</th>
                         <th>Department</th>
                         <th>In-Charge</th>
@@ -25,9 +24,6 @@
                         <td>
                             <input type="text" class="form-control" id="identity_search" placeholder="name">
                         </td>
-                        @*<td>
-                            <input type="text" class="form-control" id="identity" value="" placeholder="memo">
-                        </td>*@
                         <td>
                             <select id="section_search" class="form-control">
                             </select>
@@ -147,7 +143,7 @@
 
 
 <!-- Modal Add Name -->
-@*<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -163,7 +159,7 @@
                             <th>SL</th>
                             <th>Name</th>
                             <th>Sub Code</th>
-                            <th>Memo</th>
+                            @*<th>Memo</th>*@
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -172,95 +168,35 @@
                             <th>Company</th>
                             <th>Grade</th>
                             <th>Unit Price</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr id="fixed_employee_info">
+                            <td>1<input type="hidden" id="fixed_hidden_name" /></td>
+                            <td id="fixed_name"></td>
+                            <td>1</td>
+                            @*<td id="fixed_memo"></td>*@
+                            <td id="fixed_section"></td>
+                            <td id="fixed_department"></td>
+                            <td id="fixed_incharge"></td>
+                            <td id="fixed_role"></td>
+                            <td id="fixed_explain"></td>
+                            <td id="fixed_company"></td>
+                            <td id="fixed_grade"></td>
+                            <td id="fixed_unitprice"></td>
+                            <td><a href="javascript:void(0);" id="add_new_row" onclick="addNew()">add</a></td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Chandra Shekhar Das</td>
-                            <td>1</td>
-                            <td>memo-1</td>
-                            <td>Development</td>
-                            <td>Database</td>
-                            <td>Web</td>
-                            <td>Programmer</td>
-                            <td>work on various projects.</td>
-                            <td>JABA IT</td>
-                            <td>5</td>
-                            <td>3500</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                <input type="text" class="form-control col-12" id="memo" value="memo-1" placeholder="memo">
-                            </td>
-                            <td>
-                                <select id="section" class="form-control col-12">
-                                    <option value="">Select Section</option>
-                                    <option value="" selected>Development</option>
-                                    <option value="">Development-2</option>
-                                    <option value="">Development-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="section" class="form-control col-12">
-                                    <option value="">Select Department</option>
-                                    <option value="" selected>Database</option>
-                                    <option value="">Department-2</option>
-                                    <option value="">Department-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="section" class="form-control col-12">
-                                    <option value="">Select In-Charge</option>
-                                    <option value="" selected>Web</option>
-                                    <option value="">Work Domain-2</option>
-                                    <option value="">Work Domain-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="section" class="form-control col-12">
-                                    <option value="">Select Role</option>
-                                    <option value="" selected>Programmer</option>
-                                    <option value="">Role-2</option>
-                                    <option value="">Role-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control col-12" id="explanation" value="work on various projects." placeholder="explanation">
-                            </td>
-                            <td>
-                                <select id="section" class="form-control col-12">
-                                    <option value="">Select Company</option>
-                                    <option value="" selected>JABA IT</option>
-                                    <option value="">Company-2</option>
-                                    <option value="">Company-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control col-12" id="grade" value="1" placeholder="grade">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control col-12" id="unitprice" value="3500" placeholder="unit price">
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="add_name_tbl_2_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_add">Add</a>
-                    <a href="javascript:void(0);" class="" id="add_name_cancel">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_add" onclick="onSave()">Add</a>
+                    <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
                 </div>
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 
 <!-- Modal Add Name (New) -->
@@ -278,7 +214,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Memo</th>
+                            @*<th>Memo</th>*@
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -295,9 +231,9 @@
                                 <input type="text" class="form-control col-12" id="identity_new"  placeholder="name">
                             </td>
 
-                            <td>
+                            @*<td>
                                 <input type="text" class="form-control col-12" id="memo_new"  placeholder="memo">
-                            </td>
+                            </td>*@
                             <td>
                                 <select id="section_new" class="form-control col-12">
                                 </select>
@@ -445,7 +381,7 @@
 @section Scripts{
 
     <script type="text/javascript">
-
+        let previousAssignmentRow = 2;
         function loadSingleAssignmentData(id) {
 
             $.ajax({
@@ -562,17 +498,300 @@
         }
 
 
+        function loadSingleAssignmentDataForExistingEmployee(id) {
+
+            previousAssignmentRow = 2
+            $('#add_name_table_2 tbody').empty();
+            $('#add_name_add').css('display', 'inline-block');
+            $.ajax({
+                url: '/api/Utilities/AssignmentById/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (assignmentData) {
+                    console.log(assignmentData);
+                    $('#fixed_name').html(assignmentData.EmployeeName);
+                    $('#fixed_hidden_name').val(assignmentData.EmployeeName);
+                    $('#fixed_section').html(assignmentData.SectionName);
+                    $('#fixed_department').html(assignmentData.DepartmentName);
+                    $('#fixed_incharge').html(assignmentData.InchargeName);
+                    $('#fixed_role').html(assignmentData.RoleName);
+                    $('#fixed_explain').html(assignmentData.ExplanationName);
+                    $('#fixed_company').html(assignmentData.CompanyName);
+                    $('#fixed_grade').html(0);
+                    $('#fixed_unitprice').html(assignmentData.UnitPrice);
+                },
+                error: function () {
+                   
+                }
+            });
+        }
+
+
+        function addNew() {
+            //<td><input class="form-control col-12" id="memo_row_${previousAssignmentRow}" readonly /></td>
+        var text = `
+            <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
+                <td>${previousAssignmentRow}</td>
+                <td><input class="form-control col-12" id="identity_row_${previousAssignmentRow}" value="${$('#fixed_hidden_name').val()}" readonly /></td>
+                <td>${previousAssignmentRow}</td>`;
+
+            // for add new
+                $.ajax({
+                    url: '/api/Sections/',
+                    type: 'GET',
+                    async: false,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        text += '<td>';
+                        text += `
+                               <select id="section_row_${previousAssignmentRow}" class="form-control col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
+                                    <option value=''>Select Section</option>
+                            `;
+                        $.each(data, function (key, item) {
+                            text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
+                        });
+                        text += '</select></td>';
+                    },
+                    error: function () {
+
+                    }
+            });
+
+
+            text += `
+                <td>
+                    <select id="department_row_${previousAssignmentRow}" class="form-control col-12 department_row"></select>
+                 </td>
+                `;
+
+            $.ajax({
+                url: '/api/incharges/',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    text += '<td>';
+                    text += `
+                               <select id="incharge_row_${previousAssignmentRow}" class="form-control col-12">
+                                    <option value=''>Select In-Charge</option>
+                            `;
+                    $.each(data, function (key, item) {
+                        text += `<option value = '${item.Id}'> ${item.InChargeName}</option>`;
+                    });
+                    text += '</select></td>';
+                },
+                error: function () {
+
+                }
+            });
+
+            $.ajax({
+                url: '/api/roles/',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    text += '<td>';
+                    text += `
+                               <select id="role_row_${previousAssignmentRow}" class="form-control col-12">
+                                    <option value=''>Select Role</option>
+                            `;
+                    $.each(data, function (key, item) {
+                        text += `<option value = '${item.Id}'> ${item.RoleName}</option>`;
+                    });
+                    text += '</select></td>';
+                },
+                error: function () {
+
+                }
+            });
+
+            $.ajax({
+                url: '/api/Explanations/',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    text += '<td>';
+                    text += `
+                               <select id="explain_row_${previousAssignmentRow}" class="form-control col-12">
+                                    <option value=''>Select Role</option>
+                            `;
+                    $.each(data, function (key, item) {
+                        text += `<option value = '${item.Id}'> ${item.ExplanationName}</option>`;
+                    });
+                    text += '</select></td>';
+                },
+                error: function () {
+
+                }
+            });  
+
+            $.ajax({
+                url: '/api/Companies/',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    text += '<td>';
+                    text += `
+                               <select id="company_row_${previousAssignmentRow}" class="form-control col-12">
+                                    <option value=''>Select Role</option>
+                            `;
+                    $.each(data, function (key, item) {
+                        text += `<option value = '${item.Id}'> ${item.CompanyName}</option>`;
+                    });
+                    text += '</select></td>';
+                },
+                error: function () {
+
+                }
+            }); 
+            text += `
+                 <td><input class="form-control col-12" id="grade_row_${previousAssignmentRow}" readonly /></td>
+                 <td><input class="form-control col-12" id="unitprice_row_${previousAssignmentRow}" onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+                 <td><a href='javascript:void(0);' onClick="removeTr(${previousAssignmentRow})">remove</a></td>
+            </tr>
+
+            `;
+
+            $('#add_name_table_2 tbody').append(text);
+
+
+
+            previousAssignmentRow++;
+        }
+
+        function removeTr(rowId) {
+            var rowElement = $('#row_' + rowId);
+            rowElement.remove();
+            //console.log();
+            //$('#add_name_table_2 tbody').remove(rowElement);
+        }
+       
+        function changeVal(rowId, element) {
+
+            var sectionId = $(element).val();
+
+            $.ajax({
+                url: `/api/utilities/DepartmentsBySection/${sectionId}`,
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $('#department_row_' + rowId).empty();
+                    $('#department_row_' + rowId).append(`<option value=''>Select Department</option>`);
+                    $.each(data, function (key, item) {
+                        $('#department_row_' + rowId).append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                    });
+                },
+                error: function () {
+
+                }
+            }); 
+
+
+        }
+
+
+        function unitPriceChange(rowId,element) {
+            let _unitPrice = $(element).val();
+
+            $.ajax({
+                url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $('#grade_row_' + rowId).attr('data-id', data.Id);
+                    $('#grade_row_' + rowId).val(data.SalaryGrade);
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+        function onSave(){
+            const rows = document.querySelectorAll("#add_name_table_2 > tbody > tr");
+            $('#add_name_add').css('display','none');
+            console.log(rows);
+            $.each(rows, function (index, data) {
+                var rowId = data.dataset.id;
+
+                var employeeName = $('#identity_row_' + rowId).val();
+                var sectionId = $('#section_row_' + rowId).find(":selected").val();
+                var departmentId = $('#department_row_' + rowId).find(":selected").val();
+                var inchargeId = $('#incharge_row_' + rowId).find(":selected").val();
+                var roleId = $('#role_row_' + rowId).find(":selected").val();
+                var companyId = $('#company_row_' + rowId).find(":selected").val();
+                var explanationId = $('#explain_row_' + rowId).find(":selected").val();
+                var unitPrice = $('#unitprice_row_' + rowId).val();
+                var gradeId = $('#grade_row_' + rowId).data('id');
+
+
+
+                var data = {
+                    EmployeeName: employeeName,
+                    SectionId: sectionId,
+                    DepartmentId: departmentId,
+                    InchargeId: inchargeId,
+                    RoleId: roleId,
+                    ExplanationId: explanationId,
+                    CompanyId: companyId,
+                    UnitPrice: unitPrice,
+                    GradeId: gradeId,
+
+                };
+
+                console.log(data);
+
+                $.ajax({
+                    url: '/api/Employees',
+                    type: 'POST',
+                    async: false,
+                    dataType: 'json',
+                    data: data,
+                    success: function (data) {
+
+                        Command: toastr["success"](data, "Success")
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "3000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        //$('#modal_add_name_new').modal('toggle');
+                    },
+                    error: function () {
+                        alert("Error please try again");
+                        //$('#modal_add_name_new').modal('toggle');
+                    }
+                });
+            });
+
+        }
 
 
         $(document).ready(function () {
-            //$('.link_add').click(function () {
-            //    // $('#add_name_table_2').show();
-            //    // $('.add_name_tbl_2_btn').show();
-            //});
-            //$('.link_edit').click(function () {
-            //    //$('#add_name_table_3').show();
-            //    // $('.add_name_tbl_3_btn').show();
-            //});
+
 
             // for add new
             $.getJSON('/api/Roles/')
@@ -767,15 +986,6 @@
                 var explanationId = $('#explanation_search').find(":selected").val();
                 var employeeName = $('#identity_search').val();
 
-                //var data_info = {
-                //    SectionId: sectionId,
-                //    DepartmentId: departmentId,
-                //    InchargeId: inchargeId,
-                //    RoleId: roleId,
-                //    ExplanationId: explanationId,
-                //    CompanyId: companyId,
-
-                //};
                 if (departmentId == undefined) {
                     departmentId = '';
                 }
@@ -793,7 +1003,7 @@
                         var i = 1;
                         $.each(data, function (index,item) {    
                             $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                            $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td></td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                            $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td></td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee(${item.Id})" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
                             $('#add_name_table_1 tbody').append('</tr>');
                             i++;
                         });
