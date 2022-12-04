@@ -19,5 +19,13 @@ namespace CostAllocationApp.Dtos
         public string GradeId { get; set; }
         public string Remarks { get; set; }
         public int SubCode { get; set; }
+
+
+        public string[] Sections { get; set; }
+        public string[] Departments { get; set; }
+        public string[] Incharges { get; set; }
+        public string[] Roles { get; set; }
+        public string[] Explanations { get; set; }
+        public string[] Companies { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using CostAllocationApp.Models;
 using CostAllocationApp.BLL;
 using CostAllocationApp.ViewModels;
+using CostAllocationApp.Dtos;
 
 namespace CostAllocationApp.Controllers.Api
 {
@@ -201,6 +202,14 @@ namespace CostAllocationApp.Controllers.Api
                 return NotFound();
             }
             
+        }
+
+        [HttpPost]
+        public IHttpActionResult SearchMultipleEmployee(EmployeeAssignmentDTO employeeAssignment)
+        {
+            List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesBySearchFilterForMultipleSearch(employeeAssignment);
+
+            return Ok(employeeAssignmentViewModels);
         }
 
     }

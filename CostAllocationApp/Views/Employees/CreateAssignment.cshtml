@@ -292,9 +292,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="grade" readonly>
-                                <input type="hidden" class="form-control col-12" id="grade_edit_hidden" placeholder="grade" readonly>
-
+                                <input type="text" class="form-control col-12" id="grade_edit" data-id="" placeholder="grade" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
@@ -319,6 +317,7 @@
 
     <script type="text/javascript">
         let previousAssignmentRow = 0;
+        let unitPrices = [];
 
         function loadSingleAssignmentData(id) {
 
@@ -425,7 +424,7 @@
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
                     $('#grade_edit').val(assignmentData.GradePoint);
-                    $('#grade_edit_hidden').val(assignmentData.GradeId);
+                    $('#grade_edit').attr('data-id', assignmentData.GradeId);
                    
                 },
                 error: function () {
@@ -454,6 +453,7 @@
                     var count = 1;
                     $.each(assignmentData, function (index, item) {
                         console.log(item);
+                        unitPrices.push(item.UnitPrice);
                         previousAssignmentRow = item.SubCode;
                         tr += '<tr class="sub_thead">';
                         tr += `<td>${item.SubCode}</td>`;
@@ -665,6 +665,12 @@
         function unitPriceChange(rowId,element) {
             let _unitPrice = $(element).val();
 
+            if (unitPrices.includes(_unitPrice)) {
+
+                $('#identity_row_' + rowId).css('color', 'red');
+                $('#sub_code_row_' + rowId).css('color', 'red');
+            }
+
             $.ajax({
                 url: `/api/utilities/CompareGrade/${_unitPrice}`,
                 type: 'GET',
@@ -675,7 +681,8 @@
                     $('#grade_row_' + rowId).val(data.SalaryGrade);
                 },
                 error: function () {
-
+                    $('#grade_row_' + rowId).attr('data-id', '');
+                    $('#grade_row_' + rowId).val('');
                 }
             });
         }
@@ -745,6 +752,8 @@
                             "showMethod": "fadeIn",
                             "hideMethod": "fadeOut"
                         }
+                        alert('Success');
+                        location.reload();
                         //$('#modal_add_name_new').modal('toggle');
                     },
                     error: function () {
@@ -915,7 +924,8 @@
                         $('#grade_new').val(data.SalaryGrade);
                     },
                     error: function () {
-                       
+                        $('#grade_new').attr('data-id', '');
+                        $('#grade_new').val('');
                     }
                 });
             });
@@ -936,7 +946,8 @@
                         $('#grade_edit').val(data.SalaryGrade);
                     },
                     error: function () {
-
+                        $('#grade_edit').attr('data-id', '');
+                        $('#grade_edit').val('');
                     }
                 });
             });
@@ -1050,7 +1061,8 @@
                             "showMethod": "fadeIn",
                             "hideMethod": "fadeOut"
                         }
-                        $('#modal_add_name_new').modal('toggle');
+                        alert('Success');
+                        location.reload();
                     },
                     error: function () {
                         alert("Error please try again");
@@ -1071,7 +1083,7 @@
                 var companyId = $('#company_edit').find(":selected").val();
                 var explanationId = $('#explanation_edit').find(":selected").val();
                 var unitPrice = $('#unitprice_edit').val();
-                var gradeId = $('#grade_edit_hidden').val();
+                var gradeId = $('#grade_edit').data('id');
                 var rowId = $('#row_id_hidden_edit').val();
                 var remarks = $('#memo_edit').val();
 
@@ -1116,7 +1128,8 @@
                             "showMethod": "fadeIn",
                             "hideMethod": "fadeOut"
                         }
-                        $('#modal_add_name_new').modal('toggle');
+                        alert('Success');
+                        location.reload();
                     },
                     error: function () {
                         alert("Error please try again");
@@ -1129,7 +1142,9 @@
             });
 
 
-    });
+        });
+
+
     </script>
 
 }
