@@ -32,7 +32,7 @@ namespace CostAllocationApp.Controllers.Api
             #region validation of inputs
             if (!String.IsNullOrEmpty(employeeAssignmentDTO.EmployeeName))
             {
-                employeeAssignment.EmployeeName = employeeAssignmentDTO.EmployeeName;
+                employeeAssignment.EmployeeName = employeeAssignmentDTO.EmployeeName.Trim();
             }
             else
             {
