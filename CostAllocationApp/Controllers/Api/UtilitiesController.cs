@@ -146,14 +146,7 @@ namespace CostAllocationApp.Controllers.Api
             List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesBySearchFilter(employeeAssignment);
 
             return Ok(employeeAssignmentViewModels);
-            //if (employeeAssignmentViewModels.Count > 0)
-            //{
-            //    return Ok(employeeAssignmentViewModels);
-            //}
-            //else
-            //{
-            //    return NotFound();
-            //}
+
         }
 
         [Route("api/utilities/CompareGrade/{unitPrice}")]
@@ -184,6 +177,30 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Unit Price");
             }
+        }
+
+        [Route("api/utilities/GetEmployeesByName/{employeeName}")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesByName(string employeeName)
+        {
+            if (!String.IsNullOrEmpty(employeeName))
+            {
+                List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesByName(employeeName);
+
+                if (employeeAssignmentViewModels.Count>0)
+                {
+                    return Ok(employeeAssignmentViewModels);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
 
     }

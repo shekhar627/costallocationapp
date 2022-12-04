@@ -148,6 +148,8 @@ namespace CostAllocationApp.Controllers.Api
             employeeAssignment.CreatedBy = "";
             employeeAssignment.CreatedDate = DateTime.Now;
             employeeAssignment.IsActive = "1";
+            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks;
+            employeeAssignment.SubCode = employeeAssignmentDTO.SubCode;
 
 
             int result = employeeAssignmentBLL.CreateAssignment(employeeAssignment);
@@ -281,6 +283,7 @@ namespace CostAllocationApp.Controllers.Api
             employeeAssignment.UpdatedBy = "";
             employeeAssignment.UpdatedDate = DateTime.Now;
             employeeAssignment.Id = employeeAssignmentDTO.Id;
+            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks;
 
 
             int result = employeeAssignmentBLL.UpdateAssignment(employeeAssignment);

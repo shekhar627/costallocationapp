@@ -18,5 +18,7 @@ namespace CostAllocationApp.Models
         public decimal UnitPrice { get; set; }
         public int GradeId { get; set; }
         public string IsActive { get; set; }
+        public string Remarks { get; set; }
+        public int SubCode { get; set; }
     }
 }

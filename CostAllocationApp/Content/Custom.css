@@ -622,9 +622,7 @@ body {
 #namelist_tbl_header {
     display: none;
 }*/
-#name_list_body {
-    display: none;
-}
+
 
 #name_list_search thead th {
     border: none !important;

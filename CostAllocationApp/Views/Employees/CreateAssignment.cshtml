@@ -68,6 +68,7 @@
                     <tr>
                         <th>SL</th>
                         <th>Name</th>
+                        <th>SubCode</th>
                         <th>Memo</th>
                         <th>Section</th>
                         <th>Department</th>
@@ -79,57 +80,6 @@
                         <th>Unit Price</th>
                         <th>Action</th>
                     </tr>
-                    @*<tr>
-                        <th></th>
-                        <th>
-                            <input type="text" class="form-control col-12" id="edit_employee_name" value="sudipto" placeholder="name">
-                        </th>
-                        <th></th>
-                        <th>
-                            <select id="section" class="form-control col-12">
-                                <option value="">Select Section</option>
-                                <option value="">Section-1</option>
-                                <option value="">Section-2</option>
-                                <option value="">Section-3</option>
-                            </select>
-                        </th>
-                        <th>
-                            <select id="department" class="form-control col-12">
-                                <option value="">Select Department</option>
-                                <option value="">Department-1</option>
-                                <option value="">Department-2</option>
-                                <option value="">Department-3</option>
-                            </select>
-                        </th>
-                        <th>
-                            <select id="incharge" class="form-control col-12">
-                                <option value="">Select In-Charge</option>
-                                <option value="">Work Domain-1</option>
-                                <option value="">Work Domain-2</option>
-                                <option value="">Work Domain-3</option>
-                            </select>
-                        </th>
-                        <th>
-                            <select id="role" class="form-control col-12">
-                                <option value="">Select Role</option>
-                                <option value="">Role-1</option>
-                                <option value="">Role-2</option>
-                                <option value="">Role-3</option>
-                            </select>
-                        </th>
-                        <th></th>
-                        <th>
-                            <select id="company" class="form-control col-12">
-                                <option value="">Select Company</option>
-                                <option value="" selected>Company-1</option>
-                                <option value="">Company-2</option>
-                                <option value="">Company-3</option>
-                            </select>
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>*@
                 </thead>
                 <tbody>
 
@@ -155,11 +105,11 @@
             <div class="col-12 modal-body">
                 <table id="add_name_table_2">
                     <thead>
-                        <tr>
+                        <tr id="main_head">
                             <th>SL</th>
                             <th>Name</th>
                             <th>Sub Code</th>
-                            @*<th>Memo</th>*@
+                            <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -168,30 +118,15 @@
                             <th>Company</th>
                             <th>Grade</th>
                             <th>Unit Price</th>
-                            <th>Action</th>
-                        </tr>
-                        <tr id="fixed_employee_info">
-                            <td>1<input type="hidden" id="fixed_hidden_name" /></td>
-                            <td id="fixed_name"></td>
-                            <td>1</td>
-                            @*<td id="fixed_memo"></td>*@
-                            <td id="fixed_section"></td>
-                            <td id="fixed_department"></td>
-                            <td id="fixed_incharge"></td>
-                            <td id="fixed_role"></td>
-                            <td id="fixed_explain"></td>
-                            <td id="fixed_company"></td>
-                            <td id="fixed_grade"></td>
-                            <td id="fixed_unitprice"></td>
-                            <td><a href="javascript:void(0);" id="add_new_row" onclick="addNew()">add</a></td>
+                            <th>Action <input  type="hidden" value="" id="fixed_hidden_name" /></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
                 <div class="add_name_tbl_2_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_add" onclick="onSave()">Add</a>
                     <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_add" onclick="onSave()">Save</a>
                 </div>
             </div>
         </div>
@@ -214,7 +149,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            @*<th>Memo</th>*@
+                            <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -231,9 +166,9 @@
                                 <input type="text" class="form-control col-12" id="identity_new"  placeholder="name">
                             </td>
 
-                            @*<td>
+                            <td>
                                 <input type="text" class="form-control col-12" id="memo_new"  placeholder="memo">
-                            </td>*@
+                            </td>
                             <td>
                                 <select id="section_new" class="form-control col-12">
                                 </select>
@@ -266,8 +201,8 @@
                     </tbody>
                 </table>
                 <div class="add_name_tbl_2_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_add_new">Add</a>
                     <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_add_new">Save</a>
                 </div>
             </div>
         </div>
@@ -287,8 +222,8 @@
                 <table id="add_name_table_3">
                     <thead>
                         <tr>
-                            @*<th>Name</th>
-                            <th>Memo</th>*@
+                            @*<th>Name</th>*@
+                            <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -302,11 +237,11 @@
                     <tbody>
                         <tr>
                             @*<td>
-                                <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                            </td>
+            <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+        </td>*@
                             <td>
-                                <input type="text" class="form-control col-12" id="memo" value="memo-1" placeholder="memo">
-                            </td>*@
+                                <input type="text" class="form-control col-12" id="memo_edit" value="" placeholder="">
+                            </td>
                             <td>
                                 <input type="hidden" value="" id="row_id_hidden_edit" />
                                 <select id="section_edit" class="form-control col-12">
@@ -357,17 +292,19 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit"  placeholder="grade" readonly>
+                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="grade" readonly>
+                                <input type="hidden" class="form-control col-12" id="grade_edit_hidden" placeholder="grade" readonly>
+
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="unitprice_edit"  placeholder="unit price">
+                                <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="add_name_tbl_3_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
                     <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
                 </div>
             </div>
         </div>
@@ -381,7 +318,8 @@
 @section Scripts{
 
     <script type="text/javascript">
-        let previousAssignmentRow = 2;
+        let previousAssignmentRow = 0;
+
         function loadSingleAssignmentData(id) {
 
             $.ajax({
@@ -392,6 +330,7 @@
 
                     console.log(assignmentData);
                     $('#edit_model_span').html(assignmentData.EmployeeName);
+                    $('#memo_edit').val(assignmentData.Remarks);
                     $('#row_id_hidden_edit').val(id);
                     $.getJSON('/api/sections/')
                         .done(function (data) {
@@ -485,7 +424,8 @@
                             });
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
-                    $('#grade_edit').val(assignmentData.GradeId);
+                    $('#grade_edit').val(assignmentData.GradePoint);
+                    $('#grade_edit_hidden').val(assignmentData.GradeId);
                    
                 },
                 error: function () {
@@ -498,27 +438,48 @@
         }
 
 
-        function loadSingleAssignmentDataForExistingEmployee(id) {
-
-            previousAssignmentRow = 2
+        function loadSingleAssignmentDataForExistingEmployee(employeeName) {
+            $('#add_name_table_2 thead .sub_thead').remove();
             $('#add_name_table_2 tbody').empty();
             $('#add_name_add').css('display', 'inline-block');
             $.ajax({
-                url: '/api/Utilities/AssignmentById/' + id,
+                url: `/api/Utilities/GetEmployeesByName/${employeeName}`,
                 type: 'GET',
+                async: false,
                 dataType: 'json',
                 success: function (assignmentData) {
                     console.log(assignmentData);
-                    $('#fixed_name').html(assignmentData.EmployeeName);
-                    $('#fixed_hidden_name').val(assignmentData.EmployeeName);
-                    $('#fixed_section').html(assignmentData.SectionName);
-                    $('#fixed_department').html(assignmentData.DepartmentName);
-                    $('#fixed_incharge').html(assignmentData.InchargeName);
-                    $('#fixed_role').html(assignmentData.RoleName);
-                    $('#fixed_explain').html(assignmentData.ExplanationName);
-                    $('#fixed_company').html(assignmentData.CompanyName);
-                    $('#fixed_grade').html(0);
-                    $('#fixed_unitprice').html(assignmentData.UnitPrice);
+                    $('#fixed_hidden_name').val(assignmentData[0].EmployeeName);
+
+                    var count = 1;
+                    $.each(assignmentData, function (index, item) {
+                        console.log(item);
+                        previousAssignmentRow = item.SubCode;
+                        tr += '<tr class="sub_thead">';
+                        tr += `<td>${item.SubCode}</td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.EmployeeName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.SubCode}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.Remarks}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.SectionName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.DepartmentName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.InchargeName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.RoleName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.ExplanationName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.CompanyName}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.GradePoint}' readonly /></td>`;
+                        tr += `<td><input type='text' class="form-control col-12" value='${item.UnitPrice}' readonly /></td>`;
+                        if (count==1) {
+                            tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
+                        }
+                        
+                        tr += '</tr>';
+
+                        //console.log(tr);
+                        count++;
+                        $('#add_name_table_2 thead').append(tr);
+                        var tr = "";
+                    });
+
                 },
                 error: function () {
                    
@@ -528,12 +489,14 @@
 
 
         function addNew() {
-            //<td><input class="form-control col-12" id="memo_row_${previousAssignmentRow}" readonly /></td>
+            //
+            previousAssignmentRow++;
         var text = `
             <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
                 <td>${previousAssignmentRow}</td>
                 <td><input class="form-control col-12" id="identity_row_${previousAssignmentRow}" value="${$('#fixed_hidden_name').val()}" readonly /></td>
-                <td>${previousAssignmentRow}</td>`;
+                <td><input class="form-control" value="${previousAssignmentRow}" id='sub_code_row_${previousAssignmentRow}' readonly /></td>
+                <td><input class="form-control col-12" id="memo_row_${previousAssignmentRow}" /></td>`;
 
             // for add new
                 $.ajax({
@@ -655,23 +618,23 @@
             text += `
                  <td><input class="form-control col-12" id="grade_row_${previousAssignmentRow}" readonly /></td>
                  <td><input class="form-control col-12" id="unitprice_row_${previousAssignmentRow}" onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
-                 <td><a href='javascript:void(0);' onClick="removeTr(${previousAssignmentRow})">remove</a></td>
+                 <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
             </tr>
 
             `;
 
+            $(`#remove_row_${previousAssignmentRow - 1}`).css('display','none');
+
             $('#add_name_table_2 tbody').append(text);
 
-
-
-            previousAssignmentRow++;
         }
 
         function removeTr(rowId) {
             var rowElement = $('#row_' + rowId);
             rowElement.remove();
-            //console.log();
-            //$('#add_name_table_2 tbody').remove(rowElement);
+            previousAssignmentRow--;
+            $(`#remove_row_${previousAssignmentRow}`).css('display', 'block');
+
         }
        
         function changeVal(rowId, element) {
@@ -719,7 +682,7 @@
 
         function onSave(){
             const rows = document.querySelectorAll("#add_name_table_2 > tbody > tr");
-            $('#add_name_add').css('display','none');
+            //$('#add_name_add').css('display','none');
             console.log(rows);
             $.each(rows, function (index, data) {
                 var rowId = data.dataset.id;
@@ -733,6 +696,8 @@
                 var explanationId = $('#explain_row_' + rowId).find(":selected").val();
                 var unitPrice = $('#unitprice_row_' + rowId).val();
                 var gradeId = $('#grade_row_' + rowId).data('id');
+                var remarks = $('#memo_row_' + rowId).val();
+                var subCode = $('#sub_code_row_' + rowId).val();
 
 
 
@@ -746,6 +711,8 @@
                     CompanyId: companyId,
                     UnitPrice: unitPrice,
                     GradeId: gradeId,
+                    Remarks: remarks,
+                    SubCode: subCode,
 
                 };
 
@@ -1001,10 +968,18 @@
                         //$('#modal_add_name_new').modal('toggle');
                         $('#add_name_table_1 tbody').empty();
                         var i = 1;
-                        $.each(data, function (index,item) {    
-                            $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                            $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td></td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee(${item.Id})" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
-                            $('#add_name_table_1 tbody').append('</tr>');
+                        $.each(data, function (index, item) {
+                            if (item.CompanyName.toLowerCase() == 'mw') {
+                                $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
+                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                                $('#add_name_table_1 tbody').append('</tr>');
+                            }
+                            else {
+                                $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
+                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                                $('#add_name_table_1 tbody').append('</tr>');
+                            }
+                         
                             i++;
                         });
                     },
@@ -1027,6 +1002,7 @@
                 var explanationId = $('#explanation_new').find(":selected").val();
                 var unitPrice = $('#unitprice_new').val();
                 var gradeId = $('#grade_new').data('id');
+                var remarks = $('#memo_new').val();
 
 
 
@@ -1040,6 +1016,9 @@
                     CompanyId: companyId,
                     UnitPrice: unitPrice,
                     GradeId: gradeId,
+                    Remarks: remarks,
+                    SubCode: 1
+
                     
                 };
 
@@ -1092,9 +1071,9 @@
                 var companyId = $('#company_edit').find(":selected").val();
                 var explanationId = $('#explanation_edit').find(":selected").val();
                 var unitPrice = $('#unitprice_edit').val();
-                var gradeId = $('#grade_edit').val();
+                var gradeId = $('#grade_edit_hidden').val();
                 var rowId = $('#row_id_hidden_edit').val();
-
+                var remarks = $('#memo_edit').val();
 
                 var dataSingleAssignmentUpdate = {
                     Id: rowId,
@@ -1106,7 +1085,7 @@
                     CompanyId: companyId,
                     UnitPrice: unitPrice,
                     GradeId: gradeId,
-
+                    Remarks: remarks,
                 };
 
                 console.log(dataSingleAssignmentUpdate);

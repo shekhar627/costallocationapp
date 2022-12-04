@@ -25,5 +25,7 @@ namespace CostAllocationApp.ViewModels
         public string GradeId { get; set; }
         public string GradePoint { get; set; }
         public bool IsActive { get; set; }
+        public string Remarks { get; set; }
+        public int SubCode { get; set; }
     }
 }

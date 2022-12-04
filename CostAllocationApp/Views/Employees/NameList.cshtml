@@ -282,8 +282,8 @@
                     </tbody>
                 </table>
                 <div class="add_name_tbl_2_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_add_new">Add</a>
                     <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_add_new">Save</a>
                 </div>
             </div>
         </div>
@@ -303,8 +303,8 @@
                 <table id="add_name_table_3">
                     <thead>
                         <tr>
-                            @*<th>Name</th>
-                                <th>Memo</th>*@
+                            @*<th>Name</th>*@
+                            <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
                             <th>In-Charge</th>
@@ -319,10 +319,10 @@
                         <tr>
                             @*<td>
                                     <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control col-12" id="memo" value="memo-1" placeholder="memo">
                                 </td>*@
+                            <td>
+                                <input type="text" class="form-control col-12" id="memo_edit" value="" placeholder="">
+                            </td>
                             <td>
                                 <input type="hidden" value="" id="row_id_hidden_edit" />
                                 <select id="section_edit" class="form-control col-12">
@@ -373,7 +373,9 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="grade" data-id="0" readonly>
+                                <span id="grade_point_show"></span>
+                                <input type="hidden" class="form-control col-12" id="grade_edit" placeholder="grade" readonly>
+
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
@@ -382,8 +384,8 @@
                     </tbody>
                 </table>
                 <div class="add_name_tbl_3_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
                     <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
                 </div>
             </div>
         </div>
@@ -404,7 +406,8 @@
 
                     console.log(assignmentData);
                     $('#edit_model_span').html(assignmentData.EmployeeName);
-                    $('#row_id_hidden_edit').val(id);
+                    $('#memo_edit').val(assignmentData.Remarks);
+                    $('#row_id_hidden_edit').val(assignmentData.Id);
                     $.getJSON('/api/sections/')
                         .done(function (data) {
                             $('#section_edit').empty();
@@ -498,6 +501,8 @@
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
                     $('#grade_edit').val(assignmentData.GradeId);
+
+                    $('#grade_point_show').text(assignmentData.GradePoint);
 
                 },
                 error: function () {
@@ -699,6 +704,7 @@
                 var explanationId = $('#explanation_new').find(":selected").val();
                 var unitPrice = $('#unitprice_new').val();
                 var gradeId = $('#grade_new').data('id');
+                var remarks = $('#memo_new').val();
 
 
 
@@ -712,6 +718,9 @@
                     CompanyId: companyId,
                     UnitPrice: unitPrice,
                     GradeId: gradeId,
+                    Remarks: remarks,
+                    SubCode: 1
+
 
                 };
 
@@ -755,6 +764,8 @@
 
             });
 
+
+
             $('#add_name_edit').on('click', function () {
 
                 var sectionId = $('#section_edit').find(":selected").val();
@@ -764,9 +775,9 @@
                 var companyId = $('#company_edit').find(":selected").val();
                 var explanationId = $('#explanation_edit').find(":selected").val();
                 var unitPrice = $('#unitprice_edit').val();
-                var gradeId = $('#grade_edit').val();
+                var gradeId = $('#grade_edit_hidden').val();
                 var rowId = $('#row_id_hidden_edit').val();
-
+                var remarks = $('#memo_edit').val();
 
                 var dataSingleAssignmentUpdate = {
                     Id: rowId,
@@ -778,7 +789,7 @@
                     CompanyId: companyId,
                     UnitPrice: unitPrice,
                     GradeId: gradeId,
-
+                    Remarks: remarks,
                 };
 
                 console.log(dataSingleAssignmentUpdate);
@@ -880,7 +891,7 @@
                                         $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
                                     else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
                                 }
                                 else {
@@ -888,7 +899,7 @@
                                         $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
                                     }
                                     else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
                                     }
                                 }
                                
@@ -909,7 +920,6 @@
                 //        });
                 //    });
 
-                $('#name_list_body').show();
                 GetListDropdownValue();
             });
             function GetListDropdownValue(){

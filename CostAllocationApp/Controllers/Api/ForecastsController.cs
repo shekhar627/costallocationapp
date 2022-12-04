@@ -31,50 +31,40 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Something Went Wrong");
             }
-            if (monthData.Length>0)
-            {
-                if (forecastBLL.CheckAssignmentId(int.Parse(assignmentId)))
-                {
-                    return BadRequest("Something Went Wrong");
-                }
-                foreach (var item in monthData)
-                {
-                    string[] temp = item.Split('_');
-                    Forecast forecast = new Forecast();
-                    decimal tempPoint = 0;
-                    if (Decimal.TryParse(temp[1],out tempPoint))
-                    {
-                        if (tempPoint>1 || tempPoint<0)
-                        {
-                            forecast.Points = 0;
-                            forecast.Total = 0;
 
-                        }
-                        else
-                        {
-                            forecast.Points = tempPoint;
-                            forecast.Total = Convert.ToDecimal(temp[2]);
-                        }
+            foreach (var item in monthData)
+            {
+                string[] temp = item.Split('_');
+                Forecast forecast = new Forecast();
+                decimal tempPoint = 0;
+                if (Decimal.TryParse(temp[1],out tempPoint))
+                {
+                    if (tempPoint>1 || tempPoint<0)
+                    {
+                        forecast.Points = 0;
+                        forecast.Total = 0;
+
                     }
                     else
                     {
                         forecast.Points = tempPoint;
-                        forecast.Total = 0;
+                        forecast.Total = Convert.ToDecimal(temp[2]);
                     }
-
-                    forecast.Month = Convert.ToInt32(temp[0]);
-                    forecast.Year = Convert.ToInt32(year);
-                    forecast.EmployeeAssignmentId = Convert.ToInt32(assignmentId);
-                    forecast.CreatedBy = "";
-                    forecast.CreatedDate = DateTime.Now;
-                    int result = forecastBLL.CreateForecast(forecast);
                 }
-                return Ok("Data Saved Successfully");
+                else
+                {
+                    forecast.Points = tempPoint;
+                    forecast.Total = 0;
+                }
+
+                forecast.Month = Convert.ToInt32(temp[0]);
+                forecast.Year = Convert.ToInt32(year);
+                forecast.EmployeeAssignmentId = Convert.ToInt32(assignmentId);
+                forecast.CreatedBy = "";
+                forecast.CreatedDate = DateTime.Now;
+                int result = forecastBLL.CreateForecast(forecast);
             }
-            else
-            {
-                return BadRequest("Something Went Wrong");
-            }
+            return Ok("Data Saved Successfully");
 
         }
     }

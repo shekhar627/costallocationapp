@@ -40,5 +40,10 @@ namespace CostAllocationApp.BLL
         {
             return employeeAssignmentDAL.RemoveAssignment(rowId);
         }
+
+        public List<EmployeeAssignmentViewModel> GetEmployeesByName(string employeeName)
+        {
+            return employeeAssignmentDAL.GetEmployeesByName(employeeName);
+        }
     }
 }

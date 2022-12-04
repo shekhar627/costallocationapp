@@ -17,5 +17,7 @@ namespace CostAllocationApp.Dtos
         public string CompanyId { get; set; }
         public string UnitPrice { get; set; }
         public string GradeId { get; set; }
+        public string Remarks { get; set; }
+        public int SubCode { get; set; }
     }
 }
