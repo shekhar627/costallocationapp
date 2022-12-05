@@ -62,7 +62,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 custom_add_name">
-            <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">add_name</a>
+            <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">Name Reg.</a>
             <table id="add_name_table_1">
                 <thead>
                     <tr>
@@ -139,7 +139,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Name</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Name Reg.</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -982,12 +982,12 @@
                         $.each(data, function (index, item) {
                             if (item.CompanyName.toLowerCase() == 'mw') {
                                 $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
                                 $('#add_name_table_1 tbody').append('</tr>');
                             }
                             else {
                                 $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
                                 $('#add_name_table_1 tbody').append('</tr>');
                             }
                          
