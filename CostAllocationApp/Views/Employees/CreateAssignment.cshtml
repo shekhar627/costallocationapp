@@ -192,7 +192,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_new" data-id="0"  placeholder="grade" readonly>
+                                <input type="text" class="form-control col-12" id="grade_new"  placeholder="grade" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="unitprice_new"  placeholder="unit price">
@@ -237,8 +237,8 @@
                     <tbody>
                         <tr>
                             @*<td>
-            <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-        </td>*@
+                                <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                            </td>*@
                             <td>
                                 <input type="text" class="form-control col-12" id="memo_edit" value="" placeholder="">
                             </td>
@@ -292,7 +292,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit" data-id="" placeholder="grade" readonly>
+                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="grade" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
@@ -306,6 +306,8 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="grade_edit_hidden" />
+        <input type="hidden" id="grade_new_hidden" />
     </div>
 </div>
 
@@ -424,7 +426,7 @@
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
                     $('#grade_edit').val(assignmentData.GradePoint);
-                    $('#grade_edit').attr('data-id', assignmentData.GradeId);
+                    $('#grade_edit_hidden').val(assignmentData.GradeId);
                    
                 },
                 error: function () {
@@ -919,12 +921,11 @@
                     //    unitPrice: _unitPrice
                     //},
                     success: function (data) {
-                        console.log(data);
-                        $('#grade_new').attr('data-id', data.Id);
+                        $('#grade_new_hidden').val(data.Id);
                         $('#grade_new').val(data.SalaryGrade);
                     },
                     error: function () {
-                        $('#grade_new').attr('data-id', '');
+                        $('#grade_new_hidden').val('');
                         $('#grade_new').val('');
                     }
                 });
@@ -941,13 +942,12 @@
                     //    unitPrice: _unitPrice
                     //},
                     success: function (data) {
-                        console.log(data);
-                        $('#grade_edit').attr('data-id', data.Id);
+                        $('#grade_edit_hidden').val(data.Id);
                         $('#grade_edit').val(data.SalaryGrade);
                     },
                     error: function () {
-                        $('#grade_edit').attr('data-id', '');
                         $('#grade_edit').val('');
+                        $('#grade_edit_hidden').val('');
                     }
                 });
             });
@@ -1012,7 +1012,7 @@
                 var companyId = $('#company_new').find(":selected").val();
                 var explanationId = $('#explanation_new').find(":selected").val();
                 var unitPrice = $('#unitprice_new').val();
-                var gradeId = $('#grade_new').data('id');
+                var gradeId = $('#grade_new_hidden').val();
                 var remarks = $('#memo_new').val();
 
 
@@ -1064,8 +1064,8 @@
                         alert('Success');
                         location.reload();
                     },
-                    error: function () {
-                        alert("Error please try again");
+                    error: function (data) {
+                        alert(data.responseJSON.Message);
                         //$('#modal_add_name_new').modal('toggle');
                     }
                 });
@@ -1083,7 +1083,7 @@
                 var companyId = $('#company_edit').find(":selected").val();
                 var explanationId = $('#explanation_edit').find(":selected").val();
                 var unitPrice = $('#unitprice_edit').val();
-                var gradeId = $('#grade_edit').data('id');
+                var gradeId = $('#grade_edit_hidden').val();
                 var rowId = $('#row_id_hidden_edit').val();
                 var remarks = $('#memo_edit').val();
 
@@ -1131,8 +1131,8 @@
                         alert('Success');
                         location.reload();
                     },
-                    error: function () {
-                        alert("Error please try again");
+                    error: function (data) {
+                        alert(data.responseJSON.Message);
                         //$('#modal_add_name_new').modal('toggle');
                     }
                 });

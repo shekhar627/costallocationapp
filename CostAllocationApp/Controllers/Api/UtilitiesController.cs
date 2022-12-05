@@ -80,7 +80,7 @@ namespace CostAllocationApp.Controllers.Api
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
             if (!string.IsNullOrEmpty(employeeName))
             {
-                employeeAssignment.EmployeeName = employeeName;
+                employeeAssignment.EmployeeName = employeeName.Trim();
             }
             else
             {
@@ -186,7 +186,7 @@ namespace CostAllocationApp.Controllers.Api
         {
             if (!String.IsNullOrEmpty(employeeName))
             {
-                List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesByName(employeeName);
+                List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesByName(employeeName.Trim());
 
                 if (employeeAssignmentViewModels.Count>0)
                 {

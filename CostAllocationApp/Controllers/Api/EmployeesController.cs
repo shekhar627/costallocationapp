@@ -143,12 +143,17 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Grade Id");
             }
+
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.Remarks))
+            {
+                employeeAssignmentDTO.Remarks = "";
+            }
             #endregion
 
             employeeAssignment.CreatedBy = "";
             employeeAssignment.CreatedDate = DateTime.Now;
             employeeAssignment.IsActive = "1";
-            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks;
+            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks.Trim();
             employeeAssignment.SubCode = employeeAssignmentDTO.SubCode;
 
 
@@ -278,12 +283,17 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Grade Id");
             }
+
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.Remarks))
+            {
+                employeeAssignmentDTO.Remarks = "";
+            }
             #endregion
 
             employeeAssignment.UpdatedBy = "";
             employeeAssignment.UpdatedDate = DateTime.Now;
             employeeAssignment.Id = employeeAssignmentDTO.Id;
-            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks;
+            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks.Trim();
 
 
             int result = employeeAssignmentBLL.UpdateAssignment(employeeAssignment);

@@ -234,7 +234,7 @@ namespace CostAllocationApp.DAL
             string where = "";
             if (!string.IsNullOrEmpty(employeeAssignment.EmployeeName))
             {
-                where += $" ea.EmployeeName like '%{employeeAssignment.EmployeeName}%' and ";
+                where += $" ea.EmployeeName like N'%{employeeAssignment.EmployeeName}%' and ";
             }
             if (employeeAssignment.SectionId > 0)
             {
@@ -344,7 +344,7 @@ namespace CostAllocationApp.DAL
             string where = "";
             if (!string.IsNullOrEmpty(employeeAssignment.EmployeeName))
             {
-                where += $" ea.EmployeeName like '%{employeeAssignment.EmployeeName}%' and ";
+                where += $" ea.EmployeeName like N'%{employeeAssignment.EmployeeName.Trim()}%' and ";
             }
             if (employeeAssignment.Sections!=null)
             {
@@ -538,7 +538,7 @@ namespace CostAllocationApp.DAL
         public List<EmployeeAssignmentViewModel> GetEmployeesByName(string employeeName)
         {
 
-            string where = $"ea.EmployeeName='{employeeName}'";
+            string where = $"ea.EmployeeName = N'{employeeName}'";
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
