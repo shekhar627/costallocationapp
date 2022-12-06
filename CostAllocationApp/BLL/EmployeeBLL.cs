@@ -22,9 +22,9 @@ namespace CostAllocationApp.BLL
         {
             return employeeDAL.GetAllEmployees();
         }
-        public int RemoveEmployee(int employeeIds)
-        {
-            return employeeDAL.RemoveEmployee(employeeIds);
-        }
+        //public int RemoveEmployee(int employeeIds)
+        //{
+        //    return employeeDAL.RemoveEmployee(employeeIds);
+        //}
     }
 }

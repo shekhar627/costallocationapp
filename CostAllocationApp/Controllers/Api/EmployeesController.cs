@@ -30,6 +30,14 @@ namespace CostAllocationApp.Controllers.Api
             decimal tempUnitPrice = 0;
 
             #region validation of inputs
+            if (!String.IsNullOrEmpty(employeeAssignmentDTO.EmployeeName))
+            {
+                employeeAssignment.EmployeeName = employeeAssignmentDTO.EmployeeName.Trim();
+            }
+            else
+            {
+                return BadRequest("Invalid Employee Name");
+            }
             if (int.TryParse(employeeAssignmentDTO.SectionId, out tempValue))
             {
                 if (tempValue <= 0)
@@ -135,10 +143,18 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Grade Id");
             }
+
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.Remarks))
+            {
+                employeeAssignmentDTO.Remarks = "";
+            }
             #endregion
 
             employeeAssignment.CreatedBy = "";
             employeeAssignment.CreatedDate = DateTime.Now;
+            employeeAssignment.IsActive = "1";
+            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks.Trim();
+            employeeAssignment.SubCode = employeeAssignmentDTO.SubCode;
 
 
             int result = employeeAssignmentBLL.CreateAssignment(employeeAssignment);
@@ -267,10 +283,17 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Grade Id");
             }
+
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.Remarks))
+            {
+                employeeAssignmentDTO.Remarks = "";
+            }
             #endregion
 
             employeeAssignment.UpdatedBy = "";
             employeeAssignment.UpdatedDate = DateTime.Now;
+            employeeAssignment.Id = employeeAssignmentDTO.Id;
+            employeeAssignment.Remarks = employeeAssignmentDTO.Remarks.Trim();
 
 
             int result = employeeAssignmentBLL.UpdateAssignment(employeeAssignment);
@@ -285,7 +308,7 @@ namespace CostAllocationApp.Controllers.Api
         }
 
         [HttpGet]
-        public IHttpActionResult SearchAssignment(string EmployeeName, string SectionId, string DepartmentId, string InchargeId, string RoleId, string ExplanationId, string CompanyId, bool Status)
+        public IHttpActionResult SearchAssignment(string EmployeeName="", string SectionId="", string DepartmentId="", string InchargeId="", string RoleId="", string ExplanationId="", string CompanyId="", bool Status=true)
         {
 
             int tempValue = 0;
@@ -386,5 +409,21 @@ namespace CostAllocationApp.Controllers.Api
             }
 
         }
+
+        [HttpPut]
+        public IHttpActionResult RemoveAssignment(int id)
+        {
+            int result =  employeeAssignmentBLL.RemoveAssignment(id);
+            if (result>0)
+            {
+                return Ok("Data Removed Successfully");
+            }
+            else
+            {
+                return BadRequest("Something Went Wrong");
+            }
+        }
+
+
     }
 }

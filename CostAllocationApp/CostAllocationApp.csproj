@@ -49,12 +49,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -115,15 +124,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -138,6 +138,7 @@
     <Compile Include="BLL\EmployeeBLL.cs" />
     <Compile Include="BLL\EmployeeAssignmentBLL.cs" />
     <Compile Include="BLL\ExplanationsBLL.cs" />
+    <Compile Include="BLL\ForecastBLL.cs" />
     <Compile Include="BLL\InChargeBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
     <Compile Include="BLL\SalaryBLL.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\EmployeesController.cs" />
     <Compile Include="Controllers\Api\ExplanationsController.cs" />
+    <Compile Include="Controllers\Api\ForecastsController.cs" />
     <Compile Include="Controllers\Api\InChargesController.cs" />
     <Compile Include="Controllers\Api\RolesController.cs" />
     <Compile Include="Controllers\Api\SalariesController.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ExplanationsController.cs" />
+    <Compile Include="Controllers\ForecastsController.cs" />
     <Compile Include="Controllers\InChargesController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -167,6 +170,7 @@
     <Compile Include="DAL\EmployeeDAL.cs" />
     <Compile Include="DAL\EmployeeAssignmentDAL.cs" />
     <Compile Include="DAL\ExplanationDAL.cs" />
+    <Compile Include="DAL\ForecastDAL.cs" />
     <Compile Include="DAL\InChargeDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\SalaryDAL.cs" />
@@ -177,6 +181,7 @@
     </Compile>
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Forecast.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeAssignment.cs" />
@@ -598,6 +603,7 @@
     <Content Include="Views\Employees\NameList.cshtml" />
     <Content Include="Views\Employees\CreateAssignment.cshtml" />
     <Content Include="Views\Employees\CreateEmployee.cshtml" />
+    <Content Include="Views\Forecasts\CreateForecast.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

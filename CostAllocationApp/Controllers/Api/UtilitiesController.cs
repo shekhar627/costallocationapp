@@ -7,6 +7,7 @@ using System.Web.Http;
 using CostAllocationApp.Models;
 using CostAllocationApp.BLL;
 using CostAllocationApp.ViewModels;
+using CostAllocationApp.Dtos;
 
 namespace CostAllocationApp.Controllers.Api
 {
@@ -14,11 +15,16 @@ namespace CostAllocationApp.Controllers.Api
     {
         DepartmentBLL departmentBLL = null;
         EmployeeAssignmentBLL employeeAssignmentBLL = null;
+        SalaryBLL salaryBLL = null;
         public UtilitiesController()
         {
             departmentBLL = new DepartmentBLL();
             employeeAssignmentBLL = new EmployeeAssignmentBLL();
+            salaryBLL =new SalaryBLL();
         }
+
+
+        [Route("api/utilities/DepartmentsBySection/{id}")]
         [HttpGet]
         [ActionName("DepartmentsBySection")]
         public IHttpActionResult DepartmentsBySectionId(string id)
@@ -44,6 +50,7 @@ namespace CostAllocationApp.Controllers.Api
 
         }
 
+        [Route("api/utilities/AssignmentById/{id}")]
         [HttpGet]
         public IHttpActionResult AssignmentById(string id)
         {
@@ -73,7 +80,7 @@ namespace CostAllocationApp.Controllers.Api
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
             if (!string.IsNullOrEmpty(employeeName))
             {
-                employeeAssignment.EmployeeName = employeeName;
+                employeeAssignment.EmployeeName = employeeName.Trim();
             }
             else
             {
@@ -140,14 +147,69 @@ namespace CostAllocationApp.Controllers.Api
             List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesBySearchFilter(employeeAssignment);
 
             return Ok(employeeAssignmentViewModels);
-            //if (employeeAssignmentViewModels.Count > 0)
-            //{
-            //    return Ok(employeeAssignmentViewModels);
-            //}
-            //else
-            //{
-            //    return NotFound();
-            //}
+
+        }
+
+        [Route("api/utilities/CompareGrade/{unitPrice}")]
+        [HttpGet]
+        public IHttpActionResult CompareGrade(string unitPrice)
+        {
+            decimal tempVal = 0;
+            if (decimal.TryParse(unitPrice,out tempVal))
+            {
+                if (tempVal>0)
+                {
+                    Salary salary = salaryBLL.CompareSalary(tempVal);
+                    if (salary!=null)
+                    {
+                        return Ok(salary);
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid Unit Price");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Invalid Unit Price");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Unit Price");
+            }
+        }
+
+        [Route("api/utilities/GetEmployeesByName/{employeeName}")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesByName(string employeeName)
+        {
+            if (!String.IsNullOrEmpty(employeeName))
+            {
+                List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesByName(employeeName.Trim());
+
+                if (employeeAssignmentViewModels.Count>0)
+                {
+                    return Ok(employeeAssignmentViewModels);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+            
+        }
+
+        [HttpPost]
+        public IHttpActionResult SearchMultipleEmployee(EmployeeAssignmentDTO employeeAssignment)
+        {
+            List<EmployeeAssignmentViewModel> employeeAssignmentViewModels = employeeAssignmentBLL.GetEmployeesBySearchFilterForMultipleSearch(employeeAssignment);
+
+            return Ok(employeeAssignmentViewModels);
         }
 
     }

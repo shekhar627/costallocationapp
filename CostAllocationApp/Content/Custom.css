@@ -5,6 +5,7 @@ body {
     overflow-x: auto;
 }
 
+
 /*-----------------
 	2. Name List
 -----------------------*/
@@ -575,7 +576,7 @@ body {
     margin-bottom: 50px;
 }
 
-#add_name_add, #add_name_add_new {
+#add_name_add, #add_name_add_new, #save_forecast {
     background-color: #3c4b5d;
     color: white;
     padding: 5px;
@@ -622,9 +623,7 @@ body {
 #namelist_tbl_header {
     display: none;
 }*/
-#name_list_body {
-    display: none;
-}
+
 
 #name_list_search thead th {
     border: none !important;
@@ -961,4 +960,10 @@ body {
 #employee_name_search {
     border: none;
     width: 119px;
+}
+
+
+/*---------------------------------------add name previous--------------------------*/
+#fixed_employee_info{
+    background-color: khaki;
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CostAllocationApp.DAL;
+using CostAllocationApp.Dtos;
 using CostAllocationApp.Models;
 using CostAllocationApp.ViewModels;
 
@@ -35,6 +36,20 @@ namespace CostAllocationApp.BLL
         public List<EmployeeAssignmentViewModel> GetEmployeesBySearchFilter(EmployeeAssignment employeeAssignment)
         {
             return employeeAssignmentDAL.GetEmployeesBySearchFilter(employeeAssignment);
+        }
+        public int RemoveAssignment(int rowId)
+        {
+            return employeeAssignmentDAL.RemoveAssignment(rowId);
+        }
+
+        public List<EmployeeAssignmentViewModel> GetEmployeesByName(string employeeName)
+        {
+            return employeeAssignmentDAL.GetEmployeesByName(employeeName);
+        }
+
+        public List<EmployeeAssignmentViewModel> GetEmployeesBySearchFilterForMultipleSearch(EmployeeAssignmentDTO employeeAssignment)
+        {
+            return employeeAssignmentDAL.GetEmployeesBySearchFilterForMultipleSearch(employeeAssignment);
         }
     }
 }
