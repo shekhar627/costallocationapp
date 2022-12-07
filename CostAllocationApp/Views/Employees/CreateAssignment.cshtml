@@ -770,7 +770,6 @@
 
         $(document).ready(function () {
 
-
             // for add new
             $.getJSON('/api/Roles/')
                 .done(function (data) {
@@ -954,7 +953,6 @@
 
 
 
-
             $('#add_name_search_button').on('click', function () {
                 var sectionId = $('#section_search').find(":selected").val();
                 var inchargeId = $('#incharge_search').find(":selected").val();
@@ -990,7 +988,7 @@
                                 $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
                                 $('#add_name_table_1 tbody').append('</tr>');
                             }
-                         
+
                             i++;
                         });
                     },
@@ -1001,6 +999,7 @@
 
 
             });
+            
 
             $('#add_name_add_new').on('click', function () {
 
