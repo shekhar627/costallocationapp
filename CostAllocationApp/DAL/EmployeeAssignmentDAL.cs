@@ -102,7 +102,7 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.RoleId={employeeAssignment.RoleId} and ";
             }
-            if (employeeAssignment.ExplanationId > 0)
+            if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
             {
                 where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
             }
@@ -117,11 +117,10 @@ namespace CostAllocationApp.DAL
 
             where += " 1=1 ";
             string query = $@"select ea.id as AssignmentId,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
                             join Companies com on ea.CompanyId = com.Id
-                            join Explanations ex on ea.ExplanationId = ex.Id
                             join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id where {where}";
 
@@ -148,8 +147,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
                             employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
                             employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
-                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"].ToString();
-                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
+                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
@@ -175,11 +174,10 @@ namespace CostAllocationApp.DAL
         {
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks,gd.GradePoints,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice, ea.GradeId 
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice, ea.GradeId 
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
                             join Companies com on ea.CompanyId = com.Id
-                            join Explanations ex on ea.ExplanationId = ex.Id
                             join Roles rl on ea.RoleId = rl.Id
                             join Grades gd on ea.GradeId = gd.Id 
                             join InCharges inc on ea.InChargeId = inc.Id where ea.Id={assignmentId}";
@@ -207,8 +205,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
                             employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
                             employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
-                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"].ToString();
-                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
+                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
@@ -252,7 +250,7 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.RoleId={employeeAssignment.RoleId} and ";
             }
-            if (employeeAssignment.ExplanationId > 0)
+            if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
             {
                 where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
             }
@@ -275,12 +273,11 @@ namespace CostAllocationApp.DAL
 
             where += " 1=1 ";
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
                             join Companies com on ea.CompanyId = com.Id
-                            join Explanations ex on ea.ExplanationId = ex.Id
                             join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id 
                             join Grades gd on ea.GradeId = gd.Id
@@ -312,8 +309,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
                             employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
                             employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
-                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"].ToString();
-                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
+                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
@@ -473,12 +470,12 @@ namespace CostAllocationApp.DAL
 
             where += " 1=1 ";
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
                             join Companies com on ea.CompanyId = com.Id
-                            join Explanations ex on ea.ExplanationId = ex.Id
+                            
                             join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id 
                             join Grades gd on ea.GradeId = gd.Id
@@ -509,8 +506,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
                             employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
                             employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
-                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"].ToString();
-                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" :  rdr["ExplanationId"].ToString();
+                            //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
@@ -541,12 +538,11 @@ namespace CostAllocationApp.DAL
             string where = $"ea.EmployeeName = N'{employeeName}'";
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
                             join Companies com on ea.CompanyId = com.Id
-                            join Explanations ex on ea.ExplanationId = ex.Id
                             join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id 
                             join Grades gd on ea.GradeId = gd.Id
@@ -576,8 +572,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
                             employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
                             employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
-                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"].ToString();
-                            employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
+                            //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();

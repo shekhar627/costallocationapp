@@ -26,5 +26,9 @@ namespace CostAllocationApp.BLL
         {
             return explanationDAL.RemoveExplanations(explanationIds);
         }
+        public Explanation GetSingleExplanationByExplanationId(int id)
+        {
+            return explanationDAL.GetSingleExplanationByExplanationId(id);
+        }
     }
 }

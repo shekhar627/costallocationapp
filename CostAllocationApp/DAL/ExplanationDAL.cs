@@ -69,6 +69,38 @@ namespace CostAllocationApp.DAL
                 return explanations;
             }
         }
+        public Explanation GetSingleExplanationByExplanationId(int id)
+        {
+            Explanation explanation = new Explanation();
+            string query = "";
+            query = "SELECT * FROM Explanations WHERE IsActive=1 and id="+id;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            
+                            explanation.Id = Convert.ToInt32(rdr["Id"]);
+                            explanation.ExplanationName = rdr["Name"].ToString();
+                            explanation.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
+                            explanation.CreatedBy = rdr["CreatedBy"].ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return explanation;
+            }
+        }
         public int RemoveExplanations(int explanationIds)
         {
             int result = 0;
