@@ -72,8 +72,10 @@ namespace CostAllocationApp.BLL
         public List<EmployeeAssignmentViewModel> GetEmployeesBySearchFilter(EmployeeAssignment employeeAssignment)
         {
             var employees = employeeAssignmentDAL.GetEmployeesBySearchFilter(employeeAssignment);
+            
             if (employees.Count > 0)
             {
+                int count = 1;
                 foreach (var item in employees)
                 {
                     if (String.IsNullOrEmpty(item.ExplanationId))
@@ -85,6 +87,8 @@ namespace CostAllocationApp.BLL
                     {
                         item.ExplanationName = explanationsBLL.GetSingleExplanationByExplanationId(Int32.Parse(item.ExplanationId)).ExplanationName;
                     }
+                    item.SerialNumber = count;
+                    count++;
                 }
 
                 if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))

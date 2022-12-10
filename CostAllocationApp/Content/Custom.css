@@ -5,6 +5,15 @@ body {
     overflow-x: auto;
 }
 
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #3c4b5d !important;
+    border-color: #3c4b5d !important;
+    color:white !important;
+}
+.page-link {
+    color: black !important;
+}
+
 
 /*-----------------
 	2. Name List
@@ -487,7 +496,7 @@ body {
 
 #add_name_table_1 {
     border: 1px solid black !important;
-    width: 100%;
+    width: 100% !important;
 }
 
     #add_name_table_1 thead tr:nth-of-type(1) {
@@ -500,16 +509,43 @@ body {
         /*height:40px !important;*/
     }
 
-.add_name_btn_group a {
-    display: inline-block;
-    background-color: #3c4b5d;
-    padding: 5px;
-    border-radius: 3px;
-    color: white;
-    font-size: 14px;
-    margin-right: 20px;
-    margin: 5px;
-}
+    .link_add {
+        display: inline-block;
+        background-color: #3c4b5d;
+        padding: 5px;
+        border-radius: 3px;
+        color: white;
+        font-size: 14px;
+        margin-right: 20px;
+        margin: 5px;
+    }
+    .link_add:hover{
+        color:white;
+    }
+    .link_edit {
+        display: inline-block;
+        background-color: #3c4b5d;
+        padding: 5px;
+        border-radius: 3px;
+        color: white;
+        font-size: 14px;
+        margin-right: 20px;
+        margin: 5px;
+    }
+    .link_edit:hover{
+        color:white;
+    }
+
+        .add_name_btn_group a {
+            display: inline-block;
+            background-color: #3c4b5d;
+            padding: 5px;
+            border-radius: 3px;
+            color: white;
+            font-size: 14px;
+            margin-right: 20px;
+            margin: 5px;
+        }
 
 
 

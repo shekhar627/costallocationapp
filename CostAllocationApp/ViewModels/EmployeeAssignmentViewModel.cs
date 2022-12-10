@@ -7,6 +7,7 @@ namespace CostAllocationApp.ViewModels
 {
     public class EmployeeAssignmentViewModel
     {
+        public int SerialNumber { get; set; }
         public int Id { get; set; }
         public string EmployeeName { get; set; }
         public string SectionId { get; set; }

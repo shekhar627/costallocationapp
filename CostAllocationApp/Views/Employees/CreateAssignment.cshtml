@@ -972,24 +972,76 @@
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
-
                         console.log(data);
-                        //$('#modal_add_name_new').modal('toggle');
+                        var employeeNameTemp = '';
                         $('#add_name_table_1 tbody').empty();
-                        var i = 1;
-                        $.each(data, function (index, item) {
-                            if (item.CompanyName.toLowerCase() == 'mw') {
-                                $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
-                                $('#add_name_table_1 tbody').append('</tr>');
-                            }
-                            else {
-                                $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td></td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
-                                $('#add_name_table_1 tbody').append('</tr>');
-                            }
+                        $('#add_name_table_1').DataTable({
+                            data: data,
+                            columns: [
+                                {
+                                    data: "SerialNumber",
+                                    orderable: false,
+                                    searching: false,
+                                },
+                                {
+                                    data: 'EmployeeName',
+                                    render: function(employeeName) {
+                                        employeeNameTemp = employeeName;
+                                        return employeeName;
 
-                            i++;
+                                    },
+                                    orderable: true,
+                                },
+                                {
+                                    data: 'SubCode',
+                                    orderable: false,
+                                    searching: false,
+                                },
+                                {
+                                    data: 'Remarks',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'SectionName',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'DepartmentName',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'InchargeName',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'RoleName',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'ExplanationName',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'CompanyName',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'GradePoint',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'UnitPrice',
+                                    orderable: false,
+                                },
+                                {
+                                    data: 'Id',
+                                    render: function (id) {
+                                        return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`;
+                                    },
+                                    orderable: false,
+                                    searching: false,
+                                }
+                            ]
                         });
                     },
                     error: function () {
