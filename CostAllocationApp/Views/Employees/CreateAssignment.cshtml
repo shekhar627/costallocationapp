@@ -974,6 +974,7 @@
                     success: function (data) {
                         console.log(data);
                         var employeeNameTemp = '';
+                        var companyNameTemp = '';
                         $('#add_name_table_1 tbody').empty();
                         $('#add_name_table_1').DataTable({
                             data: data,
@@ -1023,10 +1024,22 @@
                                 },
                                 {
                                     data: 'CompanyName',
+                                    render: function (companyName) {
+                                        companyNameTemp = companyName;
+                                        return companyName;
+                                    },
                                     orderable: false,
                                 },
                                 {
                                     data: 'GradePoint',
+                                    render: function (gradePoint) {
+                                        if (companyNameTemp.toLowerCase() == 'mw') {
+                                            return gradePoint;
+                                        }
+                                        else {
+                                            return '';
+                                        }
+                                    },
                                     orderable: false,
                                 },
                                 {
@@ -1036,6 +1049,7 @@
                                 {
                                     data: 'Id',
                                     render: function (id) {
+
                                         return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`;
                                     },
                                     orderable: false,
