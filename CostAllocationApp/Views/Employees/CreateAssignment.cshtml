@@ -292,7 +292,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="grade" readonly>
+                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
@@ -428,7 +428,7 @@
                     if (assignmentData.CompanyName.toLowerCase() == "mw") {
                         $('#grade_edit').val(assignmentData.GradePoint);
                     } else {
-                        $('#grade_edit').val();
+                        $('#grade_edit').val("");
                     }                    
                     $('#grade_edit_hidden').val(assignmentData.GradeId);
                    
@@ -676,11 +676,14 @@
         function unitPriceChange(rowId,element) {
             let _unitPrice = $(element).val();
 
-            if (unitPrices.includes(_unitPrice)) {
-
+            if (!unitPrices.includes(_unitPrice)) {
                 $('#identity_row_' + rowId).css('color', 'red');
                 $('#sub_code_row_' + rowId).css('color', 'red');
             }
+            //else {
+            //    $('#identity_row_' + rowId).css('color', 'red');
+            //    $('#sub_code_row_' + rowId).css('color', 'red');
+            //}
 
             $.ajax({
                 url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -988,10 +991,32 @@
                         //$('#modal_add_name_new').modal('toggle');
                         $('#add_name_table_1 tbody').empty();
                         var i = 1;
+
+                        let tempName = "";
+                        let tempUnitPrice = "";
+
+                        let isUnitPriceMatch = "";
+                        let matchColor = "";
+
                         $.each(data, function (index, item) {
+                            matchColor = "";
+                            if (tempName != "") {
+                                if (tempName.toLowerCase() == item.EmployeeName.toLowerCase()) {
+                                    if (item.GradePoint != tempUnitPrice) {
+                                        isUnitPriceMatch = "no";
+                                        matchColor = "style='color:red;'"
+                                    }
+                                } else {
+                                    tempName = item.EmployeeName;
+                                    tempUnitPrice = item.UnitPrice;
+                                }
+                            } else {
+                                tempName = item.EmployeeName;
+                                tempUnitPrice = item.UnitPrice;
+                            }
                             if (item.CompanyName.toLowerCase() == 'mw') {
                                 $('#add_name_table_1 tbody').append(`<tr data-id="${item.Id}">`);
-                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td>${item.EmployeeName}</td><td>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
+                                $('#add_name_table_1 tbody').append(`<td>${i}</td><td ${matchColor}>${item.EmployeeName}</td><td ${matchColor}>${item.SubCode}</td><td>${item.Remarks}</td><td>${item.SectionName}</td><td>${item.DepartmentName}</td><td>${item.InchargeName}</td><td>${item.RoleName}</td><td>${item.ExplanationName}</td><td>${item.CompanyName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td><td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${item.EmployeeName}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`);
                                 $('#add_name_table_1 tbody').append('</tr>');
                             }
                             else {
