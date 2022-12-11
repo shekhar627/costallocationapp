@@ -298,7 +298,8 @@ namespace CostAllocationApp.DAL
                             join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id 
                             join Grades gd on ea.GradeId = gd.Id
-                            where {where}";
+                            where {where}
+                            order by ea.EmployeeName asc";
 
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();

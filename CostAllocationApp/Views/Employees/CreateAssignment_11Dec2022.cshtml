@@ -965,6 +965,7 @@
 
 
             $('#add_name_search_button').on('click', function () {
+                $("#add_name_table_1").dataTable().fnDestroy();
                 var sectionId = $('#section_search').find(":selected").val();
                 var inchargeId = $('#incharge_search').find(":selected").val();
                 var departmentId = $('#department_search').find(":selected").val();
