@@ -274,18 +274,34 @@ namespace CostAllocationApp.DAL
             }
 
             where += " 1=1 ";
-            string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
-                            ,gd.GradePoints,ea.IsActive
-                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
-                            join Departments dep on ea.DepartmentId = dep.Id
-                            join Companies com on ea.CompanyId = com.Id
-                            join Explanations ex on ea.ExplanationId = ex.Id
-                            join Roles rl on ea.RoleId = rl.Id
-                            join InCharges inc on ea.InChargeId = inc.Id 
-                            join Grades gd on ea.GradeId = gd.Id
-                            where {where}";
-
+            //string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,
+            //                ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.ExplanationId, ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+            //                ,gd.GradePoints,ea.IsActive
+            //                from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
+            //                join Departments dep on ea.DepartmentId = dep.Id
+            //                join Companies com on ea.CompanyId = com.Id
+            //                join Explanations ex on ea.ExplanationId = ex.Id
+            //                join Roles rl on ea.RoleId = rl.Id
+            //                join InCharges inc on ea.InChargeId = inc.Id 
+            //                join Grades gd on ea.GradeId = gd.Id
+            //                where {where}";
+            string query = $@"SELECT ea.id as AssignmentId,ea.EmployeeName,ea.SectionId
+	                            , sec.Name as SectionName, ea.Remarks, ea.SubCode
+	                            , ea.DepartmentId, dep.Name as DepartmentName
+	                            , ea.InChargeId, inc.Name as InchargeName
+	                            , ea.RoleId,rl.Name as RoleName,ea.ExplanationId
+	                            , ex.Name as ExplanationName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+	                            , gd.GradePoints,ea.IsActive
+                            FROM EmployeesAssignments ea 
+	                            JOIN Sections sec ON ea.SectionId = sec.Id
+	                            JOIN Departments dep ON ea.DepartmentId = dep.Id
+	                            JOIN Companies com ON ea.CompanyId = com.Id
+	                            JOIN Explanations ex ON ea.ExplanationId = ex.Id
+	                            JOIN Roles rl ON ea.RoleId = rl.Id
+	                            JOIN InCharges inc ON ea.InChargeId = inc.Id 
+	                            JOIN Grades gd ON ea.GradeId = gd.Id
+                            WHERE {where}
+                            ORDER BY ea.EmployeeName ASC";
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
             //HttpContext.Current.Response.Write("query: " + query + "<br>");
             //HttpContext.Current.Response.End();
@@ -319,8 +335,22 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
-                            employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            {
+                                employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.Remarks = "";
+                            }
+                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            {
+                                employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.SubCode = 0;
+                            }
 
                             //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
                             //HttpContext.Current.Response.End();
@@ -583,8 +613,23 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
-                            employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            {
+                                employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.Remarks = "";
+                            }
+                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            {
+                                employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.SubCode = 0;
+                            }
+                            
 
 
                             employeeAssignments.Add(employeeAssignmentViewModel);
