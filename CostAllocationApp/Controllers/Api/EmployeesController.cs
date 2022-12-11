@@ -90,19 +90,27 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Role Id");
             }
-            if (int.TryParse(employeeAssignmentDTO.ExplanationId, out tempValue))
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.ExplanationId))
             {
-                if (tempValue <= 0)
-                {
-
-                    return BadRequest("Invalid Explanation Id");
-                }
-                employeeAssignment.ExplanationId = tempValue;
+                employeeAssignment.ExplanationId=null;
             }
             else
             {
-                return BadRequest("Invalid Explanation Id");
+                if (int.TryParse(employeeAssignmentDTO.ExplanationId, out tempValue))
+                {
+                    if (tempValue <= 0)
+                    {
+
+                        return BadRequest("Invalid Explanation Id");
+                    }
+                    employeeAssignment.ExplanationId = tempValue.ToString();
+                }
+                else
+                {
+                    return BadRequest("Invalid Explanation Id");
+                }
             }
+
 
             if (int.TryParse(employeeAssignmentDTO.CompanyId, out tempValue))
             {
@@ -150,6 +158,7 @@ namespace CostAllocationApp.Controllers.Api
             }
             #endregion
 
+            //employeeAssignment.ExplanationId = employeeAssignmentDTO.ExplanationId;
             employeeAssignment.CreatedBy = "";
             employeeAssignment.CreatedDate = DateTime.Now;
             employeeAssignment.IsActive = "1";
@@ -230,19 +239,27 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Invalid Role Id");
             }
-            if (int.TryParse(employeeAssignmentDTO.ExplanationId, out tempValue))
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.ExplanationId))
             {
-                if (tempValue <= 0)
-                {
-
-                    return BadRequest("Invalid Explanation Id");
-                }
-                employeeAssignment.ExplanationId = tempValue;
+                employeeAssignment.ExplanationId = null;
             }
             else
             {
-                return BadRequest("Invalid Explanation Id");
+                if (int.TryParse(employeeAssignmentDTO.ExplanationId, out tempValue))
+                {
+                    if (tempValue <= 0)
+                    {
+
+                        return BadRequest("Invalid Explanation Id");
+                    }
+                    employeeAssignment.ExplanationId = tempValue.ToString();
+                }
+                else
+                {
+                    return BadRequest("Invalid Explanation Id");
+                }
             }
+
 
             if (int.TryParse(employeeAssignmentDTO.CompanyId, out tempValue))
             {
@@ -289,7 +306,7 @@ namespace CostAllocationApp.Controllers.Api
                 employeeAssignmentDTO.Remarks = "";
             }
             #endregion
-
+            employeeAssignment.ExplanationId = employeeAssignmentDTO.ExplanationId;
             employeeAssignment.UpdatedBy = "";
             employeeAssignment.UpdatedDate = DateTime.Now;
             employeeAssignment.Id = employeeAssignmentDTO.Id;
@@ -351,15 +368,15 @@ namespace CostAllocationApp.Controllers.Api
 
                 }
             }
-            if (int.TryParse(ExplanationId, out tempValue))
-            {
-                if (tempValue > 0)
-                {
+            //if (int.TryParse(ExplanationId, out tempValue))
+            //{
+            //    if (tempValue > 0)
+            //    {
 
-                    employeeAssignment.ExplanationId = tempValue;
-                }
+            //        employeeAssignment.ExplanationId = tempValue;
+            //    }
 
-            }
+            //}
 
             if (int.TryParse(CompanyId, out tempValue))
             {

@@ -118,14 +118,16 @@ namespace CostAllocationApp.Controllers.Api
             {
                 employeeAssignment.RoleId = 0;
             }
-            if (!string.IsNullOrEmpty(explanationId))
-            {
-                employeeAssignment.ExplanationId = Convert.ToInt32(explanationId);
-            }
-            else
-            {
-                employeeAssignment.ExplanationId = 0;
-            }
+            //if (!string.IsNullOrEmpty(explanationId))
+            //{
+            //    employeeAssignment.ExplanationId = Convert.ToInt32(explanationId);
+            //}
+            //else
+            //{
+            //    employeeAssignment.ExplanationId = 0;
+            //}
+
+            employeeAssignment.ExplanationId = explanationId;
             if (!string.IsNullOrEmpty(companyId))
             {
                 employeeAssignment.CompanyId = Convert.ToInt32(companyId);
