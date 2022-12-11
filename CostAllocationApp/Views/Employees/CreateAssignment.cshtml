@@ -1,4 +1,3 @@
-﻿
 @{
     ViewBag.Title = "Create Assignment";
 }
@@ -292,7 +291,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="grade" readonly>
+                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
@@ -425,7 +424,11 @@
                             });
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
-                    $('#grade_edit').val(assignmentData.GradePoint);
+                    if (assignmentData.CompanyName.toLowerCase() == "mw") {
+                        $('#grade_edit').val(assignmentData.GradePoint);
+                    } else {
+                        $('#grade_edit').val("");
+                    }                    
                     $('#grade_edit_hidden').val(assignmentData.GradeId);
                    
                 },
@@ -468,7 +471,12 @@
                         tr += `<td><input type='text' class="form-control col-12" value='${item.RoleName}' readonly /></td>`;
                         tr += `<td><input type='text' class="form-control col-12" value='${item.ExplanationName}' readonly /></td>`;
                         tr += `<td><input type='text' class="form-control col-12" value='${item.CompanyName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.GradePoint}' readonly /></td>`;
+                        if (item.CompanyName.toLowerCase() == "mw") {
+                            tr += `<td><input type='text' class="form-control col-12" value='${item.GradePoint}' readonly /></td>`;
+                        }
+                        else {
+                            tr += `<td><input type='text' class="form-control col-12" value='' readonly /></td>`;
+                        }
                         tr += `<td><input type='text' class="form-control col-12" value='${item.UnitPrice}' readonly /></td>`;
                         if (count==1) {
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
@@ -667,11 +675,14 @@
         function unitPriceChange(rowId,element) {
             let _unitPrice = $(element).val();
 
-            if (unitPrices.includes(_unitPrice)) {
-
+            if (!unitPrices.includes(_unitPrice)) {
                 $('#identity_row_' + rowId).css('color', 'red');
                 $('#sub_code_row_' + rowId).css('color', 'red');
             }
+            //else {
+            //    $('#identity_row_' + rowId).css('color', 'red');
+            //    $('#sub_code_row_' + rowId).css('color', 'red');
+            //}
 
             $.ajax({
                 url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -976,6 +987,7 @@
                         var employeeNameTemp = '';
                         var companyNameTemp = '';
                         $('#add_name_table_1 tbody').empty();
+
                         $('#add_name_table_1').DataTable({
                             data: data,
                             columns: [
