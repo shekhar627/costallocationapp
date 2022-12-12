@@ -118,6 +118,7 @@ function SectionCheck() {
     var checkboxes = document.getElementById("sectionChks");
     if (!expanded) {
         checkboxes.style.display = "block";
+        //$(this).find("#sectionChks").slideToggle("fast");
         expanded = true;
     } else {
         checkboxes.style.display = "none";

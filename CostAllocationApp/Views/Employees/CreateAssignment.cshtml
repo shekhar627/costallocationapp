@@ -1004,10 +1004,12 @@
                                 {
                                     data: 'EmployeeName',
                                     render: function (employeeName) {
+                                        console.log("employeeName: " + employeeName);
+                                        //console.log("UnitPrice: " + UnitPrice);
                                         //employeeNameTemp = employeeName;
                                         //matchColor = "";
                                         //if (tempName != "") {
-                                        //    if (tempName.toLowerCase() == employeeNameTemp.toLowerCase()) {
+                                        //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
                                         //        if (UnitPrice != tempUnitPrice) {
                                         //            isUnitPriceMatch = "no";
                                         //            matchColor = "style='color:red;'"
@@ -1017,7 +1019,7 @@
                                         //        tempUnitPrice = UnitPrice;
                                         //    }
                                         //} else {
-                                        //    tempName = employeeNameTemp;
+                                        //    tempName = employeeName;
                                         //    tempUnitPrice = UnitPrice;
                                         //}
                                         return "<label " + matchColor+">" + employeeName +"</label>";
