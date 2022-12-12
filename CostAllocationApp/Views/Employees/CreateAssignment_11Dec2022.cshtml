@@ -965,6 +965,7 @@
 
 
             $('#add_name_search_button').on('click', function () {
+                $("#add_name_table_1").dataTable().fnDestroy();
                 var sectionId = $('#section_search').find(":selected").val();
                 var inchargeId = $('#incharge_search').find(":selected").val();
                 var departmentId = $('#department_search').find(":selected").val();
@@ -1004,12 +1005,10 @@
                                 {
                                     data: 'EmployeeName',
                                     render: function (employeeName) {
-                                        console.log("employeeName: " + employeeName);
-                                        //console.log("UnitPrice: " + UnitPrice);
                                         //employeeNameTemp = employeeName;
                                         //matchColor = "";
                                         //if (tempName != "") {
-                                        //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
+                                        //    if (tempName.toLowerCase() == employeeNameTemp.toLowerCase()) {
                                         //        if (UnitPrice != tempUnitPrice) {
                                         //            isUnitPriceMatch = "no";
                                         //            matchColor = "style='color:red;'"
@@ -1019,7 +1018,7 @@
                                         //        tempUnitPrice = UnitPrice;
                                         //    }
                                         //} else {
-                                        //    tempName = employeeName;
+                                        //    tempName = employeeNameTemp;
                                         //    tempUnitPrice = UnitPrice;
                                         //}
                                         return "<label " + matchColor+">" + employeeName +"</label>";

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using CostAllocationApp.Models;
 using CostAllocationApp.ViewModels;
 using CostAllocationApp.Dtos;
+using System.Globalization;
 
 namespace CostAllocationApp.DAL
 {
@@ -298,7 +299,8 @@ namespace CostAllocationApp.DAL
                             join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id 
                             join Grades gd on ea.GradeId = gd.Id
-                            where {where}";
+                            where {where}
+                            order by ea.EmployeeName asc";
 
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
@@ -331,7 +333,9 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString();
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))

@@ -3,13 +3,88 @@
     ViewBag.Title = "Name List";
 }
 <div class="content container-fluid">
+    <!--search-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="name_list_search">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>In-Charge</th>
+                        <th>Role</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="namelist_search_tr">
+                        <td>
+                            <input type="text" class="form-control col-12 namelist_search" id="employee_name_search" value="" placeholder="name">
+                        </td>
+                        <td>
+                            <select id="section" class="form-control col-12 namelist_search"></select>
+                        </td>
+                        <td>
+                            <select id="department" class="form-control col-12 namelist_search"></select>
+                        </td>
+                        <td>
+                            <select id="incharge" class="form-control col-12 namelist_search"></select>
+                        </td>
+                        <td>
+                            <select id="role" class="form-control col-12 namelist_search"></select>
+                        </td>
+                        <td>
+                            <select id="company" class="form-control col-12 namelist_search"></select>
+                        </td>
+                        <td>
+                            <select id="active_status" class="form-control col-12 namelist_search">
+                                <option value="">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6"></td>
+                        <td>
+                            <a href="javascript:void(0);" class="" id="name_list_search_button">Search</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="forecast">
+                        <table class="" id="forecast_table">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <!--body header-->
     <div id="name_list_body">
+        @*<div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5>List</h5>
+                    </div>
+                </div>
+            </div>*@
+        <!--main body-->
         <div class="row">
             <div class="col-md-12">
                 <div>
                     <table class="namelist_tbl" id="name-list">
                         <thead>
                             <tr>
+                                <th class="name_list_th"></th>
                                 @{
                                     <th class="name_list_th"><a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">Name Reg.</a></th>
                                 }
@@ -33,7 +108,7 @@
                                 </th>
                             </tr>
                             <tr id="namelist_tbl_header">
-                                <!-- <th style="width:31px;">SL</th> -->
+                                <th style="width:31px;">SL</th>
                                 <th>Name</th>
                                 <th>Section</th>
                                 <th>Department</th>
@@ -41,20 +116,20 @@
                                 <th>Role</th>
                                 <th>Explanation</th>
                                 <th>Company Name</th>
-                                <th style="">Grade</th>
-                                <th style="">Unit Price</th>
-                                <th style="">Action</th>
+                                <th style="width:33px;">Grade</th>
+                                <th style="width:65px">Unit Price</th>
+                                <th style="width:121px">Action</th>
                             </tr>
-                            <tr id="namelist_tbl_search" style="line-height:2;">
-                               
-                                <th class="namelist_td name"><input type="text" value="" id="name_search" style="border: 1px solid black; width:159px;" /></th>
+                            <tr id="namelist_tbl_search">
+                                <th></th>
+                                <th style="width:139px;"><input type="text" value="" id="name_search" style="border: 1px solid black; width:131px;" /></th>
 
-                                <th class="namelist_td section">
+                                <th style="width:139px;">
 
                                     <div class="multiselect">
-                                        <div class="selectBox section" onclick="SectionCheck()">
+                                        <div class="selectBox" onclick="SectionCheck()">
                                             <select>
-                                                <option>All</option>
+                                                <option>Select Section</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>
@@ -64,11 +139,11 @@
                                     </div>
                                 </th>
 
-                                <th class="namelist_td department">
+                                <th style="width:139px;">
                                     <div class="multiselect">
-                                        <div class="selectBox department" onclick="DepartmentCheck()">
+                                        <div class="selectBox" onclick="DepartmentCheck()">
                                             <select>
-                                                <option>All</option>
+                                                <option>Select Department</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>
@@ -77,11 +152,11 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th class="namelist_td incharge">
+                                <th style="width:139px;">
                                     <div class="multiselect">
-                                        <div class="selectBox incharge" onclick="InchargeCheck()">
+                                        <div class="selectBox" onclick="InchargeCheck()">
                                             <select>
-                                                <option>All</option>
+                                                <option>Select In-Charge</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>
@@ -90,11 +165,11 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th class="namelist_td role">
+                                <th style="width:139px;">
                                     <div class="multiselect">
-                                        <div class="selectBox role" onclick="RoleCheck()">
+                                        <div class="selectBox" onclick="RoleCheck()">
                                             <select>
-                                                <option>All</option>
+                                                <option>Select Role</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>
@@ -103,11 +178,11 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th class="namelist_td explanation">
+                                <th style="width:139px;">
                                     <div class="multiselect">
-                                        <div class="selectBox explanation" onclick="ExplanationCheck()">
+                                        <div class="selectBox" onclick="ExplanationCheck()">
                                             <select>
-                                                <option>All</option>
+                                                <option>Select Explanation</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>
@@ -116,11 +191,11 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th class="namelist_td company">
+                                <th style="width:139px;">
                                     <div class="multiselect">
-                                        <div class="selectBox company" onclick="CompanyCheck()">
+                                        <div class="selectBox" onclick="CompanyCheck()">
                                             <select>
-                                                <option>All</option>
+                                                <option>Select Company</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>
@@ -452,66 +527,6 @@
         $(document).ready(function () {
 
             $('#namelist_tbl').DataTable();
-            LoadNameListTableOnLoad();
-            function LoadNameListTableOnLoad() {
-                let employeeName = "";
-                let sectionId = "";
-                let departmentId = "";
-                let inchargeId = "";
-                let roleId = "";
-                let explanationId = "";
-                let companyId = "";
-                let status = "";
-
-                var url = '@Url.Action("SearchEmployee", "/api/utilities")'; // don't hard code your urls!
-                $.getJSON(`/api/utilities/SearchEmployee`, { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: status })
-                    .done(function (data) {
-                        $('#employee_list_search_results').empty();
-                        let dataCount = data.length;
-                        if (dataCount > 0) {
-                            let counter = 1;
-                            let nameWithCodeAndRemarks = "";
-
-                            $.each(data, function (key, item) {
-                                console.log("Remarks: " + item.Remarks);
-                                console.log("SubCode: " + item.SubCode);
-
-                                if (nameWithCodeAndRemarks == "") {
-                                    nameWithCodeAndRemarks = item.EmployeeName;
-                                }
-                                if (item.SubCode > 0) {
-                                    nameWithCodeAndRemarks = item.EmployeeName + " " + item.SubCode
-                                }
-                                if (item.Remarks !="") {
-                                    nameWithCodeAndRemarks = nameWithCodeAndRemarks + " (" + item.Remarks + ")";
-                                }
-                                if (item.IsActive == true) {
-                                    if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
-                                    if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
-                                    }
-                                }
-                                nameWithCodeAndRemarks = "";
-                                counter++;
-                            });
-                        } else {
-                            $('#employee_list_search_results').append("<tr><td colspan='8' style='text-align:center;font-size:20px;'>No Data found!</td></tr>");
-
-                        }
-
-                    });
-                GetListDropdownValue();
-            }
             // multiple search by name
             $(document).on('change', '#name_search', function () {
                 var employeeName = "";
@@ -1569,6 +1584,63 @@
                 let assignmentId = $(this).attr('assignment_id');
                 alert(assignmentId);
             });
+            $('#name_list_search_button').click(function () {
+                //get search field value
+                let employeeName = $("#employee_name_search").val();
+                let sectionId = $("#section").val();
+                let departmentId = $("#department").val();
+                let inchargeId = $("#incharge").val();
+                let roleId = $("#role").val();
+                let explanationId = "";
+                let companyId = $("#company").val();
+                let status = $("#active_status").val();
+
+                var url = '@Url.Action("SearchEmployee", "/api/utilities")'; // don't hard code your urls!
+                //$.getJSON(`/api/utilities/SearchEmployee`, { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: status }, function (data)
+                $.getJSON(`/api/utilities/SearchEmployee`, { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: status })
+                    .done(function (data) {
+                        $('#employee_list_search_results').empty();
+                        let dataCount = data.length;
+                        //alert(dataCount);
+                        if (dataCount > 0) {
+                            let counter = 1;
+                            $.each(data, function (key, item) {
+                                if (item.IsActive == true) {
+                                    if (item.CompanyName.toLowerCase() == "mw") {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    }
+                                    else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    }
+                                }
+                                else {
+                                    if (item.CompanyName.toLowerCase() == "mw") {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                    }
+                                    else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${counter}</td><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                    }
+                                }
+                               
+                                counter++;
+                            });
+                        } else {
+                            $('#employee_list_search_results').append("<tr><td colspan='8' style='text-align:center;font-size:20px;'>No Data found!</td></tr>");
+                        }
+
+                    });
+
+                //$.getJSON(`/api/utilities/SearchAssignment22?${employeeName}`)
+                //    .done(function (data) {
+                //        $('#department_edit').empty();
+                //        $('#department_edit').append(`<option value=''>Select Department</option>`);
+                //        $.each(data, function (key, item) {
+                //            $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                //        });
+                //    });
+
+                GetListDropdownValue();
+            });
             function GetListDropdownValue(){
                 $.getJSON('/api/sections/')
                     .done(function (data) {
@@ -1675,7 +1747,6 @@
 
 
         });
-        
         //$('.container-fluid').click(function () {
         //    $('.commonselect').hide();
         //    //$(this).hide();
@@ -1688,7 +1759,6 @@
         //        checkboxes.style.display = "none";
         //    }
         //});
-
     </script>
 }
 
