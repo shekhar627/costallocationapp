@@ -451,6 +451,7 @@
 
         $(document).ready(function () {
 
+
             $('#namelist_tbl').DataTable();
             LoadNameListTableOnLoad();
             function LoadNameListTableOnLoad() {
@@ -473,8 +474,8 @@
                             let nameWithCodeAndRemarks = "";
 
                             $.each(data, function (key, item) {
-                                console.log("Remarks: " + item.Remarks);
-                                console.log("SubCode: " + item.SubCode);
+                                //console.log("Remarks: " + item.Remarks);
+                                //console.log("SubCode: " + item.SubCode);
 
                                 if (nameWithCodeAndRemarks == "") {
                                     nameWithCodeAndRemarks = item.EmployeeName;
