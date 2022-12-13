@@ -197,6 +197,43 @@
                 }
             }
 
+
+            var totalMonthPoint = 0;
+            var sameNameTr = [];
+            var tr = element.closest('tr');
+            //var trId = $(tr).data('rowid');
+            var trName = $(tr).find('td').eq(1).data('name');
+            var allTr = $('#forecast_table > tbody > tr');
+            //var monthNumber = $(element).data('month');
+            var columnIndex = $(element).parent().index();
+
+            console.log('index: ' + columnIndex);
+
+
+
+
+            $.each(allTr, function (index, value) {
+                var tempTrName = $(value).find('td').eq(1).data('name');
+                if (tempTrName == trName) {
+                    var monthPoint = $(value).find('td').eq(columnIndex).children('input').val();
+                    if (monthPoint == '' || monthPoint == NaN) {
+                        totalMonthPoint += 0;
+                    }
+                    else {
+                        totalMonthPoint += parseFloat(monthPoint);
+                    }
+                    //console.log(td);
+                    sameNameTr.push(value);
+                }
+            });
+            if (totalMonthPoint > 1) {
+                alert('total month point can not be grater than 1');
+                $(element).val(0);
+            }
+
+
+            //console.log($(tr).find('td').eq(1).data('name'));
+
         }
 
         $(document).ready(function () {
@@ -205,7 +242,7 @@
 
                 var rowId = parseInt($(this).closest('tr').data('rowid'));
                 var month = parseInt($(this).data('month'));
-                var unitPrice = parseFloat($('#up_' + rowId).data('unitprice'));
+                var unitPrice = parseFloat($('#up_' + rowId).data('unitprice').replace(/,/g, ''));
                 var pointValue = parseFloat($(this).val());
                 let result = 0;
                 switch (month) {
@@ -291,7 +328,7 @@
                     data: data_info,
                     success: function (data) {
 
-                        console.log(data);
+                        //console.log(data);
 
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();
@@ -351,7 +388,7 @@
                             $('#forecast_table>tbody').append(`
                             <tr data-rowid=${i}>
                                 <td title='initial'>${i}<input type='hidden' id='row_id_${i}' value='${value.Id}'/></td>
-                                <td title='initial'>${value.EmployeeName}</td>
+                                <td title='initial' data-name='${value.EmployeeName}'>${value.EmployeeName}</td>
                                 <td title='initial'>${value.SectionName}</td>
                                 <td title='initial'>${value.DepartmentName}</td>
                                 <td title='initial'>${value.InchargeName}</td>
