@@ -95,6 +95,8 @@ namespace CostAllocationApp.BLL
                 {
                     employees = employees.Where(emp => emp.ExplanationId == employeeAssignment.ExplanationId && emp.ExplanationId != "0").ToList();
                 }
+
+                this.MarkedAsRed(employees);
                 
             }
             return employees;
@@ -158,6 +160,38 @@ namespace CostAllocationApp.BLL
                 }
                
             }
+            return employees;
+        }
+
+        public List<EmployeeAssignmentViewModel> MarkedAsRed(List<EmployeeAssignmentViewModel> employees)
+        {
+            List<EmployeeAssignmentViewModel> viewModels = new List<EmployeeAssignmentViewModel>();
+            List<string> names = new List<string>();
+
+            names = (from x in employees
+                     select x.EmployeeName).ToList();
+            names = names.Select(n => n).Distinct().ToList();
+
+            foreach (var name in names)
+            {
+                viewModels = employees.Where(emp=>emp.EmployeeName==name).ToList();
+                if (viewModels.Count>1)
+                {
+                    EmployeeAssignmentViewModel employeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
+                    viewModels.Remove(employeeAssignmentViewModelFirst);
+
+                    foreach (var filteredAssignment in viewModels)
+                    {
+                        if (filteredAssignment.UnitPrice != employeeAssignmentViewModelFirst.UnitPrice)
+                        {
+                            employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed=true;
+
+                        }
+                    }
+                }
+            }
+
+
             return employees;
         }
     }

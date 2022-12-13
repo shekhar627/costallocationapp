@@ -65,7 +65,7 @@
             <table id="add_name_table_1">
                 <thead>
                     <tr>
-                        <th>SL</th>
+                        <th> </th>
                         <th>Name</th>
                         <th>SubCode</th>
                         <th>Memo</th>
@@ -221,7 +221,6 @@
                 <table id="add_name_table_3">
                     <thead>
                         <tr>
-                            @*<th>Name</th>*@
                             <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
@@ -984,52 +983,49 @@
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
+                        console.log(data);
                         var employeeNameTemp = '';
                         var companyNameTemp = '';
                         $('#add_name_table_1 tbody').empty();
-                        let tempName = "";
-                        let tempUnitPrice = "";
-
-                        let isUnitPriceMatch = "";
-                        let matchColor = "";
+                        let redMark = false;
+                    
 
                         $('#add_name_table_1').DataTable({
+                            destroy: true,
                             data: data,
                             columns: [
                                 {
-                                    data: "SerialNumber",
-                                    orderable: false,
-                                    searching: false,
+                                    data: 'MarkedAsRed',
+                                    render: function (markedAsRed) {
+                                        redMark = markedAsRed;
+                                        return null;
+                                    }
                                 },
                                 {
                                     data: 'EmployeeName',
                                     render: function (employeeName) {
-                                        //console.log("employeeName: " + employeeName);
-                                        //console.log("UnitPrice: " + UnitPrice);
                                         employeeNameTemp = employeeName;
-                                        //matchColor = "";
-                                        //if (tempName != "") {
-                                        //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
-                                        //        if (UnitPrice != tempUnitPrice) {
-                                        //            isUnitPriceMatch = "no";
-                                        //            matchColor = "style='color:red;'"
-                                        //        }
-                                        //    } else {
-                                        //        tempName = employeeNameTemp;
-                                        //        tempUnitPrice = UnitPrice;
-                                        //    }
-                                        //} else {
-                                        //    tempName = employeeName;
-                                        //    tempUnitPrice = UnitPrice;
-                                        //}
-                                        return "<label " + matchColor+">" + employeeName +"</label>";
+                                        if (redMark) {
+                                            return `<span style='color:red'>${employeeName}</span>`;
+                                        }
+                                        else {
+                                            return `<span>${employeeName}</span>`;
+                                        }
+                                        
 
                                     },
                                     orderable: true,
                                 },
                                 {
                                     data: 'SubCode',
-                                    orderable: false,
+                                    render: function (subCode) {
+                                        if (redMark) {
+                                            return `<span style='color:red'>${subCode}</span>`;
+                                        }
+                                        else {
+                                            return `<span>${subCode}</span>`;
+                                        }
+                                    },
                                     searching: false,
                                 },
                                 {
@@ -1091,6 +1087,9 @@
                                 }
                             ]
                         });
+                        //var allRows = $('#add_name_table_1 > tbody > tr');
+
+                        //console.log(allRows);
                     },
                     error: function () {
                         $('#add_name_table_1 tbody').empty();
