@@ -1003,10 +1003,13 @@
                                 },
                                 {
                                     data: 'EmployeeName',
-                                    render: function (employeeName) {
+                                    data: 'UnitPrice',
+                                    render: function (employeeName, unitPrice) {
                                         console.log("employeeName: " + employeeName);
                                         //console.log("UnitPrice: " + UnitPrice);
-                                        //employeeNameTemp = employeeName;
+                                        employeeNameTemp = employeeName;
+                                        let tempUnitPrice = unitPrice;
+                                        console.log("tempUnitPrice: " + tempUnitPrice);
                                         //matchColor = "";
                                         //if (tempName != "") {
                                         //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
