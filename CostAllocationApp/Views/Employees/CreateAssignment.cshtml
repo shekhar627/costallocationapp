@@ -446,6 +446,7 @@
             $('#add_name_table_2 thead .sub_thead').remove();
             $('#add_name_table_2 tbody').empty();
             $('#add_name_add').css('display', 'inline-block');
+            console.log(employeeName);
             $.ajax({
                 url: `/api/Utilities/GetEmployeesByName/${employeeName}`,
                 type: 'GET',
@@ -457,7 +458,7 @@
 
                     var count = 1;
                     $.each(assignmentData, function (index, item) {
-                        console.log(item);
+                       // console.log(item);
                         unitPrices.push(item.UnitPrice);
                         previousAssignmentRow = item.SubCode;
                         tr += '<tr class="sub_thead">';
@@ -983,7 +984,6 @@
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
-                        console.log(data);
                         var employeeNameTemp = '';
                         var companyNameTemp = '';
                         $('#add_name_table_1 tbody').empty();
@@ -1003,13 +1003,10 @@
                                 },
                                 {
                                     data: 'EmployeeName',
-                                    data: 'UnitPrice',
-                                    render: function (employeeName, unitPrice) {
+                                    render: function (employeeName) {
                                         console.log("employeeName: " + employeeName);
                                         //console.log("UnitPrice: " + UnitPrice);
-                                        employeeNameTemp = employeeName;
-                                        let tempUnitPrice = unitPrice;
-                                        console.log("tempUnitPrice: " + tempUnitPrice);
+                                        //employeeNameTemp = employeeName;
                                         //matchColor = "";
                                         //if (tempName != "") {
                                         //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
