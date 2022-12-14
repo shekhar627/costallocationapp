@@ -62,9 +62,22 @@ namespace CostAllocationApp.Controllers.Api
                 forecast.EmployeeAssignmentId = Convert.ToInt32(assignmentId);
                 forecast.CreatedBy = "";
                 forecast.CreatedDate = DateTime.Now;
-                int result = forecastBLL.CreateForecast(forecast);
+                forecast.UpdatedBy = "";
+                forecast.UpdatedDate = DateTime.Now;
+
+                var result = forecastBLL.CheckAssignmentId(int.Parse(assignmentId),year);
+                if (result==true)
+                {
+                    int resultEdit = forecastBLL.UpdateForecast(forecast);
+                }
+                else
+                {
+                    int resultSave = forecastBLL.CreateForecast(forecast);
+                }
+
+                
             }
-            return Ok("Data Saved Successfully");
+            return Ok(true);
 
         }
     }

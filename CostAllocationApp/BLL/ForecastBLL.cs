@@ -18,9 +18,13 @@ namespace CostAllocationApp.BLL
         {
             return forecastDAL.CreateForecast(forecast);
         }
-        public bool CheckAssignmentId(int assignmentId)
+        public bool CheckAssignmentId(int assignmentId,string year)
         {
-            return forecastDAL.CheckAssignmentId(assignmentId);
+            return forecastDAL.CheckAssignmentId(assignmentId, year);
+        }
+        public int UpdateForecast(Forecast forecast)
+        {
+            return forecastDAL.UpdateForecast(forecast);
         }
     }
 }

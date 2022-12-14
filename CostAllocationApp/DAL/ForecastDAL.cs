@@ -38,9 +38,41 @@ namespace CostAllocationApp.DAL
             }
         }
 
-        public bool CheckAssignmentId(int assignmentId)
+        public int UpdateForecast(Forecast forecast)
         {
-            string query = "select * from costs where EmployeeAssignmentsId="+assignmentId;
+            int result = 0;
+            string query = $@"update costs set Points = @points, Total= @total, UpdatedBy=@updatedBy, UpdatedDate=@updatedDate where Year=@year and EmployeeAssignmentsId=@employeeAssignmentsId and MonthId=@monthId";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                
+                
+                cmd.Parameters.AddWithValue("@points", forecast.Points);
+                cmd.Parameters.AddWithValue("@total", forecast.Total);
+                cmd.Parameters.AddWithValue("@year", forecast.Year);
+                cmd.Parameters.AddWithValue("@employeeAssignmentsId", forecast.EmployeeAssignmentId);
+                cmd.Parameters.AddWithValue("@monthId", forecast.Month);
+                
+                cmd.Parameters.AddWithValue("@updatedBy", forecast.UpdatedBy);
+                cmd.Parameters.AddWithValue("@updatedDate", forecast.UpdatedDate);
+                try
+                {
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
+
+
+        public bool CheckAssignmentId(int assignmentId,string year)
+        {
+            string query = "select * from costs where EmployeeAssignmentsId="+assignmentId+" and year = "+year;
             bool result = false;
             using (SqlConnection sqlConnection = this.GetConnection())
             {

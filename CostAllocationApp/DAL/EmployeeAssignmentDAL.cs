@@ -371,6 +371,135 @@ namespace CostAllocationApp.DAL
             return employeeAssignments;
         }
 
+        public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignment employeeAssignment)
+        {
+
+            string where = "";
+            if (!string.IsNullOrEmpty(employeeAssignment.EmployeeName))
+            {
+                where += $" ea.EmployeeName like N'%{employeeAssignment.EmployeeName}%' and ";
+            }
+            if (employeeAssignment.SectionId > 0)
+            {
+                where += $" ea.SectionId={employeeAssignment.SectionId} and ";
+            }
+            if (employeeAssignment.DepartmentId > 0)
+            {
+                where += $" ea.DepartmentId={employeeAssignment.DepartmentId} and ";
+            }
+            if (employeeAssignment.InchargeId > 0)
+            {
+                where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
+            }
+            if (employeeAssignment.RoleId > 0)
+            {
+                where += $" ea.RoleId={employeeAssignment.RoleId} and ";
+            }
+            //if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
+            //{
+            //    where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
+            //}
+            if (employeeAssignment.CompanyId > 0)
+            {
+                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
+            }
+            if (employeeAssignment.CompanyId > 0)
+            {
+                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
+            }
+            if (employeeAssignment.IsActive == "0" || employeeAssignment.IsActive == "1")
+            {
+                where += $" ea.IsActive={employeeAssignment.IsActive} and ";
+            }
+            else
+            {
+                where += $" ea.IsActive=1 and ";
+            }
+
+            where += " 1=1 ";
+
+            string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode, ea.ExplanationId,
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ,gd.GradePoints,ea.IsActive
+                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
+                            join Departments dep on ea.DepartmentId = dep.Id
+                            join Companies com on ea.CompanyId = com.Id
+                            join Roles rl on ea.RoleId = rl.Id
+                            join InCharges inc on ea.InChargeId = inc.Id 
+                            join Grades gd on ea.GradeId = gd.Id
+                            where {where}
+                            order by ea.EmployeeName asc";
+
+
+            List<ForecastAssignmentViewModel> forecastEmployeeAssignments = new List<ForecastAssignmentViewModel>();
+            //HttpContext.Current.Response.Write("query: " + query + "<br>");
+            //HttpContext.Current.Response.End();
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            ForecastAssignmentViewModel forecastEmployeeAssignmentViewModel = new ForecastAssignmentViewModel();
+                            forecastEmployeeAssignmentViewModel.Id = Convert.ToInt32(rdr["AssignmentId"]);
+                            forecastEmployeeAssignmentViewModel.EmployeeName = rdr["EmployeeName"].ToString();
+                            forecastEmployeeAssignmentViewModel.SectionId = rdr["SectionId"].ToString();
+                            forecastEmployeeAssignmentViewModel.SectionName = rdr["SectionName"].ToString();
+                            forecastEmployeeAssignmentViewModel.DepartmentId = rdr["DepartmentId"].ToString();
+                            forecastEmployeeAssignmentViewModel.DepartmentName = rdr["DepartmentName"].ToString();
+                            forecastEmployeeAssignmentViewModel.InchargeId = rdr["InchargeId"].ToString();
+                            forecastEmployeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
+                            forecastEmployeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
+                            forecastEmployeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
+                            forecastEmployeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
+                            //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
+                            forecastEmployeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
+                            forecastEmployeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
+                            forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString();
+                            forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(forecastEmployeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+
+                            forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            forecastEmployeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            {
+                                forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            }
+                            else
+                            {
+                                forecastEmployeeAssignmentViewModel.Remarks = "";
+                            }
+                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            {
+                                forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            }
+                            else
+                            {
+                                forecastEmployeeAssignmentViewModel.SubCode = 0;
+                            }
+
+                            //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
+                            //HttpContext.Current.Response.End();
+
+                            forecastEmployeeAssignments.Add(forecastEmployeeAssignmentViewModel);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return forecastEmployeeAssignments;
+        }
+
+
         public List<EmployeeAssignmentViewModel> GetEmployeesBySearchFilterForMultipleSearch(EmployeeAssignmentDTO employeeAssignment)
         {
 
@@ -640,6 +769,40 @@ namespace CostAllocationApp.DAL
                 return result;
             }
 
+        }
+
+        public List<ForecastDto> GetForecastsByAssignmentId(int assignmentId)
+        {
+            List<ForecastDto> forecasts = new List<ForecastDto>();
+            string query = "select * from Costs where EmployeeAssignmentsId=" + assignmentId;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            ForecastDto forecast = new ForecastDto();
+                            forecast.ForecastId = Convert.ToInt32(rdr["Id"]);
+                            forecast.Year = Convert.ToInt32(rdr["Year"]);
+                            forecast.Month = Convert.ToInt32(rdr["MonthId"]);
+                            forecast.Points = Convert.ToDecimal(rdr["Points"]);
+                            forecast.Total = Convert.ToDecimal(rdr["Total"]);
+                            forecasts.Add(forecast);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return forecasts;
         }
 
     }
