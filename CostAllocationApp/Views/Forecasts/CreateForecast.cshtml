@@ -328,7 +328,7 @@
                     data: data_info,
                     success: function (data) {
 
-                        //console.log(data);
+                        console.log(data);
 
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();
@@ -378,6 +378,25 @@
                 `);
                         let i = 1;
                         $.each(data, function (index, value) {
+                            var tempEmployeeName = '';
+                            if (value.MarkedAsRed == true) {
+                                if (value.Remarks == '') {
+                                    tempEmployeeName = `<span style='color:red;'>${value.EmployeeName} ${value.SubCode}</span>`;
+                                }
+                                else {
+                                    tempEmployeeName = `<span style='color:red;'>${value.EmployeeName} ${value.SubCode} (${value.Remarks})</span>`;
+                                }
+                                
+                            }
+                            else {
+                                if (value.Remarks == '') {
+                                    tempEmployeeName = value.EmployeeName + ' ' + value.SubCode;
+                                }
+                                else {
+                                    tempEmployeeName = value.EmployeeName + ' ' + value.SubCode + '(' + value.Remarks + ')';
+                                }
+                                
+                            }
                             var gradePoint = '';
                             if (value.CompanyName.toLowerCase() == 'mw') {
                                 gradePoint = value.GradePoint;
@@ -388,7 +407,7 @@
                             $('#forecast_table>tbody').append(`
                             <tr data-rowid=${i}>
                                 <td title='initial'>${i}<input type='hidden' id='row_id_${i}' value='${value.Id}'/></td>
-                                <td title='initial' data-name='${value.EmployeeName}'>${value.EmployeeName}</td>
+                                <td title='initial' data-name='${value.EmployeeName}'>${tempEmployeeName}</td>
                                 <td title='initial'>${value.SectionName}</td>
                                 <td title='initial'>${value.DepartmentName}</td>
                                 <td title='initial'>${value.InchargeName}</td>
