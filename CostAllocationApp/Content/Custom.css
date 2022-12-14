@@ -465,15 +465,14 @@ body {
     border: none !important;
 }
 
-/*#add_name_search {
+#add_name_search {
     border: none !important;
     border: 1px solid black !important;
-}*/
+}
 
     #add_name_search tbody tr:nth-of-type(1) td input, select {
         border: 1px solid black !important;
     }
-
 
 
 
@@ -1076,3 +1075,153 @@ body {
     width: 76px;
     font-weight: normal;
 }
+
+/*---------------------------------------add name: design modify--------------------------*/
+#add_name_table_1 {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+
+.odd {
+    line-height: 2px;
+}
+
+.even {
+    line-height: 2px;
+}
+
+#add_name_search {
+    border-collapse: collapse;
+    font-size: 14px;
+    /*font-family: Yu Gothic;*/
+}
+
+#add_name_action {
+    width: 126px;
+}
+
+/*---------------------------------------Name list: Dropdown width--------------------------*/
+.selectBox.section select {
+    width: 71px;
+    font-weight: normal;
+}
+.selectBox.department select {
+    width: 87px;
+    font-weight: normal;
+}
+.selectBox.incharge select {
+    width: 111px;
+    font-weight: normal;
+}
+.selectBox.role select {
+    width: 65px;
+    font-weight: normal;
+}
+.selectBox.explanation select {
+    width: 247px;
+    font-weight: normal;
+}
+.selectBox.company select {
+    width: 76px;
+    font-weight: normal;
+}
+
+/*---------------------------------------Name list: dropdown close outside click--------------------------*/
+.container{
+    position: relative;
+    display: inline-block;
+}
+  
+.selectBox{
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+}
+  
+#sectionChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+}
+
+/*---------------------------------------Name list: edit popup--------------------------*/
+#modal_edit_name{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+#memo_edit{
+    width: 103px;
+}
+#section_edit{
+    width: 115px;
+}
+#department_edit{
+    width: 134px;
+}
+#incharge_edit{
+    width: 141px;
+}
+#role_edit{
+    width: 76px;
+}
+#explanation_edit{
+    width: 250px;
+}
+#company_edit{
+    width: 109px;
+}
+#grade_edit{
+    width: 46px;
+}
+#unitprice_edit{
+    width: 100px;
+}
+/*---------------------------------------name registration popup--------------------------*/
+#modal_add_name_new{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+#identity_new{
+    width: 110px;
+}
+#memo_new{
+    width: 83px;
+}
+#section_new{
+    width: 100px;
+}
+#department_new{
+    width: 110px;
+}
+#incharge_new{
+    width: 100px;
+}
+#role_new{
+    width: 84px;
+}
+#explanation_new{
+    width: 220px;
+}
+#company_new{
+    width: 96px;
+}
+#grade_new{
+    width: 64px;
+}
+#unitprice_new{
+    width: 86px;
+}
+
+/*---------------------------------------master setting popup--------------------------*/
+/* #section_registration{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+} */
