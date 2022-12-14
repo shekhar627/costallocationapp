@@ -475,11 +475,13 @@
             //$('.container').click(function () {
             //    $('#sectionChks').fadeOut(100);
             //});
+            //$('#name-list').DataTable();
+
             $('.container').blur(function(e) {
                 $('.commonselect').fadeOut(100);
             });
 
-            $('#namelist_tbl').DataTable();
+            //$('#namelist_tbl').DataTable();
             LoadNameListTableOnLoad();
 
             function LoadNameListTableOnLoad() {
@@ -763,32 +765,82 @@
                     dataType: 'json',
                     data: data_info,
                     success: function(data) {
-
+                        var tempCompanyName = '';
                         $('#employee_list_search_results').empty();
-                        let dataCount = data.length;
-                        //alert(dataCount);
-                        if (dataCount > 0) {
-                            let counter = 1;
-                            $.each(data, function(key, item) {
-                                if (item.IsActive == true) {
-                                    if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    } else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                        $('#name-list').DataTable({
+                            destroy: true,
+                            data: data,
+                            ordering: false,
+                            columns: [
+
+                                {
+                                    data: 'EmployeeName',
+                                    //orderable: true
+                                },
+                                {
+                                    data:'SectionName'
+                                },
+                                {
+                                    data:'DepartmentName'
+                                },
+                                {
+                                    data: 'InchargeName'
+                                },
+                                {
+                                    data: 'RoleName'
+                                },
+                                {
+                                    data: 'ExplanationName'
+                                },
+                                {
+                                    data: 'CompanyName',
+                                    render: function (companyName) {
+                                        tempCompanyName = companyName;
+                                        return companyName;
                                     }
-                                } else {
-                                    if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
-                                    } else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                },
+                                {
+                                    data: 'GradePoint'
+                                },
+                                {
+                                    data: 'UnitPrice'
+                                },
+                                {
+                                    data: 'Id',
+                                    render: function (Id) {
+                                        if (tempCompanyName.toLowerCase() == 'mw') {
+                                            return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+                                        } else {
+                                            return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+                                        }                                        
                                     }
                                 }
+                            ]
+                        });
+                        //let dataCount = data.length;
+                        ////alert(dataCount);
+                        //if (dataCount > 0) {
+                        //    let counter = 1;
+                        //    $.each(data, function(key, item) {
+                        //        if (item.IsActive == true) {
+                        //            if (item.CompanyName.toLowerCase() == "mw") {
+                        //                $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                        //            } else {
+                        //                $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                        //            }
+                        //        } else {
+                        //            if (item.CompanyName.toLowerCase() == "mw") {
+                        //                $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                        //            } else {
+                        //                $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                        //            }
+                        //        }
 
-                                counter++;
-                            });
-                        } else {
-                            $('#employee_list_search_results').append("<tr><td colspan='8' style='text-align:center;font-size:20px;'>No Data found!</td></tr>");
-                        }
+                        //        counter++;
+                        //    });
+                        //} else {
+                        //    $('#employee_list_search_results').append("<tr><td colspan='8' style='text-align:center;font-size:20px;'>No Data found!</td></tr>");
+                        //}
 
 
                     },
@@ -1764,8 +1816,8 @@
 
 
 
-            $('#add_name_edit').on('click', function() {
-
+            $('#add_name_edit').on('click', function () {
+                
                 var sectionId = $('#section_edit').find(":selected").val();
                 var inchargeId = $('#incharge_edit').find(":selected").val();
                 var departmentId = $('#department_edit').find(":selected").val();
@@ -1776,7 +1828,7 @@
                 var gradeId = $('#grade_edit_hidden').val();
                 var rowId = $('#row_id_hidden_edit').val();
                 var remarks = $('#memo_edit').val();
-
+                console.log("testing");
                 var dataSingleAssignmentUpdate = {
                     Id: rowId,
                     SectionId: sectionId,
@@ -1836,6 +1888,7 @@
 
             $('#unitprice_edit').on('change', function() {
                 var _unitPrice = $(this).val();
+                var _companyName = $("#company_edit option:selected").text();
 
                 $.ajax({
                     url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -1846,10 +1899,96 @@
                     //},
                     success: function(data) {
                         $('#grade_edit_hidden').val(data.Id);
-                        $('#grade_edit').val(data.SalaryGrade);
+                        if (_companyName.toLowerCase() == "mw") {
+                            $('#grade_edit').val(data.SalaryGrade);
+                        } else {
+                            $('#grade_edit').val('');
+                        }                        
                     },
                     error: function() {
                         $('#grade_edit').val('');
+                        $('#grade_edit_hidden').val('');
+                    }
+                });
+            });
+
+            $('#company_edit').on('change', function () {
+                var _companyName = $("#company_edit option:selected").text();
+                var _unitPrice = $("#unitprice_edit").val();
+                console.log("_unitPrice: " + _unitPrice);
+
+                $.ajax({
+                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    //data: {
+                    //    unitPrice: _unitPrice
+                    //},
+                    success: function (data) {
+                        $('#grade_edit_hidden').val(data.Id);
+                        if (_companyName.toLowerCase() == "mw") {
+                            $('#grade_edit').val(data.SalaryGrade);
+                        } else {
+                            $('#grade_edit').val('');
+                        }
+                    },
+                    error: function () {
+                        $('#grade_edit').val('');
+                        $('#grade_edit_hidden').val('');
+                    }
+                });
+            });
+
+            $('#company_new').on('change', function () {
+                var _companyName = $("#company_new option:selected").text();
+                var _unitPrice = $("#unitprice_new").val();
+                console.log("_unitPrice: " + _unitPrice);
+
+                $.ajax({
+                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    //data: {
+                    //    unitPrice: _unitPrice
+                    //},
+                    success: function (data) {
+                        $('#grade_edit_hidden').val(data.Id);
+                        if (_companyName.toLowerCase() == "mw") {
+                            $('#grade_new').val(data.SalaryGrade);
+                        } else {
+                            $('#grade_new').val('');
+                        }
+                    },
+                    error: function () {
+                        $('#grade_new').val('');
+                        $('#grade_edit_hidden').val('');
+                    }
+                });
+            });
+
+            $('#unitprice_new').on('change', function () {
+                var _unitPrice = $(this).val();
+                var _companyName = $("#company_new option:selected").text();
+
+                console.log("_unitPrice: " + _unitPrice);
+
+                $.ajax({
+                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    //data: {
+                    //    unitPrice: _unitPrice
+                    //},
+                    success: function (data) {
+                        $('#grade_edit_hidden').val(data.Id);
+                        if (_companyName.toLowerCase() == "mw") {
+                            $('#grade_new').val(data.SalaryGrade);
+                        } else {
+                            $('#grade_new').val('');
+                        }
+                    },
+                    error: function () {
+                        $('#grade_new').val('');
                         $('#grade_edit_hidden').val('');
                     }
                 });

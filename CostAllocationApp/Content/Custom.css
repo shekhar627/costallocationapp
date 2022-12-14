@@ -23,14 +23,14 @@ body {
 }
 
 #name-list {
-    width: 120%;
+    width: 120% !important;
     /*width: 120%;*/
-    border-collapse: collapse;
+    border-collapse: collapse !important;
     /*border: 1px solid;*/
     /*font-size: 14px;*/
-    font-size: 10px;
+    font-size: 10px !important;
     /*font-family: Meiryo;*/
-    font-family: Yu Gothic;
+    font-family: Yu Gothic !important;
 }
 
 .name_list_th {
@@ -499,7 +499,7 @@ body {
 
 #add_name_table_1 {
     border: 1px solid black !important;
-    width: 100% !important;
+    width: 120% !important;
 }
 
     #add_name_table_1 thead tr:nth-of-type(1) {
@@ -1178,11 +1178,27 @@ body {
     font-family: Yu Gothic
 } */
 
-
-
-
-
-
+/*---------------------------------------add name: design modify--------------------------*/
+#add_name_table_1 {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    
+}
+.odd {
+    line-height: 2px;
+}
+.even {
+    line-height: 2px;
+}
+#add_name_search {
+    border-collapse: collapse;
+    font-size: 14px;
+    /*font-family: Yu Gothic;*/
+}
+#add_name_action {
+    width: 126px;
+}
 
 
 

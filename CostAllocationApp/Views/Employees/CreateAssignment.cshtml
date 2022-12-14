@@ -21,25 +21,25 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="identity_search" placeholder="name">
+                            <input type="text" class="" id="identity_search" placeholder="name">
                         </td>
                         <td>
-                            <select id="section_search" class="form-control"></select>
+                            <select id="section_search" class=""></select>
                         </td>
                         <td>
-                            <select id="department_search" class="form-control"></select>
+                            <select id="department_search" class=""></select>
                         </td>
                         <td>
-                            <select id="incharge_search" class="form-control"></select>
+                            <select id="incharge_search" class=""></select>
                         </td>
                         <td>
-                            <select id="role_search" class="form-control"></select>
+                            <select id="role_search" class=""></select>
                         </td>
                         <td>
-                            <select id="explanation_search" class="form-control"></select>
+                            <select id="explanation_search" class=""></select>
                         </td>
                         <td>
-                            <select id="company_search" class="form-control"></select>
+                            <select id="company_search" class=""></select>
                         </td>
                     </tr>
                     <tr>
@@ -71,7 +71,7 @@
                         <th>Company</th>
                         <th>Grade</th>
                         <th>Unit Price</th>
-                        <th>Action</th>
+                        <th id="add_name_action">Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -153,35 +153,35 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input type="text" class="form-control col-12" id="identity_new" placeholder="name">
+                                <input type="text" class=" col-12" id="identity_new" placeholder="name">
                             </td>
 
                             <td>
-                                <input type="text" class="form-control col-12" id="memo_new" placeholder="memo">
+                                <input type="text" class=" col-12" id="memo_new" placeholder="memo">
                             </td>
                             <td>
-                                <select id="section_new" class="form-control col-12"></select>
+                                <select id="section_new" class=" col-12"></select>
                             </td>
                             <td>
-                                <select id="department_new" class="form-control col-12"></select>
+                                <select id="department_new" class=" col-12"></select>
                             </td>
                             <td>
-                                <select id="incharge_new" class="form-control col-12"></select>
+                                <select id="incharge_new" class=" col-12"></select>
                             </td>
                             <td>
-                                <select id="role_new" class="form-control col-12"></select>
+                                <select id="role_new" class=" col-12"></select>
                             </td>
                             <td>
-                                <select id="explanation_new" class="form-control col-12"></select>
+                                <select id="explanation_new" class=" col-12"></select>
                             </td>
                             <td>
-                                <select id="company_new" class="form-control col-12"></select>
+                                <select id="company_new" class=" col-12"></select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_new" placeholder="grade" readonly>
+                                <input type="text" class=" col-12" id="grade_new" placeholder="grade" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="unitprice_new" placeholder="unit price">
+                                <input type="text" class=" col-12" id="unitprice_new" placeholder="unit price">
                             </td>
                         </tr>
                     </tbody>
@@ -222,14 +222,14 @@
                     <tbody>
                         <tr>
                             @*<td>
-                                    <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                                    <input type="text" class=" col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
                                 </td>*@
                             <td>
-                                <input type="text" class="form-control col-12" id="memo_edit" value="" placeholder="">
+                                <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
                             </td>
                             <td>
                                 <input type="hidden" value="" id="row_id_hidden_edit" />
-                                <select id="section_edit" class="form-control col-12">
+                                <select id="section_edit" class=" col-12">
                                     <option value="">Select Section</option>
                                     <option value="" selected>Section-1</option>
                                     <option value="">Section-2</option>
@@ -237,7 +237,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="department_edit" class="form-control col-12">
+                                <select id="department_edit" class=" col-12">
                                     <option value="">Select Department</option>
                                     <option value="" selected>Department-1</option>
                                     <option value="">Department-2</option>
@@ -245,7 +245,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="incharge_edit" class="form-control col-12">
+                                <select id="incharge_edit" class=" col-12">
                                     <option value="">Select In-Charge</option>
                                     <option value="" selected>Work Domain-1</option>
                                     <option value="">Work Domain-2</option>
@@ -253,7 +253,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="role_edit" class="form-control col-12">
+                                <select id="role_edit" class=" col-12">
                                     <option value="">Select Role</option>
                                     <option value="" selected>Role-1</option>
                                     <option value="">Role-2</option>
@@ -261,7 +261,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="explanation_edit" class="form-control col-12">
+                                <select id="explanation_edit" class=" col-12">
                                     <option value="">Select Company</option>
                                     <option value="" selected>Company-1</option>
                                     <option value="">Company-2</option>
@@ -269,7 +269,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="company_edit" class="form-control col-12">
+                                <select id="company_edit" class=" col-12">
                                     <option value="">Select Company</option>
                                     <option value="" selected>Company-1</option>
                                     <option value="">Company-2</option>
@@ -277,10 +277,10 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_edit" placeholder="" readonly>
+                                <input type="text" class=" col-12" id="grade_edit" placeholder="" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="unitprice_edit" placeholder="unit price">
+                                <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
                             </td>
                         </tr>
                     </tbody>
@@ -449,22 +449,22 @@
                         previousAssignmentRow = item.SubCode;
                         tr += '<tr class="sub_thead">';
                         tr += `<td>${item.SubCode}</td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.EmployeeName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.SubCode}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.Remarks}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.SectionName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.DepartmentName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.InchargeName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.RoleName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.ExplanationName}' readonly /></td>`;
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.CompanyName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.EmployeeName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.SubCode}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.Remarks}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.SectionName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.DepartmentName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.InchargeName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.RoleName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.ExplanationName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.CompanyName}' readonly /></td>`;
                         if (item.CompanyName.toLowerCase() == "mw") {
-                            tr += `<td><input type='text' class="form-control col-12" value='${item.GradePoint}' readonly /></td>`;
+                            tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly /></td>`;
                         }
                         else {
-                            tr += `<td><input type='text' class="form-control col-12" value='' readonly /></td>`;
+                            tr += `<td><input type='text' class=" col-12" value='' readonly /></td>`;
                         }
-                        tr += `<td><input type='text' class="form-control col-12" value='${item.UnitPrice}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" value='${item.UnitPrice}' readonly /></td>`;
                         if (count==1) {
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
@@ -491,9 +491,9 @@
         var text = `
             <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
                 <td>${previousAssignmentRow}</td>
-                <td><input class="form-control col-12" id="identity_row_${previousAssignmentRow}" value="${$('#fixed_hidden_name').val()}" readonly /></td>
-                <td><input class="form-control" value="${previousAssignmentRow}" id='sub_code_row_${previousAssignmentRow}' readonly /></td>
-                <td><input class="form-control col-12" id="memo_row_${previousAssignmentRow}" /></td>`;
+                <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" value="${$('#fixed_hidden_name').val()}" readonly /></td>
+                <td><input class="" value="${previousAssignmentRow}" id='sub_code_row_${previousAssignmentRow}' readonly /></td>
+                <td><input class=" col-12" id="memo_row_${previousAssignmentRow}" /></td>`;
 
             // for add new
                 $.ajax({
@@ -505,7 +505,7 @@
                         console.log(data);
                         text += '<td>';
                         text += `
-                               <select id="section_row_${previousAssignmentRow}" class="form-control col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
+                               <select id="section_row_${previousAssignmentRow}" class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
                                     <option value=''>Select Section</option>
                             `;
                         $.each(data, function (key, item) {
@@ -521,7 +521,7 @@
 
             text += `
                 <td>
-                    <select id="department_row_${previousAssignmentRow}" class="form-control col-12 department_row"></select>
+                    <select id="department_row_${previousAssignmentRow}" class=" col-12 department_row"></select>
                  </td>
                 `;
 
@@ -534,7 +534,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="incharge_row_${previousAssignmentRow}" class="form-control col-12">
+                               <select id="incharge_row_${previousAssignmentRow}" class=" col-12">
                                     <option value=''>Select In-Charge</option>
                             `;
                     $.each(data, function (key, item) {
@@ -556,7 +556,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="role_row_${previousAssignmentRow}" class="form-control col-12">
+                               <select id="role_row_${previousAssignmentRow}" class=" col-12">
                                     <option value=''>Select Role</option>
                             `;
                     $.each(data, function (key, item) {
@@ -578,7 +578,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="explain_row_${previousAssignmentRow}" class="form-control col-12">
+                               <select id="explain_row_${previousAssignmentRow}" class=" col-12">
                                     <option value=''>Select Role</option>
                             `;
                     $.each(data, function (key, item) {
@@ -600,7 +600,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="company_row_${previousAssignmentRow}" class="form-control col-12">
+                               <select id="company_row_${previousAssignmentRow}" class=" col-12 add_company">
                                     <option value=''>Select Role</option>
                             `;
                     $.each(data, function (key, item) {
@@ -613,8 +613,8 @@
                 }
             });
             text += `
-                 <td><input class="form-control col-12" id="grade_row_${previousAssignmentRow}" readonly /></td>
-                 <td><input class="form-control col-12" id="unitprice_row_${previousAssignmentRow}" onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+                 <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly /></td>
+                 <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
                  <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
             </tr>
 
@@ -625,6 +625,33 @@
             $('#add_name_table_2 tbody').append(text);
 
         }
+
+        $('.add_company').on('change', function () {
+            var _companyName = $(this).val();
+            var _unitPrice = $("#unitprice_edit").val();
+            console.log("_companyName: " + _companyName);
+
+            //$.ajax({
+            //    url: `/api/utilities/CompareGrade/${_unitPrice}`,
+            //    type: 'GET',
+            //    dataType: 'json',
+            //    //data: {
+            //    //    unitPrice: _unitPrice
+            //    //},
+            //    success: function (data) {
+            //        $('#grade_edit_hidden').val(data.Id);
+            //        if (_companyName.toLowerCase() == "mw") {
+            //            $('#grade_edit').val(data.SalaryGrade);
+            //        } else {
+            //            $('#grade_edit').val('');
+            //        }
+            //    },
+            //    error: function () {
+            //        $('#grade_edit').val('');
+            //        $('#grade_edit_hidden').val('');
+            //    }
+            //});
+        });
 
         function removeTr(rowId) {
             var rowElement = $('#row_' + rowId);
@@ -928,8 +955,29 @@
                 });
             });
 
+            //$('#unitprice_edit').on('change', function () {
+            //    var _unitPrice = $(this).val();
+
+            //    $.ajax({
+            //        url: `/api/utilities/CompareGrade/${_unitPrice}`,
+            //        type: 'GET',
+            //        dataType: 'json',
+            //        //data: {
+            //        //    unitPrice: _unitPrice
+            //        //},
+            //        success: function (data) {
+            //            $('#grade_edit_hidden').val(data.Id);
+            //            $('#grade_edit').val(data.SalaryGrade);
+            //        },
+            //        error: function () {
+            //            $('#grade_edit').val('');
+            //            $('#grade_edit_hidden').val('');
+            //        }
+            //    });
+            //});
             $('#unitprice_edit').on('change', function () {
                 var _unitPrice = $(this).val();
+                var _companyName = $("#company_edit option:selected").text();
 
                 $.ajax({
                     url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -940,7 +988,38 @@
                     //},
                     success: function (data) {
                         $('#grade_edit_hidden').val(data.Id);
-                        $('#grade_edit').val(data.SalaryGrade);
+                        if (_companyName.toLowerCase() == "mw") {
+                            $('#grade_edit').val(data.SalaryGrade);
+                        } else {
+                            $('#grade_edit').val('');
+                        }
+                    },
+                    error: function () {
+                        $('#grade_edit').val('');
+                        $('#grade_edit_hidden').val('');
+                    }
+                });
+            });
+
+            $('#company_edit').on('change', function () {
+                var _companyName = $("#company_edit option:selected").text();
+                var _unitPrice = $("#unitprice_edit").val();
+                console.log("_unitPrice: " + _unitPrice);
+
+                $.ajax({
+                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    //data: {
+                    //    unitPrice: _unitPrice
+                    //},
+                    success: function (data) {
+                        $('#grade_edit_hidden').val(data.Id);
+                        if (_companyName.toLowerCase() == "mw") {
+                            $('#grade_edit').val(data.SalaryGrade);
+                        } else {
+                            $('#grade_edit').val('');
+                        }
                     },
                     error: function () {
                         $('#grade_edit').val('');
