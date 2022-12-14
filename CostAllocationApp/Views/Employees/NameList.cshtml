@@ -773,11 +773,17 @@
 
             // multiple search by departments
             $(document).on('click', '#departmentChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_dept_all").is(':checked');
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+                
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_dept_all") {
-                    $(".department_checkbox").prop("checked", isSectionAllChk);
+                    $(".department_checkbox").prop("checked", isDepartmentAllCheck);
                 } else {
                     $("#chk_dept_all").prop("checked", false);
                 }
