@@ -32,7 +32,16 @@ namespace CostAllocationApp.Controllers.Api
             #region validation of inputs
             if (!String.IsNullOrEmpty(employeeAssignmentDTO.EmployeeName))
             {
-                employeeAssignment.EmployeeName = employeeAssignmentDTO.EmployeeName.Trim();
+                var checkResult = employeeAssignmentBLL.CheckEmployeeName(employeeAssignmentDTO.EmployeeName.Trim());
+                if (checkResult && employeeAssignmentDTO.SubCode == 1)
+                {
+                    return BadRequest("Employee Already Exists");
+                }
+                else
+                {
+                    employeeAssignment.EmployeeName = employeeAssignmentDTO.EmployeeName.Trim();
+                }
+                
             }
             else
             {

@@ -268,5 +268,10 @@ namespace CostAllocationApp.BLL
 
             return employees;
         }
+
+        public bool CheckEmployeeName(string employeeName)
+        {
+            return employeeAssignmentDAL.CheckEmployeeName(employeeName);
+        }
     }
 }

@@ -65,7 +65,7 @@ namespace CostAllocationApp.Controllers.Api
                 forecast.UpdatedBy = "";
                 forecast.UpdatedDate = DateTime.Now;
 
-                var result = forecastBLL.CheckAssignmentId(int.Parse(assignmentId),year);
+                var result = forecastBLL.CheckAssignmentId(int.Parse(assignmentId),int.Parse(year), Convert.ToInt32(temp[0]));
                 if (result==true)
                 {
                     int resultEdit = forecastBLL.UpdateForecast(forecast);
