@@ -1004,14 +1004,25 @@
                                 {
                                     data: 'EmployeeName',
                                     render: function (employeeName) {
+                                        //console.log("employeeName: " + employeeName);
+                                        //console.log("UnitPrice: " + UnitPrice);
                                         employeeNameTemp = employeeName;
-                                        if (redMark) {
-                                            return `<span style='color:red'>${employeeName}</span>`;
-                                        }
-                                        else {
-                                            return `<span>${employeeName}</span>`;
-                                        }
-                                        
+                                        //matchColor = "";
+                                        //if (tempName != "") {
+                                        //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
+                                        //        if (UnitPrice != tempUnitPrice) {
+                                        //            isUnitPriceMatch = "no";
+                                        //            matchColor = "style='color:red;'"
+                                        //        }
+                                        //    } else {
+                                        //        tempName = employeeNameTemp;
+                                        //        tempUnitPrice = UnitPrice;
+                                        //    }
+                                        //} else {
+                                        //    tempName = employeeName;
+                                        //    tempUnitPrice = UnitPrice;
+                                        //}
+                                        return "<label " + matchColor+">" + employeeName +"</label>";
 
                                     },
                                     orderable: true,
