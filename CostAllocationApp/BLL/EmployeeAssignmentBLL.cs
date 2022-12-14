@@ -102,6 +102,46 @@ namespace CostAllocationApp.BLL
             return employees;
         }
 
+        public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignment employeeAssignment)
+        {
+            var employees = employeeAssignmentDAL.GetEmployeesForecastBySearchFilter(employeeAssignment);
+
+            if (employees.Count > 0)
+            {
+                int count = 1;
+                foreach (var item in employees)
+                {
+                    if (String.IsNullOrEmpty(item.ExplanationId))
+                    {
+                        item.ExplanationId = "0";
+                        item.ExplanationName = "n/a";
+                    }
+                    else
+                    {
+                        item.ExplanationName = explanationsBLL.GetSingleExplanationByExplanationId(Int32.Parse(item.ExplanationId)).ExplanationName;
+                    }
+                    item.SerialNumber = count;
+                    count++;
+                }
+
+                if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
+                {
+                    employees = employees.Where(emp => emp.ExplanationId == employeeAssignment.ExplanationId && emp.ExplanationId != "0").ToList();
+                }
+
+                List<ForecastAssignmentViewModel> redMarkedForecastAssignments =  this.MarkedAsRedForForecast(employees);
+                if (redMarkedForecastAssignments.Count > 0)
+                {
+                    foreach (var item in redMarkedForecastAssignments)
+                    {
+                        item.forecasts = employeeAssignmentDAL.GetForecastsByAssignmentId(item.Id);
+                    }
+                }
+
+            }
+            return employees;
+        }
+
         public int RemoveAssignment(int rowId)
         {
             return employeeAssignmentDAL.RemoveAssignment(rowId);
@@ -188,6 +228,38 @@ namespace CostAllocationApp.BLL
                             {
                                 employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed = true;
                             }
+                        }
+                    }
+                }
+            }
+
+
+            return employees;
+        }
+
+        public List<ForecastAssignmentViewModel> MarkedAsRedForForecast(List<ForecastAssignmentViewModel> employees)
+        {
+            List<ForecastAssignmentViewModel> viewModels = new List<ForecastAssignmentViewModel>();
+            List<string> names = new List<string>();
+
+            names = (from x in employees
+                     select x.EmployeeName).ToList();
+            names = names.Select(n => n).Distinct().ToList();
+
+            foreach (var name in names)
+            {
+                viewModels = employees.Where(emp => emp.EmployeeName == name).ToList();
+                if (viewModels.Count > 1)
+                {
+                    ForecastAssignmentViewModel forecastEmployeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
+                    viewModels.Remove(forecastEmployeeAssignmentViewModelFirst);
+
+                    foreach (var filteredAssignment in viewModels)
+                    {
+                        if (filteredAssignment.UnitPrice != forecastEmployeeAssignmentViewModelFirst.UnitPrice)
+                        {
+                            employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed = true;
+
                         }
                     }
                 }

@@ -43,7 +43,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="7"></td>
+                        <td colspan="6"></td>
                         <td>
                             <a href="javascript:void(0);" class="" id="add_name_search_button">Search</a>
                         </td>
@@ -1059,6 +1059,7 @@
                         $('#add_name_table_1').DataTable({
                             destroy: true,
                             data: data,
+                            ordering: true,
                             columns: [
                                 {
                                     data: 'MarkedAsRed',
@@ -1113,27 +1114,22 @@
                                 },
                                 {
                                     data: 'Remarks',
-                                    orderable: false,
                                 },
                                 {
                                     data: 'SectionName',
-                                    orderable: false,
                                 },
                                 {
                                     data: 'DepartmentName',
-                                    orderable: false,
+                                    
                                 },
                                 {
                                     data: 'InchargeName',
-                                    orderable: false,
                                 },
                                 {
                                     data: 'RoleName',
-                                    orderable: false,
                                 },
                                 {
                                     data: 'ExplanationName',
-                                    orderable: false,
                                 },
                                 {
                                     data: 'CompanyName',
@@ -1141,7 +1137,6 @@
                                         companyNameTemp = companyName;
                                         return companyName;
                                     },
-                                    orderable: false,
                                 },
                                 {
                                     data: 'GradePoint',
@@ -1165,8 +1160,8 @@
 
                                         return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`;
                                     },
-                                    orderable: false,
                                     searching: false,
+                                    orderable: false,
                                 }
                             ]
                         });
