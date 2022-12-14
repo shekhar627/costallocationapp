@@ -33,7 +33,7 @@ namespace CostAllocationApp.DAL
                 {
                     cmd.Parameters.AddWithValue("@explanationId", employeeAssignment.ExplanationId);
                 }
-                
+
                 cmd.Parameters.AddWithValue("@companyId", employeeAssignment.CompanyId);
                 cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
                 cmd.Parameters.AddWithValue("@gradeId", employeeAssignment.GradeId);
@@ -77,7 +77,7 @@ namespace CostAllocationApp.DAL
                 {
                     cmd.Parameters.AddWithValue("@explanationId", employeeAssignment.ExplanationId);
                 }
-               
+
                 cmd.Parameters.AddWithValue("@companyId", employeeAssignment.CompanyId);
                 cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
                 cmd.Parameters.AddWithValue("@gradeId", employeeAssignment.GradeId);
@@ -100,10 +100,10 @@ namespace CostAllocationApp.DAL
 
         }
 
-        public List<EmployeeAssignmentViewModel>  SearchAssignment(EmployeeAssignment employeeAssignment)
+        public List<EmployeeAssignmentViewModel> SearchAssignment(EmployeeAssignment employeeAssignment)
         {
-            string where="";
-            if (employeeAssignment.SectionId>0)
+            string where = "";
+            if (employeeAssignment.SectionId > 0)
             {
                 where += $" ea.SectionId={employeeAssignment.SectionId} and ";
             }
@@ -230,7 +230,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.GradeId = rdr["GradeId"].ToString();
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();                            
+                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
 
                         }
                     }
@@ -280,7 +280,7 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
             }
-            if (employeeAssignment.IsActive =="0" || employeeAssignment.IsActive == "1")
+            if (employeeAssignment.IsActive == "0" || employeeAssignment.IsActive == "1")
             {
                 where += $" ea.IsActive={employeeAssignment.IsActive} and ";
             }
@@ -302,6 +302,7 @@ namespace CostAllocationApp.DAL
                             join Grades gd on ea.GradeId = gd.Id
                             where {where}
                             order by ea.EmployeeName asc";
+            //ORDER BY ea.EmployeeName asc, ea.Id";
 
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
@@ -380,7 +381,7 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.EmployeeName like N'%{employeeAssignment.EmployeeName.Trim()}%' and ";
             }
-            if (employeeAssignment.Sections!=null)
+            if (employeeAssignment.Sections != null)
             {
                 if (employeeAssignment.Sections.Length > 0 && employeeAssignment.Sections.ToString() != "all")
                 {
@@ -393,7 +394,7 @@ namespace CostAllocationApp.DAL
 
                     where += $" ea.SectionId in ({ids}) and ";
                 }
-              
+
             }
             if (employeeAssignment.Departments != null && employeeAssignment.Departments.ToString() != "all")
             {
@@ -411,7 +412,7 @@ namespace CostAllocationApp.DAL
 
             }
 
-            if (employeeAssignment.Incharges != null && employeeAssignment.Incharges.ToString() != "all") 
+            if (employeeAssignment.Incharges != null && employeeAssignment.Incharges.ToString() != "all")
             {
                 if (employeeAssignment.Incharges.Length > 0)
                 {
@@ -515,7 +516,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
                             employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
                             employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
-                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" :  rdr["ExplanationId"].ToString();
+                            employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
@@ -538,7 +539,7 @@ namespace CostAllocationApp.DAL
                             {
                                 employeeAssignmentViewModel.SubCode = 0;
                             }
-                            
+
 
 
 
@@ -619,7 +620,7 @@ namespace CostAllocationApp.DAL
                             {
                                 employeeAssignmentViewModel.SubCode = 0;
                             }
-                            
+
 
 
                             employeeAssignments.Add(employeeAssignmentViewModel);

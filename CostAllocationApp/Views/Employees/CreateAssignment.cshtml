@@ -1,5 +1,5 @@
 @{
-    ViewBag.Title = "Create Assignment";
+    ViewBag.Title = "Add Name";
 }
 
 <div class="content container-fluid">
@@ -24,28 +24,22 @@
                             <input type="text" class="form-control" id="identity_search" placeholder="name">
                         </td>
                         <td>
-                            <select id="section_search" class="form-control">
-                            </select>
+                            <select id="section_search" class="form-control"></select>
                         </td>
                         <td>
-                            <select id="department_search" class="form-control">
-                            </select>
+                            <select id="department_search" class="form-control"></select>
                         </td>
                         <td>
-                            <select id="incharge_search" class="form-control">
-                            </select>
+                            <select id="incharge_search" class="form-control"></select>
                         </td>
                         <td>
-                            <select id="role_search" class="form-control">
-                            </select>
+                            <select id="role_search" class="form-control"></select>
                         </td>
                         <td>
-                            <select id="explanation_search" class="form-control">
-                            </select>
+                            <select id="explanation_search" class="form-control"></select>
                         </td>
                         <td>
-                            <select id="company_search" class="form-control">
-                            </select>
+                            <select id="company_search" class="form-control"></select>
                         </td>
                     </tr>
                     <tr>
@@ -80,9 +74,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -117,11 +109,10 @@
                             <th>Company</th>
                             <th>Grade</th>
                             <th>Unit Price</th>
-                            <th>Action <input  type="hidden" value="" id="fixed_hidden_name" /></th>
+                            <th>Action <input type="hidden" value="" id="fixed_hidden_name" /></th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
                 <div class="add_name_tbl_2_btn">
                     <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
@@ -162,23 +153,20 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input type="text" class="form-control col-12" id="identity_new"  placeholder="name">
+                                <input type="text" class="form-control col-12" id="identity_new" placeholder="name">
                             </td>
 
                             <td>
-                                <input type="text" class="form-control col-12" id="memo_new"  placeholder="memo">
+                                <input type="text" class="form-control col-12" id="memo_new" placeholder="memo">
                             </td>
                             <td>
-                                <select id="section_new" class="form-control col-12">
-                                </select>
+                                <select id="section_new" class="form-control col-12"></select>
                             </td>
                             <td>
-                                <select id="department_new" class="form-control col-12">
-                                </select>
+                                <select id="department_new" class="form-control col-12"></select>
                             </td>
                             <td>
-                                <select id="incharge_new" class="form-control col-12">
-                                </select>
+                                <select id="incharge_new" class="form-control col-12"></select>
                             </td>
                             <td>
                                 <select id="role_new" class="form-control col-12"></select>
@@ -187,14 +175,13 @@
                                 <select id="explanation_new" class="form-control col-12"></select>
                             </td>
                             <td>
-                                <select id="company_new" class="form-control col-12">
-                                </select>
+                                <select id="company_new" class="form-control col-12"></select>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="grade_new"  placeholder="grade" readonly>
+                                <input type="text" class="form-control col-12" id="grade_new" placeholder="grade" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control col-12" id="unitprice_new"  placeholder="unit price">
+                                <input type="text" class="form-control col-12" id="unitprice_new" placeholder="unit price">
                             </td>
                         </tr>
                     </tbody>
@@ -235,8 +222,8 @@
                     <tbody>
                         <tr>
                             @*<td>
-                                <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                            </td>*@
+                                    <input type="text" class="form-control col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                                </td>*@
                             <td>
                                 <input type="text" class="form-control col-12" id="memo_edit" value="" placeholder="">
                             </td>
@@ -342,7 +329,7 @@
                                 else {
                                     $('#section_edit').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                                 }
-                                
+
                             });
                         });
 
@@ -357,7 +344,7 @@
                                 else {
                                     $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                                 }
-                                
+
                             });
                         });
 
@@ -372,7 +359,7 @@
                                 else {
                                     $('#incharge_edit').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
                                 }
-                                
+
                             });
                         });
 
@@ -388,7 +375,7 @@
                                 else {
                                     $('#role_edit').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
                                 }
-                                
+
                             });
                         });
 
@@ -404,7 +391,7 @@
                                 else {
                                     $('#explanation_edit').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                                 }
-                                
+
                             });
                         });
 
@@ -419,7 +406,7 @@
                                 else {
                                     $('#company_edit').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                                 }
-                                
+
                             });
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
@@ -427,9 +414,9 @@
                         $('#grade_edit').val(assignmentData.GradePoint);
                     } else {
                         $('#grade_edit').val("");
-                    }                    
+                    }
                     $('#grade_edit_hidden').val(assignmentData.GradeId);
-                   
+
                 },
                 error: function () {
                     //$('#add_name_table_1 tbody').empty();
@@ -481,7 +468,7 @@
                         if (count==1) {
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
-                        
+
                         tr += '</tr>';
 
                         //console.log(tr);
@@ -492,7 +479,7 @@
 
                 },
                 error: function () {
-                   
+
                 }
             });
         }
@@ -602,7 +589,7 @@
                 error: function () {
 
                 }
-            });  
+            });
 
             $.ajax({
                 url: '/api/Companies/',
@@ -624,7 +611,7 @@
                 error: function () {
 
                 }
-            }); 
+            });
             text += `
                  <td><input class="form-control col-12" id="grade_row_${previousAssignmentRow}" readonly /></td>
                  <td><input class="form-control col-12" id="unitprice_row_${previousAssignmentRow}" onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
@@ -646,7 +633,7 @@
             $(`#remove_row_${previousAssignmentRow}`).css('display', 'block');
 
         }
-       
+
         function changeVal(rowId, element) {
 
             var sectionId = $(element).val();
@@ -666,7 +653,7 @@
                 error: function () {
 
                 }
-            }); 
+            });
 
 
         }
@@ -863,7 +850,7 @@
                             $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                         });
                 });
-            // for search 
+            // for search
                 $.getJSON('/api/sections/')
                     .done(function (data) {
                         $('#section_search').empty();
@@ -988,7 +975,7 @@
                         var companyNameTemp = '';
                         $('#add_name_table_1 tbody').empty();
                         let redMark = false;
-                    
+
 
                         $('#add_name_table_1').DataTable({
                             destroy: true,
@@ -1007,7 +994,7 @@
                                         //console.log("employeeName: " + employeeName);
                                         //console.log("UnitPrice: " + UnitPrice);
                                         employeeNameTemp = employeeName;
-                                        //matchColor = "";
+                                        matchColor = "";
                                         //if (tempName != "") {
                                         //    if (tempName.toLowerCase() == employeeName.toLowerCase()) {
                                         //        if (UnitPrice != tempUnitPrice) {
@@ -1022,7 +1009,13 @@
                                         //    tempName = employeeName;
                                         //    tempUnitPrice = UnitPrice;
                                         //}
-                                        return "<label " + matchColor+">" + employeeName +"</label>";
+                                        if (redMark) {
+                                            return `<span style='color:red'>${employeeName}</span>`;
+                                        }
+                                        else {
+                                            return `<span>${employeeName}</span>`;
+                                        }
+                                        //return "<label " + matchColor+">" + employeeName +"</label>";
 
                                     },
                                     orderable: true,
@@ -1031,10 +1024,10 @@
                                     data: 'SubCode',
                                     render: function (subCode) {
                                         if (redMark) {
-                                            return `<span style='color:red'>${subCode}</span>`;
+                                            return `<span style='color:red'>${parseInt(subCode)}</span>`;
                                         }
                                         else {
-                                            return `<span>${subCode}</span>`;
+                                            return `<span>${parseInt(subCode)}</span>`;
                                         }
                                     },
                                     searching: false,
@@ -1109,7 +1102,7 @@
 
 
             });
-            
+
 
             $('#add_name_add_new').on('click', function () {
 
@@ -1139,7 +1132,7 @@
                     Remarks: remarks,
                     SubCode: 1
 
-                    
+
                 };
 
                 console.log(data);
@@ -1179,7 +1172,7 @@
                     }
                 });
 
-               
+
 
             });
 

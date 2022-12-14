@@ -1,7 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "Name List";
-}
+﻿@{ ViewBag.Title = "Name List"; }
 
 <div class="content container-fluid">
     <div id="name_list_body">
@@ -56,18 +53,19 @@
                                     <th class="namelist_td section">
 
                                         <div class="multiselect">
-                                            @*<div class="selectBox section" onclick="SectionCheck()" id="section_click">*@
+                                            @*
+                                                <div class="selectBox section" onclick="SectionCheck()" id="section_click">*@
                                             <!-- <section id="section_click" onclick="SectionCheck()"> -->
-                                                <div class="selectBox section" id="section_click" onclick="SectionCheck()">
-                                                    <select>
-                                                        <option>All</option>
-                                                    </select>
-                                                    <div class="overSelect"></div>
-                                                </div>
+                                            <div class="selectBox section" id="section_click" onclick="SectionCheck()">
+                                                <select>
+                                                    <option>All</option>
+                                                </select>
+                                                <div class="overSelect"></div>
+                                            </div>
 
-                                                <div id="sectionChks" class="commonselect">
+                                            <div id="sectionChks" class="commonselect">
 
-                                                </div>
+                                            </div>
                                             <!-- </section> -->
                                         </div>
                                     </th>
@@ -167,28 +165,28 @@
             <div class="col-12 modal-body">
                 <table id="add_name_table_new">
                     <thead>
-                    <tr>
-                        <th class="name_list_th"></th>
-                        <th class="name_list_th"></th>
-                        <th class="name_list_th">
-                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
-                        </th>
-                        <th class="name_list_th">
-                            <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
-                        </th>
-                        <th class="name_list_th">
-                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
-                        </th>
-                        <th class="name_list_th">
-                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
-                        </th>
-                        <th class="name_list_th">
-                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
-                        </th>
-                        <th class="name_list_th">
-                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal">Com. Reg.</a>
-                        </th>
-                    </tr>
+                        <tr>
+                            <th class="name_list_th"></th>
+                            <th class="name_list_th"></th>
+                            <th class="name_list_th">
+                                <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
+                            </th>
+                            <th class="name_list_th">
+                                <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                            </th>
+                            <th class="name_list_th">
+                                <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
+                            </th>
+                            <th class="name_list_th">
+                                <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
+                            </th>
+                            <th class="name_list_th">
+                                <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
+                            </th>
+                            <th class="name_list_th">
+                                <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal">Com. Reg.</a>
+                            </th>
+                        </tr>
                         <tr>
                             <th>Name</th>
                             <th>Memo</th>
@@ -260,7 +258,8 @@
                 <table id="add_name_table_3">
                     <thead>
                         <tr>
-                            @*<th>Name</th>*@
+                            @*
+                                <th>Name</th>*@
                             <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
@@ -274,7 +273,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @*<td>
+                            @*
+                                <td>
                                     <input type="text" class="col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
                                 </td>*@
                             <td>
@@ -349,32 +349,28 @@
         <input type="hidden" id="grade_new_hidden" />
     </div>
 </div>
-@Html.Partial("_Modals")
-@section Scripts{
+@Html.Partial("_Modals") @section Scripts{
     <script type="text/javascript">
-
-
         function loadSingleAssignmentData(id) {
 
             $.ajax({
                 url: '/api/Utilities/AssignmentById/' + id,
                 type: 'GET',
                 dataType: 'json',
-                success: function (assignmentData) {
+                success: function(assignmentData) {
 
                     console.log(assignmentData);
                     $('#edit_model_span').html(assignmentData.EmployeeName);
                     $('#memo_edit').val(assignmentData.Remarks);
                     $('#row_id_hidden_edit').val(assignmentData.Id);
                     $.getJSON('/api/sections/')
-                        .done(function (data) {
+                        .done(function(data) {
                             $('#section_edit').empty();
                             $('#section_edit').append(`<option value=''>Select Section</option>`);
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.Id == assignmentData.SectionId) {
                                     $('#section_edit').append(`<option value='${item.Id}' selected>${item.SectionName}</option>`);
-                                }
-                                else {
+                                } else {
                                     $('#section_edit').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                                 }
 
@@ -382,14 +378,13 @@
                         });
 
                     $.getJSON(`/api/departments`)
-                        .done(function (data) {
+                        .done(function(data) {
                             $('#department_edit').empty();
                             $('#department_edit').append(`<option value=''>Select Department</option>`);
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.Id == assignmentData.DepartmentId) {
                                     $('#department_edit').append(`<option value='${item.Id}' selected>${item.DepartmentName}</option>`);
-                                }
-                                else {
+                                } else {
                                     $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                                 }
 
@@ -397,14 +392,13 @@
                         });
 
                     $.getJSON('/api/incharges/')
-                        .done(function (data) {
+                        .done(function(data) {
                             $('#incharge_edit').empty();
                             $('#incharge_edit').append(`<option value=''>Select In-Charge</option>`);
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.Id == assignmentData.InchargeId) {
                                     $('#incharge_edit').append(`<option value='${item.Id}' selected>${item.InChargeName}</option>`);
-                                }
-                                else {
+                                } else {
                                     $('#incharge_edit').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
                                 }
 
@@ -413,14 +407,13 @@
 
 
                     $.getJSON('/api/Roles/')
-                        .done(function (data) {
+                        .done(function(data) {
                             $('#role_edit').empty();
                             $('#role_edit').append(`<option value=''>Select Role</option>`);
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.Id == assignmentData.RoleId) {
                                     $('#role_edit').append(`<option value='${item.Id}' selected>${item.RoleName}</option>`);
-                                }
-                                else {
+                                } else {
                                     $('#role_edit').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
                                 }
 
@@ -429,14 +422,13 @@
 
 
                     $.getJSON('/api/Explanations/')
-                        .done(function (data) {
+                        .done(function(data) {
                             $('#explanation_edit').empty();
                             $('#explanation_edit').append(`<option value=''>Select Explanation</option>`);
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.Id == assignmentData.ExplanationId) {
                                     $('#explanation_edit').append(`<option value='${item.Id}' selected>${item.ExplanationName}</option>`);
-                                }
-                                else {
+                                } else {
                                     $('#explanation_edit').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                                 }
 
@@ -444,14 +436,13 @@
                         });
 
                     $.getJSON('/api/Companies/')
-                        .done(function (data) {
+                        .done(function(data) {
                             $('#company_edit').empty();
                             $('#company_edit').append(`<option value=''>Select Company</option>`);
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.Id == assignmentData.CompanyId) {
                                     $('#company_edit').append(`<option value='${item.Id}' selected>${item.CompanyName}</option>`);
-                                }
-                                else {
+                                } else {
                                     $('#company_edit').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                                 }
 
@@ -460,14 +451,13 @@
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
                     if (assignmentData.CompanyName.toLowerCase() == "mw") {
                         $('#grade_edit').val(assignmentData.GradePoint);
-                    }
-                    else {
+                    } else {
                         $('#grade_edit').val("");
                     }
                     $('#grade_edit_hidden').val(assignmentData.GradeId);
 
                 },
-                error: function () {
+                error: function() {
                     //$('#add_name_table_1 tbody').empty();
                 }
             });
@@ -481,16 +471,17 @@
         }
 
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             //$('.container').click(function () {
             //    $('#sectionChks').fadeOut(100);
             //});
-            $('.container').blur(function (e) {
+            $('.container').blur(function(e) {
                 $('.commonselect').fadeOut(100);
             });
 
             $('#namelist_tbl').DataTable();
             LoadNameListTableOnLoad();
+
             function LoadNameListTableOnLoad() {
                 let employeeName = "";
                 let sectionId = "";
@@ -502,15 +493,24 @@
                 let status = "";
 
                 var url = '@Url.Action("SearchEmployee", "/api/utilities")'; // don't hard code your urls!
-                $.getJSON(`/api/utilities/SearchEmployee`, { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: status })
-                    .done(function (data) {
+                $.getJSON(`/api/utilities/SearchEmployee`, {
+                        employeeName: employeeName,
+                        sectionId: sectionId,
+                        departmentId: departmentId,
+                        inchargeId: inchargeId,
+                        roleId: roleId,
+                        explanationId: explanationId,
+                        companyId: companyId,
+                        status: status
+                    })
+                    .done(function(data) {
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         if (dataCount > 0) {
                             let counter = 1;
                             let nameWithCodeAndRemarks = "";
 
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 //console.log("Remarks: " + item.Remarks);
                                 //console.log("SubCode: " + item.SubCode);
 
@@ -520,22 +520,19 @@
                                 if (item.SubCode > 0) {
                                     nameWithCodeAndRemarks = item.EmployeeName + " " + item.SubCode
                                 }
-                                if (item.Remarks !="") {
+                                if (item.Remarks != "") {
                                     nameWithCodeAndRemarks = nameWithCodeAndRemarks + " (" + item.Remarks + ")";
                                 }
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
                                         $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                    else {
+                                    } else {
                                         $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
                                         $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
-                                    }
-                                    else {
+                                    } else {
                                         $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name" >${nameWithCodeAndRemarks}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
@@ -551,13 +548,13 @@
                 GetListDropdownValue();
             }
             // multiple search by name
-            $(document).on('change', '#name_search', function () {
+            $(document).on('change', '#name_search', function() {
                 let isSectionAllChk = $("#chk_sec_all").is(':checked');
                 var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
                 var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
                 var isRoleAllCheck = $("#chk_role_all").is(':checked');
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
 
                 var employeeName = "";
                 var sectionCheck = [];
@@ -578,35 +575,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
                 }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
                 }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
                 }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
                 }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
                 }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                } 
+                }
 
                 //$.each(sectionCheckedBoxes, function (index, item) {
                 //    sectionCheck.push(item.value);
@@ -645,28 +642,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -678,22 +672,22 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
 
 
             });
-            
+
             // multiple search by section
-            $(document).on('click', '#sectionChks input[type="checkbox"]', function () {                
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');      
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');      
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');      
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');      
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');      
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');      
+            $(document).on('click', '#sectionChks input[type="checkbox"]', function() {
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
 
                 var clicked_checkbox = $(this).attr("id")
 
@@ -721,35 +715,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
-                }        
+                }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
-                } 
+                }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
-                }            
+                }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
-                } 
+                }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
-                } 
+                }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                }                
+                }
 
                 var data_info = {
                     EmployeeName: employeeName,
@@ -768,28 +762,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -801,7 +792,7 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
@@ -810,14 +801,14 @@
             });
 
             // multiple search by departments
-            $(document).on('click', '#departmentChks input[type="checkbox"]', function () {
+            $(document).on('click', '#departmentChks input[type="checkbox"]', function() {
                 let isSectionAllChk = $("#chk_sec_all").is(':checked');
                 var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
                 var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
                 var isRoleAllCheck = $("#chk_role_all").is(':checked');
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
-                
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_dept_all") {
@@ -845,35 +836,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
                 }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
                 }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
                 }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
                 }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
                 }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                } 
+                }
 
                 //$.each(sectionCheckedBoxes, function (index, item) {
                 //    sectionCheck.push(item.value);
@@ -912,28 +903,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -945,7 +933,7 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
@@ -953,14 +941,14 @@
             });
 
             // multiple search by incharges
-            $(document).on('click', '#inchargeChks input[type="checkbox"]', function () {
+            $(document).on('click', '#inchargeChks input[type="checkbox"]', function() {
                 let isSectionAllChk = $("#chk_sec_all").is(':checked');
                 var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
                 var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
                 var isRoleAllCheck = $("#chk_role_all").is(':checked');
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
-                
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_incharge_all") {
@@ -988,35 +976,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
                 }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
                 }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
                 }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
                 }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
                 }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                } 
+                }
 
                 //$.each(sectionCheckedBoxes, function (index, item) {
                 //    sectionCheck.push(item.value);
@@ -1055,28 +1043,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -1088,7 +1073,7 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
@@ -1096,14 +1081,14 @@
             });
 
             // multiple search by roles
-            $(document).on('click', '#RoleChks input[type="checkbox"]', function () {
+            $(document).on('click', '#RoleChks input[type="checkbox"]', function() {
                 let isSectionAllChk = $("#chk_sec_all").is(':checked');
                 var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
                 var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
                 var isRoleAllCheck = $("#chk_role_all").is(':checked');
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
-                
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_role_all") {
@@ -1132,35 +1117,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
                 }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
                 }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
                 }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
                 }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
                 }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                } 
+                }
 
                 //$.each(sectionCheckedBoxes, function (index, item) {
                 //    sectionCheck.push(item.value);
@@ -1199,28 +1184,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -1232,7 +1214,7 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
@@ -1241,14 +1223,14 @@
 
 
             // multiple search by explanations
-            $(document).on('click', '#ExplanationChks input[type="checkbox"]', function () {
+            $(document).on('click', '#ExplanationChks input[type="checkbox"]', function() {
                 let isSectionAllChk = $("#chk_sec_all").is(':checked');
                 var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
                 var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
                 var isRoleAllCheck = $("#chk_role_all").is(':checked');
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
-                
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_explanation_all") {
@@ -1276,35 +1258,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
                 }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
                 }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
                 }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
                 }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
                 }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                } 
+                }
 
 
                 //$.each(sectionCheckedBoxes, function (index, item) {
@@ -1344,28 +1326,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -1377,7 +1356,7 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
@@ -1385,14 +1364,14 @@
             });
 
             // multiple search by companies
-            $(document).on('click', '#CompanyChks input[type="checkbox"]', function () {
+            $(document).on('click', '#CompanyChks input[type="checkbox"]', function() {
                 let isSectionAllChk = $("#chk_sec_all").is(':checked');
                 var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
                 var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
                 var isRoleAllCheck = $("#chk_role_all").is(':checked');
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
-                
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_comopany_all") {
@@ -1420,35 +1399,35 @@
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
                 if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
+                    $.each(sectionCheckedBoxes, function(index, item) {
                         sectionCheck.push(item.value);
                     });
                 }
                 if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
+                    $.each(departmentCheckedBoxes, function(index, item) {
                         departmentCheck.push(item.value);
                     });
                 }
                 if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
+                    $.each(inchargeCheckedBoxes, function(index, item) {
                         inchargeCheck.push(item.value);
                     });
                 }
                 if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
+                    $.each(roleCheckedBoxes, function(index, item) {
                         roleCheck.push(item.value);
                     });
                 }
                 if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
+                    $.each(explanationCheckedBoxes, function(index, item) {
                         explanationCheck.push(item.value);
                     });
                 }
                 if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
+                    $.each(companyCheckedBoxes, function(index, item) {
                         companyCheck.push(item.value);
                     });
-                } 
+                }
 
 
                 //$.each(sectionCheckedBoxes, function (index, item) {
@@ -1488,28 +1467,25 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data_info,
-                    success: function (data) {
+                    success: function(data) {
 
                         $('#employee_list_search_results').empty();
                         let dataCount = data.length;
                         //alert(dataCount);
                         if (dataCount > 0) {
                             let counter = 1;
-                            $.each(data, function (key, item) {
+                            $.each(data, function(key, item) {
                                 if (item.IsActive == true) {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
                                     }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td class='namelist_td'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${item.Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${item.Id})" assignment_id='${item.Id}'>Inactive</a></td></tr>`);
-                                    }
-                                }
-                                else {
+                                } else {
                                     if (item.CompanyName.toLowerCase() == "mw") {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td">${item.GradePoint}</td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
-                                    }
-                                    else {
-                                        $('#employee_list_search_results').append(`<tr class="namelist_tr"><td class="namelist_td">${item.EmployeeName}</td><td class="namelist_td">${item.SectionName}</td><td class="namelist_td">${item.DepartmentName}</td><td class="namelist_td">${item.InchargeName}</td><td class="namelist_td">${item.RoleName}</td><td class="namelist_td">${item.ExplanationName}</td><td class="namelist_td">${item.CompanyName}</td><td class="namelist_td"></td><td class="namelist_td">${item.UnitPrice}</td><td style='text-align:center;'>inactivated</td></tr>`);
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint">${item.GradePoint}</td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
+                                    } else {
+                                        $('#employee_list_search_results').append(`<tr class="namelist_tr" style="line-height: 2px;"><td class="namelist_td name">${item.EmployeeName}</td><td class="namelist_td section">${item.SectionName}</td><td class="namelist_td department">${item.DepartmentName}</td><td class="namelist_td InCharge">${item.InchargeName}</td><td class="namelist_td Role">${item.RoleName}</td><td class="namelist_td Explanation">${item.ExplanationName}</td><td class="namelist_td Company">${item.CompanyName}</td><td class="namelist_td GradePoint"></td><td class="namelist_td UnitPrice">${item.UnitPrice}</td><td class='namelist_td Action'>inactivated</td></tr>`);
                                     }
                                 }
 
@@ -1521,7 +1497,7 @@
 
 
                     },
-                    error: function () {
+                    error: function() {
                         //$('#add_name_table_1 tbody').empty();
                     }
                 });
@@ -1530,10 +1506,10 @@
 
             // for add new
             $.getJSON('/api/Roles/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#role_new').empty();
                     $('#role_new').append(`<option value=''>Select Role</option>`);
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
                     });
                 });
@@ -1548,10 +1524,10 @@
             //    });
             // for add new
             $.getJSON('/api/Explanations/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#explanation_new').empty();
                     $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                     });
                 });
@@ -1566,10 +1542,10 @@
             //    });
             // for add new
             $.getJSON('/api/Companies/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#company_new').empty();
                     $('#company_new').append(`<option value=''>Select Company</option>`);
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                     });
                 });
@@ -1585,10 +1561,10 @@
 
             // for add new
             $.getJSON('/api/incharges/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#incharge_new').empty();
                     $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
                     });
                 });
@@ -1603,10 +1579,10 @@
             //    });
             // for add new
             $.getJSON('/api/sections/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#section_new').empty();
                     $('#section_new').append(`<option value=''>Select Section</option>`);
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                     });
                 });
@@ -1621,37 +1597,37 @@
             //    });
 
 
-            $(document).on('change', '#section', function () {
+            $(document).on('change', '#section', function() {
 
                 var sectionId = $(this).val();
                 console.log(sectionId);
 
                 $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#department').empty();
                         $('#department').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#department').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                         });
                     });
             });
 
-            $(document).on('change', '#section_new', function () {
+            $(document).on('change', '#section_new', function() {
 
                 var sectionId = $(this).val();
                 console.log(sectionId);
 
                 $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#department_new').empty();
                         $('#department_new').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                         });
                     });
             });
 
-            $('#unitprice_new').on('change', function () {
+            $('#unitprice_new').on('change', function() {
                 var _unitPrice = $(this).val();
 
                 $.ajax({
@@ -1661,11 +1637,11 @@
                     //data: {
                     //    unitPrice: _unitPrice
                     //},
-                    success: function (data) {
+                    success: function(data) {
                         $('#grade_new_hidden').val(data.Id);
                         $('#grade_new').val(data.SalaryGrade);
                     },
-                    error: function () {
+                    error: function() {
                         $('#grade_new_hidden').val('');
                         $('#grade_new').val('');
                     }
@@ -1673,7 +1649,7 @@
             });
 
 
-            $('#namelist_inactive').on('click', function () {
+            $('#namelist_inactive').on('click', function() {
                 var rowId = $('#namelist_inactive_rowid').val();
 
                 $.ajax({
@@ -1683,10 +1659,10 @@
                     //data: {
                     //    unitPrice: _unitPrice
                     //},
-                    success: function (data) {
+                    success: function(data) {
                         Command: toastr["success"](data, "Success")
 
-                        toastr.options = {
+                            toastr.options = {
                             "closeButton": false,
                             "debug": false,
                             "newestOnTop": false,
@@ -1704,17 +1680,17 @@
                             "hideMethod": "fadeOut"
                         }
 
-                        alert('Success');
+                            alert('Success');
                         location.reload();
                     },
-                    error: function () {
+                    error: function() {
                         alert("Error please try again");
                     }
                 });
             });
 
 
-            $('#add_name_add_new').on('click', function () {
+            $('#add_name_add_new').on('click', function() {
 
                 var employeeName = $('#identity_new').val();
                 var sectionId = $('#section_new').find(":selected").val();
@@ -1752,11 +1728,11 @@
                     type: 'POST',
                     dataType: 'json',
                     data: data,
-                    success: function (data) {
+                    success: function(data) {
 
                         Command: toastr["success"](data, "Success")
 
-                        toastr.options = {
+                            toastr.options = {
                             "closeButton": false,
                             "debug": false,
                             "newestOnTop": false,
@@ -1776,7 +1752,7 @@
                         alert('Success');
                         location.reload();
                     },
-                    error: function (data) {
+                    error: function(data) {
                         alert(data.responseJSON.Message);
                         //$('#modal_add_name_new').modal('toggle');
                     }
@@ -1788,7 +1764,7 @@
 
 
 
-            $('#add_name_edit').on('click', function () {
+            $('#add_name_edit').on('click', function() {
 
                 var sectionId = $('#section_edit').find(":selected").val();
                 var inchargeId = $('#incharge_edit').find(":selected").val();
@@ -1822,11 +1798,11 @@
                     async: false,
                     dataType: 'json',
                     data: dataSingleAssignmentUpdate,
-                    success: function (data) {
+                    success: function(data) {
 
                         Command: toastr["success"](data, "Success")
 
-                        toastr.options = {
+                            toastr.options = {
                             "closeButton": false,
                             "debug": false,
                             "newestOnTop": false,
@@ -1847,7 +1823,7 @@
                         location.reload();
                         //$('#modal_add_name_new').modal('toggle');
                     },
-                    error: function (data) {
+                    error: function(data) {
                         alert(data.responseJSON.Message);
                         //$('#modal_add_name_new').modal('toggle');
                     }
@@ -1858,7 +1834,7 @@
             });
 
 
-            $('#unitprice_edit').on('change', function () {
+            $('#unitprice_edit').on('change', function() {
                 var _unitPrice = $(this).val();
 
                 $.ajax({
@@ -1868,11 +1844,11 @@
                     //data: {
                     //    unitPrice: _unitPrice
                     //},
-                    success: function (data) {
+                    success: function(data) {
                         $('#grade_edit_hidden').val(data.Id);
                         $('#grade_edit').val(data.SalaryGrade);
                     },
-                    error: function () {
+                    error: function() {
                         $('#grade_edit').val('');
                         $('#grade_edit_hidden').val('');
                     }
@@ -1880,87 +1856,88 @@
             });
 
 
-            $(document).on('change', '#section_edit', function () {
+            $(document).on('change', '#section_edit', function() {
 
                 var sectionId = $(this).val();
                 console.log(sectionId);
 
                 $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#department_edit').empty();
                         $('#department_edit').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                         });
                     });
             });
 
-            $('#edit_button').click(function () {
+            $('#edit_button').click(function() {
                 let assignmentId = $(this).attr('assignment_id');
                 alert(assignmentId);
             });
-            $('#delete_button').click(function () {
+            $('#delete_button').click(function() {
                 let assignmentId = $(this).attr('assignment_id');
                 alert(assignmentId);
             });
-            function GetListDropdownValue(){
+
+            function GetListDropdownValue() {
                 $.getJSON('/api/sections/')
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#sectionChks').empty();
                         $('#sectionChks').append(`<label for='chk_sec_all'><input id="chk_sec_all" type="checkbox" checked data-checkwhat="chkSelect" value='sec_all'/>All</label>`)
-                        $.each(data, function (key, item) { 
+                        $.each(data, function(key, item) {
                             $('#sectionChks').append(`<label for='section_checkbox_${item.Id}'><input class='section_checkbox' id="section_checkbox_${item.Id}"  type="checkbox" checked value='${item.Id}'/>${item.SectionName}</label>`)
                         });
                     });
                 $.getJSON('/api/Departments/')
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#departmentChks').empty();
                         $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
                         });
                     });
                 $.getJSON('/api/InCharges/')
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#inchargeChks').empty();
                         $('#inchargeChks').append(`<label for='chk_incharge_all'><input id="chk_incharge_all" type="checkbox" checked value='incharge_all'/>All</label>`);
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#inchargeChks').append(`<label for='incharge_checkbox_${item.Id}'><input class='incharge_checkbox' id="incharge_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.InChargeName}</label>`)
                         });
                     });
                 $.getJSON('/api/Roles/')
-                        .done(function (data) {
-                            $('#RoleChks').empty();
-                            $('#RoleChks').append(`<label for='chk_role_all'><input id="chk_role_all" type="checkbox" checked value='role_all'/>All</label>`);
-                            $.each(data, function (key, item) {
-                                $('#RoleChks').append(`<label for='role_checkbox_${item.Id}'><input class='role_checkbox' id="role_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.RoleName}</label>`)
-                            });
+                    .done(function(data) {
+                        $('#RoleChks').empty();
+                        $('#RoleChks').append(`<label for='chk_role_all'><input id="chk_role_all" type="checkbox" checked value='role_all'/>All</label>`);
+                        $.each(data, function(key, item) {
+                            $('#RoleChks').append(`<label for='role_checkbox_${item.Id}'><input class='role_checkbox' id="role_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.RoleName}</label>`)
                         });
+                    });
                 $.getJSON('/api/Explanations/')
-                        .done(function (data) {
-                            $('#ExplanationChks').empty();
-                            $('#ExplanationChks').append(`<label for='chk_explanation_all'><input id="chk_explanation_all" type="checkbox" checked value='explanation_all'/>All</label><br>`);
-                            $.each(data, function (key, item) {
-                                $('#ExplanationChks').append(`<label for='explanation_checkbox_${item.Id}'><input class='explanation_checkbox' id="explanation_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.ExplanationName}</label><br>`);
-                                
-                            });
+                    .done(function(data) {
+                        $('#ExplanationChks').empty();
+                        $('#ExplanationChks').append(`<label for='chk_explanation_all'><input id="chk_explanation_all" type="checkbox" checked value='explanation_all'/>All</label><br>`);
+                        $.each(data, function(key, item) {
+                            $('#ExplanationChks').append(`<label for='explanation_checkbox_${item.Id}'><input class='explanation_checkbox' id="explanation_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.ExplanationName}</label><br>`);
+
                         });
+                    });
                 $.getJSON('/api/Companies/')
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#CompanyChks').empty();
                         $('#CompanyChks').append(`<label for='chk_comopany_all'><input id="chk_comopany_all" type="checkbox" checked value='comopany_all'/>All</label>`);
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#CompanyChks').append(`<label for='comopany_checkbox_${item.Id}'><input class='comopany_checkbox' id="comopany_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.CompanyName}</label>`)
                         });
                     });
             }
 
-            $('#department_modal_href').click(function () {
+            $('#department_modal_href').click(function() {
                 $.getJSON('/api/sections/')
-                    .done(function (data) {
+                    .done(function(data) {
                         $('#section_list').empty();
                         $('#section_list').append(`<option value=''>Select Section</option>`)
-                        $.each(data, function (key, item) {
+                        $.each(data, function(key, item) {
                             $('#section_list').append(`<option value='${item.Id}'>&nbsp;&nbsp; ${item.SectionName}</option>`)
                         });
                     });
@@ -1969,10 +1946,10 @@
 
             //Search: Get Sections
             $.getJSON('/api/Sections/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#section').empty();
                     $('#section').append(`<option value=''>Select Section</option>`)
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#section').append(`<option value='${item.Id}'>${item.SectionName}</option>`)
                     });
                 });
@@ -1987,28 +1964,28 @@
             //    });
             //Search: Get In-Charge
             $.getJSON('/api/InCharges/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#incharge').empty();
                     $('#incharge').append(`<option value=''>Select In-Charge</option>`)
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#incharge').append(`<option value='${item.Id}'>${item.InChargeName}</option>`)
                     });
                 });
             //Search: Get Roles
             $.getJSON('/api/Roles/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#role').empty();
                     $('#role').append(`<option value=''>Select Role</option>`)
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#role').append(`<option value='${item.Id}'>${item.RoleName}</option>`)
                     });
                 });
             //Search: Get Company
             $.getJSON('/api/Companies/')
-                .done(function (data) {
+                .done(function(data) {
                     $('#company').empty();
                     $('#company').append(`<option value=''>Select Company</option>`)
-                    $.each(data, function (key, item) {
+                    $.each(data, function(key, item) {
                         $('#company').append(`<option value='${item.Id}'>${item.CompanyName}</option>`)
                     });
                 });
@@ -2028,7 +2005,5 @@
         //        checkboxes.style.display = "none";
         //    }
         //});
-
     </script>
 }
-
