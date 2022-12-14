@@ -552,6 +552,13 @@
             }
             // multiple search by name
             $(document).on('change', '#name_search', function () {
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+
                 var employeeName = "";
                 var sectionCheck = [];
                 var departmentCheck = [];
@@ -570,24 +577,55 @@
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-                $.each(sectionCheckedBoxes, function (index, item) {
-                    sectionCheck.push(item.value);
-                });
-                $.each(departmentCheckedBoxes, function (index, item) {
-                    departmentCheck.push(item.value);
-                });
-                $.each(inchargeCheckedBoxes, function (index, item) {
-                    inchargeCheck.push(item.value);
-                });
-                $.each(roleCheckedBoxes, function (index, item) {
-                    roleCheck.push(item.value);
-                });
-                $.each(explanationCheckedBoxes, function (index, item) {
-                    explanationCheck.push(item.value);
-                });
-                $.each(companyCheckedBoxes, function (index, item) {
-                    companyCheck.push(item.value);
-                });
+                if (!isSectionAllChk) {
+                    $.each(sectionCheckedBoxes, function (index, item) {
+                        sectionCheck.push(item.value);
+                    });
+                }
+                if (!isDepartmentAllCheck) {
+                    $.each(departmentCheckedBoxes, function (index, item) {
+                        departmentCheck.push(item.value);
+                    });
+                }
+                if (!isInChargeAllCheck) {
+                    $.each(inchargeCheckedBoxes, function (index, item) {
+                        inchargeCheck.push(item.value);
+                    });
+                }
+                if (!isRoleAllCheck) {
+                    $.each(roleCheckedBoxes, function (index, item) {
+                        roleCheck.push(item.value);
+                    });
+                }
+                if (!isExplanationAllCheck) {
+                    $.each(explanationCheckedBoxes, function (index, item) {
+                        explanationCheck.push(item.value);
+                    });
+                }
+                if (!isCompanytAllCheck) {
+                    $.each(companyCheckedBoxes, function (index, item) {
+                        companyCheck.push(item.value);
+                    });
+                } 
+
+                //$.each(sectionCheckedBoxes, function (index, item) {
+                //    sectionCheck.push(item.value);
+                //});
+                //$.each(departmentCheckedBoxes, function (index, item) {
+                //    departmentCheck.push(item.value);
+                //});
+                //$.each(inchargeCheckedBoxes, function (index, item) {
+                //    inchargeCheck.push(item.value);
+                //});
+                //$.each(roleCheckedBoxes, function (index, item) {
+                //    roleCheck.push(item.value);
+                //});
+                //$.each(explanationCheckedBoxes, function (index, item) {
+                //    explanationCheck.push(item.value);
+                //});
+                //$.each(companyCheckedBoxes, function (index, item) {
+                //    companyCheck.push(item.value);
+                //});
 
 
                 var data_info = {
@@ -806,24 +844,55 @@
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-                $.each(sectionCheckedBoxes, function (index, item) {
-                    sectionCheck.push(item.value);
-                });
-                $.each(departmentCheckedBoxes, function (index, item) {
-                    departmentCheck.push(item.value);
-                });
-                $.each(inchargeCheckedBoxes, function (index, item) {
-                    inchargeCheck.push(item.value);
-                });
-                $.each(roleCheckedBoxes, function (index, item) {
-                    roleCheck.push(item.value);
-                });
-                $.each(explanationCheckedBoxes, function (index, item) {
-                    explanationCheck.push(item.value);
-                });
-                $.each(companyCheckedBoxes, function (index, item) {
-                    companyCheck.push(item.value);
-                });
+                if (!isSectionAllChk) {
+                    $.each(sectionCheckedBoxes, function (index, item) {
+                        sectionCheck.push(item.value);
+                    });
+                }
+                if (!isDepartmentAllCheck) {
+                    $.each(departmentCheckedBoxes, function (index, item) {
+                        departmentCheck.push(item.value);
+                    });
+                }
+                if (!isInChargeAllCheck) {
+                    $.each(inchargeCheckedBoxes, function (index, item) {
+                        inchargeCheck.push(item.value);
+                    });
+                }
+                if (!isRoleAllCheck) {
+                    $.each(roleCheckedBoxes, function (index, item) {
+                        roleCheck.push(item.value);
+                    });
+                }
+                if (!isExplanationAllCheck) {
+                    $.each(explanationCheckedBoxes, function (index, item) {
+                        explanationCheck.push(item.value);
+                    });
+                }
+                if (!isCompanytAllCheck) {
+                    $.each(companyCheckedBoxes, function (index, item) {
+                        companyCheck.push(item.value);
+                    });
+                } 
+
+                //$.each(sectionCheckedBoxes, function (index, item) {
+                //    sectionCheck.push(item.value);
+                //});
+                //$.each(departmentCheckedBoxes, function (index, item) {
+                //    departmentCheck.push(item.value);
+                //});
+                //$.each(inchargeCheckedBoxes, function (index, item) {
+                //    inchargeCheck.push(item.value);
+                //});
+                //$.each(roleCheckedBoxes, function (index, item) {
+                //    roleCheck.push(item.value);
+                //});
+                //$.each(explanationCheckedBoxes, function (index, item) {
+                //    explanationCheck.push(item.value);
+                //});
+                //$.each(companyCheckedBoxes, function (index, item) {
+                //    companyCheck.push(item.value);
+                //});
 
 
                 var data_info = {
@@ -885,11 +954,17 @@
 
             // multiple search by incharges
             $(document).on('click', '#inchargeChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_incharge_all").is(':checked');
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+                
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_incharge_all") {
-                    $(".incharge_checkbox").prop("checked", isSectionAllChk);
+                    $(".incharge_checkbox").prop("checked", isInChargeAllCheck);
                 } else {
                     $("#chk_incharge_all").prop("checked", false);
                 }
@@ -912,24 +987,55 @@
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-                $.each(sectionCheckedBoxes, function (index, item) {
-                    sectionCheck.push(item.value);
-                });
-                $.each(departmentCheckedBoxes, function (index, item) {
-                    departmentCheck.push(item.value);
-                });
-                $.each(inchargeCheckedBoxes, function (index, item) {
-                    inchargeCheck.push(item.value);
-                });
-                $.each(roleCheckedBoxes, function (index, item) {
-                    roleCheck.push(item.value);
-                });
-                $.each(explanationCheckedBoxes, function (index, item) {
-                    explanationCheck.push(item.value);
-                });
-                $.each(companyCheckedBoxes, function (index, item) {
-                    companyCheck.push(item.value);
-                });
+                if (!isSectionAllChk) {
+                    $.each(sectionCheckedBoxes, function (index, item) {
+                        sectionCheck.push(item.value);
+                    });
+                }
+                if (!isDepartmentAllCheck) {
+                    $.each(departmentCheckedBoxes, function (index, item) {
+                        departmentCheck.push(item.value);
+                    });
+                }
+                if (!isInChargeAllCheck) {
+                    $.each(inchargeCheckedBoxes, function (index, item) {
+                        inchargeCheck.push(item.value);
+                    });
+                }
+                if (!isRoleAllCheck) {
+                    $.each(roleCheckedBoxes, function (index, item) {
+                        roleCheck.push(item.value);
+                    });
+                }
+                if (!isExplanationAllCheck) {
+                    $.each(explanationCheckedBoxes, function (index, item) {
+                        explanationCheck.push(item.value);
+                    });
+                }
+                if (!isCompanytAllCheck) {
+                    $.each(companyCheckedBoxes, function (index, item) {
+                        companyCheck.push(item.value);
+                    });
+                } 
+
+                //$.each(sectionCheckedBoxes, function (index, item) {
+                //    sectionCheck.push(item.value);
+                //});
+                //$.each(departmentCheckedBoxes, function (index, item) {
+                //    departmentCheck.push(item.value);
+                //});
+                //$.each(inchargeCheckedBoxes, function (index, item) {
+                //    inchargeCheck.push(item.value);
+                //});
+                //$.each(roleCheckedBoxes, function (index, item) {
+                //    roleCheck.push(item.value);
+                //});
+                //$.each(explanationCheckedBoxes, function (index, item) {
+                //    explanationCheck.push(item.value);
+                //});
+                //$.each(companyCheckedBoxes, function (index, item) {
+                //    companyCheck.push(item.value);
+                //});
 
 
                 var data_info = {
@@ -991,11 +1097,17 @@
 
             // multiple search by roles
             $(document).on('click', '#RoleChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_role_all").is(':checked');
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+                
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_role_all") {
-                    $(".role_checkbox").prop("checked", isSectionAllChk);
+                    $(".role_checkbox").prop("checked", isRoleAllCheck);
                 } else {
                     $("#chk_role_all").prop("checked", false);
                 }
@@ -1019,24 +1131,55 @@
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-                $.each(sectionCheckedBoxes, function (index, item) {
-                    sectionCheck.push(item.value);
-                });
-                $.each(departmentCheckedBoxes, function (index, item) {
-                    departmentCheck.push(item.value);
-                });
-                $.each(inchargeCheckedBoxes, function (index, item) {
-                    inchargeCheck.push(item.value);
-                });
-                $.each(roleCheckedBoxes, function (index, item) {
-                    roleCheck.push(item.value);
-                });
-                $.each(explanationCheckedBoxes, function (index, item) {
-                    explanationCheck.push(item.value);
-                });
-                $.each(companyCheckedBoxes, function (index, item) {
-                    companyCheck.push(item.value);
-                });
+                if (!isSectionAllChk) {
+                    $.each(sectionCheckedBoxes, function (index, item) {
+                        sectionCheck.push(item.value);
+                    });
+                }
+                if (!isDepartmentAllCheck) {
+                    $.each(departmentCheckedBoxes, function (index, item) {
+                        departmentCheck.push(item.value);
+                    });
+                }
+                if (!isInChargeAllCheck) {
+                    $.each(inchargeCheckedBoxes, function (index, item) {
+                        inchargeCheck.push(item.value);
+                    });
+                }
+                if (!isRoleAllCheck) {
+                    $.each(roleCheckedBoxes, function (index, item) {
+                        roleCheck.push(item.value);
+                    });
+                }
+                if (!isExplanationAllCheck) {
+                    $.each(explanationCheckedBoxes, function (index, item) {
+                        explanationCheck.push(item.value);
+                    });
+                }
+                if (!isCompanytAllCheck) {
+                    $.each(companyCheckedBoxes, function (index, item) {
+                        companyCheck.push(item.value);
+                    });
+                } 
+
+                //$.each(sectionCheckedBoxes, function (index, item) {
+                //    sectionCheck.push(item.value);
+                //});
+                //$.each(departmentCheckedBoxes, function (index, item) {
+                //    departmentCheck.push(item.value);
+                //});
+                //$.each(inchargeCheckedBoxes, function (index, item) {
+                //    inchargeCheck.push(item.value);
+                //});
+                //$.each(roleCheckedBoxes, function (index, item) {
+                //    roleCheck.push(item.value);
+                //});
+                //$.each(explanationCheckedBoxes, function (index, item) {
+                //    explanationCheck.push(item.value);
+                //});
+                //$.each(companyCheckedBoxes, function (index, item) {
+                //    companyCheck.push(item.value);
+                //});
 
 
                 var data_info = {
@@ -1099,11 +1242,17 @@
 
             // multiple search by explanations
             $(document).on('click', '#ExplanationChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_explanation_all").is(':checked');
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+                
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_explanation_all") {
-                    $(".explanation_checkbox").prop("checked", isSectionAllChk);
+                    $(".explanation_checkbox").prop("checked", isExplanationAllCheck);
                 } else {
                     $("#chk_explanation_all").prop("checked", false);
                 }
@@ -1126,24 +1275,56 @@
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-                $.each(sectionCheckedBoxes, function (index, item) {
-                    sectionCheck.push(item.value);
-                });
-                $.each(departmentCheckedBoxes, function (index, item) {
-                    departmentCheck.push(item.value);
-                });
-                $.each(inchargeCheckedBoxes, function (index, item) {
-                    inchargeCheck.push(item.value);
-                });
-                $.each(roleCheckedBoxes, function (index, item) {
-                    roleCheck.push(item.value);
-                });
-                $.each(explanationCheckedBoxes, function (index, item) {
-                    explanationCheck.push(item.value);
-                });
-                $.each(companyCheckedBoxes, function (index, item) {
-                    companyCheck.push(item.value);
-                });
+                if (!isSectionAllChk) {
+                    $.each(sectionCheckedBoxes, function (index, item) {
+                        sectionCheck.push(item.value);
+                    });
+                }
+                if (!isDepartmentAllCheck) {
+                    $.each(departmentCheckedBoxes, function (index, item) {
+                        departmentCheck.push(item.value);
+                    });
+                }
+                if (!isInChargeAllCheck) {
+                    $.each(inchargeCheckedBoxes, function (index, item) {
+                        inchargeCheck.push(item.value);
+                    });
+                }
+                if (!isRoleAllCheck) {
+                    $.each(roleCheckedBoxes, function (index, item) {
+                        roleCheck.push(item.value);
+                    });
+                }
+                if (!isExplanationAllCheck) {
+                    $.each(explanationCheckedBoxes, function (index, item) {
+                        explanationCheck.push(item.value);
+                    });
+                }
+                if (!isCompanytAllCheck) {
+                    $.each(companyCheckedBoxes, function (index, item) {
+                        companyCheck.push(item.value);
+                    });
+                } 
+
+
+                //$.each(sectionCheckedBoxes, function (index, item) {
+                //    sectionCheck.push(item.value);
+                //});
+                //$.each(departmentCheckedBoxes, function (index, item) {
+                //    departmentCheck.push(item.value);
+                //});
+                //$.each(inchargeCheckedBoxes, function (index, item) {
+                //    inchargeCheck.push(item.value);
+                //});
+                //$.each(roleCheckedBoxes, function (index, item) {
+                //    roleCheck.push(item.value);
+                //});
+                //$.each(explanationCheckedBoxes, function (index, item) {
+                //    explanationCheck.push(item.value);
+                //});
+                //$.each(companyCheckedBoxes, function (index, item) {
+                //    companyCheck.push(item.value);
+                //});
 
 
                 var data_info = {
@@ -1205,11 +1386,17 @@
 
             // multiple search by companies
             $(document).on('click', '#CompanyChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_comopany_all").is(':checked');
+                let isSectionAllChk = $("#chk_sec_all").is(':checked');
+                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+                var isRoleAllCheck = $("#chk_role_all").is(':checked');
+                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked'); 
+                
                 var clicked_checkbox = $(this).attr("id")
 
                 if (clicked_checkbox.toLowerCase() == "chk_comopany_all") {
-                    $(".comopany_checkbox").prop("checked", isSectionAllChk);
+                    $(".comopany_checkbox").prop("checked", isCompanytAllCheck);
                 } else {
                     $("#chk_comopany_all").prop("checked", false);
                 }
@@ -1232,24 +1419,56 @@
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-                $.each(sectionCheckedBoxes, function (index, item) {
-                    sectionCheck.push(item.value);
-                });
-                $.each(departmentCheckedBoxes, function (index, item) {
-                    departmentCheck.push(item.value);
-                });
-                $.each(inchargeCheckedBoxes, function (index, item) {
-                    inchargeCheck.push(item.value);
-                });
-                $.each(roleCheckedBoxes, function (index, item) {
-                    roleCheck.push(item.value);
-                });
-                $.each(explanationCheckedBoxes, function (index, item) {
-                    explanationCheck.push(item.value);
-                });
-                $.each(companyCheckedBoxes, function (index, item) {
-                    companyCheck.push(item.value);
-                });
+                if (!isSectionAllChk) {
+                    $.each(sectionCheckedBoxes, function (index, item) {
+                        sectionCheck.push(item.value);
+                    });
+                }
+                if (!isDepartmentAllCheck) {
+                    $.each(departmentCheckedBoxes, function (index, item) {
+                        departmentCheck.push(item.value);
+                    });
+                }
+                if (!isInChargeAllCheck) {
+                    $.each(inchargeCheckedBoxes, function (index, item) {
+                        inchargeCheck.push(item.value);
+                    });
+                }
+                if (!isRoleAllCheck) {
+                    $.each(roleCheckedBoxes, function (index, item) {
+                        roleCheck.push(item.value);
+                    });
+                }
+                if (!isExplanationAllCheck) {
+                    $.each(explanationCheckedBoxes, function (index, item) {
+                        explanationCheck.push(item.value);
+                    });
+                }
+                if (!isCompanytAllCheck) {
+                    $.each(companyCheckedBoxes, function (index, item) {
+                        companyCheck.push(item.value);
+                    });
+                } 
+
+
+                //$.each(sectionCheckedBoxes, function (index, item) {
+                //    sectionCheck.push(item.value);
+                //});
+                //$.each(departmentCheckedBoxes, function (index, item) {
+                //    departmentCheck.push(item.value);
+                //});
+                //$.each(inchargeCheckedBoxes, function (index, item) {
+                //    inchargeCheck.push(item.value);
+                //});
+                //$.each(roleCheckedBoxes, function (index, item) {
+                //    roleCheck.push(item.value);
+                //});
+                //$.each(explanationCheckedBoxes, function (index, item) {
+                //    explanationCheck.push(item.value);
+                //});
+                //$.each(companyCheckedBoxes, function (index, item) {
+                //    companyCheck.push(item.value);
+                //});
 
 
                 var data_info = {
