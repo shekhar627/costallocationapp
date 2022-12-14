@@ -31,7 +31,7 @@ namespace CostAllocationApp.BLL
         public List<EmployeeAssignmentViewModel> SearchAssignment(EmployeeAssignment employeeAssignment)
         {
             var employees = employeeAssignmentDAL.SearchAssignment(employeeAssignment);
-            if (employees.Count>0)
+            if (employees.Count > 0)
             {
                 foreach (var item in employees)
                 {
@@ -72,7 +72,7 @@ namespace CostAllocationApp.BLL
         public List<EmployeeAssignmentViewModel> GetEmployeesBySearchFilter(EmployeeAssignment employeeAssignment)
         {
             var employees = employeeAssignmentDAL.GetEmployeesBySearchFilter(employeeAssignment);
-            
+
             if (employees.Count > 0)
             {
                 int count = 1;
@@ -97,7 +97,7 @@ namespace CostAllocationApp.BLL
                 }
 
                 this.MarkedAsRed(employees);
-                
+
             }
             return employees;
         }
@@ -158,7 +158,7 @@ namespace CostAllocationApp.BLL
                         employees = employeesWithIn;
                     }
                 }
-               
+
             }
             return employees;
         }
@@ -174,18 +174,20 @@ namespace CostAllocationApp.BLL
 
             foreach (var name in names)
             {
-                viewModels = employees.Where(emp=>emp.EmployeeName==name).ToList();
-                if (viewModels.Count>1)
+                viewModels = employees.Where(emp => emp.EmployeeName == name).ToList();
+                if (viewModels.Count > 1)
                 {
                     EmployeeAssignmentViewModel employeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
                     viewModels.Remove(employeeAssignmentViewModelFirst);
 
                     foreach (var filteredAssignment in viewModels)
                     {
-                        if (filteredAssignment.UnitPrice != employeeAssignmentViewModelFirst.UnitPrice)
+                        if (!string.IsNullOrEmpty(employeeAssignmentViewModelFirst.UnitPrice))
                         {
-                            employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed=true;
-
+                            if (filteredAssignment.UnitPrice != employeeAssignmentViewModelFirst.UnitPrice)
+                            {
+                                employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed = true;
+                            }
                         }
                     }
                 }
