@@ -580,7 +580,7 @@ body {
     /*display: none;*/
 }
 
-    #add_name_table_new thead tr:nth-of-type(1) {
+    #add_name_table_new thead tr:nth-of-type(2) {
         text-align: center;
         background-color: #3c4b5d;
         color: white;
@@ -981,6 +981,7 @@ body {
 .commonselect {
     font-weight: normal !important;
     background-color: aliceblue;
+    text-align: left;
 }
 /*------Name List: Edit -------*/
 #name_list_edit_modal {
@@ -1077,3 +1078,120 @@ body {
     width: 76px;
     font-weight: normal;
 }
+
+/*---------------------------------------Name list: dropdown close outside click--------------------------*/
+.container{
+    position: relative;
+    display: inline-block;
+}
+  
+.selectBox{
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+}
+  
+#sectionChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+}
+
+/*---------------------------------------Name list: edit popup--------------------------*/
+#modal_edit_name{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+#memo_edit{
+    width: 103px;
+}
+#section_edit{
+    width: 115px;
+}
+#department_edit{
+    width: 134px;
+}
+#incharge_edit{
+    width: 141px;
+}
+#role_edit{
+    width: 76px;
+}
+#explanation_edit{
+    width: 250px;
+}
+#company_edit{
+    width: 109px;
+}
+#grade_edit{
+    width: 46px;
+}
+#unitprice_edit{
+    width: 100px;
+}
+/*---------------------------------------name registration popup--------------------------*/
+#modal_add_name_new{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+#identity_new{
+    width: 110px;
+}
+#memo_new{
+    width: 83px;
+}
+#section_new{
+    width: 100px;
+}
+#department_new{
+    width: 110px;
+}
+#incharge_new{
+    width: 100px;
+}
+#role_new{
+    width: 84px;
+}
+#explanation_new{
+    width: 220px;
+}
+#company_new{
+    width: 96px;
+}
+#grade_new{
+    width: 64px;
+}
+#unitprice_new{
+    width: 86px;
+}
+
+/*---------------------------------------master setting popup--------------------------*/
+/* #section_registration{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

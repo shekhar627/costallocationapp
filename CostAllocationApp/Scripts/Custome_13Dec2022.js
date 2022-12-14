@@ -114,20 +114,6 @@ function CreateMultipleInputInCharge() {
 
 var expanded = false;
 
-//$('#section_click').click(function (e) {
-//    //alert("test");
-//    //$(this).siblings('#sectionChks').fadeToggle(100);
-//    var checkboxes = document.getElementById("sectionChks");
-//    if (!expanded) {
-//        checkboxes.style.display = "block";
-//        //$(this).find("#sectionChks").slideToggle("fast");
-//        expanded = true;
-//    } else {
-//        checkboxes.style.display = "none";
-//        expanded = false;
-//    }
-//});
-
 function SectionCheck() {
     var checkboxes = document.getElementById("sectionChks");
     if (!expanded) {

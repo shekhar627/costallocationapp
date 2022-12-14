@@ -227,9 +227,10 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.GradeId = rdr["GradeId"].ToString();
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();                            
 
                         }
                     }
@@ -381,7 +382,7 @@ namespace CostAllocationApp.DAL
             }
             if (employeeAssignment.Sections!=null)
             {
-                if (employeeAssignment.Sections.Length > 0)
+                if (employeeAssignment.Sections.Length > 0 && employeeAssignment.Sections.ToString() != "all")
                 {
                     string ids = "";
                     foreach (var item in employeeAssignment.Sections)
@@ -394,7 +395,7 @@ namespace CostAllocationApp.DAL
                 }
               
             }
-            if (employeeAssignment.Departments != null)
+            if (employeeAssignment.Departments != null && employeeAssignment.Departments.ToString() != "all")
             {
                 if (employeeAssignment.Departments.Length > 0)
                 {
@@ -410,7 +411,7 @@ namespace CostAllocationApp.DAL
 
             }
 
-            if (employeeAssignment.Incharges != null)
+            if (employeeAssignment.Incharges != null && employeeAssignment.Incharges.ToString() != "all") 
             {
                 if (employeeAssignment.Incharges.Length > 0)
                 {
@@ -425,7 +426,7 @@ namespace CostAllocationApp.DAL
                 }
 
             }
-            if (employeeAssignment.Roles != null)
+            if (employeeAssignment.Roles != null && employeeAssignment.Roles.ToString() != "all")
             {
                 if (employeeAssignment.Roles.Length > 0)
                 {
@@ -456,7 +457,7 @@ namespace CostAllocationApp.DAL
             //    }
 
             //}
-            if (employeeAssignment.Companies != null)
+            if (employeeAssignment.Companies != null && employeeAssignment.Companies.ToString() != "all")
             {
                 if (employeeAssignment.Companies.Length > 0)
                 {
@@ -521,8 +522,23 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
-                            employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            {
+                                employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.Remarks = "";
+                            }
+                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            {
+                                employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.SubCode = 0;
+                            }
+                            
 
 
 
