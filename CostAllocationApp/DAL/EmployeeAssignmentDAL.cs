@@ -832,5 +832,30 @@ namespace CostAllocationApp.DAL
             return forecasts;
         }
 
+        public bool CheckEmployeeName(string employeeName)
+        {
+            string query = "select * from EmployeesAssignments where EmployeeName=N'"+employeeName+"'";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
+
     }
 }

@@ -70,9 +70,9 @@ namespace CostAllocationApp.DAL
         }
 
 
-        public bool CheckAssignmentId(int assignmentId,string year)
+        public bool CheckAssignmentId(int assignmentId,int year,int month)
         {
-            string query = "select * from costs where EmployeeAssignmentsId="+assignmentId+" and year = "+year;
+            string query = "select * from costs where EmployeeAssignmentsId="+assignmentId+" and year = "+year+" and monthid="+month;
             bool result = false;
             using (SqlConnection sqlConnection = this.GetConnection())
             {
