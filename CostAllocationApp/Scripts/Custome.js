@@ -631,3 +631,118 @@ function AddSalary() {
         });
     }
 }
+function LoadGradeValue(sel) {
+    var _rowId = $("#add_name_row_no_hidden").val();
+    var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    console.log("_companyName: " + _companyName);
+    var _unitPrice = $("#add_name_unit_price_hidden").val();
+
+    console.log("_unitPrice: " + _unitPrice);
+
+    $.ajax({
+        url: `/api/utilities/CompareGrade/${_unitPrice}`,
+        type: 'GET',
+        dataType: 'json',
+        //data: {
+        //    unitPrice: _unitPrice
+        //},
+        success: function (data) {
+            $('#grade_edit_hidden').val(data.Id);
+            if (_companyName.toLowerCase() == "mw") {
+                //$('#grade_new_hidden').val(data.Id);
+                $('#grade_row_' + _rowId).val(data.SalaryGrade);
+            } else {
+                $('#grade_row_' + _rowId).val('');
+            }
+        },
+        error: function () {
+            $('#grade_row_' + _rowId).val('');
+        }
+    });
+}
+
+function NameList_DatatableLoad(data) {
+    var tempCompanyName = "";
+    var tempSubCode = "";
+    var tempRemarks = "";
+
+    $('#name-list').DataTable({
+        destroy: true,
+        data: data,
+        ordering: true,
+        pageLength: 100,
+        columns: [
+            //{
+            //    data: 'SubCode',
+            //    //render: function (subCodeNo) {
+            //    //    tempSubCode = subCodeNo;
+            //    //    return '';
+            //    //}
+            //},
+            //{
+            //    data: 'Remarks',
+            //    render: function (remarks) {
+            //        tempRemarks = remarks;
+            //        return null;
+            //    }
+            //},
+            {
+                data: 'EmployeeNameWithCodeRemarks',
+                render: function (employeeName) {
+                    //var nameWithCodeAndRemarks = "";
+                    //if (nameWithCodeAndRemarks == "") {
+                    //    nameWithCodeAndRemarks = employeeName;
+                    //}
+                    //if (tempSubCode > 0) {
+                    //    nameWithCodeAndRemarks = employeeName + " " + tempSubCode
+                    //}
+                    //if (tempRemarks != "") {
+                    //    nameWithCodeAndRemarks = nameWithCodeAndRemarks + " (" + tempRemarks + ")";
+                    //}
+                    //nameWithCodeAndRemarks = nameWithCodeAndRemarks;
+                    return employeeName;
+                }
+            },
+            {
+                data: 'SectionName'
+            },
+            {
+                data: 'DepartmentName'
+            },
+            {
+                data: 'InchargeName'
+            },
+            {
+                data: 'RoleName'
+            },
+            {
+                data: 'ExplanationName'
+            },
+            {
+                data: 'CompanyName',
+                render: function (companyName) {
+                    tempCompanyName = companyName;
+                    return companyName;
+                }
+            },
+            {
+                data: 'GradePoint'
+            },
+            {
+                data: 'UnitPrice'
+            },
+            {
+                data: 'Id',
+                render: function (Id) {
+                    if (tempCompanyName.toLowerCase() == 'mw') {
+                        return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+                    } else {
+                        return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+                    }
+                }
+            }
+        ]
+    });
+
+
+}

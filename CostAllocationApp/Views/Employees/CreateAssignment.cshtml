@@ -222,8 +222,8 @@
                     <tbody>
                         <tr>
                             @*<td>
-                                    <input type="text" class=" col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                                </td>*@
+                                <input type="text" class=" col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                            </td>*@
                             <td>
                                 <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
                             </td>
@@ -293,6 +293,8 @@
         </div>
         <input type="hidden" id="grade_edit_hidden" />
         <input type="hidden" id="grade_new_hidden" />
+        <input type="hidden" id="add_name_unit_price_hidden" />
+        <input type="hidden" id="add_name_row_no_hidden" />
     </div>
 </div>
 
@@ -600,7 +602,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="company_row_${previousAssignmentRow}" class=" col-12 add_company">
+                               <select id="company_row_${previousAssignmentRow}" class=" col-12 add_company" onchange="LoadGradeValue(this);">
                                     <option value=''>Select Role</option>
                             `;
                     $.each(data, function (key, item) {
@@ -688,6 +690,8 @@
 
         function unitPriceChange(rowId,element) {
             let _unitPrice = $(element).val();
+            $("#add_name_unit_price_hidden").val(_unitPrice);
+            $("#add_name_row_no_hidden").val(rowId);
 
             if (!unitPrices.includes(_unitPrice)) {
                 $('#identity_row_' + rowId).css('color', 'red');
@@ -1059,6 +1063,7 @@
                             destroy: true,
                             data: data,
                             ordering: true,
+                            pageLength: 100,
                             columns: [
                                 {
                                     data: 'MarkedAsRed',

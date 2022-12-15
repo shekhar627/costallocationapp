@@ -340,22 +340,27 @@ namespace CostAllocationApp.DAL
 
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+                            employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
+                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            {
+                                employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                                employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + employeeAssignmentViewModel.SubCode;
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.SubCode = 0;                                
+                            }
+
                             if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
                             {
                                 employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                                employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + employeeAssignmentViewModel.Remarks + ")";
                             }
                             else
                             {
                                 employeeAssignmentViewModel.Remarks = "";
                             }
-                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
-                            {
-                                employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
-                            }
-                            else
-                            {
-                                employeeAssignmentViewModel.SubCode = 0;
-                            }
+                            
 
                             //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
                             //HttpContext.Current.Response.End();
@@ -652,21 +657,26 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
-                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
-                            {
-                                employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            }
-                            else
-                            {
-                                employeeAssignmentViewModel.Remarks = "";
-                            }
+                            employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
+
                             if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
                             {
                                 employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                                employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + employeeAssignmentViewModel.SubCode;
                             }
                             else
                             {
                                 employeeAssignmentViewModel.SubCode = 0;
+                            }
+
+                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            {
+                                employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                                employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + employeeAssignmentViewModel.Remarks + ")";
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.Remarks = "";
                             }
 
 
