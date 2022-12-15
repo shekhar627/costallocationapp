@@ -169,6 +169,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
                             employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
 
@@ -741,6 +742,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))

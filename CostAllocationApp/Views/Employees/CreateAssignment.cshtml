@@ -451,22 +451,22 @@
                         previousAssignmentRow = item.SubCode;
                         tr += '<tr class="sub_thead">';
                         tr += `<td>${item.SubCode}</td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.EmployeeName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.SubCode}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.Remarks}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.SectionName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.DepartmentName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.InchargeName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.RoleName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.ExplanationName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" value='${item.CompanyName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 141px;' value='${item.EmployeeName}' readonly/></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 47px;' value='${item.SubCode}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.Remarks}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 87px;' value='${item.SectionName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.DepartmentName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.InchargeName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.RoleName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 190px;' value='${item.ExplanationName}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width:81px;'   value='${item.CompanyName}' readonly /></td>`;
                         if (item.CompanyName.toLowerCase() == "mw") {
-                            tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly /></td>`;
+                            tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly style='width: 55px;' /></td>`;
                         }
                         else {
-                            tr += `<td><input type='text' class=" col-12" value='' readonly /></td>`;
+                            tr += `<td><input type='text' class=" col-12" value='' readonly style='width: 55px;' /></td>`;
                         }
-                        tr += `<td><input type='text' class=" col-12" value='${item.UnitPrice}' readonly /></td>`;
+                        tr += `<td><input type='text' class=" col-12" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
                         if (count==1) {
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
@@ -493,9 +493,9 @@
         var text = `
             <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
                 <td>${previousAssignmentRow}</td>
-                <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" value="${$('#fixed_hidden_name').val()}" readonly /></td>
-                <td><input class="" value="${previousAssignmentRow}" id='sub_code_row_${previousAssignmentRow}' readonly /></td>
-                <td><input class=" col-12" id="memo_row_${previousAssignmentRow}" /></td>`;
+                <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" style='width: 141px;' value="${$('#fixed_hidden_name').val()}" readonly /></td>
+                <td><input class="" value="${previousAssignmentRow}"  style='width: 47px;' id='sub_code_row_${previousAssignmentRow}' readonly /></td>
+                <td><input class=" col-12" style='width: 89px;' id="memo_row_${previousAssignmentRow}" /></td>`;
 
             // for add new
                 $.ajax({
@@ -507,7 +507,7 @@
                         console.log(data);
                         text += '<td>';
                         text += `
-                               <select id="section_row_${previousAssignmentRow}" class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
+                               <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
                                     <option value=''>Select Section</option>
                             `;
                         $.each(data, function (key, item) {
@@ -580,7 +580,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="explain_row_${previousAssignmentRow}" class=" col-12">
+                               <select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12">
                                     <option value=''>Select Role</option>
                             `;
                     $.each(data, function (key, item) {
@@ -602,7 +602,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="company_row_${previousAssignmentRow}" class=" col-12 add_company" onchange="LoadGradeValue(this);">
+                               <select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(this);">
                                     <option value=''>Select Role</option>
                             `;
                     $.each(data, function (key, item) {
@@ -615,8 +615,8 @@
                 }
             });
             text += `
-                 <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly /></td>
-                 <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+                 <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/></td>
+                 <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
                  <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
             </tr>
 
@@ -693,6 +693,15 @@
             $("#add_name_unit_price_hidden").val(_unitPrice);
             $("#add_name_row_no_hidden").val(rowId);
 
+
+            var _rowId = $("#add_name_row_no_hidden").val();
+            var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+            console.log("_companyName: " + _companyName);
+            //var _unitPrice = $("#add_name_unit_price_hidden").val();
+
+            console.log("_unitPrice: " + _unitPrice);
+
+
             if (!unitPrices.includes(_unitPrice)) {
                 $('#identity_row_' + rowId).css('color', 'red');
                 $('#sub_code_row_' + rowId).css('color', 'red');
@@ -708,8 +717,22 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
-                    $('#grade_row_' + rowId).attr('data-id', data.Id);
-                    $('#grade_row_' + rowId).val(data.SalaryGrade);
+                    $('#grade_edit_hidden').val(data.Id);
+                    console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
+                    console.log("_companyName.toLowerCase(): " + typeof (_companyName));
+                    console.log("_rowId: " + _rowId);
+                    //if (_companyName.toLowerCase == 'mw') {
+                    if (_companyName.toLowerCase().indexOf("mw") > 0) {
+                        console.log("test- equal");
+                        $('#grade_row_' + rowId).attr('data-id', data.Id);
+                        $('#grade_row_' + _rowId).val(data.SalaryGrade);
+                    } else {
+                        console.log("test- not equal");
+                        $('#grade_row_' + _rowId).val('');
+                    }
+
+                    
+                    //$('#grade_row_' + rowId).val(data.SalaryGrade);
                 },
                 error: function () {
                     $('#grade_row_' + rowId).attr('data-id', '');

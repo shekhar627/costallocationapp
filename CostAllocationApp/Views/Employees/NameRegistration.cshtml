@@ -17,7 +17,7 @@
                                         <a class="" href="/Division/CreateDivision" target="_blank" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
                                     </th>
                                     <th class="name_registration_th">
-                                        <a class="" href="/Department/CreateDepartment" target="_blank" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                                        <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
                                     </th>
                                     <th class="name_registration_th">
                                         <a class="" href="/Home/InCharge" target="_blank" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
@@ -93,6 +93,9 @@
 </div>
 <input type="hidden" id="grade_edit_hidden" />
 <input type="hidden" id="grade_new_hidden" />
+
+<input type="hidden" id="page_load_after_modal_close" />
+
 @section Scripts{
     <script>
 

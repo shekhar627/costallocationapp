@@ -205,6 +205,8 @@ function GetCheckedIds(department_list_id) {
 
 //---------------modal insert--------------------//
 function AddDivision() {
+    
+
     var apiurl = "/api/sections/";
     let sectionName = $("#section-name").val().trim();
     if (sectionName == "") {
@@ -224,6 +226,7 @@ function AddDivision() {
             dataType: 'json',
             data: data,
             success: function (data) {
+                $("#page_load_after_modal_close").val("yes");
 
                 Command: toastr["success"](data, "Success")
 
@@ -294,6 +297,9 @@ function AddDepartment() {
             dataType: 'json',
             data: data,
             success: function (data) {
+                $("#page_load_after_modal_close").val("yes");
+                $("#department_name").val('');
+                $("#section_list").val('');
 
                 Command: toastr["success"](data, "Success")
 
@@ -351,7 +357,8 @@ function AddInCharge() {
             dataType: 'json',
             data: data,
             success: function (data) {
-
+                $("#page_load_after_modal_close").val("yes");
+                $("#in_charge_name").val('');
                 Command: toastr["success"](data, "Success")
 
                 toastr.options = {
@@ -406,7 +413,8 @@ function AddRoles() {
             dataType: 'json',
             data: data,
             success: function (data) {
-
+                $("#page_load_after_modal_close").val("yes");
+                $("#role_name").val('');
                 Command: toastr["success"](data, "Success")
 
                 toastr.options = {
@@ -462,6 +470,8 @@ function AddExplanations() {
             dataType: 'json',
             data: data,
             success: function (data) {
+                $("#page_load_after_modal_close").val("yes");
+                $("#explanation_name").val('');
 
                 Command: toastr["success"](data, "Success")
 
@@ -518,7 +528,8 @@ function AddCompany() {
             dataType: 'json',
             data: data,
             success: function (data) {
-
+                $("#page_load_after_modal_close").val("yes");
+                $("#companyName").val('');
                 Command: toastr["success"](data, "Success")
 
                 toastr.options = {
@@ -749,6 +760,55 @@ function NameList_DatatableLoad(data) {
             }
         ]
     });
-
-
 }
+
+//$("#section_registration").on('hide', function () {
+//    window.location.reload();
+//});
+$('#section_registration').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        window.location.reload(true);
+    }
+})
+$('#department_registration').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        window.location.reload(true);
+    }
+})
+$('#in-charge_registration').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        window.location.reload(true);
+    }
+})
+$('#role_registration_modal').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        window.location.reload(true);
+    }
+})
+$('#explanation_modal').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        window.location.reload(true);
+    }
+})
+$('#company_reg_modal').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        window.location.reload(true);
+    }
+})
+
+$('#department_modal_href').click(function () {
+    $.getJSON('/api/sections/')
+        .done(function (data) {
+            $('#section_list').empty();
+            $('#section_list').append(`<option value=''>Select Section</option>`)
+            $.each(data, function (key, item) {
+                $('#section_list').append(`<option value='${item.Id}'>&nbsp;&nbsp; ${item.SectionName}</option>`)
+            });
+        });
+});
