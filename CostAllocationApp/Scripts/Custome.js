@@ -648,10 +648,16 @@ function LoadGradeValue(sel) {
         //},
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase() == "mw") {
+            console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
+            console.log("_companyName.toLowerCase(): " + typeof (_companyName));
+            console.log("_rowId: " + _rowId);
+            //if (_companyName.toLowerCase == 'mw') {
+            if (_companyName.toLowerCase().indexOf("mw") >0) {
+                console.log("test- equal");
                 //$('#grade_new_hidden').val(data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
             } else {
+                console.log("test- not equal");
                 $('#grade_row_' + _rowId).val('');
             }
         },
