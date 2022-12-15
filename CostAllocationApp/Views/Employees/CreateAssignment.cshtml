@@ -54,7 +54,8 @@
     </div>
     <div class="row">
         <div class="col-md-12 custom_add_name">
-            <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">Name Reg.</a>
+            @*<a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">Name Reg.</a>*@
+            <a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a>
             <table id="add_name_table_1">
                 <thead>
                     <tr>
@@ -793,7 +794,6 @@
 
 
         $(document).ready(function () {
-
             // for add new
             $.getJSON('/api/Roles/')
                 .done(function (data) {

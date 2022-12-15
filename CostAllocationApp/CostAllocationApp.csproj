@@ -534,6 +534,9 @@
     <Content Include="img\profiles\avatar-28.jpg" />
     <Content Include="img\profiles\avatar-29.jpg" />
     <Content Include="img\profiles\avatar-30.jpg" />
+    <Content Include="img\sort.png" />
+    <Content Include="img\sortDown.png" />
+    <Content Include="img\sortUp.png" />
     <Content Include="img\user.jpg" />
     <Content Include="img\video-call.jpg" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -606,6 +609,7 @@
     <Content Include="Views\Employees\CreateAssignment.cshtml" />
     <Content Include="Views\Employees\CreateEmployee.cshtml" />
     <Content Include="Views\Forecasts\CreateForecast.cshtml" />
+    <Content Include="Views\Employees\NameRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
