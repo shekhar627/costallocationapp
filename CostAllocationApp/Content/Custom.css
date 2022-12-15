@@ -1225,3 +1225,64 @@ body {
     font-size: 10px;
     font-family: Yu Gothic
 } */
+
+/*---------------------------------------name registration--------------------------*/
+#name_registration {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+
+#name_registration {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+
+/*---------------------------------------name list: datatable--------------------------*/
+/*.name_list_table_header{
+    background-color:slategray;
+    color:white;
+}
+table.dataTable > thead .sorting,
+table.dataTable > thead .sorting .sorting_asc,
+table.dataTable > thead .sorting .sorting_desc, {
+    background: none;
+}
+
+.arrow-icon{
+    margin-left:5px;
+}
+.sorting .arrow-icon {
+    background: url('../img/sort.png') no-repeat top left;
+    position: absolute;
+    height: 16px;
+    width: 10px;
+    background-size: 10px 13px;
+    margin-top: 3px;
+}
+.sorting_asc .arrow-icon {
+    background: url('../img/sortDown.png') no-repeat top left;
+    position: absolute;
+    height: 16px;
+    width: 10px;
+    background-size: 8px 14px;
+    margin-top: 3px;
+}
+.sorting_desc.arrow-icon {
+    background: url('../img/sortUp.png') no-repeat top left;
+    position: absolute;
+    height: 16px;
+    width: 10px;
+    background-size: 8px 14px;
+    margin-top: 3px;
+}*/
+
+
+
+
+
+
+
+
+
