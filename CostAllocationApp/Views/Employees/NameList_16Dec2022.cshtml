@@ -6,53 +6,47 @@
             <div class="col-md-12">
                 <div>
                     <section class="container" tabIndex="1">
-                        <div>
-                            <table>
-                                <thead>
-                                    <tr class="master_setting_popup">
-                                        <th class="name_list_th name"><a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a></th>
-                                        <th class="name_list_th section">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
-                                        </th>
-                                        <th class="name_list_th department">
-                                            <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
-                                        </th>
-                                        <th class="name_list_th incharge">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
-                                        </th>
-                                        <th class="name_list_th role">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
-                                        </th>
-                                        <th class="name_list_th explanation">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
-                                        </th>
-                                        <th class="name_list_th company">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal" style="margin-left:185px;">Com. Reg.</a>
-                                        </th>
-                                    </tr>                                   
-                                </thead>
-                            </table>
-
-                        </div>
                         <table class="namelist_tbl" id="name-list">
                             <thead class="name_list_table_header">
-
+                                <tr>
+                                    <!-- <th class="name_list_th"><a href="javascript:void(0);" data-toggle="modal" data-target="#modal_add_name_new">Name Reg.</a></th> -->
+                                    <th class="name_list_th"><a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a></th>
+                                    <th class="name_list_th">
+                                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
+                                    </th>
+                                    <th class="name_list_th">
+                                        <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                                    </th>
+                                    <th class="name_list_th">
+                                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
+                                    </th>
+                                    <th class="name_list_th">
+                                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
+                                    </th>
+                                    <th class="name_list_th">
+                                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
+                                    </th>
+                                    <th class="name_list_th">
+                                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal">Com. Reg.</a>
+                                    </th>
+                                </tr>
                                 <tr id="namelist_tbl_header">
-                                    <th id="name_list_name">Name <i class="fa fa-sort-amount-asc" id="name_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="name_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_section">Section <i class="fa fa-sort-amount-asc" id="section_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="section_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_department">Department <i class="fa fa-sort-amount-asc" id="department_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="department_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_incharge">In-Charge <i class="fa fa-sort-amount-asc" id="incharge_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="incharge_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_role">Role <i class="fa fa-sort-amount-asc" id="role_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="role_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_explanation">Explanation <i class="fa fa-sort-amount-asc" id="explanation_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="explanation_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_company">Company Name <i class="fa fa-sort-amount-asc" id="company_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="company_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_grade">Grade <i class="fa fa-sort-amount-asc" id="grade_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="grade_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_unit">Unit Price <i class="fa fa-sort-amount-asc" id="unit_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="unit_desc" aria-hidden="true"></i></th>
+                                    <th>Name</th>
+                                    
+                                    <th>Section</th>
+                                    <th>Department</th>
+                                    <th>In-Charge</th>
+                                    <th>Role</th>
+                                    <th>Explanation</th>
+                                    <th>Company Name</th>
+                                    <th style="">Grade</th>
+                                    <th style="">Unit Price </th>
                                     <th style="">Action</th>
                                 </tr>
                                 <tr id="namelist_tbl_search" style="line-height:2;">
 
                                     <th class="namelist_td name"><input type="text" value="" id="name_search" style="border: 1px solid black; width:159px;" /></th>
-
+                                    
                                     <th class="namelist_td section">
 
                                         <div class="multiselect">
@@ -66,6 +60,7 @@
                                             <div id="sectionChks" class="commonselect">
 
                                             </div>
+                                            <!-- </section> -->
                                         </div>
                                     </th>
 
@@ -257,7 +252,7 @@
                     <thead>
                         <tr>
                             @*
-                                <th>Name</th>*@
+                            <th>Name</th>*@
                             <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
@@ -272,9 +267,9 @@
                     <tbody>
                         <tr>
                             @*
-                                <td>
-                                    <input type="text" class="col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                                </td>*@
+                            <td>
+                                <input type="text" class="col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                            </td>*@
                             <td>
                                 <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
                             </td>
@@ -472,33 +467,10 @@
 
 
         $(document).ready(function() {
-            $('#name_list_name').click(function () {
-                NameListSort("name_asc","name_desc");
-            });
-            $('#name_list_section').click(function () {
-                NameListSort("section_asc", "section_desc");
-            });
-            $('#name_list_department').click(function () {
-                NameListSort("department_asc", "department_desc");
-            });
-            $('#name_list_incharge').click(function () {
-                NameListSort("incharge_asc", "incharge_desc");
-            });
-            $('#name_list_role').click(function () {
-                NameListSort("role_asc", "role_desc");
-            });
-            $('#name_list_explanation').click(function () {
-                NameListSort("explanation_asc", "explanation_desc");
-            });
-            $('#name_list_company').click(function () {
-                NameListSort("company_asc", "company_desc");
-            });
-            $('#name_list_grade').click(function () {
-                NameListSort("grade_asc", "grade_desc");
-            });
-            $('#name_list_unit').click(function () {
-                NameListSort("unit_asc", "unit_desc");
-            });
+            //$('.container').click(function () {
+            //    $('#sectionChks').fadeOut(100);
+            //});
+            //$('#name-list').DataTable();
 
             $('.container').blur(function(e) {
                 $('.commonselect').fadeOut(100);
@@ -507,7 +479,7 @@
             //$('#namelist_tbl').DataTable();
             LoadNameListTableOnLoad();
 
-            function LoadNameListTableOnLoad() {
+            function LoadNameListTableOnLoad() {                
                 let employeeName = "";
                 let sectionId = "";
                 let departmentId = "";
@@ -538,7 +510,7 @@
                         if (dataCount > 0) {
                             let counter = 1;
                             let nameWithCodeAndRemarks = "";
-
+                            
                             //$.each(data, function(key, item) {
                             //    //console.log("Remarks: " + item.Remarks);
                             //    //console.log("SubCode: " + item.SubCode);
@@ -552,7 +524,7 @@
                             //    if (item.Remarks != "") {
                             //        nameWithCodeAndRemarks = nameWithCodeAndRemarks + " (" + item.Remarks + ")";
                             //    }
-
+                                
 
                             //    if (item.IsActive == true) {
                             //        if (item.CompanyName.toLowerCase() == "mw") {
@@ -613,7 +585,7 @@
                             //    //                     return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
                             //    //                 } else {
                             //    //                     return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
-                            //    //                 }
+                            //    //                 }                                        
                             //    //             }
                             //    //         }
                             //    //     ]
@@ -729,7 +701,7 @@
                         $('#employee_list_search_results').empty();
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
+
                         //let dataCount = data.length;
                         ////alert(dataCount);
                         //if (dataCount > 0) {
@@ -853,7 +825,6 @@
 
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
 
                         //let dataCount = data.length;
                         ////alert(dataCount);
@@ -999,7 +970,7 @@
 
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
+
                         //let dataCount = data.length;
                         ////alert(dataCount);
                         //if (dataCount > 0) {
@@ -1143,7 +1114,6 @@
 
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
 
                         //let dataCount = data.length;
                         ////alert(dataCount);
@@ -1289,7 +1259,6 @@
 
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
 
                         //let dataCount = data.length;
                         ////alert(dataCount);
@@ -1436,7 +1405,6 @@
 
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
 
                         //let dataCount = data.length;
                         ////alert(dataCount);
@@ -1582,7 +1550,6 @@
 
                         //Name list with datatable
                         NameList_DatatableLoad(data);
-                        NameListSort_OnChange();
 
                         //let dataCount = data.length;
                         ////alert(dataCount);
@@ -1879,7 +1846,7 @@
 
 
             $('#add_name_edit').on('click', function () {
-
+                
                 var sectionId = $('#section_edit').find(":selected").val();
                 var inchargeId = $('#incharge_edit').find(":selected").val();
                 var departmentId = $('#department_edit').find(":selected").val();
@@ -1965,7 +1932,7 @@
                             $('#grade_edit').val(data.SalaryGrade);
                         } else {
                             $('#grade_edit').val('');
-                        }
+                        }                        
                     },
                     error: function() {
                         $('#grade_edit').val('');

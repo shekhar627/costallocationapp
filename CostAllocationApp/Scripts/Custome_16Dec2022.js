@@ -678,46 +678,6 @@ function LoadGradeValue(sel) {
     });
 }
 
-function NameListSort(sort_asc, sort_desc) {
-    var nameAsc = $('#' + sort_asc).css('display');
-    if (nameAsc == 'inline-block') {
-        $('#' + sort_asc).css('display', 'none');
-        $('#' + sort_desc).css('display', 'inline-block');
-    }
-    else {
-        $('#' + sort_asc).css('display', 'inline-block');
-        $('#' + sort_desc).css('display', 'none');
-    }
-}
-function NameListSort_OnChange() {
-    $('#name_asc').css('display', 'inline-block');
-    $('#name_desc').css('display', 'none');
-
-    $('#section_asc').css('display', 'inline-block');
-    $('#section_desc').css('display', 'none');
-
-    $('#department_asc').css('display', 'inline-block');
-    $('#department_desc').css('display', 'none');
-
-    $('#incharge_asc').css('display', 'inline-block');
-    $('#incharge_desc').css('display', 'none');
-
-    $('#role_asc').css('display', 'inline-block');
-    $('#role_desc').css('display', 'none');
-
-    $('#explanation_asc').css('display', 'inline-block');
-    $('#explanation_desc').css('display', 'none');
-
-    $('#company_asc').css('display', 'inline-block');
-    $('#company_desc').css('display', 'none');
-
-    $('#grade_asc').css('display', 'inline-block');
-    $('#grade_desc').css('display', 'none');
-
-    $('#unit_asc').css('display', 'inline-block');
-    $('#unit_desc').css('display', 'none');
-}
-
 function NameList_DatatableLoad(data) {
     var tempCompanyName = "";
     var tempSubCode = "";
@@ -728,15 +688,12 @@ function NameList_DatatableLoad(data) {
         data: data,
         ordering: true,
         //orderCellsTop: true,
-        orderCellsTop: true,
         //columnDefs: [{
         //    visible: false,
-        //    targets: 1
+        //    targets: 2
         //}],
         //oTable.fnSort([[0, 'asc'], [1, 'asc']]),
         pageLength: 100,
-        searching: false,
-        bLengthChange: false,
         columns: [
             //{
             //    data: 'SubCode',

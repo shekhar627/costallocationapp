@@ -61,7 +61,7 @@ body {
     /*padding: 5px;*/
 }
 
-#name-list thead tr:nth-of-type(2) {
+#name-list thead tr:nth-of-type(1) {
     background-color: #3c4b5d;
     color: white;
 }
@@ -352,7 +352,7 @@ body {
 
 
 #forecast_table {
-    width: 200%;
+    width: 250%;
     border-collapse: collapse;
     border: 1px solid;
     font-size:12px;
@@ -1263,11 +1263,32 @@ table.dataTable > thead .sorting .sorting_desc, {
     background-size: 8px 14px;
     margin-top: 3px;
 }*/
-
-
-
-
-
+/*---------------------------------------namelist: registration popup button--------------------------*/
+.master_setting_popup {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+.name_list_th.name {
+    text-align: center;
+    width: 195px !important;
+}
+.name_list_th.section {
+    text-align: center;
+    width: 101px !important;
+}
+.name_list_th.department {
+    text-align: center;
+    width: 91px !important;
+}
+.name_list_th.InCharge {
+    text-align: center;
+    width: 97px !important;
+}
+.name_list_th.company {
+    text-align: center;
+    margin-left:185px;
+}
 
 
 

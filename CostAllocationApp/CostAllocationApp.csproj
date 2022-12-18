@@ -500,6 +500,7 @@
     <Content Include="img\flags\za.png" />
     <Content Include="img\flags\zm.png" />
     <Content Include="img\flags\zw.png" />
+    <Content Include="img\forecast_loader.gif" />
     <Content Include="img\img-01.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="img\logo3.png" />

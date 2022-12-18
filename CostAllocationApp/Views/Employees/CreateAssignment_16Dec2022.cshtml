@@ -60,18 +60,17 @@
                 <thead>
                     <tr>
                         <th> </th>
-                        <th id="add_name_name">Name <i class="fa fa-sort-amount-asc" id="name_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="name_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_subcode">SubCode <i class="fa fa-sort-amount-asc" id="subcode_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="subcode_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_memo">Memo <i class="fa fa-sort-amount-asc" id="memo_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="memo_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_section">Section <i class="fa fa-sort-amount-asc" id="section_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="section_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_department">Department <i class="fa fa-sort-amount-asc" id="department_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="department_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_incharge">In-Charge <i class="fa fa-sort-amount-asc" id="incharge_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="incharge_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_role">Role <i class="fa fa-sort-amount-asc" id="role_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="role_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_explanation">Explanation <i class="fa fa-sort-amount-asc" id="explanation_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="explanation_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_company">Company Name <i class="fa fa-sort-amount-asc" id="company_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="company_desc" aria-hidden="true"></i></th>
-                        <th id="">Grade </th>
-                        <th id="add_name_unit">Unit Price <i class="fa fa-sort-amount-asc" id="unit_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="unit_desc" aria-hidden="true"></i></th>
-
+                        <th>Name</th>
+                        <th>SubCode</th>
+                        <th>Memo</th>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>In-Charge</th>
+                        <th>Role</th>
+                        <th>Explanation</th>
+                        <th>Company</th>
+                        <th>Grade</th>
+                        <th>Unit Price</th>
                         <th id="add_name_action">Action</th>
                     </tr>
                 </thead>
@@ -822,39 +821,6 @@
 
 
         $(document).ready(function () {
-            $('#add_name_name').click(function () {
-                NameListSort("name_asc", "name_desc");
-            });
-            $('#add_name_subcode').click(function () {
-                NameListSort("subcode_asc", "subcode_desc");
-            });
-            $('#add_name_memo').click(function () {
-                NameListSort("memo_asc", "memo_desc");
-            });
-            $('#add_name_section').click(function () {
-                NameListSort("section_asc", "section_desc");
-            });
-            $('#add_name_department').click(function () {
-                NameListSort("department_asc", "department_desc");
-            });
-            $('#add_name_incharge').click(function () {
-                NameListSort("incharge_asc", "incharge_desc");
-            });
-            $('#add_name_role').click(function () {
-                NameListSort("role_asc", "role_desc");
-            });
-            $('#add_name_explanation').click(function () {
-                NameListSort("explanation_asc", "explanation_desc");
-            });
-            $('#add_name_company').click(function () {
-                NameListSort("company_asc", "company_desc");
-            });
-            $('#add_name_grade').click(function () {
-                NameListSort("grade_asc", "grade_desc");
-            });
-            $('#add_name_unit').click(function () {
-                NameListSort("unit_asc", "unit_desc");
-            });
             // for add new
             $.getJSON('/api/Roles/')
                 .done(function (data) {
@@ -1215,7 +1181,7 @@
                                 },
                                 {
                                     data: 'UnitPrice',
-                                    orderable: true,
+                                    orderable: false,
                                 },
                                 {
                                     data: 'Id',

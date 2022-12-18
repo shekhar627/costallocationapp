@@ -218,8 +218,11 @@ namespace CostAllocationApp.BLL
                 if (viewModels.Count > 1)
                 {
                     EmployeeAssignmentViewModel employeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
+                    if (employeeAssignmentViewModelFirst==null)
+                    {
+                        continue;
+                    }
                     viewModels.Remove(employeeAssignmentViewModelFirst);
-
                     foreach (var filteredAssignment in viewModels)
                     {
                         if (!string.IsNullOrEmpty(employeeAssignmentViewModelFirst.UnitPrice))
@@ -252,8 +255,11 @@ namespace CostAllocationApp.BLL
                 if (viewModels.Count > 1)
                 {
                     ForecastAssignmentViewModel forecastEmployeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
+                    if (forecastEmployeeAssignmentViewModelFirst == null)
+                    {
+                        continue;
+                    }
                     viewModels.Remove(forecastEmployeeAssignmentViewModelFirst);
-
                     foreach (var filteredAssignment in viewModels)
                     {
                         if (filteredAssignment.UnitPrice != forecastEmployeeAssignmentViewModelFirst.UnitPrice)
