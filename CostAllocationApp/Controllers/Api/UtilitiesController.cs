@@ -155,6 +155,16 @@ namespace CostAllocationApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult SearchForecastEmployee(string employeeName, string sectionId, string departmentId, string inchargeId, string roleId, string explanationId, string companyId, string status,string year)
         {
+            employeeName = "";
+            sectionId = "";
+            departmentId = "";
+            inchargeId = "";
+            roleId = "";
+            explanationId = "";
+            companyId = "";
+            status = "";
+            year = "";
+
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
             if (!string.IsNullOrEmpty(employeeName))
             {

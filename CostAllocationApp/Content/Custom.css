@@ -352,13 +352,13 @@ body {
 
 
 #forecast_table {
-    width: 250%;
+    width: 250% !important;
     border-collapse: collapse;
     border: 1px solid;
     font-size:12px;
 }
 
-.forecast_th {
+/*.forecast_th {
     text-align: center;
 }
 
@@ -397,7 +397,7 @@ body {
     float: right;
     margin-left: 33%;
     display: none;
-}
+}*/
 
 /*-----------------
 	7. Forecast Search
