@@ -474,22 +474,43 @@ namespace CostAllocationApp.DAL
 
                             forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             forecastEmployeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
-                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
-                            {
-                                forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            }
-                            else
-                            {
-                                forecastEmployeeAssignmentViewModel.Remarks = "";
-                            }
+
                             if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
                             {
                                 forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                                forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks = forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + forecastEmployeeAssignmentViewModel.SubCode;
                             }
                             else
                             {
                                 forecastEmployeeAssignmentViewModel.SubCode = 0;
                             }
+
+                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            {
+                                forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                                forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks = forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + forecastEmployeeAssignmentViewModel.Remarks + ")";
+                            }
+                            else
+                            {
+                                forecastEmployeeAssignmentViewModel.Remarks = "";
+                            }
+
+                            //if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            //}
+                            //else
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.Remarks = "";
+                            //}
+                            //if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            //}
+                            //else
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.SubCode = 0;
+                            //}
 
                             //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
                             //HttpContext.Current.Response.End();
@@ -820,7 +841,20 @@ namespace CostAllocationApp.DAL
                             forecast.Year = Convert.ToInt32(rdr["Year"]);
                             forecast.Month = Convert.ToInt32(rdr["MonthId"]);
                             forecast.Points = Convert.ToDecimal(rdr["Points"]);
-                            forecast.Total = Convert.ToDecimal(rdr["Total"]);
+                            //forecast.Total = Convert.ToDecimal(rdr["Total"]);
+                            forecast.Total = rdr["Total"].ToString();
+                            forecast.Total = Convert.ToDecimal(forecast.Total).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+
+                            //if (!string.IsNullOrEmpty(rdr["Total"].ToString())) {
+                            //    forecast.Total = rdr["Total"].ToString();
+                            //    //forecast.Total = (Convert.ToDecimal(forecast.Total)).ToString("N", new CultureInfo("en-US"));
+                            //    forecast.Total = Convert.ToDecimal(forecast.Total).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            //}
+                            //else
+                            //{
+                            //    forecast.Total = "0";
+                            //}
+
                             forecasts.Add(forecast);
                         }
                     }

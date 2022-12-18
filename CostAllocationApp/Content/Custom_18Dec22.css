@@ -1036,7 +1036,7 @@ body {
     text-indent: 1em;
 }
 /*---------------------------------------Name list: Dropdown width--------------------------*/
-/* .selectBox.section select {
+.selectBox.section select {
     width: 71px;
     font-weight: normal;
 }
@@ -1059,7 +1059,7 @@ body {
 .selectBox.company select {
     width: 76px;
     font-weight: normal;
-} */
+}
 
 /*---------------------------------------add name: design modify--------------------------*/
 #add_name_table_1 {
@@ -1097,11 +1097,11 @@ body {
     font-weight: normal;
 }
 .selectBox.incharge select {
-    width: 91px;
+    width: 111px;
     font-weight: normal;
 }
 .selectBox.role select {
-    width: 48px;
+    width: 65px;
     font-weight: normal;
 }
 .selectBox.explanation select {
@@ -1124,11 +1124,7 @@ body {
     user-select: none;
     z-index: 1;
 }
-.forecast_checkbox{
-    cursor: pointer;
-    user-select: none;
-    z-index: 1;
-}
+  
 #sectionChks{
     position: absolute;
     left: 0;
@@ -1326,19 +1322,19 @@ table.dataTable > thead .sorting .sorting_desc, {
     padding-left: 13px;
 }
 .forecast_checkbox.section select{
-    width: 102px;
+    width: 71px;
     font-weight: normal;
 }
 .forecast_checkbox.department select {
-    width: 108px;
+    width: 87px;
     font-weight: normal;
 }
 .forecast_checkbox.incharge select {
-    width: 104px;
+    width: 111px;
     font-weight: normal;
 }
 .forecast_checkbox.role select {
-    width: 84px;
+    width: 65px;
     font-weight: normal;
 }
 .forecast_checkbox.explanation select {
@@ -1346,6 +1342,6 @@ table.dataTable > thead .sorting .sorting_desc, {
     font-weight: normal;
 }
 .forecast_checkbox.company select {
-    width: 93px;
+    width: 76px;
     font-weight: normal;
 }

@@ -876,7 +876,7 @@ $('#department_modal_href').click(function () {
         });
 });
 
-function ForecastSearchDropdownInLoad() {
+function GetListDropdownValue() {
     $.getJSON('/api/sections/')
         .done(function (data) {
             $('#sectionChks').empty();

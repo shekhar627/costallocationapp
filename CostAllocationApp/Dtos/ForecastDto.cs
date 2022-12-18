@@ -11,6 +11,7 @@ namespace CostAllocationApp.Dtos
         public int Year { get; set; }
         public int Month { get; set; }
         public decimal Points { get; set; }
-        public decimal Total { get; set; }
+        //public decimal Total { get; set; }
+        public string Total { get; set; }
     }
 }
