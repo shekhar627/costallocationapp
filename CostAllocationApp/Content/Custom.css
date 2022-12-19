@@ -1129,7 +1129,7 @@ body {
     user-select: none;
     z-index: 1;
 }
-#sectionChks{
+.commonselect{
     position: absolute;
     left: 0;
     top: 100%;
@@ -1137,8 +1137,68 @@ body {
     background: #eee;
     padding: 1rem;
     z-index: 2;
+    width:150px;
 }
-
+/* #sectionChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#departmentChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#inchargeChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#RoleChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#ExplanationChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#CompanyChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+} */
 /*---------------------------------------Name list: edit popup--------------------------*/
 #modal_edit_name{
     border-collapse: collapse;
@@ -1342,7 +1402,7 @@ table.dataTable > thead .sorting .sorting_desc, {
     font-weight: normal;
 }
 .forecast_checkbox.explanation select {
-    width: 247px;
+    width: 237px;
     font-weight: normal;
 }
 .forecast_checkbox.company select {

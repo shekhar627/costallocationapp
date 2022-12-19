@@ -195,13 +195,6 @@
     </div>
 </div>
 
-<input type="hidden" id="hidSectionId" />
-<input type="hidden" id="hidDepartmentId" />
-<input type="hidden" id="hidInChargeId" />
-<input type="hidden" id="hidRoleId" />
-<input type="hidden" id="hidExplanationId" />
-<input type="hidden" id="hidCompanyid" />
-
 @section Scripts{
 
     <script type="text/javascript">
@@ -367,617 +360,10 @@
         }
 
         $(document).ready(function () {
-
-            // multiple search by section
-            $(document).on('click', '#sectionChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_sec_all") {
-                    $(".section_checkbox").prop("checked", isSectionAllChk);
-                } else {
-                    $("#chk_sec_all").prop("checked", false);
-                }
-
-
-                clicked_checkbox = "";
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var sectionSearchId = "";
-                //if (!isSectionAllChk) {
-                //    $.each(sectionCheckedBoxes, function(index, item) {
-                //        if(sectionSearchId == ""){
-                //            sectionSearchId = item.value;
-                //        }
-                //        else{
-                //            sectionSearchId = sectionSearchId + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidSectionId").val(sectionSearchId);
-            });
-
-            // multiple search by departments
-            $(document).on('click', '#departmentChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_dept_all") {
-                    $(".department_checkbox").prop("checked", isDepartmentAllCheck);
-                } else {
-                    $("#chk_dept_all").prop("checked", false);
-                }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var departmentIds = "";
-                //$("#hidDepartmentId").val('');
-                //if (!isDepartmentAllCheck) {
-                //    $.each(departmentCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(departmentIds == ""){
-                //            departmentIds = item.value;
-                //        }
-                //        else{
-                //            departmentIds = departmentIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidDepartmentId").val(departmentIds);
-            });
-
-            // multiple search by incharges
-            $(document).on('click', '#inchargeChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_incharge_all") {
-                    $(".incharge_checkbox").prop("checked", isInChargeAllCheck);
-                } else {
-                    $("#chk_incharge_all").prop("checked", false);
-                }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var inchargeIds = "";
-                //$("#hidInChargeId").val('');
-                //if (!isInChargeAllCheck) {
-                //    $.each(inchargeCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(inchargeIds == ""){
-                //            inchargeIds = item.value;
-                //        }
-                //        else{
-                //            inchargeIds = inchargeIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidInChargeId").val(inchargeIds);
-            });
-
-            // multiple search by roles
-            $(document).on('click', '#RoleChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_role_all") {
-                    $(".role_checkbox").prop("checked", isRoleAllCheck);
-                } else {
-                    $("#chk_role_all").prop("checked", false);
-                }
-
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var roleIds = "";
-                //$("#hidRoleId").val('');
-                //if (!isRoleAllCheck) {
-                //    $.each(roleCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(roleIds == ""){
-                //            roleIds = item.value;
-                //        }
-                //        else{
-                //            roleIds = roleIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidRoleId").val(roleIds);
-
-            });
-
-            // multiple search by explanations
-            $(document).on('click', '#ExplanationChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_explanation_all") {
-                    $(".explanation_checkbox").prop("checked", isExplanationAllCheck);
-                } else {
-                    $("#chk_explanation_all").prop("checked", false);
-                }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var explanationIds = "";
-                //$("#hidExplanationId").val('');
-                //if (!isExplanationAllCheck) {
-                //    $.each(explanationCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(explanationIds == ""){
-                //            explanationIds = item.value;
-                //        }
-                //        else{
-                //            explanationIds = explanationIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidExplanationId").val(explanationIds);
-            });
-
-            // multiple search by companies
-            $(document).on('click', '#CompanyChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_comopany_all") {
-                    $(".comopany_checkbox").prop("checked", isCompanytAllCheck);
-                } else {
-                    $("#chk_comopany_all").prop("checked", false);
-                }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var companyIds = "";
-                //$("#hidCompanyid").val('');
-                //if (!isCompanytAllCheck) {
-                //    $.each(companyCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(companyIds == ""){
-                //            companyIds = item.value;
-                //        }
-                //        else{
-                //            companyIds = companyIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidCompanyid").val(companyIds);
-            });
-
-
-
-
-            $(document).on("click", function (event) {
-                var $trigger = $(".forecast_multiselect");
-                //alert("trigger: "+$trigger);
-                if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                    $(".commonselect").slideUp("fast");
-                }
-            });
-
             ForecastSearchDropdownInLoad();
-            // $('.container').blur(function (e) {
-            //     $('.commonselect').fadeOut(100);
-            // });
+            $('.container').blur(function (e) {
+                $('.commonselect').fadeOut(100);
+            });
 
             $('#forecast_table').on('change', '.input_month', function () {
 
@@ -1111,52 +497,13 @@
             }
 
             $('#forecast_search_button').on('click', function () {
-                //// var sectionId = $('#section_search').find(":selected").val();
-                //// var departmentId = $('#department_search').find(":selected").val();
-                //// var inchargeId = $('#incharge_search').find(":selected").val();
-                //// var roleId = $('#role_search').find(":selected").val();
-                //// var explanationId = $('#explanation_search').find(":selected").val();
-                //// var companyId = $('#company_search').val();
-
-                //var sectionId = $('#hidSectionId').val();
-
-                ////if(sectionId == ''){
-                ////    sectionId = '';
-                ////}else{
-                ////    sectionId = "'"+sectionId+"'";
-                ////}
-                //var departmentId = $('#hidDepartmentId').val();
-                ////if(departmentId == ''){
-                ////    departmentId = '';
-                ////}else{
-                ////    departmentId = "'"+departmentId+"'";
-                ////}
-                //var inchargeId = $('#hidInChargeId').val();
-                ////if(inchargeId == ''){
-                ////    inchargeId = '';
-                ////}else{
-                ////    inchargeId = "'"+inchargeId+"'";
-                ////}
-                //var roleId = $('#hidRoleId').val();
-                ////if(roleId == ''){
-                ////    roleId = '';
-                ////}else{
-                ////    roleId = "'"+roleId+"'";
-                ////}
-                //var explanationId = $('#hidExplanationId').val();
-                ////if(explanationId == ''){
-                ////    explanationId = '';
-                ////}else{
-                ////    explanationId = "'"+explanationId+"'";
-                ////}
-                //var companyId = $('#hidCompanyid').val();
-                ////if(companyId == ''){
-                ////    companyId = '';
-                ////}else{
-                ////    companyId = "'"+companyId+"'";
-                ////}
+                var sectionId = $('#section_search').find(":selected").val();
+                var inchargeId = $('#incharge_search').find(":selected").val();
+                var departmentId = $('#department_search').find(":selected").val();
+                var roleId = $('#role_search').find(":selected").val();
+                var companyId = $('#company_search').find(":selected").val();
+                var explanationId = $('#explanation_search').find(":selected").val();
                 var employeeName = $('#identity_search').val();
-
                 var year = $('#period_search').find(":selected").val();
 
                 if (year == '' || year == undefined) {
@@ -1165,153 +512,47 @@
                     return false;
                 }
 
-                //if (departmentId == undefined) {
-                //    departmentId = '';
-                //}
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                //var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                sectionId = "";
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        //sectionCheck.push(item.value);
-                        if (sectionId == "") {
-                            sectionId = item.value;
-                        } else {
-                            sectionId = sectionId + "##" + item.value;
-                        }
-                    });
+                if (departmentId == undefined) {
+                    departmentId = '';
                 }
-                
-                departmentId = "";
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        //departmentCheck.push(item.value);
-                        if (departmentId == "") {
-                            departmentId = item.value;
-                        } else {
-                            departmentId = departmentId + "##" + item.value;
-                        }
-                    });
-                }
-
-                inchargeId = "";
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        //inchargeCheck.push(item.value);
-                        if (inchargeId == "") {
-                            inchargeId = item.value;
-                        } else {
-                            inchargeId = inchargeId + "##" + item.value;
-                        }
-                    });
-                }
-                roleId = "";
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        //roleCheck.push(item.value);
-                        if (roleId == "") {
-                            roleId = item.value;
-                        } else {
-                            roleId = roleId + "##" + item.value;
-                        }
-                    });
-                }
-                explanationId = "";
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        //explanationCheck.push(item.value);
-                        if (explanationId == "") {
-                            explanationId = item.value;
-                        } else {
-                            explanationId = explanationId + "##" + item.value;
-                        }
-                    });
-                }
-                companyId = "";
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        //companyCheck.push(item.value);
-                        if (companyId == "") {
-                            companyId = item.value;
-                        } else {
-                            companyId = companyId + "##" + item.value;
-                        }
-                    });
-                }
-
-                var data_info = {
-                    employeeName: employeeName,
-                    sectionId: sectionId,
-                    departmentId: departmentId,
-                    inchargeId: inchargeId,
-                    roleId: roleId,
-                    explanationId: explanationId,
-                    companyId: companyId,
-                    status: '', year: ''
-                };
-
-
+                var data_info = { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: '', year: '' };
                 $.ajax({
-                    //url: `/api/utilities/SearchForecastEmployee`,
-                    //type: 'GET',
-                    //dataType: 'json',
-                    //data: data_info,
                     url: `/api/utilities/SearchForecastEmployee`,
-                    contentType: 'application/json',
                     type: 'GET',
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
+                        console.log(data);
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();
 
                         $('#forecast_table>thead').append(`
-
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Name</th>
-                                                    <th>Section</th>
-                                                    <th>Department</th>
-                                                    <th>In-Charge</th>
-                                                    <th>Role</th>
-                                                    <th>Explanation</th>
-                                                    <th>Company Name</th>
-                                                    <th>Grade</th>
-                                                    <th>Unit Price</th>
-                                                    <th>10月</th>
-                                                    <th>11月</th>
-                                                    <th>12月</th>
-                                                    <th>1月</th>
-                                                    <th>2月</th>
-                                                    <th>3月</th>
-                                                    <th>4月</th>
-                                                    <th>5月</th>
-                                                    <th>6月</th>
-                                                    <th>7月</th>
-                                                    <th>8月</th>
-                                                    <th>9月</th>
-                                                </tr>
-                                            `);
+                                        
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Section</th>
+                                            <th>Department</th>
+                                            <th>In-Charge</th>
+                                            <th>Role</th>
+                                            <th>Explanation</th>
+                                            <th>Company Name</th>
+                                            <th>Grade</th>
+                                            <th>Unit Price</th>
+                                            <th>10月</th>
+                                            <th>11月</th>
+                                            <th>12月</th>
+                                            <th>1月</th>
+                                            <th>2月</th>
+                                            <th>3月</th>
+                                            <th>4月</th>
+                                            <th>5月</th>
+                                            <th>6月</th>
+                                            <th>7月</th>
+                                            <th>8月</th>
+                                            <th>9月</th>
+                                        </tr>
+                                    `);
                         //Forecast_DatatableLoad(data);
                         var _id = 0;
                         var _companyName = '';
@@ -1385,7 +626,7 @@
                                         else {
                                             return `<td title='initial'></td>`;
                                         }
-
+                                        
                                     }
                                 },
                                 {
@@ -1394,13 +635,13 @@
                                 {
                                     data: 'forecasts',
                                     render: function (_forecast) {
-
+                                        
                                         if (_forecast.length > 0) {
                                             return `<td><input type='text' id='oct_${_id}' onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points}' class='input_month'/></td>`;
                                         } else {
                                             return `<td><input type='text' id='oct_${_id}' onChange="checkPoint(this)"  data-month='10' value='0' class='input_month'/></td>`;
                                         }
-
+                                        
                                     },
                                 },
                                 {

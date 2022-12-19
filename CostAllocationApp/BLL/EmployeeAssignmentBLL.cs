@@ -102,7 +102,8 @@ namespace CostAllocationApp.BLL
             return employees;
         }
 
-        public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignment employeeAssignment)
+        //public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignment employeeAssignment)
+        public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignmentForecast employeeAssignment)
         {
             var employees = employeeAssignmentDAL.GetEmployeesForecastBySearchFilter(employeeAssignment);
 
@@ -124,10 +125,10 @@ namespace CostAllocationApp.BLL
                     count++;
                 }
 
-                if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
-                {
-                    employees = employees.Where(emp => emp.ExplanationId == employeeAssignment.ExplanationId && emp.ExplanationId != "0").ToList();
-                }
+                //if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
+                //{
+                //    employees = employees.Where(emp => emp.ExplanationId == employeeAssignment.ExplanationId && emp.ExplanationId != "0").ToList();
+                //}
 
                 List<ForecastAssignmentViewModel> redMarkedForecastAssignments =  this.MarkedAsRedForForecast(employees);
                 if (redMarkedForecastAssignments.Count > 0)

@@ -1175,6 +1175,15 @@
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
                 var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
 
+                var clicked_checkbox = $(this).attr("id")
+
+                if (clicked_checkbox.toLowerCase() == "chk_sec_all") {
+                    $(".section_checkbox").prop("checked", isSectionAllChk);
+                } else {
+                    $("#chk_sec_all").prop("checked", false);
+                }
+                clicked_checkbox = "";
+
                 //var employeeName = "";
                 var sectionCheck = [];
                 var departmentCheck = [];
@@ -1185,8 +1194,7 @@
 
                 var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
                 var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked'); chk_sec_all                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
@@ -1201,7 +1209,8 @@
                         }
                     });
                 }
-                
+                alert(isSectionAllChk);
+                alert(sectionId);
                 departmentId = "";
                 if (!isDepartmentAllCheck) {
                     $.each(departmentCheckedBoxes, function (index, item) {
@@ -1282,6 +1291,8 @@
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
+                        console.log(data);
+                        //return false;
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();
 

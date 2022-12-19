@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\EmployeeAssignmentForecast.cs" />
     <Compile Include="Models\Forecast.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
