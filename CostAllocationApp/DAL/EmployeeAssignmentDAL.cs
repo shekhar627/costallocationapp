@@ -844,7 +844,10 @@ namespace CostAllocationApp.DAL
                             //forecast.Total = Convert.ToDecimal(rdr["Total"]);
                             forecast.Total = rdr["Total"].ToString();
                             forecast.Total = Convert.ToDecimal(forecast.Total).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
-
+                            if (String.IsNullOrEmpty(forecast.Total))
+                            {
+                                forecast.Total = "0";
+                            }
                             //if (!string.IsNullOrEmpty(rdr["Total"].ToString())) {
                             //    forecast.Total = rdr["Total"].ToString();
                             //    //forecast.Total = (Convert.ToDecimal(forecast.Total)).ToString("N", new CultureInfo("en-US"));
