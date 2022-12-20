@@ -1246,6 +1246,7 @@
                         var _companyName = '';
                         var _oct = 0;
                         var _octTotal = 0;
+                        
 
                         $('#forecast_table').DataTable({
                             destroy: true,
@@ -1263,9 +1264,10 @@
 
                                 },
                                 {
-                                    data: 'EmployeeName',
-                                    render: function (employeeName) {
-                                        return `<span title='initial' data-name='${employeeName}'> ${employeeName}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                    data: 'EmployeeNameWithCodeRemarks',
+                                    render: function (employeeNameWithCodeRemarks) {
+                                        var splittedString = employeeNameWithCodeRemarks.split('_');
+                                        return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
                                     }
                                 },
                                 {
