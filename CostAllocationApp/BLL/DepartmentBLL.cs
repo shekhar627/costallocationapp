@@ -30,5 +30,9 @@ namespace CostAllocationApp.BLL
         {
             return departmentDAL.GetAllDepartmentsBySectionId(sectionId);
         }
+        public bool CheckDepartment(Department department)
+        {
+            return departmentDAL.CheckDepartment(department);
+        }
     }
 }

@@ -186,7 +186,7 @@
                             <tbody></tbody>
                         </table>
                         <div class="add_name_tbl_2_btn">
-                            <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave()" style="display:none;">Save</a>
+                            <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave()">Save</a>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,6 @@
                     success: function (data) {
 
                         saveFlag = data
-                        
                         //$('#modal_add_name_new').modal('toggle');
                         //$("#loading").css("display", "inline-block");
 
@@ -291,7 +290,6 @@
 
             if (saveFlag) {
                 $("#loading").css("display", "none");
-                $('#save_forecast').css('display', 'none');
 
                 Command: toastr["success"]('Data Saved Successfully', "Success")
 
@@ -371,15 +369,7 @@
             //console.log($(tr).find('td').eq(1).data('name'));
 
         }
-        var expanded = false;
-        $(document).on("click", function (event) {
-            var $trigger = $(".forecast_multiselect");
-            //alert("trigger: "+$trigger);
-            if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                $(".commonselect").slideUp("fast");
-                expanded = false;
-            }
-        });
+
         $(document).ready(function () {
 
             // multiple search by section
@@ -979,14 +969,14 @@
 
 
 
-            // var expanded = false;
-            // $(document).on("click", function (event) {
-            //     var $trigger = $(".forecast_multiselect");
-            //     //alert("trigger: "+$trigger);
-            //     if ($trigger !== event.target && !$trigger.has(event.target).length) {
-            //         $(".commonselect").slideUp("fast");
-            //     }
-            // });
+
+            $(document).on("click", function (event) {
+                var $trigger = $(".forecast_multiselect");
+                //alert("trigger: "+$trigger);
+                if ($trigger !== event.target && !$trigger.has(event.target).length) {
+                    $(".commonselect").slideUp("fast");
+                }
+            });
 
             ForecastSearchDropdownInLoad();
             // $('.container').blur(function (e) {
@@ -1079,8 +1069,6 @@
                     alert('select year');
                     return false;
                 }
-
-                $('#save_forecast').css('display','inline-block');
 
                 //if (departmentId == undefined) {
                 //    departmentId = '';

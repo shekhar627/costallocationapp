@@ -28,5 +28,10 @@ namespace CostAllocationApp.BLL
         {
             return sectionDAL.RemoveSection(sectionId);
         }
+
+        public bool CheckSection(string sectionName)
+        {
+            return sectionDAL.CheckSection(sectionName);
+        }
     }
 }

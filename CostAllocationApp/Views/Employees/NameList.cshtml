@@ -470,7 +470,17 @@
             $('#namelist_inactive_rowid').val(id);
         }
 
-
+        var expanded = false;
+        $(document).on("click", function (event) {
+            var $trigger = $(".multiselect");
+            //alert("trigger: "+$trigger);
+            if ($trigger !== event.target && !$trigger.has(event.target).length) {
+                expanded = false;
+                $(".commonselect").slideUp("fast");
+            }
+        });
+        
+        
         $(document).ready(function() {
             $('#name_list_name').click(function () {
                 NameListSort("name_asc","name_desc");
@@ -500,10 +510,30 @@
                 NameListSort("unit_asc", "unit_desc");
             });
 
-            $('.container').blur(function(e) {
-                $('.commonselect').fadeOut(100);
-            });
-
+            // $('.container').blur(function(e) {
+            //     $('.commonselect').fadeOut(100);
+            // });
+            // var expanded = false;
+            // $(document).on("click", function (event) {
+            //     var $trigger = $(".multiselect");
+            //     //alert("trigger: "+$trigger);
+            //     if ($trigger !== event.target && !$trigger.has(event.target).length) {
+            //         expanded = false;
+            //         $(".commonselect").slideUp("fast");
+            //     }
+            // });
+            
+            // function SectionCheck() {
+            //     var checkboxes = document.getElementById("sectionChks");
+            //     if (!expanded) {
+            //         checkboxes.style.display = "block";
+            //         //$(this).find("#sectionChks").slideToggle("fast");
+            //         expanded = true;
+            //     } else {
+            //         checkboxes.style.display = "none";
+            //         expanded = false;
+            //     }
+            // }
             //$('#namelist_tbl').DataTable();
             LoadNameListTableOnLoad();
 
@@ -2082,6 +2112,8 @@
             });
 
             function GetListDropdownValue() {
+                console.log("test");
+
                 $.getJSON('/api/sections/')
                     .done(function(data) {
                         $('#sectionChks').empty();
@@ -2132,6 +2164,61 @@
                         });
                     });
             }
+
+            $('#section_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    GetListDropdownValue();
+                }
+            })
+            $('#department_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    GetListDropdownValue();
+                }
+            })
+            $('#in-charge_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue();
+                    GetListDropdownValue();
+                }
+            })
+            $('#role_registration_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue();
+                    GetListDropdownValue();
+                }
+            })
+            $('#explanation_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    GetListDropdownValue();
+                }
+            })
+            $('#company_reg_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    GetListDropdownValue();
+                }
+            })
+            
             var expanded = false;
 
             //Search: Get Sections

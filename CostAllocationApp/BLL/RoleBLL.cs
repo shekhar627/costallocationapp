@@ -25,5 +25,9 @@ namespace CostAllocationApp.BLL
         {
             return roleDAL.RemoveRoles(roleIds);
         }
+        public bool CheckRole(string roleName)
+        {
+            return roleDAL.CheckRole(roleName);
+        }
     }
 }

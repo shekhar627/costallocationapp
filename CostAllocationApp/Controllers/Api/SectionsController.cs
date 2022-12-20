@@ -30,16 +30,24 @@ namespace CostAllocationApp.Controllers.Api
                 section.CreatedDate = DateTime.Now;
                 section.IsActive = true;
 
-
-                int result = sectionBLL.CreateSection(section);
-                if (result > 0)
+                if (sectionBLL.CheckSection(section.SectionName))
                 {
-                    return Ok("Data Saved Successfully!");
+                    return BadRequest("Section Already Exists!!!");
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    int result = sectionBLL.CreateSection(section);
+                    if (result > 0)
+                    {
+                        return Ok("Data Saved Successfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something Went Wrong!!!");
+                    }
+
                 }
+               
             }
 
 

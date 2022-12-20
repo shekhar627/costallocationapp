@@ -138,6 +138,31 @@ namespace CostAllocationApp.DAL
 
         }
 
+        public bool CheckDepartment(Department department)
+        {
+            string query = "select * from Departments  where Name=N'" + department.DepartmentName + "' and SectionId="+department.SectionId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
+
 
     }
 }

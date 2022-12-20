@@ -296,6 +296,7 @@
         <input type="hidden" id="grade_new_hidden" />
         <input type="hidden" id="add_name_unit_price_hidden" />
         <input type="hidden" id="add_name_row_no_hidden" />
+        <input type="hidden" id="unit_price_first_project_hid" />
     </div>
 </div>
 
@@ -467,8 +468,9 @@
                         else {
                             tr += `<td><input type='text' class=" col-12" value='' readonly style='width: 55px;' /></td>`;
                         }
-                        tr += `<td><input type='text' class=" col-12" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
-                        if (count==1) {
+                        tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
+                        if (count == 1) {
+                            $("#unit_price_first_project_hid").val(item.UnitPriceWithoutComma);
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
 
@@ -693,7 +695,8 @@
             let _unitPrice = $(element).val();
             $("#add_name_unit_price_hidden").val(_unitPrice);
             $("#add_name_row_no_hidden").val(rowId);
-
+            let _unitPrideFirstProject = $("#unit_price_first_project_hid").val();
+            let _unitPrideFirstProjectWithComma = $("#add_name_unit_price_1").val();
 
             var _rowId = $("#add_name_row_no_hidden").val();
             var _companyName = $('#company_row_' + _rowId).find(":selected").text();
@@ -703,9 +706,13 @@
             console.log("_unitPrice: " + _unitPrice);
 
 
-            if (!unitPrices.includes(_unitPrice)) {
+            //if (!unitPrices.includes(_unitPrice)) {
+            if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
                 $('#identity_row_' + rowId).css('color', 'red');
                 $('#sub_code_row_' + rowId).css('color', 'red');
+            } else {
+                $('#identity_row_' + rowId).css('color', '');
+                $('#sub_code_row_' + rowId).css('color', '');
             }
             //else {
             //    $('#identity_row_' + rowId).css('color', 'red');
@@ -1120,7 +1127,7 @@
                             destroy: true,
                             data: data,
                             ordering: true,
-                            //pageLength: 100,
+                            pageLength: 100,
                             searching: false,
                             bLengthChange: false,
                             columns: [

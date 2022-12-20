@@ -28,15 +28,21 @@ namespace CostAllocationApp.Controllers.Api
                 company.CreatedDate = DateTime.Now;
                 company.IsActive = true;
 
-
-                int result = companyBLL.CreateCompany(company);
-                if (result > 0)
+                if (companyBLL.CheckComany(company.CompanyName))
                 {
-                    return Ok("Data Saved Successfully!");
+                    return BadRequest("Company Already Exists!!!");
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    int result = companyBLL.CreateCompany(company);
+                    if (result > 0)
+                    {
+                        return Ok("Data Saved Successfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something Went Wrong!!!");
+                    }
                 }
             }
         }

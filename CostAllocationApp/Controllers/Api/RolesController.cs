@@ -29,14 +29,21 @@ namespace CostAllocationApp.Controllers.Api
                 role.IsActive = true;
 
 
-                int result = roleBLL.CreateRole(role);
-                if (result > 0)
+                if (roleBLL.CheckRole(role.RoleName))
                 {
-                    return Ok("Data Saved Successfully!");
+                    return BadRequest("Role Already Exists!!!");
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    int result = roleBLL.CreateRole(role);
+                    if (result > 0)
+                    {
+                        return Ok("Data Saved Successfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something Went Wrong!!!");
+                    }
                 }
             }
         }

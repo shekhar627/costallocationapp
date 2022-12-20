@@ -26,5 +26,9 @@ namespace CostAllocationApp.BLL
         {
             return inChargeDAL.RemoveInCharge(inChargeId);
         }
+        public bool CheckInCharge(string incharegeName)
+        {
+            return inChargeDAL.CheckInCharge(incharegeName);
+        }
     }
 }

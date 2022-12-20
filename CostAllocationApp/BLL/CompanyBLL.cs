@@ -26,5 +26,9 @@ namespace CostAllocationApp.BLL
         {
             return companyDAL.RemoveCompanies(companyIds);
         }
+        public bool CheckComany(string companyName)
+        {
+            return companyDAL.CheckComany(companyName);
+        }
     }
 }

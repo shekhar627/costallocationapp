@@ -334,27 +334,29 @@ namespace CostAllocationApp.DAL
 
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
-                            employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
-                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
-                            {
-                                employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
-                                employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + employeeAssignmentViewModel.SubCode;
-                            }
-                            else
-                            {
-                                employeeAssignmentViewModel.SubCode = 0;                                
-                            }
+                            //employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
+                            employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            employeeAssignmentViewModel.Remarks = rdr["Remarks"] is DBNull ? "" :  rdr["Remarks"].ToString();
+                            //if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            //{
+                            //    employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            //    employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + employeeAssignmentViewModel.SubCode;
+                            //}
+                            //else
+                            //{
+                            //    employeeAssignmentViewModel.SubCode = 0;                                
+                            //}
 
-                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
-                            {
-                                employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                                employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + employeeAssignmentViewModel.Remarks + ")";
-                            }
-                            else
-                            {
-                                employeeAssignmentViewModel.Remarks = "";
-                            }
-                            
+                            //if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            //{
+                            //    employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            //    employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + employeeAssignmentViewModel.Remarks + ")";
+                            //}
+                            //else
+                            //{
+                            //    employeeAssignmentViewModel.Remarks = "";
+                            //}
+
 
                             //HttpContext.Current.Response.Write("employeeAssignmentViewModel.UnitPrice: " + employeeAssignmentViewModel.UnitPrice);
                             //HttpContext.Current.Response.End();
@@ -593,26 +595,28 @@ namespace CostAllocationApp.DAL
 
                             forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             forecastEmployeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+                            forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"]  is DBNull ? "":  rdr["Remarks"].ToString() ;
 
-                            if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
-                            {
-                                forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
-                                forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks = forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + forecastEmployeeAssignmentViewModel.SubCode;
-                            }
-                            else
-                            {
-                                forecastEmployeeAssignmentViewModel.SubCode = 0;
-                            }
+                            //if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            //    forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks = forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " " + forecastEmployeeAssignmentViewModel.SubCode;
+                            //}
+                            //else
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.SubCode = 0;
+                            //}
 
-                            if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
-                            {
-                                forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                                forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks = forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + forecastEmployeeAssignmentViewModel.Remarks + ")";
-                            }
-                            else
-                            {
-                                forecastEmployeeAssignmentViewModel.Remarks = "";
-                            }
+                            //if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
+                            //    forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks = forecastEmployeeAssignmentViewModel.EmployeeNameWithCodeRemarks + " (" + forecastEmployeeAssignmentViewModel.Remarks + ")";
+                            //}
+                            //else
+                            //{
+                            //    forecastEmployeeAssignmentViewModel.Remarks = "";
+                            //}
 
                             //if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
                             //{
@@ -883,6 +887,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
                             employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            employeeAssignmentViewModel.UnitPriceWithoutComma = Convert.ToInt32(rdr["UnitPrice"].ToString());
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))

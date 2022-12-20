@@ -90,5 +90,29 @@ namespace CostAllocationApp.DAL
             }
 
         }
+        public bool CheckComany(string companyName)
+        {
+            string query = "select * from Companies where Name=N'" + companyName + "'";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
     }
 }

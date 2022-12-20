@@ -91,5 +91,30 @@ namespace CostAllocationApp.DAL
             }
 
         }
+
+        public bool CheckSection(string sectionName)
+        {
+            string query = "select * from Sections where Name=N'" + sectionName + "'";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
     }
 }

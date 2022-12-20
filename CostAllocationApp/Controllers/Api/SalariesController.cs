@@ -30,15 +30,24 @@ namespace CostAllocationApp.Controllers.Api
                 salary.IsActive = true;
 
 
-                int result = salaryBLL.CreateSalary(salary);
-                if (result > 0)
+                if (salaryBLL.CheckGrade(salary))
                 {
-                    return Ok("Data Saved Successfully!");
+                    return BadRequest("Data Already Exists!!!");
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    int result = salaryBLL.CreateSalary(salary);
+                    if (result > 0)
+                    {
+                        return Ok("Data Saved Successfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something Went Wrong!!!");
+                    }
                 }
+
+                
             }
         }
         [HttpGet]

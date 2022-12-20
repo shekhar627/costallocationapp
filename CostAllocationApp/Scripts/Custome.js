@@ -1,4 +1,4 @@
-﻿function CreateMultipleInput() {
+function CreateMultipleInput() {
     var multipleHtmlInputs = "";
     multipleHtmlInputs = multipleHtmlInputs + "<div class='row'> ";
 
@@ -112,7 +112,7 @@ function CreateMultipleInputInCharge() {
 
 
 
-var expanded = false;
+
 
 //$('#section_click').click(function (e) {
 //    //alert("test");
@@ -128,7 +128,71 @@ var expanded = false;
 //    }
 //});
 
+function DismissOtherDropdown(requestType){
+    var section_display = "";
+    if(requestType.toLowerCase() != "section"){
+        section_display = $('#sectionChks');
+        if (section_display.css("display") == "block") {
+            let checkboxes = document.getElementById("sectionChks");
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    
+    if(requestType.toLowerCase() != "dept"){
+        section_display = "";
+        section_display = $('#departmentChks');
+        if (section_display.css("display") == "block") {
+            let checkboxes = document.getElementById("departmentChks");
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    
+    if(requestType.toLowerCase() != "incharge"){
+        section_display = "";
+        section_display = $('#inchargeChks');
+        if (section_display.css("display") == "block") {
+            let checkboxes = document.getElementById("inchargeChks");
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    
+    if(requestType.toLowerCase() != "role"){
+        section_display = "";
+        section_display = $('#RoleChks');
+        if (section_display.css("display") == "block") {
+            let checkboxes = document.getElementById("RoleChks");
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    
+    if(requestType.toLowerCase() != "explanation"){
+        section_display = "";
+        section_display = $('#ExplanationChks');
+        if (section_display.css("display") == "block") {
+            let checkboxes = document.getElementById("ExplanationChks");
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    
+    if(requestType.toLowerCase() != "company"){
+        section_display = "";
+        section_display = $('#CompanyChks');
+        if (section_display.css("display") == "block") {
+            let checkboxes = document.getElementById("CompanyChks");
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }    
+}
+//var expanded = false;
 function SectionCheck() {
+    DismissOtherDropdown ("section");
+
     var checkboxes = document.getElementById("sectionChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -140,6 +204,14 @@ function SectionCheck() {
     }
 }
 function DepartmentCheck() {
+    DismissOtherDropdown ("dept");
+    // section_display = $('#sectionChks');
+    // if (section_display.css("display") == "block") {
+    //     let checkboxes = document.getElementById("sectionChks");
+    //     checkboxes.style.display = "none";
+    //     expanded = false;
+    // }
+    
     var checkboxes = document.getElementById("departmentChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -150,6 +222,7 @@ function DepartmentCheck() {
     }
 }
 function InchargeCheck() {
+    DismissOtherDropdown ("incharge");
     var checkboxes = document.getElementById("inchargeChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -160,6 +233,7 @@ function InchargeCheck() {
     }
 }
 function RoleCheck() {
+    DismissOtherDropdown ("role");
     var checkboxes = document.getElementById("RoleChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -170,6 +244,7 @@ function RoleCheck() {
     }
 }
 function ExplanationCheck() {
+    DismissOtherDropdown ("explanation");
     var checkboxes = document.getElementById("ExplanationChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -180,6 +255,7 @@ function ExplanationCheck() {
     }
 }
 function CompanyCheck() {
+    DismissOtherDropdown ("company");
     var checkboxes = document.getElementById("CompanyChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -205,7 +281,7 @@ function GetCheckedIds(department_list_id) {
 
 //---------------modal insert--------------------//
 function AddDivision() {
-    
+
 
     var apiurl = "/api/sections/";
     let sectionName = $("#section-name").val().trim();
@@ -258,8 +334,8 @@ function AddDivision() {
                         });
                     });
             },
-            error: function () {
-                alert("Error please try again");
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
         });
     }
@@ -331,8 +407,8 @@ function AddDepartment() {
                         });
                     });
             },
-            error: function () {
-                alert("Error please try again");
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
         });
     }
@@ -388,8 +464,8 @@ function AddInCharge() {
                         });
                     });
             },
-            error: function () {
-                alert("Error please try again");
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
         });
     }
@@ -445,8 +521,8 @@ function AddRoles() {
                         });
                     });
             },
-            error: function () {
-                alert("Error please try again");
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
         });
     }
@@ -560,8 +636,8 @@ function AddCompany() {
                         });
                     });
             },
-            error: function () {
-                alert("Error please try again");
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
         });
     }
@@ -636,8 +712,8 @@ function AddSalary() {
                         });
                     });
             },
-            error: function () {
-                alert("Error please try again");
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
         });
     }
@@ -663,7 +739,7 @@ function LoadGradeValue(sel) {
             console.log("_companyName.toLowerCase(): " + typeof (_companyName));
             console.log("_rowId: " + _rowId);
             //if (_companyName.toLowerCase == 'mw') {
-            if (_companyName.toLowerCase().indexOf("mw") >0) {
+            if (_companyName.toLowerCase().indexOf("mw") > 0) {
                 console.log("test- equal");
                 //$('#grade_new_hidden').val(data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
@@ -774,7 +850,7 @@ function NameList_DatatableLoad(data) {
             //    render: function (sectionName) {                    
             //        return '';
             //    }
-                
+
             //},
             {
                 data: 'SectionName'
@@ -828,42 +904,39 @@ function NameList_DatatableLoad(data) {
 //$("#section_registration").on('hide', function () {
 //    window.location.reload();
 //});
-$('#section_registration').on('hidden.bs.modal', function () {
-    var isPageLoad = $("#page_load_after_modal_close").val();
-    if (isPageLoad == "yes") {
-        window.location.reload(true);
+
+function RetainRegistrationValue() {
+    let name = $("#hid_name").val();
+    let memo = $("#hid_memo").val(memo);
+    let sectionId = $("#hid_sectionId").val(sectionId);
+    let departmentId = $("#hid_departmentId").val(departmentId);
+    let inchargeId = $("#hid_inchargeId").val(inchargeId);
+    let roleId = $("#hid_roleId").val(roleId);
+    let explantionId = $("#hid_explanationId").val(explantionId);
+    let companyid = $("#hid_companyId").val();
+    let companyName = $("#hid_companyName").val();
+    let grade = $("#hid_grade").val();
+    //let unitPrice = $("#hid_gradeId").val(unitPrice);
+    let unitPrice = $("#hid_unitPrice").val();
+
+    $("#identity_new").val(name);
+    $("#memo_new").val(memo);
+    // $('#section_new').find(":selected").val();
+    // $('#department_new').find(":selected").val();
+    // $('#incharge_new').find(":selected").val();
+    // $('#role_new').find(":selected").val();
+    // $('#explanation_new').find(":selected").val();
+    // $('#company_new').find(":selected").val();
+    if (companyName.toLowerCase() == 'mw') {
+        $("#grade_new").val(grade);
+    } else {
+        $("#grade_new").val('');
     }
-})
-$('#department_registration').on('hidden.bs.modal', function () {
-    var isPageLoad = $("#page_load_after_modal_close").val();
-    if (isPageLoad == "yes") {
-        window.location.reload(true);
-    }
-})
-$('#in-charge_registration').on('hidden.bs.modal', function () {
-    var isPageLoad = $("#page_load_after_modal_close").val();
-    if (isPageLoad == "yes") {
-        window.location.reload(true);
-    }
-})
-$('#role_registration_modal').on('hidden.bs.modal', function () {
-    var isPageLoad = $("#page_load_after_modal_close").val();
-    if (isPageLoad == "yes") {
-        window.location.reload(true);
-    }
-})
-$('#explanation_modal').on('hidden.bs.modal', function () {
-    var isPageLoad = $("#page_load_after_modal_close").val();
-    if (isPageLoad == "yes") {
-        window.location.reload(true);
-    }
-})
-$('#company_reg_modal').on('hidden.bs.modal', function () {
-    var isPageLoad = $("#page_load_after_modal_close").val();
-    if (isPageLoad == "yes") {
-        window.location.reload(true);
-    }
-})
+
+    $("#unitprice_new").val(unitPrice);
+
+}
+
 
 $('#department_modal_href').click(function () {
     $.getJSON('/api/sections/')
@@ -927,3 +1000,4 @@ function ForecastSearchDropdownInLoad() {
             });
         });
 }
+

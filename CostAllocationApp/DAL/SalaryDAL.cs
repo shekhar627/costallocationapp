@@ -95,5 +95,29 @@ namespace CostAllocationApp.DAL
             }
 
         }
+        public bool CheckGrade(Salary salary)
+        {
+            string query = $"select * from Grades where GradePoints=N'{salary.SalaryGrade}' or GradeLowPoints={salary.SalaryLowPoint} or GradeHighPoints={salary.SalaryHighPoint}";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
     }
 }

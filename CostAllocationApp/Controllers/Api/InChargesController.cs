@@ -28,16 +28,23 @@ namespace CostAllocationApp.Controllers.Api
                 inCharge.CreatedDate = DateTime.Now;
                 inCharge.IsActive = true;
 
-
-                int result = inChargeBLL.CreateInCharge(inCharge);
-                if (result > 0)
+                if (inChargeBLL.CheckInCharge(inCharge.InChargeName))
                 {
-                    return Ok("Data Saved Successfully!");
+                    return BadRequest("In-Charge Already Exists!!!");
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    int result = inChargeBLL.CreateInCharge(inCharge);
+                    if (result > 0)
+                    {
+                        return Ok("Data Saved Successfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something Went Wrong!!!");
+                    }
                 }
+                
             }
         }
         [HttpGet]

@@ -218,6 +218,26 @@ namespace CostAllocationApp.BLL
                 viewModels = employees.Where(emp => emp.EmployeeName == name).ToList();
                 if (viewModels.Count > 1)
                 {
+                    foreach (var item in viewModels)
+                    {
+                        var singleEmployee = employees.Where(emp => emp.Id == item.Id).FirstOrDefault();
+                        if (singleEmployee != null)
+                        {
+                            //singleEmployee.SubCode = -1;
+                            if (!String.IsNullOrEmpty(singleEmployee.Remarks))
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName +" "+ singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
+                            }
+                            else
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
+                            }
+
+                        }
+                    }
+
+
+
                     EmployeeAssignmentViewModel employeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
                     if (employeeAssignmentViewModelFirst==null)
                     {
@@ -232,6 +252,26 @@ namespace CostAllocationApp.BLL
                             {
                                 employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed = true;
                             }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in viewModels)
+                    {
+                        var singleEmployee = employees.Where(emp => emp.Id == item.Id).FirstOrDefault();
+                        if (singleEmployee!=null)
+                        {
+                            //singleEmployee.SubCode = -1;
+                            if (!String.IsNullOrEmpty(singleEmployee.Remarks))
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
+                            }
+                            else
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName;
+                            }
+                            
                         }
                     }
                 }
@@ -255,6 +295,25 @@ namespace CostAllocationApp.BLL
                 viewModels = employees.Where(emp => emp.EmployeeName == name).ToList();
                 if (viewModels.Count > 1)
                 {
+
+                    foreach (var item in viewModels)
+                    {
+                        var singleEmployee = employees.Where(emp => emp.Id == item.Id).FirstOrDefault();
+                        if (singleEmployee != null)
+                        {
+                            //singleEmployee.SubCode = -1;
+                            if (!String.IsNullOrEmpty(singleEmployee.Remarks))
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " " + singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
+                            }
+                            else
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
+                            }
+
+                        }
+                    }
+
                     ForecastAssignmentViewModel forecastEmployeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
                     if (forecastEmployeeAssignmentViewModelFirst == null)
                     {
@@ -266,6 +325,26 @@ namespace CostAllocationApp.BLL
                         if (filteredAssignment.UnitPrice != forecastEmployeeAssignmentViewModelFirst.UnitPrice)
                         {
                             employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed = true;
+
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in viewModels)
+                    {
+                        var singleEmployee = employees.Where(emp => emp.Id == item.Id).FirstOrDefault();
+                        if (singleEmployee != null)
+                        {
+                            //singleEmployee.SubCode = -1;
+                            if (!String.IsNullOrEmpty(singleEmployee.Remarks))
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
+                            }
+                            else
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName;
+                            }
 
                         }
                     }

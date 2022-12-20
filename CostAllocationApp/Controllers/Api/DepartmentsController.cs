@@ -35,16 +35,24 @@ namespace CostAllocationApp.Controllers.Api
                 department.CreatedDate = DateTime.Now;
                 department.IsActive = true;
 
-
-                int result = departmentBLL.CreateDepartment(department);
-                if (result > 0)
+                if (departmentBLL.CheckDepartment(department))
                 {
-                    return Ok("Data Saved Successfully!");
+                    return BadRequest("Department Already Exists!!!");
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    int result = departmentBLL.CreateDepartment(department);
+                    if (result > 0)
+                    {
+                        return Ok("Data Saved Successfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something Went Wrong!!!");
+                    }
                 }
+
+                
             }
         }
         [HttpGet]

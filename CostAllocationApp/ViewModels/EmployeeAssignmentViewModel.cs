@@ -30,5 +30,6 @@ namespace CostAllocationApp.ViewModels
         public int SubCode { get; set; }
         public bool MarkedAsRed { get; set; }
         public string EmployeeNameWithCodeRemarks { get; set; }
+        public int UnitPriceWithoutComma { get; set; }
     }
 }

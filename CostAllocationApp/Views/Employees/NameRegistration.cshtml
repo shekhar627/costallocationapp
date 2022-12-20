@@ -96,19 +96,24 @@
 
 <input type="hidden" id="page_load_after_modal_close" />
 
+<input type="hidden" id="hid_name" />
+<input type="hidden" id="hid_memo" />
+<input type="hidden" id="hid_sectionId" />
+<input type="hidden" id="hid_departmentId" />
+<input type="hidden" id="hid_inchargeId" />
+<input type="hidden" id="hid_roleId" />
+<input type="hidden" id="hid_explanationId" />
+<input type="hidden" id="hid_companyId" />
+<input type="hidden" id="hid_companyName" />
+<input type="hidden" id="hid_grade" />
+<input type="hidden" id="hid_gradeId" />
+<input type="hidden" id="hid_unitPrice" />
+
 @section Scripts{
     <script>
-
+        
         $(document).ready(function () {
-            //SectionDropdown fill
-            $.getJSON('/api/sections/')
-            .done(function (data) {
-                $('#section_new').empty();
-                $('#section_new').append(`<option value=''>Select Section</option>`);
-                $.each(data, function (key, item) {
-                    $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
-                });
-            });
+            
             //Department fill after section select
             $(document).on('change', '#section_new', function () {
                 var sectionId = $(this).val();
@@ -117,48 +122,178 @@
                     .done(function (data) {
                         $('#department_new').empty();
                         $('#department_new').append(`<option value=''>Select Department</option>`);
+                        var departmentId = $("#hid_departmentId").val();
                         $.each(data, function (key, item) {
-                            $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                            if(departmentId == item.Id){
+                                $('#department_new').append(`<option selected value='${item.Id}'>${item.DepartmentName}</option>`);
+                            }else{
+                                $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                            }
                         });
                     });
             });
-            //InCharge dropdown fill
-            $.getJSON('/api/incharges/')
-            .done(function (data) {
-                $('#incharge_new').empty();
-                $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
-                $.each(data, function (key, item) {
-                    $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
-                });
-            });
-            //Role dropdown fill
-            $.getJSON('/api/Roles/')
-            .done(function (data) {
-                $('#role_new').empty();
-                $('#role_new').append(`<option value=''>Select Role</option>`);
-                $.each(data, function (key, item) {
-                    $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
-                });
-            });
+            
+            function FillDropdownOfNameRegistration() {
+                SetRegistrationValueInHiddenField();
 
-            //Explanation dropdown fill
-            $.getJSON('/api/Explanations/')
-            .done(function (data) {
-                $('#explanation_new').empty();
-                $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
-                $.each(data, function (key, item) {
-                    $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
-                });
-            });
-            //Company dropdown fill
-            $.getJSON('/api/Companies/')
-            .done(function (data) {
-                $('#company_new').empty();
-                $('#company_new').append(`<option value=''>Select Company</option>`);
-                $.each(data, function (key, item) {
-                    $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
-                });
-            });
+                //SectionDropdown fill
+                $.getJSON('/api/sections/')
+                    .done(function (data) {
+                        $('#section_new').empty();
+                        $('#section_new').append(`<option value=''>Select Section</option>`);
+                        var sectionId = $("#hid_sectionId").val();
+                        $.each(data, function (key, item) {
+                            if(sectionId == item.Id){
+                                $('#section_new').append(`<option selected value='${item.Id}'>${item.SectionName}</option>`);
+                            }else{
+                                $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                            }
+                        });
+                    });
+
+                //InCharge dropdown fill
+                $.getJSON('/api/incharges/')
+                    .done(function (data) {
+                        $('#incharge_new').empty();
+                        $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
+                        var inchargeId = $("#hid_inchargeId").val();
+                        $.each(data, function (key, item) {
+                            if(inchargeId == item.Id){
+                                $('#incharge_new').append(`<option selected value='${item.Id}'>${item.InChargeName}</option>`);
+                            }else{
+                                $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                            }
+                        });
+                    });
+                //Role dropdown fill
+                $.getJSON('/api/Roles/')
+                    .done(function (data) {
+                        $('#role_new').empty();
+                        $('#role_new').append(`<option value=''>Select Role</option>`);
+                        var roleId = $("#hid_roleId").val();
+                        $.each(data, function (key, item) {
+                            if(roleId == item.Id){
+                                $('#role_new').append(`<option selected value='${item.Id}'>${item.RoleName}</option>`);
+                            }else{
+                                $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+                            }
+                        });
+                    });
+
+                //Explanation dropdown fill
+                $.getJSON('/api/Explanations/')
+                    .done(function (data) {
+                        $('#explanation_new').empty();
+                        $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
+                        var explantionId = $("#hid_explanationId").val();
+                        $.each(data, function (key, item) {
+                            if(explantionId == item.Id){
+                                $('#explanation_new').append(`<option selected value='${item.Id}'>${item.ExplanationName}</option>`);
+                            }else{
+                                $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                            }
+                        });
+                    });
+                //Company dropdown fill
+                $.getJSON('/api/Companies/')
+                    .done(function (data) {
+                        $('#company_new').empty();
+                        $('#company_new').append(`<option value=''>Select Company</option>`);
+                        var companyid = $("#hid_companyId").val();
+                        $.each(data, function (key, item) {
+                            if(companyid == item.Id){
+                                $('#company_new').append(`<option selected value='${item.Id}'>${item.CompanyName}</option>`);
+                            }else{
+                                $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+                            }
+                        });
+                    });
+            }
+            FillDropdownOfNameRegistration();
+            
+            $('#section_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#department_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#in-charge_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue();
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#role_registration_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue();
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#explanation_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#company_reg_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+
+            function SetRegistrationValueInHiddenField() {
+                let name = $("#identity_new").val();
+                let memo = $("#memo_new").val();
+                let sectionId = $('#section_new').find(":selected").val();
+                console.log("set: sectionId: "+sectionId);
+                let departmentId = $('#department_new').find(":selected").val();
+                let inchargeId = $('#incharge_new').find(":selected").val();
+                let roleId = $('#role_new').find(":selected").val();
+                let explantionId = $('#explanation_new').find(":selected").val();
+                let companyid = $('#company_new').find(":selected").val();
+                let companyName = $('#company_new').find(":selected").text();
+                let grade = $("#grade_new").val();
+                let unitPrice = $("#unitprice_new").val();
+
+                $("#hid_name").val(name);
+                $("#hid_memo").val(memo);
+                $("#hid_sectionId").val(sectionId);
+                //console.log("set 2: sectionId: "+$("#hid_sectionId").val());
+
+                $("#hid_departmentId").val(departmentId);
+                $("#hid_inchargeId").val(inchargeId);
+                $("#hid_roleId").val(roleId);
+                $("#hid_explanationId").val(explantionId);
+                $("#hid_companyId").val(companyid);
+                $("#hid_companyName").val(companyName);
+                $("#hid_grade").val(grade);
+                //$("#hid_gradeId").val(unitPrice);
+                $("#hid_unitPrice").val(unitPrice);
+            }
         });
 
 

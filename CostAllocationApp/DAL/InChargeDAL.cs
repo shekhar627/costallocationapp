@@ -90,5 +90,30 @@ namespace CostAllocationApp.DAL
             }
 
         }
+        public bool CheckInCharge(string incharegeName)
+        {
+            string query = "select * from InCharges where Name=N'" + incharegeName + "'";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
+
     }
 }

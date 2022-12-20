@@ -27,6 +27,11 @@ namespace CostAllocationApp.BLL
             return salaryDAL.RemoveSalary(salaryIds);
         }
 
+        public bool CheckGrade(Salary salary)
+        {
+            return salaryDAL.CheckGrade(salary);
+        }
+
         public Salary CompareSalary(decimal unitPrice)
         {
             Salary salary = null;
