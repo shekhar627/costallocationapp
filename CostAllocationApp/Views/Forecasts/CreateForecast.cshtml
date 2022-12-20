@@ -381,6 +381,33 @@
             }
         });
         $(document).ready(function () {
+            $('#forecast_name').click(function () {
+                NameListSort("name_asc", "name_desc");
+            });
+            $('#forecast_section').click(function () {
+                NameListSort("section_asc", "section_desc");
+            });
+            $('#forecast_department').click(function () {
+                NameListSort("department_asc", "department_desc");
+            });
+            $('#forecast_incharge').click(function () {
+                NameListSort("incharge_asc", "incharge_desc");
+            });
+            $('#forecast_role').click(function () {
+                NameListSort("role_asc", "role_desc");
+            });
+            $('#forecast_explanation').click(function () {
+                NameListSort("explanation_asc", "explanation_desc");
+            });
+            $('#forecast_company').click(function () {
+                NameListSort("company_asc", "company_desc");
+            });
+            $('#forecast_grade').click(function () {
+                NameListSort("grade_asc", "grade_desc");
+            });
+            $('#forecast_unitprice').click(function () {
+                NameListSort("unit_asc", "unit_desc");
+            });
 
             // multiple search by section
             $(document).on('click', '#sectionChks input[type="checkbox"]', function () {
@@ -1205,16 +1232,16 @@
                         $('#forecast_table>thead').append(`
                                         
                                         <tr>
-                                            <th></th>
-                                            <th>Name</th>
-                                            <th>Section</th>
-                                            <th>Department</th>
-                                            <th>In-Charge</th>
-                                            <th>Role</th>
-                                            <th>Explanation</th>
-                                            <th>Company Name</th>
-                                            <th>Grade</th>
-                                            <th>Unit Price</th>
+                                            <th data-orderable="false"></th>
+                                            <th id="forecast_name">Name </th>
+                                            <th id="forecast_section">Section </th>
+                                            <th id="forecast_department">Department </th>
+                                            <th id="forecast_incharge">In-Charge </th>
+                                            <th id="forecast_role">Role </th>
+                                            <th id="forecast_explanation">Explanation </th>
+                                            <th id="forecast_company">Company Name </i></th>
+                                            <th id="forecast_grade">Grade </th>
+                                            <th id="forecast_unitprice">Unit Price </th>
                                             <th>10月</th>
                                             <th>11月</th>
                                             <th>12月</th>
@@ -1253,13 +1280,15 @@
                             searching: false,
                             bLengthChange: false,
                             autoWidth: false,
+                            pageLength: 100,
                             columns: [
                                 {
                                     data: 'Id',
                                     render: function (id) {
                                         _id = id;
                                         return null;
-                                    }
+                                    },
+                                    //ordering: false
 
                                 },
                                 {
