@@ -618,7 +618,7 @@
                 }
             });
             text += `
-                 <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/></td>
+                 <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>
                  <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
                  <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
             </tr>
@@ -704,7 +704,7 @@
             //var _unitPrice = $("#add_name_unit_price_hidden").val();
 
             console.log("_unitPrice: " + _unitPrice);
-
+            
 
             //if (!unitPrices.includes(_unitPrice)) {
             if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
@@ -729,13 +729,15 @@
                     console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
                     console.log("_companyName.toLowerCase(): " + typeof (_companyName));
                     console.log("_rowId: " + _rowId);
-                    //if (_companyName.toLowerCase == 'mw') {
+                    //if (_companyName.toLowerCase == 'mw') {                    
                     if (_companyName.toLowerCase().indexOf("mw") > 0) {
                         console.log("test- equal");
                         $('#grade_row_' + rowId).attr('data-id', data.Id);
+                        $('#grade_row_new_' + rowId).val(data.Id);
                         $('#grade_row_' + _rowId).val(data.SalaryGrade);
                     } else {
-                        console.log("test- not equal");
+                        $('#grade_row_' + rowId).attr('data-id', data.Id);
+                        $('#grade_row_new_' + rowId).val(data.Id);
                         $('#grade_row_' + _rowId).val('');
                     }
 
@@ -745,6 +747,8 @@
                 error: function () {
                     $('#grade_row_' + rowId).attr('data-id', '');
                     $('#grade_row_' + rowId).val('');
+                    $('#grade_row_new_' + rowId).val('');
+                    alert("Invalid Grade Id!!!");
                 }
             });
         }
@@ -764,7 +768,7 @@
                 var companyId = $('#company_row_' + rowId).find(":selected").val();
                 var explanationId = $('#explain_row_' + rowId).find(":selected").val();
                 var unitPrice = $('#unitprice_row_' + rowId).val();
-                var gradeId = $('#grade_row_' + rowId).data('id');
+                var gradeId = $('#grade_row_new_' + rowId).val();
                 var remarks = $('#memo_row_' + rowId).val();
                 var subCode = $('#sub_code_row_' + rowId).val();
 
