@@ -214,48 +214,45 @@
                 return false;
             }
             $.each(rows, function (index, data) {
-                console.log(data);
-                //var rowId = data.dataset.rowid;
-                var rowId = $(this).closest('tr').find('td').eq(1).children('input').val();
+                var rowId = data.dataset.rowid;
                 var year = $('#period_search').find(":selected").val();
                 var assignmentId = $('#row_id_' + rowId).val();
+                var oct_point = $('#oct_' + rowId).val();
+                var oct_output = $('#oct_output_' + rowId).val();
 
-                var oct_point = $('#oct_' + rowId).val().replace(/,/g, '');
-                var oct_output = $('#oct_output_' + rowId).val().replace(/,/g, '');
-
-                var nov_point = $('#nov_' + rowId).val().replace(/,/g, '');
-                var nov_output = $('#nov_output_' + rowId).val().replace(/,/g, '');
+                var nov_point = $('#nov_' + rowId).val();
+                var nov_output = $('#nov_output_' + rowId).val();
 
 
-                var dec_point = $('#dec_' + rowId).val().replace(/,/g, '');
-                var dec_output = $('#dec_output_' + rowId).val().replace(/,/g, '');
+                var dec_point = $('#dec_' + rowId).val();
+                var dec_output = $('#dec_output_' + rowId).val();
 
-                var jan_point = $('#jan_' + rowId).val().replace(/,/g, '');
-                var jan_output = $('#jan_output_' + rowId).val().replace(/,/g, '');
+                var jan_point = $('#jan_' + rowId).val();
+                var jan_output = $('#jan_output_' + rowId).val();
 
-                var feb_point = $('#feb_' + rowId).val().replace(/,/g, '');
-                var feb_output = $('#feb_output_' + rowId).val().replace(/,/g, '');
+                var feb_point = $('#feb_' + rowId).val();
+                var feb_output = $('#feb_output_' + rowId).val();
 
-                var mar_point = $('#mar_' + rowId).val().replace(/,/g, '');
-                var mar_output = $('#mar_output_' + rowId).val().replace(/,/g, '');
+                var mar_point = $('#mar_' + rowId).val();
+                var mar_output = $('#mar_output_' + rowId).val();
 
-                var apr_point = $('#apr_' + rowId).val().replace(/,/g, '');
-                var apr_output = $('#apr_output_' + rowId).val().replace(/,/g, '');
+                var apr_point = $('#apr_' + rowId).val();
+                var apr_output = $('#apr_output_' + rowId).val();
 
-                var may_point = $('#may_' + rowId).val().replace(/,/g, '');
-                var may_output = $('#may_output_' + rowId).val().replace(/,/g, '');
+                var may_point = $('#may_' + rowId).val();
+                var may_output = $('#may_output_' + rowId).val();
 
-                var jun_point = $('#jun_' + rowId).val().replace(/,/g, '');
-                var jun_output = $('#jun_output_' + rowId).val().replace(/,/g, '');
+                var jun_point = $('#jun_' + rowId).val();
+                var jun_output = $('#jun_output_' + rowId).val();
 
-                var jul_point = $('#jul_' + rowId).val().replace(/,/g, '');
-                var jul_output = $('#jul_output_' + rowId).val().replace(/,/g, '');
+                var jul_point = $('#jul_' + rowId).val();
+                var jul_output = $('#jul_output_' + rowId).val();
 
-                var aug_point = $('#aug_' + rowId).val().replace(/,/g, '');
-                var aug_output = $('#aug_output_' + rowId).val().replace(/,/g, '');
+                var aug_point = $('#aug_' + rowId).val();
+                var aug_output = $('#aug_output_' + rowId).val();
 
-                var sep_point = $('#sep_' + rowId).val().replace(/,/g, '');
-                var sep_output = $('#sep_output_' + rowId).val().replace(/,/g, '');
+                var sep_point = $('#sep_' + rowId).val();
+                var sep_output = $('#sep_output_' + rowId).val();
 
                 var data = `10_${oct_point}_${oct_output},11_${nov_point}_${nov_output},12_${dec_point}_${dec_output},1_${jan_point}_${jan_output},2_${feb_point}_${feb_output},3_${mar_point}_${mar_output},4_${apr_point}_${apr_output},5_${may_point}_${may_output},6_${jun_point}_${jun_output},7_${jul_point}_${jul_output},8_${aug_point}_${aug_output},9_${sep_point}_${sep_output}`;
 
@@ -335,8 +332,7 @@
             var sameNameTr = [];
             var tr = element.closest('tr');
             //var trId = $(tr).data('rowid');
-            var trName = $(tr).find('td').eq(1).children('span').data('name');
-            console.log(trName);
+            var trName = $(tr).find('td').eq(1).data('name');
             var allTr = $('#forecast_table > tbody > tr');
             //var monthNumber = $(element).data('month');
             var columnIndex = $(element).parent().index();
@@ -985,16 +981,10 @@
 
             $('#forecast_table').on('change', '.input_month', function () {
 
-                //var rowId = parseInt($(this).closest('tr').data('rowid'));
-                var rowId = $(this).closest('tr').find('td').eq(1).children('input').val();
-                console.log('row_d:' + rowId);
-                //console.log($(this).closest('tr').find('td').eq(1).children('input').val());
+                var rowId = parseInt($(this).closest('tr').data('rowid'));
                 var month = parseInt($(this).data('month'));
-                console.log('month ' + month);
                 var unitPrice = parseFloat($('#up_' + rowId).data('unitprice').replace(/,/g, ''));
-                console.log('unitprice ' + unitPrice)
                 var pointValue = parseFloat($(this).val());
-                console.log('point ' + pointValue)
                 let result = 0;
                 switch (month) {
                     case 1:
@@ -1051,15 +1041,120 @@
 
             });
 
+            function Forecast_DatatableLoad(data) {
+                var tempCompanyName = "";
+                var tempSubCode = "";
+                var tempRemarks = "";
+
+                $('#forecast_table').DataTable({
+                    destroy: true,
+                    data: data,
+                    ordering: true,
+                    orderCellsTop: true,
+                    pageLength: 100,
+                    searching: false,
+                    bLengthChange: false,
+                    columns: [
+                        {
+                            data: 'EmployeeNameWithCodeRemarks',
+                            render: function (employeeName) {
+                                return employeeName;
+                            }
+                        },
+                        {
+                            data: 'SectionName'
+                        },
+                        {
+                            data: 'DepartmentName'
+                        },
+                        {
+                            data: 'InchargeName'
+                        },
+                        {
+                            data: 'RoleName'
+                        },
+                        {
+                            data: 'ExplanationName'
+                        },
+                        {
+                            data: 'CompanyName',
+                            render: function (companyName) {
+                                tempCompanyName = companyName;
+                                return companyName;
+                            }
+                        },
+                        {
+                            data: 'GradePoint',
+                            render: function (grade) {
+                                if (tempCompanyName.toLowerCase() == "mw") {
+                                    return grade;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        {
+                            data: 'UnitPrice'
+                        },
+                        {
+                            data: 'Id',
+                            render: function (Id) {
+                                if (tempCompanyName.toLowerCase() == 'mw') {
+                                    return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+                                } else {
+                                    return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
 
             $('#forecast_search_button').on('click', function () {
-                $("#loading").css("display", "none");
-                var sectionId = $('#section_search').find(":selected").val();
-                var inchargeId = $('#incharge_search').find(":selected").val();
-                var departmentId = $('#department_search').find(":selected").val();
-                var roleId = $('#role_search').find(":selected").val();
-                var companyId = $('#company_search').find(":selected").val();
-                var explanationId = $('#explanation_search').find(":selected").val();
+                //// var sectionId = $('#section_search').find(":selected").val();
+                //// var departmentId = $('#department_search').find(":selected").val();
+                //// var inchargeId = $('#incharge_search').find(":selected").val();
+                //// var roleId = $('#role_search').find(":selected").val();
+                //// var explanationId = $('#explanation_search').find(":selected").val();
+                //// var companyId = $('#company_search').val();
+
+                //var sectionId = $('#hidSectionId').val();
+
+                ////if(sectionId == ''){
+                ////    sectionId = '';
+                ////}else{
+                ////    sectionId = "'"+sectionId+"'";
+                ////}
+                //var departmentId = $('#hidDepartmentId').val();
+                ////if(departmentId == ''){
+                ////    departmentId = '';
+                ////}else{
+                ////    departmentId = "'"+departmentId+"'";
+                ////}
+                //var inchargeId = $('#hidInChargeId').val();
+                ////if(inchargeId == ''){
+                ////    inchargeId = '';
+                ////}else{
+                ////    inchargeId = "'"+inchargeId+"'";
+                ////}
+                //var roleId = $('#hidRoleId').val();
+                ////if(roleId == ''){
+                ////    roleId = '';
+                ////}else{
+                ////    roleId = "'"+roleId+"'";
+                ////}
+                //var explanationId = $('#hidExplanationId').val();
+                ////if(explanationId == ''){
+                ////    explanationId = '';
+                ////}else{
+                ////    explanationId = "'"+explanationId+"'";
+                ////}
+                //var companyId = $('#hidCompanyid').val();
+                ////if(companyId == ''){
+                ////    companyId = '';
+                ////}else{
+                ////    companyId = "'"+companyId+"'";
+                ////}
                 var employeeName = $('#identity_search').val();
 
                 var year = $('#period_search').find(":selected").val();
@@ -1080,6 +1175,15 @@
                 var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
                 var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
 
+                var clicked_checkbox = $(this).attr("id")
+
+                if (clicked_checkbox.toLowerCase() == "chk_sec_all") {
+                    $(".section_checkbox").prop("checked", isSectionAllChk);
+                } else {
+                    $("#chk_sec_all").prop("checked", false);
+                }
+                clicked_checkbox = "";
+
                 //var employeeName = "";
                 var sectionCheck = [];
                 var departmentCheck = [];
@@ -1090,8 +1194,7 @@
 
                 var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
                 var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked'); chk_sec_all                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
                 var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
                 var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
@@ -1106,7 +1209,8 @@
                         }
                     });
                 }
-                
+                alert(isSectionAllChk);
+                alert(sectionId);
                 departmentId = "";
                 if (!isDepartmentAllCheck) {
                     $.each(departmentCheckedBoxes, function (index, item) {
@@ -1187,48 +1291,38 @@
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
+                        console.log(data);
+                        //return false;
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();
 
                         $('#forecast_table>thead').append(`
-                                        
-                                        <tr>
-                                            <th></th>
-                                            <th>Name</th>
-                                            <th>Section</th>
-                                            <th>Department</th>
-                                            <th>In-Charge</th>
-                                            <th>Role</th>
-                                            <th>Explanation</th>
-                                            <th>Company Name</th>
-                                            <th>Grade</th>
-                                            <th>Unit Price</th>
-                                            <th>10月</th>
-                                            <th>11月</th>
-                                            <th>12月</th>
-                                            <th>1月</th>
-                                            <th>2月</th>
-                                            <th>3月</th>
-                                            <th>4月</th>
-                                            <th>5月</th>
-                                            <th>6月</th>
-                                            <th>7月</th>
-                                            <th>8月</th>
-                                            <th>9月</th>
-                                            <th>Oct</th>
-                                            <th>Nov</th>
-                                            <th>Dec</th>
-                                            <th>Jan</th>
-                                            <th>Feb</th>
-                                            <th>Mar</th>
-                                            <th>Apr</th>
-                                            <th>May</th>
-                                            <th>Jun</th>
-                                            <th>Jul</th>
-                                            <th>Aug</th>
-                                            <th>Sep</th>
-                                        </tr>
-                                    `);
+
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Name</th>
+                                                    <th>Section</th>
+                                                    <th>Department</th>
+                                                    <th>In-Charge</th>
+                                                    <th>Role</th>
+                                                    <th>Explanation</th>
+                                                    <th>Company Name</th>
+                                                    <th>Grade</th>
+                                                    <th>Unit Price</th>
+                                                    <th>10月</th>
+                                                    <th>11月</th>
+                                                    <th>12月</th>
+                                                    <th>1月</th>
+                                                    <th>2月</th>
+                                                    <th>3月</th>
+                                                    <th>4月</th>
+                                                    <th>5月</th>
+                                                    <th>6月</th>
+                                                    <th>7月</th>
+                                                    <th>8月</th>
+                                                    <th>9月</th>
+                                                </tr>
+                                            `);
                         //Forecast_DatatableLoad(data);
                         var _id = 0;
                         var _companyName = '';
@@ -1252,7 +1346,7 @@
                                 {
                                     data: 'EmployeeName',
                                     render: function (employeeName) {
-                                        return `<span title='initial' data-name='${employeeName}'> ${employeeName}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                        return `<td title='initial' data-name='${employeeName}'> <input type='hidden' id='row_id_${_id}' value='${_id}'/> ${employeeName}</td>`;
                                     }
                                 },
                                 {
@@ -1306,10 +1400,7 @@
                                     }
                                 },
                                 {
-                                    data: 'UnitPrice',
-                                    render: function (unitPrice) {
-                                        return `<span id='up_${_id}' data-unitprice=${unitPrice}> ${unitPrice}</span>`;
-                                    }
+                                    data: 'UnitPrice'
                                 },
                                 {
                                     data: 'forecasts',
@@ -1424,7 +1515,7 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='${_forecast[8].Points}' class='input_month'/></td>`;
                                         } else {
                                             return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='0' class='input_month'/></td>`;
                                         }
@@ -1436,7 +1527,7 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='${_forecast[9].Points}' class='input_month'/></td>`;
                                         } else {
                                             return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='0' class='input_month'/></td>`;
                                         }
@@ -1448,153 +1539,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='${_forecast[9].Points}' class='input_month'/></td>`;
                                         } else {
                                             return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='0' class='input_month'/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='oct_output_${_id}' value='${_forecast[0].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='oct_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='nov_output_${_id}' value='${_forecast[1].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='nov_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='dec_output_${_id}' value='${_forecast[2].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='dec_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jan_output_${_id}' value='${_forecast[3].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jan_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='feb_output_${_id}' value='${_forecast[4].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='feb_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='mar_output_${_id}' value='${_forecast[5].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='mar_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='apr_output_${_id}' value='${_forecast[6].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='apr_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='may_output_${_id}' value='${_forecast[7].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='may_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jun_output_${_id}' value='${_forecast[8].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jun_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_output_${_id}' value='${_forecast[9].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jul_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_output_${_id}' value='${_forecast[10].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='aug_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
-                                        }
-
-                                    },
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
-
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_output_${_id}' value='${_forecast[11].Total}' style='background-color:#E6E6E3' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='sep_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
                                         }
 
                                     },

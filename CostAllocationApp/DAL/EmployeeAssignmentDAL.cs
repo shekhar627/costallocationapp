@@ -103,15 +103,15 @@ namespace CostAllocationApp.DAL
         public List<EmployeeAssignmentViewModel> SearchAssignment(EmployeeAssignment employeeAssignment)
         {
             string where = "";
-            if (employeeAssignment.SectionId > 0)
+            if (employeeAssignment.SectionId >0)
             {
                 where += $" ea.SectionId={employeeAssignment.SectionId} and ";
             }
-            if (employeeAssignment.DepartmentId > 0)
+            if (employeeAssignment.DepartmentId >0)
             {
                 where += $" ea.DepartmentId={employeeAssignment.DepartmentId} and ";
             }
-            if (employeeAssignment.InchargeId > 0)
+            if (employeeAssignment.InchargeId >0)
             {
                 where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
             }
@@ -123,11 +123,7 @@ namespace CostAllocationApp.DAL
             //{
             //    where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
             //}
-            if (employeeAssignment.CompanyId > 0)
-            {
-                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
-            }
-            if (employeeAssignment.CompanyId > 0)
+            if (employeeAssignment.CompanyId >0)
             {
                 where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
             }
@@ -257,15 +253,15 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.SectionId={employeeAssignment.SectionId} and ";
             }
-            if (employeeAssignment.DepartmentId > 0)
+            if (employeeAssignment.DepartmentId >0)
             {
                 where += $" ea.DepartmentId={employeeAssignment.DepartmentId} and ";
             }
-            if (employeeAssignment.InchargeId > 0)
+            if (employeeAssignment.InchargeId >0)
             {
                 where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
             }
-            if (employeeAssignment.RoleId > 0)
+            if (employeeAssignment.RoleId >0)
             {
                 where += $" ea.RoleId={employeeAssignment.RoleId} and ";
             }
@@ -273,14 +269,11 @@ namespace CostAllocationApp.DAL
             //{
             //    where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
             //}
-            if (employeeAssignment.CompanyId > 0)
+            if (employeeAssignment.CompanyId >0)
             {
                 where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
             }
-            if (employeeAssignment.CompanyId > 0)
-            {
-                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
-            }
+            
             if (employeeAssignment.IsActive == "0" || employeeAssignment.IsActive == "1")
             {
                 where += $" ea.IsActive={employeeAssignment.IsActive} and ";
@@ -379,7 +372,7 @@ namespace CostAllocationApp.DAL
             return employeeAssignments;
         }
 
-        public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignment employeeAssignment)
+        public List<ForecastAssignmentViewModel> GetEmployeesForecastBySearchFilter(EmployeeAssignmentForecast employeeAssignment)
         {
 
             string where = "";
@@ -387,34 +380,160 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.EmployeeName like N'%{employeeAssignment.EmployeeName}%' and ";
             }
-            if (employeeAssignment.SectionId > 0)
+            if (!string.IsNullOrEmpty(employeeAssignment.SectionId))
             {
-                where += $" ea.SectionId={employeeAssignment.SectionId} and ";
+                string tempSectionIds = "";
+                if (employeeAssignment.SectionId.IndexOf("##") >= 0)
+                {
+                    string[] arrSectionIds = employeeAssignment.SectionId.Split(new[] { "##" }, StringSplitOptions.None);
+                    
+                    for (int i = 0; i < arrSectionIds.Length; i++)
+                    {
+                        if(tempSectionIds == "")
+                        {
+                            tempSectionIds = arrSectionIds[i];
+                        }
+                        else
+                        {
+                            tempSectionIds = tempSectionIds +","+arrSectionIds[i];
+                        }
+                    }
+                }
+                else
+                {
+                    tempSectionIds = employeeAssignment.SectionId;
+                }
+                where += $" ea.SectionId In ({tempSectionIds}) and ";
             }
-            if (employeeAssignment.DepartmentId > 0)
+            if (!string.IsNullOrEmpty(employeeAssignment.DepartmentId))
             {
-                where += $" ea.DepartmentId={employeeAssignment.DepartmentId} and ";
+                string tempDepartmentIds = "";
+                if (employeeAssignment.DepartmentId.IndexOf("##") >= 0)
+                {
+                    string[] arrDepartmentIds = employeeAssignment.DepartmentId.Split(new[] { "##" }, StringSplitOptions.None);
+
+                    for (int i = 0; i < arrDepartmentIds.Length; i++)
+                    {
+                        if (tempDepartmentIds == "")
+                        {
+                            tempDepartmentIds = arrDepartmentIds[i];
+                        }
+                        else
+                        {
+                            tempDepartmentIds = tempDepartmentIds + "," + arrDepartmentIds[i];
+                        }
+                    }
+                }
+                else
+                {
+                    tempDepartmentIds = employeeAssignment.DepartmentId;
+                }
+                where += $" ea.DepartmentId In ({tempDepartmentIds}) and ";
             }
-            if (employeeAssignment.InchargeId > 0)
+
+            if (!string.IsNullOrEmpty(employeeAssignment.InchargeId))
             {
-                where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
+                string tempInchargeIdIds = "";
+                if (employeeAssignment.InchargeId.IndexOf("##") >= 0)
+                {
+                    string[] arrInchargeIds = employeeAssignment.InchargeId.Split(new[] { "##" }, StringSplitOptions.None);
+
+                    for (int i = 0; i < arrInchargeIds.Length; i++)
+                    {
+                        if (tempInchargeIdIds == "")
+                        {
+                            tempInchargeIdIds = arrInchargeIds[i];
+                        }
+                        else
+                        {
+                            tempInchargeIdIds = tempInchargeIdIds + "," + arrInchargeIds[i];
+                        }
+                    }
+                }
+                else
+                {
+                    tempInchargeIdIds = employeeAssignment.InchargeId;
+                }
+                where += $" ea.InChargeId In ({tempInchargeIdIds}) and ";
             }
-            if (employeeAssignment.RoleId > 0)
+
+            if (!string.IsNullOrEmpty(employeeAssignment.RoleId))
             {
-                where += $" ea.RoleId={employeeAssignment.RoleId} and ";
+                string tempRoleIds = "";
+                if (employeeAssignment.RoleId.IndexOf("##") >= 0)
+                {
+                    string[] arrRoleIdss = employeeAssignment.RoleId.Split(new[] { "##" }, StringSplitOptions.None);
+
+                    for (int i = 0; i < arrRoleIdss.Length; i++)
+                    {
+                        if (tempRoleIds == "")
+                        {
+                            tempRoleIds = arrRoleIdss[i];
+                        }
+                        else
+                        {
+                            tempRoleIds = tempRoleIds + "," + arrRoleIdss[i];
+                        }
+                    }
+                }
+                else
+                {
+                    tempRoleIds = employeeAssignment.RoleId;
+                }
+                where += $" ea.RoleId In ({tempRoleIds}) and ";
             }
-            //if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
-            //{
-            //    where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
-            //}
-            if (employeeAssignment.CompanyId > 0)
+
+            if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
             {
-                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
+                string tempExplanationIds = "";
+                if (employeeAssignment.ExplanationId.IndexOf("##") >= 0)
+                {
+                    string[] arrtempExplanationIds = employeeAssignment.ExplanationId.Split(new[] { "##" }, StringSplitOptions.None);
+
+                    for (int i = 0; i < arrtempExplanationIds.Length; i++)
+                    {
+                        if (tempExplanationIds == "")
+                        {
+                            tempExplanationIds = arrtempExplanationIds[i];
+                        }
+                        else
+                        {
+                            tempExplanationIds = tempExplanationIds + "," + arrtempExplanationIds[i];
+                        }
+                    }
+                }
+                else
+                {
+                    tempExplanationIds = employeeAssignment.ExplanationId;
+                }
+                where += $" ea.ExplanationId IN ({tempExplanationIds}) and ";
             }
-            if (employeeAssignment.CompanyId > 0)
+            if (!string.IsNullOrEmpty(employeeAssignment.CompanyId))
             {
-                where += $" ea.CompanyId={employeeAssignment.CompanyId} and ";
+                string tempCompanyIds = "";
+                if (employeeAssignment.CompanyId.IndexOf("##") >= 0)
+                {
+                    string[] arrCompanyIds = employeeAssignment.CompanyId.Split(new[] { "##" }, StringSplitOptions.None);
+
+                    for (int i = 0; i < arrCompanyIds.Length; i++)
+                    {
+                        if (tempCompanyIds == "")
+                        {
+                            tempCompanyIds = arrCompanyIds[i];
+                        }
+                        else
+                        {
+                            tempCompanyIds = tempCompanyIds + "," + arrCompanyIds[i];
+                        }
+                    }
+                }
+                else
+                {
+                    tempCompanyIds = employeeAssignment.CompanyId;
+                }
+                where += $" ea.CompanyId In ({tempCompanyIds}) and ";
             }
+
             if (employeeAssignment.IsActive == "0" || employeeAssignment.IsActive == "1")
             {
                 where += $" ea.IsActive={employeeAssignment.IsActive} and ";
