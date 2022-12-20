@@ -349,7 +349,7 @@
 
 
             $.each(allTr, function (index, value) {
-                var tempTrName = $(value).find('td').eq(1).data('name');
+                var tempTrName = $(value).find('td').eq(1).children('span').data('name');
                 if (tempTrName == trName) {
                     var monthPoint = $(value).find('td').eq(columnIndex).children('input').val();
                     if (monthPoint == '' || monthPoint == NaN) {
@@ -1252,6 +1252,7 @@
                             data: data,
                             searching: false,
                             bLengthChange: false,
+                            autoWidth: false,
                             columns: [
                                 {
                                     data: 'Id',
@@ -1294,7 +1295,7 @@
                                 {
                                     data: 'ExplanationName',
                                     render: function (explanationName) {
-                                        return `<td title='initial' class='forecast_explanation'>${explanationName}</td>`;
+                                        return `<span title='initial' class='forecast_explanation'>${explanationName}</span>`;
                                     }
                                 },
                                 {
@@ -1614,18 +1615,14 @@
                             ],
                         });
 
-
                     },
                     error: function () {
                         $('#add_name_table_1 tbody').empty();
                     }
                 });
 
-
+                
             });
-
-
-
 
 
             // // for search

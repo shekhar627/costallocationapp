@@ -33,6 +33,11 @@ body {
     font-family: Yu Gothic !important;
 }
 
+#name-list > tbody > tr > td {
+    width: 1px !important;
+    white-space: nowrap !important;
+}
+
 .name_list_th {
     border: none;
     text-align: center;
@@ -352,12 +357,14 @@ body {
 
 
 #forecast_table {
-    width: 250% !important;
+    /*width: 250% !important;*/
     border-collapse: collapse;
     border: 1px solid;
     font-size:12px;
 }
-
+/*#forecast_table > thead > tr > th{
+    width: 0px !important;
+}*/
 .forecast_th {
     text-align: center;
 }
@@ -397,6 +404,11 @@ body {
     float: right;
     margin-left: 33%;
     display: none;
+}
+
+#forecast_table > tbody> tr> td{
+    width: 1px !important;
+    white-space: nowrap !important;
 }
 
 /*-----------------
@@ -481,6 +493,11 @@ body {
 #add_name_table_1 {
     border: 1px solid black !important;
     width: 120% !important;
+}
+
+#add_name_table_1 > tbody> tr> td{
+    width: 1px !important;
+    white-space: nowrap !important;
 }
 
     #add_name_table_1 thead tr:nth-of-type(1) {
