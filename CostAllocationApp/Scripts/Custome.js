@@ -830,7 +830,7 @@ function NameList_DatatableLoad(data) {
             //},
             {
                 data: 'EmployeeNameWithCodeRemarks',
-                render: function (employeeName) {
+                render: function (employeeNameWithCodeRemarks) {
                     //var nameWithCodeAndRemarks = "";
                     //if (nameWithCodeAndRemarks == "") {
                     //    nameWithCodeAndRemarks = employeeName;
@@ -842,7 +842,8 @@ function NameList_DatatableLoad(data) {
                     //    nameWithCodeAndRemarks = nameWithCodeAndRemarks + " (" + tempRemarks + ")";
                     //}
                     //nameWithCodeAndRemarks = nameWithCodeAndRemarks;
-                    return employeeName;
+                    var splittedString = employeeNameWithCodeRemarks.split('$');
+                    return `<span onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
                 }
             },
             //{

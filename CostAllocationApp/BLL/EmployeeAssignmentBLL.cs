@@ -226,11 +226,11 @@ namespace CostAllocationApp.BLL
                             //singleEmployee.SubCode = -1;
                             if (!String.IsNullOrEmpty(singleEmployee.Remarks))
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName +" "+ singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName+"$"+singleEmployee.EmployeeName +" "+ singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
                             }
                             else
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName+"$"+singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
                             }
 
                         }
@@ -265,11 +265,11 @@ namespace CostAllocationApp.BLL
                             //singleEmployee.SubCode = -1;
                             if (!String.IsNullOrEmpty(singleEmployee.Remarks))
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
                             }
                             else
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName;
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName;
                             }
                             
                         }
@@ -304,11 +304,11 @@ namespace CostAllocationApp.BLL
                             //singleEmployee.SubCode = -1;
                             if (!String.IsNullOrEmpty(singleEmployee.Remarks))
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName+"_"+ singleEmployee.EmployeeName + " " + singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName+"$"+ singleEmployee.EmployeeName + " " + singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
                             }
                             else
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "_" + singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
                             }
 
                         }

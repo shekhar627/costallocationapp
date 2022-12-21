@@ -1299,7 +1299,7 @@
                                 {
                                     data: 'EmployeeNameWithCodeRemarks',
                                     render: function (employeeNameWithCodeRemarks) {
-                                        var splittedString = employeeNameWithCodeRemarks.split('_');
+                                        var splittedString = employeeNameWithCodeRemarks.split('$');
                                         return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
                                     }
                                 },
