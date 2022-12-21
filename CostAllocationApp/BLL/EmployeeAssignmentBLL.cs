@@ -199,7 +199,7 @@ namespace CostAllocationApp.BLL
                         employees = employeesWithIn;
                     }
                 }
-
+                this.MarkedAsRed(employees);
             }
             return employees;
         }

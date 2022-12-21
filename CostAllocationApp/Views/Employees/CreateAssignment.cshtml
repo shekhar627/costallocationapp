@@ -61,7 +61,7 @@
                     <tr>
                         <th> </th>
                         <th id="add_name_name">Name <i class="fa fa-sort-amount-asc" id="name_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="name_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_subcode">SubCode <i class="fa fa-sort-amount-asc" id="subcode_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="subcode_desc" aria-hidden="true"></i></th>
+                        <th id="add_name_subcode" style="width:59px;">SubCode <i class="fa fa-sort-amount-asc" id="subcode_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="subcode_desc" aria-hidden="true"></i></th>
                         <th id="add_name_memo">Memo <i class="fa fa-sort-amount-asc" id="memo_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="memo_desc" aria-hidden="true"></i></th>
                         <th id="add_name_section">Section <i class="fa fa-sort-amount-asc" id="section_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="section_desc" aria-hidden="true"></i></th>
                         <th id="add_name_department">Department <i class="fa fa-sort-amount-asc" id="department_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="department_desc" aria-hidden="true"></i></th>
@@ -470,7 +470,7 @@
                         }
                         tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
                         if (count == 1) {
-                            $("#unit_price_first_project_hid").val(item.UnitPriceWithoutComma);
+                            $("#unit_price_first_project_hid").val(item.UnitPrice);
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
 
@@ -1178,10 +1178,10 @@
                                     data: 'SubCode',
                                     render: function (subCode) {
                                         if (redMark) {
-                                            return `<span style='color:red'>${parseInt(subCode)}</span>`;
+                                            return `<span style='color:red;'>${parseInt(subCode)}</span></td>`;
                                         }
                                         else {
-                                            return `<span>${parseInt(subCode)}</span>`;
+                                            return `<span >${parseInt(subCode)}</span>`;
                                         }
                                     },
                                     searching: false,

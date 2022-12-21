@@ -296,8 +296,7 @@
                 <table id="add_name_table_3">
                     <thead>
                         <tr>
-                            @*
-                                <th>Name</th>*@
+                            <th>Name</th>
                             <th>Memo</th>
                             <th>Section</th>
                             <th>Department</th>
@@ -311,10 +310,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @*
+                            
                                 <td>
-                                    <input type="text" class="col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                                </td>*@
+                                    <input type="text" class="col-12" id="name_edit" value="Chandra Shekhar Das" placeholder="name" readonly>
+                                </td>
                             <td>
                                 <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
                             </td>
@@ -405,6 +404,7 @@
 
                     console.log(assignmentData);
                     $('#edit_model_span').html(assignmentData.EmployeeName);
+                    $('#name_edit').val(assignmentData.EmployeeName);
                     $('#memo_edit').val(assignmentData.Remarks);
                     $('#row_id_hidden_edit').val(assignmentData.Id);
                     $.getJSON('/api/sections/')
@@ -548,7 +548,7 @@
                         }
                         tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
                         if (count == 1) {
-                            $("#unit_price_first_project_hid").val(item.UnitPriceWithoutComma);
+                            $("#unit_price_first_project_hid").val(item.UnitPrice);
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
 

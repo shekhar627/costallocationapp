@@ -164,8 +164,8 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
                             employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
 
@@ -223,8 +223,8 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.GradeId = rdr["GradeId"].ToString();
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
@@ -329,8 +329,9 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
 
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
@@ -590,8 +591,8 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             forecastEmployeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             forecastEmployeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString();
-                            forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(forecastEmployeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(forecastEmployeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
 
                             forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             forecastEmployeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
@@ -799,7 +800,8 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
@@ -885,8 +887,9 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            //employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
                             employeeAssignmentViewModel.UnitPriceWithoutComma = Convert.ToInt32(rdr["UnitPrice"].ToString());
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
@@ -966,8 +969,10 @@ namespace CostAllocationApp.DAL
                             forecast.Month = Convert.ToInt32(rdr["MonthId"]);
                             forecast.Points = Convert.ToDecimal(rdr["Points"]);
                             //forecast.Total = Convert.ToDecimal(rdr["Total"]);
-                            forecast.Total = rdr["Total"].ToString();
-                            forecast.Total = Convert.ToDecimal(forecast.Total).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            //forecast.Total = rdr["Total"].ToString();
+                            //forecast.Total = Convert.ToDecimal(forecast.Total).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
+                            forecast.Total = Convert.ToInt32(rdr["Total"]).ToString("N0");
+
                             if (String.IsNullOrEmpty(forecast.Total))
                             {
                                 forecast.Total = "0";

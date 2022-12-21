@@ -287,7 +287,6 @@ body {
 #section_table td, th {
     border: 1px solid;
     padding: 0px !important;
-    text-align:center;
 }
 
     #section_table td:nth-of-type(2) {
@@ -517,7 +516,7 @@ body {
         text-align: center;
     }
     #add_name_table_1 th, td:nth-of-type(12) {
-        /*text-align: right;*/
+        text-align: right;
         /* padding: 1rem; */
     }
     .link_add {
