@@ -186,6 +186,7 @@
                             <tbody></tbody>
                         </table>
                         <div class="add_name_tbl_2_btn">
+                            <a href="javascript:void(0);" class="" id="cancel_forecast" onclick="onCancel()" style="display:none;">Cancel</a>
                             <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave()" style="display:none;">Save</a>
                         </div>
                     </div>
@@ -205,6 +206,514 @@
 @section Scripts{
 
     <script type="text/javascript">
+
+        var globalSearchObject = '';
+
+        function checkPoint(element) {
+
+            var pointValue = $(element).val();
+            if (isNaN(pointValue) || pointValue == undefined || pointValue == '') {
+                $(element).val('0.0');
+            }
+            else {
+                if (pointValue > 1 || pointValue < 0) {
+                    $(element).val('0.0');
+                }
+            }
+
+
+            var totalMonthPoint = 0;
+            var sameNameTr = [];
+            var tr = element.closest('tr');
+            //var trId = $(tr).data('rowid');
+            var trName = $(tr).find('td').eq(0).children('span').data('name');
+            console.log('name:'+trName);
+            var allTr = $('#forecast_table > tbody > tr');
+            //var monthNumber = $(element).data('month');
+            var columnIndex = $(element).parent().index();
+
+            console.log('index: ' + columnIndex);
+
+
+
+
+            $.each(allTr, function (index, value) {
+                var tempTrName = $(value).find('td').eq(0).children('span').data('name');
+                if (tempTrName == trName) {
+                    var monthPoint = $(value).find('td').eq(columnIndex).children('input').val();
+                    if (monthPoint == '' || monthPoint == NaN) {
+                        totalMonthPoint += 0;
+                    }
+                    else {
+                        totalMonthPoint += parseFloat(monthPoint);
+                    }
+                    //console.log(td);
+                    sameNameTr.push(value);
+                }
+            });
+            if (totalMonthPoint > 1) {
+                alert('total month point can not be grater than 1');
+                $(element).val('0.0');
+            }
+
+
+            //console.log($(tr).find('td').eq(1).data('name'));
+
+        }
+
+        //function onClickEmpty(element) {
+        //    $(element).val('');
+        //}
+
+        function onCancel() {
+            if (globalSearchObject == '') {
+                return;
+            }
+            else {
+                $.ajax({
+                    //url: `/api/utilities/SearchForecastEmployee`,
+                    //type: 'GET',
+                    //dataType: 'json',
+                    //data: data_info,
+                    url: `/api/utilities/SearchForecastEmployee`,
+                    contentType: 'application/json',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: globalSearchObject,
+                    success: function (data) {
+                        $('#forecast_table>thead').empty();
+                        $('#forecast_table>tbody').empty();
+
+                        $('#forecast_table>thead').append(`
+                                        
+                                        <tr>
+                                            <th id="forecast_name">Name </th>
+                                            <th id="forecast_section">Section </th>
+                                            <th id="forecast_department">Department </th>
+                                            <th id="forecast_incharge">In-Charge </th>
+                                            <th id="forecast_role">Role </th>
+                                            <th id="forecast_explanation">Explanation </th>
+                                            <th id="forecast_company">Company Name </i></th>
+                                            <th id="forecast_grade">Grade </th>
+                                            <th id="forecast_unitprice">Unit Price </th>
+                                            <th>10月</th>
+                                            <th>11月</th>
+                                            <th>12月</th>
+                                            <th>1月</th>
+                                            <th>2月</th>
+                                            <th>3月</th>
+                                            <th>4月</th>
+                                            <th>5月</th>
+                                            <th>6月</th>
+                                            <th>7月</th>
+                                            <th>8月</th>
+                                            <th>9月</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dec</th>
+                                            <th>Jan</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Apr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Aug</th>
+                                            <th>Sep</th>
+                                        </tr>
+                                    `);
+                        //Forecast_DatatableLoad(data);
+                        var _id = 0;
+                        var _companyName = '';
+                        var _oct = 0;
+                        var _octTotal = 0;
+
+                        console.log(data);
+                        $('#forecast_table').DataTable({
+                            destroy: true,
+                            data: data,
+                            searching: false,
+                            bLengthChange: false,
+                            autoWidth: false,
+                            pageLength: 100,
+                            columns: [
+                                //{
+                                //    data: 'Id',
+                                //    render: function (id) {
+                                //        _id = id;
+                                //        return null;
+                                //    },
+                                //    //ordering: false
+
+                                //},
+                                {
+                                    data: 'EmployeeNameWithCodeRemarks',
+                                    render: function (employeeNameWithCodeRemarks) {
+                                        var splittedString = employeeNameWithCodeRemarks.split('$');
+                                        _id = parseInt(splittedString[3]); // id
+                                        if (splittedString[2] == 'true') {
+                                            return `<span title='initial' data-name='${splittedString[0]}' style='color:red;'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                        } else {
+                                            return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                        }
+
+                                    }
+                                },
+                                {
+                                    data: 'SectionName',
+                                    render: function (sectionName) {
+                                        return `<td title='initial'>${sectionName}</td>`;
+                                    }
+                                },
+                                {
+                                    data: 'DepartmentName',
+                                    render: function (departmentName) {
+                                        return `<td title='initial'>${departmentName}</td>`;
+                                    }
+                                },
+                                {
+                                    data: 'InchargeName',
+                                    render: function (inchargeName) {
+                                        return `<td title='initial'>${inchargeName}</td>`;
+                                    }
+                                },
+                                {
+                                    data: 'RoleName',
+                                    render: function (roleName) {
+                                        return `<td title='initial'>${roleName}</td>`;
+                                    }
+                                },
+                                {
+                                    data: 'ExplanationName',
+                                    render: function (explanationName) {
+                                        return `<span title='initial' class='forecast_explanation'>${explanationName}</span>`;
+                                    }
+                                },
+                                {
+                                    data: 'CompanyName',
+                                    render: function (companyName) {
+                                        _companyName = companyName;
+                                        return `<td title='initial'>${companyName}</td>`;
+                                    }
+                                },
+                                {
+                                    data: 'GradePoint',
+                                    render: function (gradePoint) {
+
+                                        if (_companyName.toLowerCase() == 'mw') {
+                                            return `<td title='initial'>${gradePoint}</td>`;
+                                        }
+                                        else {
+                                            return `<td title='initial'></td>`;
+                                        }
+
+                                    }
+                                },
+                                {
+                                    data: 'UnitPrice',
+                                    render: function (unitPrice) {
+                                        return `<span id='up_${_id}' data-unitprice=${unitPrice}> ${unitPrice}</span>`;
+                                    }
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='oct_${_id}'   onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='oct_${_id}'   onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='nov_${_id}' onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='nov_${_id}' onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='dec_${_id}' onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='dec_${_id}' onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='jan_${_id}' onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='jan_${_id}' onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='feb_${_id}' onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='feb_${_id}' onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='mar_${_id}' onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='mar_${_id}' onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='apr_${_id}' onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='apr_${_id}' onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='may_${_id}' onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='may_${_id}' onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='jun_${_id}' onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='jun_${_id}' onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='oct_output_${_id}' value='${_forecast[0].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='oct_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='nov_output_${_id}' value='${_forecast[1].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='nov_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='dec_output_${_id}' value='${_forecast[2].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='dec_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='jan_output_${_id}' value='${_forecast[3].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='jan_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='feb_output_${_id}' value='${_forecast[4].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='feb_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='mar_output_${_id}' value='${_forecast[5].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='mar_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='apr_output_${_id}' value='${_forecast[6].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='apr_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='may_output_${_id}' value='${_forecast[7].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='may_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='jun_output_${_id}' value='${_forecast[8].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='jun_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='jul_output_${_id}' value='${_forecast[9].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='jul_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='aug_output_${_id}' value='${_forecast[10].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='aug_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                                {
+                                    data: 'forecasts',
+                                    render: function (_forecast) {
+
+                                        if (_forecast.length > 0) {
+                                            return `<td><input type='text' id='sep_output_${_id}' value='${_forecast[11].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        } else {
+                                            return `<td><input type='text' id='sep_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                        }
+
+                                    },
+                                },
+                            ],
+                        });
+
+                    },
+                    error: function () {
+                        $('#add_name_table_1 tbody').empty();
+                    }
+                });
+            }
+        }
+
         function onSave() {
             $("#loading").css("display", "inline-block");
             var saveFlag = false;
@@ -216,7 +725,7 @@
             $.each(rows, function (index, data) {
                 console.log(data);
                 //var rowId = data.dataset.rowid;
-                var rowId = $(this).closest('tr').find('td').eq(1).children('input').val();
+                var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
                 var year = $('#period_search').find(":selected").val();
                 var assignmentId = $('#row_id_' + rowId).val();
 
@@ -291,7 +800,7 @@
 
             if (saveFlag) {
                 $("#loading").css("display", "none");
-                $('#save_forecast').css('display', 'none');
+                //$('#save_forecast').css('display', 'none');
 
                 Command: toastr["success"]('Data Saved Successfully', "Success")
 
@@ -314,7 +823,7 @@
                 }
             }
 
-            $('#forecast_table > tbody').empty();
+            //$('#forecast_table > tbody').empty();
             //$('#forecast_table').DataTable().destroy();
             //$('#forecast_table').empty();
            
@@ -324,57 +833,7 @@
 
 
 
-        function checkPoint(element) {
-
-            var pointValue = $(element).val();
-            if (isNaN(pointValue) || pointValue == undefined || pointValue == '') {
-                $(element).val(0);
-            }
-            else {
-                if (pointValue > 1 || pointValue < 0) {
-                    $(element).val(0);
-                }
-            }
-
-
-            var totalMonthPoint = 0;
-            var sameNameTr = [];
-            var tr = element.closest('tr');
-            //var trId = $(tr).data('rowid');
-            var trName = $(tr).find('td').eq(1).children('span').data('name');
-            console.log(trName);
-            var allTr = $('#forecast_table > tbody > tr');
-            //var monthNumber = $(element).data('month');
-            var columnIndex = $(element).parent().index();
-
-            console.log('index: ' + columnIndex);
-
-
-
-
-            $.each(allTr, function (index, value) {
-                var tempTrName = $(value).find('td').eq(1).children('span').data('name');
-                if (tempTrName == trName) {
-                    var monthPoint = $(value).find('td').eq(columnIndex).children('input').val();
-                    if (monthPoint == '' || monthPoint == NaN) {
-                        totalMonthPoint += 0;
-                    }
-                    else {
-                        totalMonthPoint += parseFloat(monthPoint);
-                    }
-                    //console.log(td);
-                    sameNameTr.push(value);
-                }
-            });
-            if (totalMonthPoint > 1) {
-                alert('total month point can not be grater than 1');
-                $(element).val(0);
-            }
-
-
-            //console.log($(tr).find('td').eq(1).data('name'));
-
-        }
+        
         var expanded = false;
         $(document).on("click", function (event) {
             var $trigger = $(".forecast_multiselect");
@@ -1027,7 +1486,7 @@
             $('#forecast_table').on('change', '.input_month', function () {
 
                 //var rowId = parseInt($(this).closest('tr').data('rowid'));
-                var rowId = $(this).closest('tr').find('td').eq(1).children('input').val();
+                var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
                 console.log('row_d:' + rowId);
                 //console.log($(this).closest('tr').find('td').eq(1).children('input').val());
                 var month = parseInt($(this).data('month'));
@@ -1040,51 +1499,51 @@
                 switch (month) {
                     case 1:
                         result = unitPrice * pointValue;
-                        $('#jan_output_' + rowId).val(result.toFixed(2));
+                        $('#jan_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 2:
                         result = unitPrice * pointValue;
-                        $('#feb_output_' + rowId).val(result.toFixed(2));
+                        $('#feb_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 3:
                         result = unitPrice * pointValue;
-                        $('#mar_output_' + rowId).val(result.toFixed(2));
+                        $('#mar_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 4:
                         result = unitPrice * pointValue;
-                        $('#apr_output_' + rowId).val(result.toFixed(2));
+                        $('#apr_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 5:
                         result = unitPrice * pointValue;
-                        $('#may_output_' + rowId).val(result.toFixed(2));
+                        $('#may_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 6:
                         result = unitPrice * pointValue;
-                        $('#jun_output_' + rowId).val(result.toFixed(2));
+                        $('#jun_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 7:
                         result = unitPrice * pointValue;
-                        $('#jul_output_' + rowId).val(result.toFixed(2));
+                        $('#jul_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 8:
                         result = unitPrice * pointValue;
-                        $('#aug_output_' + rowId).val(result.toFixed(2));
+                        $('#aug_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 9:
                         result = unitPrice * pointValue;
-                        $('#sep_output_' + rowId).val(result.toFixed(2));
+                        $('#sep_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 10:
                         result = unitPrice * pointValue;
-                        $('#oct_output_' + rowId).val(result.toFixed(2));
+                        $('#oct_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 11:
                         result = unitPrice * pointValue;
-                        $('#nov_output_' + rowId).val(result.toFixed(2));
+                        $('#nov_output_' + rowId).val(result.toLocaleString());
                         break;
                     case 12:
                         result = unitPrice * pointValue;
-                        $('#dec_output_' + rowId).val(result.toFixed(2));
+                        $('#dec_output_' + rowId).val(result.toLocaleString());
                         break;
 
                 }
@@ -1111,6 +1570,7 @@
                     return false;
                 }
 
+                $('#cancel_forecast').css('display', 'inline-block');
                 $('#save_forecast').css('display','inline-block');
 
                 //if (departmentId == undefined) {
@@ -1218,6 +1678,7 @@
                     status: '', year: ''
                 };
 
+                globalSearchObject = data_info;
 
                 $.ajax({
                     //url: `/api/utilities/SearchForecastEmployee`,
@@ -1236,7 +1697,6 @@
                         $('#forecast_table>thead').append(`
                                         
                                         <tr>
-                                            <th data-orderable="false"></th>
                                             <th id="forecast_name">Name </th>
                                             <th id="forecast_section">Section </th>
                                             <th id="forecast_department">Department </th>
@@ -1277,8 +1737,8 @@
                         var _companyName = '';
                         var _oct = 0;
                         var _octTotal = 0;
-                        
 
+                        console.log(data);
                         $('#forecast_table').DataTable({
                             destroy: true,
                             data: data,
@@ -1287,20 +1747,26 @@
                             autoWidth: false,
                             pageLength: 100,
                             columns: [
-                                {
-                                    data: 'Id',
-                                    render: function (id) {
-                                        _id = id;
-                                        return null;
-                                    },
-                                    //ordering: false
+                                //{
+                                //    data: 'Id',
+                                //    render: function (id) {
+                                //        _id = id;
+                                //        return null;
+                                //    },
+                                //    //ordering: false
 
-                                },
+                                //},
                                 {
                                     data: 'EmployeeNameWithCodeRemarks',
                                     render: function (employeeNameWithCodeRemarks) {
                                         var splittedString = employeeNameWithCodeRemarks.split('$');
-                                        return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                        _id = parseInt(splittedString[3]); // id
+                                        if (splittedString[2]=='true') {
+                                            return `<span title='initial' data-name='${splittedString[0]}' style='color:red;'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                        } else {
+                                            return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                        }
+                                        
                                     }
                                 },
                                 {
@@ -1364,9 +1830,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='oct_${_id}' onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='oct_${_id}' onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='oct_${_id}' onChange="checkPoint(this)"  data-month='10' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='oct_${_id}' onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1376,9 +1842,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='nov_${_id}' onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='nov_${_id}' onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='nov_${_id}' onChange="checkPoint(this)" data-month='11' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='nov_${_id}' onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1388,9 +1854,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='dec_${_id}' onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='dec_${_id}' onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='dec_${_id}' onChange="checkPoint(this)" data-month='12' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='dec_${_id}' onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1400,9 +1866,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jan_${_id}' onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jan_${_id}' onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jan_${_id}' onChange="checkPoint(this)" data-month='1' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jan_${_id}' onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1412,9 +1878,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='feb_${_id}' onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='feb_${_id}' onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='feb_${_id}' onChange="checkPoint(this)" data-month='2' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='feb_${_id}' onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1424,9 +1890,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='mar_${_id}' onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='mar_${_id}' onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='mar_${_id}' onChange="checkPoint(this)" data-month='3' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='mar_${_id}' onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1436,9 +1902,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='apr_${_id}' onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='apr_${_id}' onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='apr_${_id}' onChange="checkPoint(this)" data-month='4' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='apr_${_id}' onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1448,9 +1914,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='may_${_id}' onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='may_${_id}' onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='may_${_id}' onChange="checkPoint(this)" data-month='5' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='may_${_id}' onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1460,9 +1926,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jun_${_id}' onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jun_${_id}' onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jun_${_id}' onChange="checkPoint(this)" data-month='6' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jun_${_id}' onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1472,9 +1938,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jul_${_id}' onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1484,9 +1950,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='aug_${_id}' onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1496,9 +1962,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='sep_${_id}' onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -1508,9 +1974,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='oct_output_${_id}' value='${_forecast[0].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='oct_output_${_id}' value='${_forecast[0].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='oct_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='oct_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1520,9 +1986,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='nov_output_${_id}' value='${_forecast[1].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='nov_output_${_id}' value='${_forecast[1].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='nov_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='nov_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1532,9 +1998,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='dec_output_${_id}' value='${_forecast[2].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='dec_output_${_id}' value='${_forecast[2].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='dec_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='dec_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1544,9 +2010,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jan_output_${_id}' value='${_forecast[3].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='jan_output_${_id}' value='${_forecast[3].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jan_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='jan_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1556,9 +2022,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='feb_output_${_id}' value='${_forecast[4].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='feb_output_${_id}' value='${_forecast[4].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='feb_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='feb_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1568,9 +2034,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='mar_output_${_id}' value='${_forecast[5].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='mar_output_${_id}' value='${_forecast[5].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='mar_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='mar_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1580,9 +2046,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='apr_output_${_id}' value='${_forecast[6].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='apr_output_${_id}' value='${_forecast[6].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='apr_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='apr_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1592,9 +2058,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='may_output_${_id}' value='${_forecast[7].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='may_output_${_id}' value='${_forecast[7].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='may_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='may_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1604,9 +2070,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jun_output_${_id}' value='${_forecast[8].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='jun_output_${_id}' value='${_forecast[8].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jun_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='jun_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1616,9 +2082,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_output_${_id}' value='${_forecast[9].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='jul_output_${_id}' value='${_forecast[9].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jul_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='jul_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1628,9 +2094,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_output_${_id}' value='${_forecast[10].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='aug_output_${_id}' value='${_forecast[10].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='aug_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='aug_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },
@@ -1640,9 +2106,9 @@
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_output_${_id}' value='${_forecast[11].Total}' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='sep_output_${_id}' value='${_forecast[11].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='sep_output_${_id}' value='0' style='background-color:#E6E6E3' readonly/></td>`;
+                                            return `<td><input type='text' id='sep_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
                                         }
 
                                     },

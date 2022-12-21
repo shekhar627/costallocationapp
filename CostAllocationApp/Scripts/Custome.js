@@ -819,13 +819,13 @@ function NameList_DatatableLoad(data) {
                 data: 'EmployeeNameWithCodeRemarks',
                 render: function (employeeNameWithCodeRemarks) {
                     var splittedString = employeeNameWithCodeRemarks.split('$');
-                    //if (redMark) {
-                    //    return `<span class="mark_ask_red" onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
-                    //}
-                    //else {
-                    //    return `<span onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
-                    //}
-                    return `<span onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                    if (splittedString[2] == 'true') {
+                        return `<span style='color:red;' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                    }
+                    else {
+                        return `<span onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                    }
+                    
                 }
             },
             {

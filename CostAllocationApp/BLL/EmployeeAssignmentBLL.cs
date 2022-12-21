@@ -99,6 +99,11 @@ namespace CostAllocationApp.BLL
                 this.MarkedAsRed(employees);
 
             }
+
+            foreach (var item in employees)
+            {
+                item.EmployeeNameWithCodeRemarks += "$" + item.MarkedAsRed.ToString().ToLower();
+            }
             return employees;
         }
 
@@ -139,6 +144,10 @@ namespace CostAllocationApp.BLL
                     }
                 }
 
+            }
+            foreach (var item in employees)
+            {
+                item.EmployeeNameWithCodeRemarks += "$" + item.MarkedAsRed.ToString().ToLower() + "$" + item.Id; ;
             }
             return employees;
         }
@@ -200,6 +209,11 @@ namespace CostAllocationApp.BLL
                     }
                 }
                 this.MarkedAsRed(employees);
+            }
+
+            foreach (var item in employees)
+            {
+                item.EmployeeNameWithCodeRemarks += "$" + item.MarkedAsRed.ToString().ToLower();
             }
             return employees;
         }
@@ -339,11 +353,11 @@ namespace CostAllocationApp.BLL
                             //singleEmployee.SubCode = -1;
                             if (!String.IsNullOrEmpty(singleEmployee.Remarks))
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "_" + singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
                             }
                             else
                             {
-                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "_" + singleEmployee.EmployeeName;
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName;
                             }
 
                         }

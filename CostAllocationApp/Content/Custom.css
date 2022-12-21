@@ -383,7 +383,7 @@ body {
 #forecast_table input[type='text']{
     height: 25px;
     border: 1px solid gray;
-    width: 70px;
+    width: 50px;
     text-align:center;
 }
 
@@ -624,7 +624,7 @@ body {
     margin-bottom: 50px;
 }
 
-#add_name_add, #add_name_add_new, #save_forecast {
+#add_name_add, #add_name_add_new, #save_forecast, #cancel_forecast {
     background-color: #3c4b5d;
     color: white;
     padding: 5px;

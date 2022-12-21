@@ -1226,6 +1226,9 @@
                                 },
                                 {
                                     data: 'UnitPrice',
+                                    render: function (unitPrice) {
+                                        return `<span style='text-align:right;display:block;padding-right:2px;'>${unitPrice}</span>`;
+                                    },
                                     orderable: true,
                                 },
                                 {
