@@ -295,8 +295,8 @@ namespace CostAllocationApp.DAL
                             join InCharges inc on ea.InChargeId = inc.Id 
                             join Grades gd on ea.GradeId = gd.Id
                             where {where}
-                            order by ea.EmployeeName asc";
-            //ORDER BY ea.EmployeeName asc, ea.Id";
+                            order by ea.EmployeeName asc, ea.Id";
+                            //ORDER BY ea.EmployeeName asc, ea.Id";
 
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
@@ -337,6 +337,7 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             //employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
                             employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
+                            employeeAssignmentViewModel.AddNameSubCode = rdr["SubCode"].ToString();
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"] is DBNull ? "" :  rdr["Remarks"].ToString();
                             //if (!string.IsNullOrEmpty(rdr["SubCode"].ToString()))
                             //{

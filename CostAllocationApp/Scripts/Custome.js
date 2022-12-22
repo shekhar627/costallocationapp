@@ -977,3 +977,8 @@ function ForecastSearchDropdownInLoad() {
         });
 }
 
+function checkPoint_click(e) {   
+    if (e.value <=0) {
+        $("#" + e.id).val('');
+    } 
+}

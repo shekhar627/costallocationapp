@@ -28,6 +28,7 @@ namespace CostAllocationApp.ViewModels
         public bool IsActive { get; set; }
         public string Remarks { get; set; }
         public int SubCode { get; set; }
+        public string AddNameSubCode { get; set; }
         public bool MarkedAsRed { get; set; }
         public string EmployeeNameWithCodeRemarks { get; set; }
         public int UnitPriceWithoutComma { get; set; }

@@ -96,8 +96,8 @@ namespace CostAllocationApp.BLL
                     employees = employees.Where(emp => emp.ExplanationId == employeeAssignment.ExplanationId && emp.ExplanationId != "0").ToList();
                 }
 
-                this.MarkedAsRed(employees);
-
+                //this.MarkedAsRed(employees);
+                this.MarkedAsRedForAddName(employees);
             }
 
             foreach (var item in employees)
@@ -373,5 +373,84 @@ namespace CostAllocationApp.BLL
         {
             return employeeAssignmentDAL.CheckEmployeeName(employeeName);
         }
+
+        public List<EmployeeAssignmentViewModel> MarkedAsRedForAddName(List<EmployeeAssignmentViewModel> employees)
+        {
+            List<EmployeeAssignmentViewModel> viewModels = new List<EmployeeAssignmentViewModel>();
+            List<string> names = new List<string>();
+
+            names = (from x in employees
+                     select x.EmployeeName).ToList();
+            names = names.Select(n => n).Distinct().ToList();
+
+            foreach (var name in names)
+            {
+                viewModels = employees.Where(emp => emp.EmployeeName == name).ToList();
+                if (viewModels.Count > 1)
+                {
+                    foreach (var item in viewModels)
+                    {
+                        var singleEmployee = employees.Where(emp => emp.Id == item.Id).FirstOrDefault();
+                        if (singleEmployee != null)
+                        {
+                            //singleEmployee.SubCode = -1;
+                            if (!String.IsNullOrEmpty(singleEmployee.Remarks))
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName + " " + singleEmployee.SubCode + " (" + singleEmployee.Remarks + ")";
+                            }
+                            else
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName + " " + singleEmployee.SubCode;
+                            }
+
+                        }
+                    }
+
+
+
+                    EmployeeAssignmentViewModel employeeAssignmentViewModelFirst = viewModels.Where(vm => vm.SubCode == 1).FirstOrDefault();
+                    if (employeeAssignmentViewModelFirst == null)
+                    {
+                        continue;
+                    }
+                    viewModels.Remove(employeeAssignmentViewModelFirst);
+                    foreach (var filteredAssignment in viewModels)
+                    {
+                        if (!string.IsNullOrEmpty(employeeAssignmentViewModelFirst.UnitPrice))
+                        {
+                            if (filteredAssignment.UnitPrice != employeeAssignmentViewModelFirst.UnitPrice)
+                            {
+                                employees.Where(emp => emp.Id == filteredAssignment.Id).FirstOrDefault().MarkedAsRed = true;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in viewModels)
+                    {
+                        var singleEmployee = employees.Where(emp => emp.Id == item.Id).FirstOrDefault();
+                        if (singleEmployee != null)
+                        {
+                            //singleEmployee.SubCode = -1;
+                            if (!String.IsNullOrEmpty(singleEmployee.Remarks))
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName + " (" + singleEmployee.Remarks + ")";
+                            }
+                            else
+                            {
+                                singleEmployee.EmployeeNameWithCodeRemarks = singleEmployee.EmployeeName + "$" + singleEmployee.EmployeeName;
+                            }
+
+                            singleEmployee.AddNameSubCode = "";
+                        }
+                    }
+                }
+            }
+
+
+            return employees;
+        }
+
     }
 }
