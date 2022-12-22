@@ -1126,22 +1126,22 @@ body {
 
 /*---------------------------------------Name list: Dropdown width--------------------------*/
 .selectBox.section select {
-    width: 102px;
+    width: 80px;
     font-weight: normal;
     height: 22px;
 }
 .selectBox.department select {
-    width: 130px;
+    width: 110px;
     font-weight: normal;
     height: 22px;
 }
 .selectBox.incharge select {
-    width: 100px;
+    width: 75px;
     font-weight: normal;
     height: 22px;
 }
 .selectBox.role select {
-    width: 75px;
+    width: 48px;
     font-weight: normal;
     height: 22px;
 }
