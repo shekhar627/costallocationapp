@@ -57,7 +57,9 @@ namespace CostAllocationApp.DAL
                             salary.Id = Convert.ToInt32(rdr["Id"]);
                             salary.SalaryGrade = rdr["GradePoints"].ToString();
                             salary.SalaryLowPoint = Convert.ToDecimal(rdr["GradeLowPoints"]);
+                            salary.SalaryLowPointWithComma = Convert.ToInt32(rdr["GradeLowPoints"]).ToString("N0");
                             salary.SalaryHighPoint = Convert.ToDecimal(rdr["GradeHighPoints"]);
+                            salary.SalaryHighPointWithComma = Convert.ToInt32(rdr["GradeHighPoints"]).ToString("N0");
                             salary.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             salary.CreatedBy = rdr["CreatedBy"].ToString();
 

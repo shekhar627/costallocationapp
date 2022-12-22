@@ -151,6 +151,25 @@
                         });
                     });
 
+                var tempSectionId = $('#section_new').find(":selected").val();
+
+                if (tempSectionId > 0) {
+                    $.getJSON(`/api/utilities/DepartmentsBySection/${tempSectionId}`)
+                        .done(function (data) {
+                            $('#department_new').empty();
+                            $('#department_new').append(`<option value=''>Select Department</option>`);
+                            var departmentId = $("#hid_departmentId").val();
+                            $.each(data, function (key, item) {
+                                if (departmentId == item.Id) {
+                                    $('#department_new').append(`<option selected value='${item.Id}'>${item.DepartmentName}</option>`);
+                                } else {
+                                    $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                                }
+                            });
+                        });
+
+                }
+
                 //InCharge dropdown fill
                 $.getJSON('/api/incharges/')
                     .done(function (data) {

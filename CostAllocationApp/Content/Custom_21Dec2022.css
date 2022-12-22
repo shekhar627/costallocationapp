@@ -287,21 +287,14 @@ body {
 #section_table td, th {
     border: 1px solid;
     padding: 0px !important;
-    text-align:center;
 }
 
-#section_table td, th:nth-of-type(9) {
-    text-align:center;
-    width: 20px;
-}
-
-
-#section_table td:nth-of-type(2) {
-    border: 1px solid;
-    padding: 2px !important;
-    text-align: left;
-    text-indent: 1em;
-}
+    #section_table td:nth-of-type(2) {
+        border: 1px solid;
+        padding: 2px !important;
+        text-align: left;
+        text-indent: 1em;
+    }
 
 #department_table td:nth-of-type(2) {
     border: 1px solid;
@@ -389,7 +382,7 @@ body {
 #forecast_table input[type='text']{
     height: 25px;
     border: 1px solid gray;
-    width: 50px;
+    width: 70px;
     text-align:center;
 }
 
@@ -434,8 +427,7 @@ body {
 
 #forecast_search {
     border: none !important;
-    margin-bottom: -17px;
-    font-size: 14px;
+    margin-bottom: 20px;
 }
 
     #forecast_search tbody tr:nth-of-type(1) td input, select {
@@ -502,7 +494,7 @@ body {
 
 #add_name_table_1 {
     border: 1px solid black !important;
-    width: 138% !important;
+    width: 120% !important;
 }
 
 #add_name_table_1 > tbody> tr> td{
@@ -524,7 +516,7 @@ body {
         text-align: center;
     }
     #add_name_table_1 th, td:nth-of-type(12) {
-        /*text-align: right;*/
+        text-align: right;
         /* padding: 1rem; */
     }
     .link_add {
@@ -631,7 +623,7 @@ body {
     margin-bottom: 50px;
 }
 
-#add_name_add, #add_name_add_new, #save_forecast, #cancel_forecast {
+#add_name_add, #add_name_add_new, #save_forecast {
     background-color: #3c4b5d;
     color: white;
     padding: 5px;
@@ -679,14 +671,6 @@ body {
     display: none;
 }*/
 
-#namelist_tbl_header{
-    line-height: 0;
-    height: 17px;
-}
-#namelist_tbl_search{
-    line-height: 0;
-    height: 17px;
-}
 
 #name_list_search thead th {
     border: none !important;
@@ -1118,7 +1102,12 @@ body {
     line-height: 2px;
 }
 
-
+#add_name_search {
+    border-collapse: collapse;
+    font-size: 14px;
+    /*font-family: Yu Gothic;*/
+    border: none !important;
+}
 
 #add_name_action {
     width: 126px;
@@ -1126,34 +1115,28 @@ body {
 
 /*---------------------------------------Name list: Dropdown width--------------------------*/
 .selectBox.section select {
-    width: 80px;
+    width: 71px;
     font-weight: normal;
-    height: 22px;
 }
 .selectBox.department select {
-    width: 110px;
+    width: 87px;
     font-weight: normal;
-    height: 22px;
 }
 .selectBox.incharge select {
-    width: 75px;
+    width: 91px;
     font-weight: normal;
-    height: 22px;
 }
 .selectBox.role select {
     width: 48px;
     font-weight: normal;
-    height: 22px;
 }
 .selectBox.explanation select {
-    width: 255px;
+    width: 247px;
     font-weight: normal;
-    height: 22px;
 }
 .selectBox.company select {
-    width: 86px;
+    width: 76px;
     font-weight: normal;
-    height: 22px;
 }
 
 /*---------------------------------------Name list: dropdown close outside click--------------------------*/
@@ -1456,69 +1439,11 @@ table.dataTable > thead .sorting .sorting_desc, {
     width: 93px;
     font-weight: normal;
 }
-
-/*---------------------------------------add name: search filters--------------------------*/
-#add_name_search {
-    /* border-collapse: collapse; */
-    font-size: 14px;
-    /*font-family: Yu Gothic;*/
-    /* font-size: 10px;
-    font-family: Yu Gothic;
-    border: none !important; */
-    border: none !important;
-    margin-bottom: -18px;
+/*---------------------------------------create forecast: asc desc hide--------------------------*/
+/*.table.dataTable > thead .sorting_desc:after {
+   
+    display:none !important;
 }
-.add_name_name_filter{
-    width:160px;   
-}
-.add_name_section_filter{
-    width:110px;   
-}
-.add_name_department_filter{
-    width:110px;   
-}
-.add_name_incharge_filter{
-    width:110px;   
-}
-.add_name_role_filter{
-    width:90px;   
-}
-.add_name_explanation_filter{
-    width:250px;   
-}
-.add_name_company_filter{
-    width:110px;   
-}
-/*---------------------------------------name list: search filter: auto width--------------------------*/
-#name_search{
-    min-width: 100%;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.table.dataTable > thead .sorting_asc:before, table.dataTable > thead .sorting_desc:after {
+    display: none !important;
+}*/

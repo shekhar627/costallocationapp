@@ -708,7 +708,7 @@ function AddSalary() {
                     .done(function (data) {
                         $('#incharge_list_tbody').empty();
                         $.each(data, function (key, item) {
-                            $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPoint} ～ ${item.SalaryHighPoint}</td><td>${item.SalaryGrade}</td></tr>`);
+                            $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPointWithComma} ～ ${item.SalaryHighPointWithComma}</td><td>${item.SalaryGrade}</td></tr>`);
                         });
                     });
             },
@@ -797,61 +797,37 @@ function NameListSort_OnChange() {
 function NameList_DatatableLoad(data) {
     var tempCompanyName = "";
     var tempSubCode = "";
-    var tempRemarks = "";
+    var redMark = "";
 
     $('#name-list').DataTable({
         destroy: true,
         data: data,
         ordering: true,
-        //orderCellsTop: true,
         orderCellsTop: true,
-        //columnDefs: [{
-        //    visible: false,
-        //    targets: 1
-        //}],
-        //oTable.fnSort([[0, 'asc'], [1, 'asc']]),
         pageLength: 100,
         searching: false,
         bLengthChange: false,
         columns: [
             //{
-            //    data: 'SubCode',
-            //    //render: function (subCodeNo) {
-            //    //    tempSubCode = subCodeNo;
-            //    //    return '';
-            //    //}
-            //},
-            //{
-            //    data: 'Remarks',
-            //    render: function (remarks) {
-            //        tempRemarks = remarks;
+            //    data: 'MarkedAsRed',
+            //    render: function (markedAsRed) {
+            //        redMark = markedAsRed;
             //        return null;
             //    }
             //},
             {
                 data: 'EmployeeNameWithCodeRemarks',
-                render: function (employeeName) {
-                    //var nameWithCodeAndRemarks = "";
-                    //if (nameWithCodeAndRemarks == "") {
-                    //    nameWithCodeAndRemarks = employeeName;
-                    //}
-                    //if (tempSubCode > 0) {
-                    //    nameWithCodeAndRemarks = employeeName + " " + tempSubCode
-                    //}
-                    //if (tempRemarks != "") {
-                    //    nameWithCodeAndRemarks = nameWithCodeAndRemarks + " (" + tempRemarks + ")";
-                    //}
-                    //nameWithCodeAndRemarks = nameWithCodeAndRemarks;
-                    return employeeName;
+                render: function (employeeNameWithCodeRemarks) {
+                    var splittedString = employeeNameWithCodeRemarks.split('$');
+                    if (splittedString[2] == 'true') {
+                        return `<span style='color:red;' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                    }
+                    else {
+                        return `<span onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                    }
+                    
                 }
             },
-            //{
-            //    data: 'SectionName',
-            //    render: function (sectionName) {                    
-            //        return '';
-            //    }
-
-            //},
             {
                 data: 'SectionName'
             },
@@ -880,7 +856,7 @@ function NameList_DatatableLoad(data) {
                     if (tempCompanyName.toLowerCase() == "mw") {
                         return grade;
                     } else {
-                        return '';
+                        return "<span style='display:none;'>" + grade+"</span>";
                     }
                 }
             },
@@ -1001,3 +977,8 @@ function ForecastSearchDropdownInLoad() {
         });
 }
 
+function checkPoint_click(e) {   
+    if (e.value <=0) {
+        $("#" + e.id).val('');
+    } 
+}

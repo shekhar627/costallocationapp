@@ -105,7 +105,7 @@
                 .done(function (data) {
                     $('#incharge_list_tbody').empty();
                     $.each(data, function (key, item) {
-                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPoint} ～ ${item.SalaryHighPoint}</td><td>${item.SalaryGrade}</td></tr>`);
+                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPointWithComma} ～ ${item.SalaryHighPointWithComma}</td><td>${item.SalaryGrade}</td></tr>`);
                     });
                 });
 

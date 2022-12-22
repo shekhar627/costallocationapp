@@ -21,25 +21,25 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="identity_search" placeholder="name">
+                            <input type="text" class="add_name_name_filter" id="identity_search" placeholder="name">
                         </td>
                         <td>
-                            <select id="section_search" class="form-control"></select>
+                            <select id="section_search" class="add_name_section_filter"></select>
                         </td>
                         <td>
-                            <select id="department_search" class="form-control"></select>
+                            <select id="department_search" class="add_name_department_filter"></select>
                         </td>
                         <td>
-                            <select id="incharge_search" class="form-control"></select>
+                            <select id="incharge_search" class="add_name_incharge_filter"></select>
                         </td>
                         <td>
-                            <select id="role_search" class="form-control"></select>
+                            <select id="role_search" class="add_name_role_filter"></select>
                         </td>
                         <td>
-                            <select id="explanation_search" class="form-control"></select>
+                            <select id="explanation_search" class="add_name_explanation_filter"></select>
                         </td>
                         <td>
-                            <select id="company_search" class="form-control"></select>
+                            <select id="company_search" class="add_name_company_filter"></select>
                         </td>
                     </tr>
                     <tr>
@@ -61,7 +61,7 @@
                     <tr>
                         <th> </th>
                         <th id="add_name_name">Name <i class="fa fa-sort-amount-asc" id="name_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="name_desc" aria-hidden="true"></i></th>
-                        <th id="add_name_subcode">SubCode <i class="fa fa-sort-amount-asc" id="subcode_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="subcode_desc" aria-hidden="true"></i></th>
+                        <th id="add_name_subcode" style="width:59px;">SubCode <i class="fa fa-sort-amount-asc" id="subcode_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="subcode_desc" aria-hidden="true"></i></th>
                         <th id="add_name_memo">Memo <i class="fa fa-sort-amount-asc" id="memo_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="memo_desc" aria-hidden="true"></i></th>
                         <th id="add_name_section">Section <i class="fa fa-sort-amount-asc" id="section_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="section_desc" aria-hidden="true"></i></th>
                         <th id="add_name_department">Department <i class="fa fa-sort-amount-asc" id="department_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="department_desc" aria-hidden="true"></i></th>
@@ -69,7 +69,7 @@
                         <th id="add_name_role">Role <i class="fa fa-sort-amount-asc" id="role_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="role_desc" aria-hidden="true"></i></th>
                         <th id="add_name_explanation">Explanation <i class="fa fa-sort-amount-asc" id="explanation_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="explanation_desc" aria-hidden="true"></i></th>
                         <th id="add_name_company">Company Name <i class="fa fa-sort-amount-asc" id="company_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="company_desc" aria-hidden="true"></i></th>
-                        <th id="">Grade </th>
+                        <th id="add_name_grade">Grade <i class="fa fa-sort-amount-asc" id="grade_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="grade_desc" aria-hidden="true"></i></th>
                         <th id="add_name_unit">Unit Price <i class="fa fa-sort-amount-asc" id="unit_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="unit_desc" aria-hidden="true"></i></th>
 
                         <th id="add_name_action">Action</th>
@@ -470,7 +470,7 @@
                         }
                         tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
                         if (count == 1) {
-                            $("#unit_price_first_project_hid").val(item.UnitPriceWithoutComma);
+                            $("#unit_price_first_project_hid").val(item.UnitPrice);
                             tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
                         }
 
@@ -1175,13 +1175,23 @@
                                     orderable: true,
                                 },
                                 {
-                                    data: 'SubCode',
+                                    //data: 'SubCode',
+                                    //render: function (subCode) {
+                                    //    if (redMark) {
+                                    //        return `<span style='color:red;'>${parseInt(subCode)}</span></td>`;
+                                    //    }
+                                    //    else {
+                                    //        return `<span >${parseInt(subCode)}</span>`;
+                                    //    }
+                                    //},
+                                    //searching: false,
+                                    data: 'AddNameSubCode',
                                     render: function (subCode) {
                                         if (redMark) {
-                                            return `<span style='color:red'>${parseInt(subCode)}</span>`;
+                                            return `<span style='color:red;'>${subCode}</span></td>`;
                                         }
                                         else {
-                                            return `<span>${parseInt(subCode)}</span>`;
+                                            return `<span >${subCode}</span>`;
                                         }
                                     },
                                     searching: false,
@@ -1219,13 +1229,16 @@
                                             return gradePoint;
                                         }
                                         else {
-                                            return '';
+                                            return "<span style='display:none;'>" + gradePoint + "</span>";
                                         }
                                     },
-                                    orderable: false,
+                                    orderable: true,
                                 },
                                 {
                                     data: 'UnitPrice',
+                                    render: function (unitPrice) {
+                                        return `<span style='text-align:right;display:block;padding-right:2px;'>${unitPrice}</span>`;
+                                    },
                                     orderable: true,
                                 },
                                 {
