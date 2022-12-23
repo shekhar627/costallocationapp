@@ -147,14 +147,22 @@
                 $('#del_incharge_modal').modal('toggle');
 
             });
+
             $('#delete_button').on('click', function (event) {
 
                 let id = GetCheckedIds("incharge_list_tbody");
+
                 if (id == "") {
                     alert("Please check first to delete.");
                     return false;
+                } else {
+
                 }
             });
+
+            //$('.in_charge_list_chk').on('click', function (event) {
+            //    alert("test");
+            //});
         });
     </script>
 

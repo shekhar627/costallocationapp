@@ -1494,7 +1494,10 @@ table.dataTable > thead .sorting .sorting_desc, {
     min-width: 100%;
 }
 
-
+.namelist_addname {
+    text-decoration: underline;
+    cursor: pointer;
+}
 
 
 

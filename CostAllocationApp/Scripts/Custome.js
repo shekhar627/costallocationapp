@@ -820,10 +820,10 @@ function NameList_DatatableLoad(data) {
                 render: function (employeeNameWithCodeRemarks) {
                     var splittedString = employeeNameWithCodeRemarks.split('$');
                     if (splittedString[2] == 'true') {
-                        return `<span style='color:red;' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                        return `<span style='color:red;' class='namelist_addname' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
                     }
                     else {
-                        return `<span onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
+                        return `<span class='namelist_addname' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
                     }
                     
                 }
