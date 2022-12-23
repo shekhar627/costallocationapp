@@ -1,22 +1,15 @@
 ﻿/*-----------------
 	1. General
 -----------------------*/
-
 body {
     overflow-x: auto;
 }
 
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
     background-color: #3c4b5d !important;
     border-color: #3c4b5d !important;
-    color: white !important;
+    color:white !important;
 }
-
 .page-link {
     color: black !important;
 }
@@ -25,9 +18,7 @@ body {
 /*-----------------
 	2. Name List
 -----------------------*/
-
-#name-list td,
-th {
+#name-list td, th {
     border: 1px solid;
 }
 
@@ -42,7 +33,7 @@ th {
     font-family: Yu Gothic !important;
 }
 
-#name-list>tbody>tr>td {
+#name-list > tbody > tr > td {
     width: 1px !important;
     white-space: nowrap !important;
 }
@@ -82,13 +73,11 @@ th {
     color: white;
 }
 
-
 /*-----------------
 	3. Name Registration
 -----------------------*/
 
-#name_registration td,
-th {
+#name_registration td, th {
     border: 1px solid;
     padding: 2px;
 }
@@ -107,14 +96,11 @@ th {
     text-align: center;
 }
 
-
 /*#name_registration input[type='text'], select {
     height: 25px;
     border: none;
     width: 150px !important;
 }*/
-
-
 /*#name_registration input[type='text'], select {
     height: 25px;
     border: none;
@@ -187,6 +173,7 @@ th {
     width: 65px !important;
 }
 
+
 .name_registration_th a {
     background: #4472C4;
     color: white;
@@ -227,14 +214,10 @@ th {
 #name_registration tbody td i {
     padding: 10px;
 }
-
-
 /*-----------------
 	4. In-Charge Registration
 -----------------------*/
-
-#incharge_table td,
-th {
+#incharge_table td, th {
     border: 1px solid;
     padding: 0px !important;
 }
@@ -246,11 +229,12 @@ th {
     border: 1px solid;
 }
 
-#incharge_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #incharge_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
+
 
 .cutom_button_group_incharge {
     float: right;
@@ -267,13 +251,11 @@ th {
     text-indent: 1em;
 }
 
-
 /*-----------------
 	5. Department Registration
 -----------------------*/
 
-#department_table td,
-th {
+#department_table td, th {
     border: 1px solid;
     padding: 0px !important;
 }
@@ -285,11 +267,11 @@ th {
     border: 1px solid;
 }
 
-#department_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #department_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
 .cutom_button_group_department {
     float: right;
@@ -299,24 +281,20 @@ th {
 #department_table tbody tr td:last-child {
     width: 200px;
 }
-
-
 /*-----------------
 	6. Section Registration
 -----------------------*/
-
-#section_table td,
-th {
+#section_table td, th {
     border: 1px solid;
     padding: 0px !important;
-    text-align: center;
+    text-align:center;
 }
 
-#section_table td,
-th:nth-of-type(9) {
-    text-align: center;
+#section_table td, th:nth-of-type(9) {
+    text-align:center;
     width: 20px;
 }
+
 
 #section_table td:nth-of-type(2) {
     border: 1px solid;
@@ -346,23 +324,23 @@ th:nth-of-type(9) {
     border: 1px solid;
 }
 
-#section_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #section_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
-#section_table thead th:nth-of-type(2) {
-    width: 200px
-}
+    #section_table thead th:nth-of-type(2) {
+        width: 200px
+    }
 
-#section_table thead th:nth-of-type(3) {
-    width: 100px
-}
+    #section_table thead th:nth-of-type(3) {
+        width: 100px
+    }
 
-#section_table thead th:nth-of-type(1) {
-    width: 45px;
-}
+    #section_table thead th:nth-of-type(1) {
+        width: 45px;
+    }
 
 #section_delete_btn {
     padding-left: 386px;
@@ -381,23 +359,21 @@ th:nth-of-type(9) {
     margin-left: 69%;
 }
 
-
 /*-----------------
 	7. Forecast Create
 -----------------------*/
+
+
 
 #forecast_table {
     /*width: 250% !important;*/
     border-collapse: collapse;
     border: 1px solid;
-    font-size: 12px;
+    font-size:12px;
 }
-
-
 /*#forecast_table > thead > tr > th{
     width: 0px !important;
 }*/
-
 .forecast_th {
     text-align: center;
 }
@@ -410,12 +386,13 @@ th:nth-of-type(9) {
     background-color: #80ced6;
 }
 
-#forecast_table input[type='text'] {
+#forecast_table input[type='text']{
     height: 25px;
     border: 1px solid gray;
     width: 50px;
-    text-align: center;
+    text-align:center;
 }
+
 
 .forecast_table a {
     background: #4472C4;
@@ -438,16 +415,14 @@ th:nth-of-type(9) {
     display: none;
 }
 
-#forecast_table>tbody>tr>td {
+#forecast_table > tbody> tr> td{
     width: 1px !important;
     white-space: nowrap !important;
 }
 
-
 /*-----------------
 	7. Forecast Search
 -----------------------*/
-
 #forecast_search thead th {
     border: none !important;
     text-align: center;
@@ -463,10 +438,9 @@ th:nth-of-type(9) {
     font-size: 14px;
 }
 
-#forecast_search tbody tr:nth-of-type(1) td input,
-select {
-    border: 1px solid black !important;
-}
+    #forecast_search tbody tr:nth-of-type(1) td input, select {
+        border: 1px solid black !important;
+    }
 
 
 /*#forecast_search {
@@ -483,7 +457,6 @@ select {
     float: right;
     margin-bottom: 20px;
 }
-
 
 /*-----------------
 	8. Add Name
@@ -503,10 +476,11 @@ select {
     border: 1px solid black !important;
 }
 
-#add_name_search tbody tr:nth-of-type(1) td input,
-select {
-    border: 1px solid black !important;
-}
+    #add_name_search tbody tr:nth-of-type(1) td input, select {
+        border: 1px solid black !important;
+    }
+
+
 
 #add_name_search_button {
     background-color: #3c4b5d;
@@ -519,8 +493,10 @@ select {
     margin-bottom: 20px;
 }
 
-#add_name_table_1 th,
-td {
+
+
+
+#add_name_table_1 th, td {
     border: 1px solid black !important;
 }
 
@@ -529,76 +505,69 @@ td {
     width: 138% !important;
 }
 
-#add_name_table_1>tbody>tr>td {
+#add_name_table_1 > tbody> tr> td{
     width: 1px !important;
     white-space: nowrap !important;
 }
 
-#add_name_table_1 thead tr:nth-of-type(1) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_1 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_1 thead tr:nth-of-type(2) select,
-input {
-    /*height:40px !important;*/
-}
+    #add_name_table_1 thead tr:nth-of-type(2) select, input {
+        /*height:40px !important;*/
+    }
 
-#add_name_table_1 th,
-td:nth-of-type(3) {
-    text-align: center;
-}
+    #add_name_table_1 th, td:nth-of-type(3) {
+        text-align: center;
+    }
+    #add_name_table_1 th, td:nth-of-type(12) {
+        /*text-align: right;*/
+        /* padding: 1rem; */
+    }
+    .link_add {
+        display: inline-block;
+        background-color: #3c4b5d;
+        padding: 5px;
+        border-radius: 3px;
+        color: white;
+        font-size: 14px;
+        margin-right: 20px;
+        margin: 5px;
+    }
+    .link_add:hover{
+        color:white;
+    }
+    .link_edit {
+        display: inline-block;
+        background-color: #3c4b5d;
+        padding: 5px;
+        border-radius: 3px;
+        color: white;
+        font-size: 14px;
+        margin-right: 20px;
+        margin: 5px;
+    }
+    .link_edit:hover{
+        color:white;
+    }
 
-#add_name_table_1 th,
-td:nth-of-type(12) {
-    /*text-align: right;*/
-    /* padding: 1rem; */
-}
+        .add_name_btn_group a {
+            display: inline-block;
+            background-color: #3c4b5d;
+            padding: 5px;
+            border-radius: 3px;
+            color: white;
+            font-size: 14px;
+            margin-right: 20px;
+            margin: 5px;
+        }
 
-.link_add {
-    display: inline-block;
-    background-color: #3c4b5d;
-    padding: 5px;
-    border-radius: 3px;
-    color: white;
-    font-size: 14px;
-    margin-right: 20px;
-    margin: 5px;
-}
 
-.link_add:hover {
-    color: white;
-}
 
-.link_edit {
-    display: inline-block;
-    background-color: #3c4b5d;
-    padding: 5px;
-    border-radius: 3px;
-    color: white;
-    font-size: 14px;
-    margin-right: 20px;
-    margin: 5px;
-}
-
-.link_edit:hover {
-    color: white;
-}
-
-.add_name_btn_group a {
-    display: inline-block;
-    background-color: #3c4b5d;
-    padding: 5px;
-    border-radius: 3px;
-    color: white;
-    font-size: 14px;
-    margin-right: 20px;
-    margin: 5px;
-}
-
-#add_name_table_2 th,
-td {
+#add_name_table_2 th, td {
     border: 1px solid black !important;
 }
 
@@ -608,38 +577,40 @@ td {
     font-family: Yu Gothic;
 }
 
-#add_name_table_2 thead tr:nth-of-type(1) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_2 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_2 tbody tr:nth-of-type(1) {
-    background-color: #F2F2F2;
-}
+    #add_name_table_2 tbody tr:nth-of-type(1) {
+        background-color: #F2F2F2;
+    }
 
-#add_name_table_2 th,
-td {
-    border: 1px solid black !important;
-}
+    #add_name_table_2 th, td {
+        border: 1px solid black !important;
+    }
 
 #add_name_table_new {
     border: 1px solid black !important;
     /*display: none;*/
 }
 
-#add_name_table_new thead tr:nth-of-type(2) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_new thead tr:nth-of-type(2) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_new tbody tr:nth-of-type(1) {
-    background-color: #F2F2F2;
-}
+    #add_name_table_new tbody tr:nth-of-type(1) {
+        background-color: #F2F2F2;
+    }
 
-#add_name_table_3 th,
-td {
+
+
+
+
+#add_name_table_3 th, td {
     border: 1px solid black !important;
 }
 
@@ -648,20 +619,19 @@ td {
     width: 100%;
 }
 
-#add_name_table_3 thead tr:nth-of-type(1) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_3 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
+
+
 
 .custom_add_name {
     margin-bottom: 50px;
 }
 
-#add_name_add,
-#add_name_add_new,
-#save_forecast,
-#cancel_forecast {
+#add_name_add, #add_name_add_new, #save_forecast, #cancel_forecast {
     background-color: #3c4b5d;
     color: white;
     padding: 5px;
@@ -692,11 +662,13 @@ td {
 }
 
 
+
+
+
+
 /*-----------------
 	9. Name List
 -----------------------*/
-
-
 /*#name-list tbody {
     display: none;
 }
@@ -707,12 +679,11 @@ td {
     display: none;
 }*/
 
-#namelist_tbl_header {
+#namelist_tbl_header{
     line-height: 0;
     height: 17px;
 }
-
-#namelist_tbl_search {
+#namelist_tbl_search{
     /*line-height: 0;*/
     height: 17px;
 }
@@ -726,50 +697,39 @@ td {
     border: none !important;
 }
 
-
 /*#name_list_search tbody tr:nth-of-type(1) td input, select {
     border: 1px solid black !important;
     width: auto;
     border: 1px solid #ccc !important;
     border-radius: 13px;
 }*/
-
-#name_list_search tbody tr:nth-of-type(1) td input,
-select {
+#name_list_search tbody tr:nth-of-type(1) td input, select {
     /*border: 1px solid black !important;*/
     width: auto;
     /*border: 1px solid #ccc !important;*/
     /*border: 1px solid #C97 !important;*/
     /*border-radius: 13px;*/
 }
-
-
 /*#section, #department, #incharge, #role, #company {
     border: 1px solid #C97 !important;
     border-radius: 13px;
 }*/
-
 .namelist_search {
     border: 1px solid #ccc !important;
     border-radius: 13px;
 }
-
-
 /*.namelist_listbody,tr,td,#namelist_tbl_search {
     border: 1px solid #ccc !important;
     border-collapse: separate;
     border-spacing: 4px;
 }*/
-
-.namelist_listbody,
-td {
+.namelist_listbody, td {
     border: 1px solid #ccc !important;
     border-collapse: separate;
     border-spacing: 4px;
 }
 
-.namelist_tbl,
-td {
+.namelist_tbl, td {
     border: 1px solid #ccc !important;
     border-collapse: separate;
     border-spacing: 4px;
@@ -800,8 +760,14 @@ td {
 }
 
 
-/*------------------------------------Add/Edit/Delete Links-----------------------------------------*/
 
+
+
+
+
+
+
+/*------------------------------------Add/Edit/Delete Links-----------------------------------------*/
 #edit_button {
     background: cornflowerblue;
     color: white;
@@ -829,9 +795,7 @@ td {
     display: inline-block;
 }
 
-
 /*------------------------------------Edit Informaton-----------------------------------------*/
-
 #edit_employee_name {
     border: none;
     width: 119px;
@@ -867,9 +831,7 @@ td {
     width: 57px !important;
 }
 
-
 /*------------------------------------Entry Pages: Input Field Error Message-----------------------------------------*/
-
 .division-name-error {
     display: none;
     width: 100%;
@@ -886,9 +848,7 @@ td {
     color: #dc3545;
 }
 
-
 /*------------------------------------Section List: tbody-----------------------------------------*/
-
 #section_list_tbody {
     text-align: center;
     /*height: 133px;*/
@@ -898,10 +858,7 @@ td {
 #section_name_lbl {
     padding-top: 10px;
 }
-
-
 /*------------------------------------Section body resize-----------------------------------------*/
-
 #section_body {
     width: 59% !important;
 }
@@ -913,10 +870,7 @@ td {
 #incharge_body {
     width: 59% !important;
 }
-
-
 /*------------------------------------Department List-----------------------------------------*/
-
 #department_list_tbody {
     text-align: center;
     /*height: 133px;*/
@@ -934,9 +888,7 @@ td {
     width: 100px
 }
 
-
 /*------------------------------------In-Charge List-----------------------------------------*/
-
 #incharge_list_tbody {
     text-align: center;
     /*height: 133px;*/
@@ -950,17 +902,12 @@ td {
     width: 200px
 }
 
-
 /*------------------------------------Section Modal-----------------------------------------*/
-
 .cutom_button_group_section_modal {
     float: right;
     margin-left: 45%;
 }
-
-
 /*------------------------------------Name list: Dropdown check -----------------------------------------*/
-
 .multiselect {
     position: absolute;
     /*background-color: aliceblue;*/
@@ -972,8 +919,7 @@ td {
     position: relative;
 }
 
-
-/*.selectBox select {
+    /*.selectBox select {
     width: 100%;
     font-weight: normal;
     }*/
@@ -986,118 +932,95 @@ td {
     bottom: 0;
 }
 
-
 /*------Section -------*/
-
 #sectionChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#sectionChks label {
-    display: block;
-}
+    #sectionChks label {
+        display: block;
+    }
 
-#sectionChks label:hover {
-    background-color: #1e90ff;
-}
-
-
+        #sectionChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Department -------*/
-
 #departmentChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#departmentChks label {
-    display: block;
-}
+    #departmentChks label {
+        display: block;
+    }
 
-#departmentChks label:hover {
-    background-color: #1e90ff;
-}
-
-
+        #departmentChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Incharge -------*/
-
 #inchargeChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#inchargeChks label {
-    display: block;
-}
+    #inchargeChks label {
+        display: block;
+    }
 
-#inchargeChks label:hover {
-    background-color: #1e90ff;
-}
-
-
+        #inchargeChks label:hover {
+            background-color: #1e90ff;
+        }
 /*------Role -------*/
-
 #RoleChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#RoleChks label {
-    display: block;
-}
+    #RoleChks label {
+        display: block;
+    }
 
-#RoleChks label:hover {
-    background-color: #1e90ff;
-}
-
+        #RoleChks label:hover {
+            background-color: #1e90ff;
+        }
 #ExplanationChks {
     display: none;
     border: 1px #dadada solid;
 }
-
-
 /*------Company -------*/
-
 #CompanyChks {
     display: none;
     border: 1px #dadada solid;
 }
 
-#CompanyChks label {
-    display: block;
-}
+    #CompanyChks label {
+        display: block;
+    }
 
-#CompanyChks label:hover {
-    background-color: #1e90ff;
-}
+        #CompanyChks label:hover {
+            background-color: #1e90ff;
+        }
 
 .commonselect {
     font-weight: normal !important;
     background-color: aliceblue;
     text-align: left;
 }
-
-
 /*------Name List: Edit -------*/
-
 #name_list_edit_modal {
     width: 100% !important;
 }
 
-#name_list_edit_modal thead tr {
-    text-align: center;
-}
-
+    #name_list_edit_modal thead tr {
+        text-align: center;
+    }
 
 /*-----------------------------------------------Module Label text align ----------------------------*/
-
 .module-label-txt {
     text-align: right;
 }
-
-
 /*---------------------------------------Name List: Search,list,modal--------------------------*/
-
 #employee_name_search {
     border: none;
     width: 119px;
@@ -1105,72 +1028,56 @@ td {
 
 
 /*---------------------------------------add name previous--------------------------*/
-
-#fixed_employee_info {
+#fixed_employee_info{
     background-color: khaki;
 }
 
-
 /*---------------------------------------name list: look and feel like excel sheet--------------------------*/
-
 .namelist_td.name {
     text-align: center;
     width: 165px !important;
 }
-
 .namelist_td.section {
     text-align: center;
     width: 74px !important;
 }
-
 .namelist_td.department {
     text-align: center;
     width: 90px !important;
 }
-
 .namelist_td.InCharge {
     text-align: center;
     width: 115px !important;
 }
-
 .namelist_td.Role {
     text-align: center;
     width: 70px !important;
 }
-
 .namelist_td.Explanation {
     text-align: left;
     width: 250px !important;
     text-indent: 1em;
 }
-
 .namelist_td.Company {
     text-align: left;
     width: 80px !important;
     text-indent: 1em;
 }
-
 .namelist_td.Action {
     text-align: left;
     width: 100px !important;
 }
-
 .namelist_td.GradePoint {
     text-align: center;
     width: 45px !important;
     text-indent: 1em;
 }
-
 .namelist_td.UnitPrice {
     text-align: center;
     width: 60px !important;
     text-indent: 1em;
 }
-
-
 /*---------------------------------------Name list: Dropdown width--------------------------*/
-
-
 /* .selectBox.section select {
     width: 71px;
     font-weight: normal;
@@ -1196,9 +1103,7 @@ td {
     font-weight: normal;
 } */
 
-
 /*---------------------------------------add name: design modify--------------------------*/
-
 #add_name_table_1 {
     border-collapse: collapse;
     font-size: 10px;
@@ -1213,70 +1118,61 @@ td {
     line-height: 2px;
 }
 
+
+
 #add_name_action {
     width: 126px;
 }
 
-
 /*---------------------------------------Name list: Dropdown width--------------------------*/
-
 .selectBox.section select {
     width: 80px;
     font-weight: normal;
     height: 22px;
 }
-
 .selectBox.department select {
     width: 110px;
     font-weight: normal;
     height: 22px;
 }
-
 .selectBox.incharge select {
     width: 75px;
     font-weight: normal;
     height: 22px;
 }
-
 .selectBox.role select {
     width: 48px;
     font-weight: normal;
     height: 22px;
 }
-
 .selectBox.explanation select {
     width: 255px;
     font-weight: normal;
     height: 22px;
 }
-
 .selectBox.company select {
     width: 86px;
     font-weight: normal;
     height: 22px;
 }
 
-
 /*---------------------------------------Name list: dropdown close outside click--------------------------*/
-
-.container {
+.container{
     position: relative;
     display: inline-block;
 }
-
-.selectBox {
+  
+.selectBox{
     cursor: pointer;
     user-select: none;
     z-index: 1;
 }
-
-.forecast_checkbox {
+.forecast_checkbox{
     cursor: pointer;
     user-select: none;
     z-index: 1;
 }
-
-.commonselect {
+.commonselect{
     position: absolute;
     left: 0;
     top: 100%;
@@ -1284,10 +1180,8 @@ td {
     background: #eee;
     padding: 1rem;
     z-index: 2;
-    width: 150px;
+    width:150px;
 }
-
-
 /* #sectionChks{
     position: absolute;
     left: 0;
@@ -1348,119 +1242,88 @@ td {
     z-index: 2;
     width:150px;
 } */
-
-
 /*---------------------------------------Name list: edit popup--------------------------*/
-
-#modal_edit_name {
+#modal_edit_name{
     border-collapse: collapse;
     font-size: 10px;
     font-family: Yu Gothic
 }
-
 #name_edit {
     width: 131px;
     opacity: .7;
 }
-
 #memo_edit {
     width: 90px;
 }
-
 #section_edit {
     width: 89px;
 }
-
 #department_edit {
     width: 100px;
 }
-
 #incharge_edit {
     width: 120px;
 }
-
 #role_edit {
     width: 73px;
 }
-
 #explanation_edit {
     width: 220px;
 }
-
-#company_edit {
+#company_edit{
     width: 109px;
 }
-
-#grade_edit {
+#grade_edit{
     width: 46px;
 }
-
-#unitprice_edit {
+#unitprice_edit{
     width: 100px;
 }
-
-
 /*---------------------------------------name registration popup--------------------------*/
-
-#modal_add_name_new {
+#modal_add_name_new{
     border-collapse: collapse;
     font-size: 10px;
     font-family: Yu Gothic
 }
-
-#identity_new {
+#identity_new{
     width: 110px;
 }
-
-#memo_new {
+#memo_new{
     width: 83px;
 }
-
-#section_new {
+#section_new{
     width: 100px;
 }
-
-#department_new {
+#department_new{
     width: 110px;
 }
-
-#incharge_new {
+#incharge_new{
     width: 100px;
 }
-
-#role_new {
+#role_new{
     width: 84px;
 }
-
-#explanation_new {
+#explanation_new{
     width: 220px;
 }
-
-#company_new {
+#company_new{
     width: 96px;
 }
-
-#grade_new {
+#grade_new{
     width: 64px;
 }
-
-#unitprice_new {
+#unitprice_new{
     width: 86px;
 }
 
-
 /*---------------------------------------master setting popup--------------------------*/
-
-
 /* #section_registration{
     border-collapse: collapse;
     font-size: 10px;
     font-family: Yu Gothic
 } */
 
-
 /*---------------------------------------name registration--------------------------*/
-
 #name_registration {
     border-collapse: collapse;
     font-size: 10px;
@@ -1472,11 +1335,8 @@ td {
     font-size: 10px;
     font-family: Yu Gothic
 }
-
 
 /*---------------------------------------name list: datatable--------------------------*/
-
-
 /*.name_list_table_header{
     background-color:slategray;
     color:white;
@@ -1514,117 +1374,90 @@ table.dataTable > thead .sorting .sorting_desc, {
     background-size: 8px 14px;
     margin-top: 3px;
 }*/
-
-
 /*---------------------------------------namelist: registration popup button--------------------------*/
-
 .master_setting_popup {
     border-collapse: collapse;
     font-size: 10px;
     font-family: Yu Gothic;
 }
-
 .name_list_th.name {
     text-align: center;
     width: 195px !important;
 }
-
 .name_list_th.section {
     text-align: center;
     width: 101px !important;
 }
-
 .name_list_th.department {
     text-align: center;
     width: 91px !important;
 }
-
 .name_list_th.InCharge {
     text-align: center;
     width: 97px !important;
 }
-
 .name_list_th.company {
     text-align: center;
-    margin-left: 185px;
+    margin-left:185px;
 }
-
 
 /*---------------------------------------create forecast: search filters--------------------------*/
-
-.create_forecast.name_search {
-    width: 160px;
+.create_forecast.name_search{
+    width:160px;   
 }
-
-.create_forecast.section_search {
-    width: 110px;
+.create_forecast.section_search{
+    width:110px;   
 }
-
-.create_forecast.department_search {
-    width: 110px;
+.create_forecast.department_search{
+    width:110px;   
 }
-
-.create_forecast.incharge_search {
-    width: 110px;
+.create_forecast.incharge_search{
+    width:110px;   
 }
-
-.create_forecast.role_search {
-    width: 90px;
+.create_forecast.role_search{
+    width:90px;   
 }
-
-.create_forecast.explanation_search {
-    width: 250px;
+.create_forecast.explanation_search{
+    width:250px;   
 }
-
-.create_forecast.company_search {
-    width: 100px;
+.create_forecast.company_search{
+    width:100px;   
 }
-
-
 /* .create_forecast.period_search{
     width:85px;   
 } */
-
 .forecast_multiselect {
     position: absolute;
     /*background-color: aliceblue;*/
     margin: -12px;
     padding-left: 13px;
 }
-
-.forecast_checkbox.section select {
+.forecast_checkbox.section select{
     width: 102px;
     font-weight: normal;
 }
-
 .forecast_checkbox.department select {
     width: 108px;
     font-weight: normal;
 }
-
 .forecast_checkbox.incharge select {
     width: 104px;
     font-weight: normal;
 }
-
 .forecast_checkbox.role select {
     width: 84px;
     font-weight: normal;
 }
-
 .forecast_checkbox.explanation select {
     width: 237px;
     font-weight: normal;
 }
-
 .forecast_checkbox.company select {
     width: 93px;
     font-weight: normal;
 }
 
-
 /*---------------------------------------add name: search filters--------------------------*/
-
 #add_name_search {
     /* border-collapse: collapse; */
     font-size: 14px;
@@ -1635,39 +1468,29 @@ table.dataTable > thead .sorting .sorting_desc, {
     border: none !important;
     margin-bottom: -18px;
 }
-
-.add_name_name_filter {
-    width: 160px;
+.add_name_name_filter{
+    width:160px;   
 }
-
-.add_name_section_filter {
-    width: 110px;
+.add_name_section_filter{
+    width:110px;   
 }
-
-.add_name_department_filter {
-    width: 110px;
+.add_name_department_filter{
+    width:110px;   
 }
-
-.add_name_incharge_filter {
-    width: 110px;
+.add_name_incharge_filter{
+    width:110px;   
 }
-
-.add_name_role_filter {
-    width: 90px;
+.add_name_role_filter{
+    width:90px;   
 }
-
-.add_name_explanation_filter {
-    width: 250px;
+.add_name_explanation_filter{
+    width:250px;   
 }
-
-.add_name_company_filter {
-    width: 110px;
+.add_name_company_filter{
+    width:110px;   
 }
-
-
 /*---------------------------------------name list: search filter: auto width--------------------------*/
-
-#name_search {
+#name_search{
     min-width: 100%;
 }
 
@@ -1675,3 +1498,30 @@ table.dataTable > thead .sorting .sorting_desc, {
     text-decoration: underline;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
