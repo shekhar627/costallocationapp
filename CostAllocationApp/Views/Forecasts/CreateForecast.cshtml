@@ -2,7 +2,9 @@
 @{
     ViewBag.Title = "Create Forecast";
 }
-
+@section Styles {
+    <link href="@Url.Content("~/Content/forecast.css")" rel="stylesheet" type="text/css" />
+}
 
 <div class="content container-fluid" style="position:relative">
     <!-- Page Header -->
@@ -204,7 +206,7 @@
 <input type="hidden" id="hidCompanyid" />
 
 @section Scripts{
-
+    <script src="/Scripts/forecast.js"></script>
     <script type="text/javascript">
 
         var globalSearchObject = '';
@@ -227,7 +229,7 @@
             var tr = element.closest('tr');
             //var trId = $(tr).data('rowid');
             var trName = $(tr).find('td').eq(0).children('span').data('name');
-            console.log('name:'+trName);
+            console.log('name:' + trName);
             var allTr = $('#forecast_table > tbody > tr');
             //var monthNumber = $(element).data('month');
             var columnIndex = $(element).parent().index();
@@ -285,43 +287,43 @@
                         $('#forecast_table>tbody').empty();
 
                         $('#forecast_table>thead').append(`
-                                        
-                                        <tr>
-                                            <th id="forecast_name">Name </th>
-                                            <th id="forecast_section">Section </th>
-                                            <th id="forecast_department">Department </th>
-                                            <th id="forecast_incharge">In-Charge </th>
-                                            <th id="forecast_role">Role </th>
-                                            <th id="forecast_explanation">Explanation </th>
-                                            <th id="forecast_company">Company Name </i></th>
-                                            <th id="forecast_grade">Grade </th>
-                                            <th id="forecast_unitprice"><span>Unit Price</span> </th>
-                                            <th>10月</th>
-                                            <th>11月</th>
-                                            <th>12月</th>
-                                            <th>1月</th>
-                                            <th>2月</th>
-                                            <th>3月</th>
-                                            <th>4月</th>
-                                            <th>5月</th>
-                                            <th>6月</th>
-                                            <th>7月</th>
-                                            <th>8月</th>
-                                            <th>9月</th>
-                                            <th>Oct</th>
-                                            <th>Nov</th>
-                                            <th>Dec</th>
-                                            <th>Jan</th>
-                                            <th>Feb</th>
-                                            <th>Mar</th>
-                                            <th>Apr</th>
-                                            <th>May</th>
-                                            <th>Jun</th>
-                                            <th>Jul</th>
-                                            <th>Aug</th>
-                                            <th>Sep</th>
-                                        </tr>
-                                    `);
+
+                                                <tr>
+                                                    <th id="forecast_name">Name </th>
+                                                    <th id="forecast_section">Section </th>
+                                                    <th id="forecast_department">Department </th>
+                                                    <th id="forecast_incharge">In-Charge </th>
+                                                    <th id="forecast_role">Role </th>
+                                                    <th id="forecast_explanation">Explanation </th>
+                                                    <th id="forecast_company">Company Name </i></th>
+                                                    <th id="forecast_grade">Grade </th>
+                                                    <th id="forecast_unitprice"><span>Unit Price</span> </th>
+                                                    <th>10月</th>
+                                                    <th>11月</th>
+                                                    <th>12月</th>
+                                                    <th>1月</th>
+                                                    <th>2月</th>
+                                                    <th>3月</th>
+                                                    <th>4月</th>
+                                                    <th>5月</th>
+                                                    <th>6月</th>
+                                                    <th>7月</th>
+                                                    <th>8月</th>
+                                                    <th>9月</th>
+                                                    <th>Oct</th>
+                                                    <th>Nov</th>
+                                                    <th>Dec</th>
+                                                    <th>Jan</th>
+                                                    <th>Feb</th>
+                                                    <th>Mar</th>
+                                                    <th>Apr</th>
+                                                    <th>May</th>
+                                                    <th>Jun</th>
+                                                    <th>Jul</th>
+                                                    <th>Aug</th>
+                                                    <th>Sep</th>
+                                                </tr>
+                                            `);
                         //Forecast_DatatableLoad(data);
                         var _id = 0;
                         var _companyName = '';
@@ -782,7 +784,7 @@
                     success: function (data) {
 
                         saveFlag = data
-                        
+
                         //$('#modal_add_name_new').modal('toggle');
                         //$("#loading").css("display", "inline-block");
 
@@ -827,13 +829,13 @@
             //$('#forecast_table').DataTable().destroy();
             $('#forecast_table').empty();
             onCancel();
-            
+
         }
 
 
 
 
-        
+
         var expanded = false;
         $(document).on("click", function (event) {
             var $trigger = $(".forecast_multiselect");
@@ -1571,7 +1573,7 @@
                 }
 
                 $('#cancel_forecast').css('display', 'inline-block');
-                $('#save_forecast').css('display','inline-block');
+                $('#save_forecast').css('display', 'inline-block');
 
                 //if (departmentId == undefined) {
                 //    departmentId = '';
@@ -1609,7 +1611,7 @@
                         }
                     });
                 }
-                
+
                 departmentId = "";
                 if (!isDepartmentAllCheck) {
                     $.each(departmentCheckedBoxes, function (index, item) {
@@ -1695,43 +1697,43 @@
                         $('#forecast_table>tbody').empty();
 
                         $('#forecast_table>thead').append(`
-                                        
-                                        <tr>
-                                            <th id="forecast_name">Name </th>
-                                            <th id="forecast_section">Section </th>
-                                            <th id="forecast_department">Department </th>
-                                            <th id="forecast_incharge">In-Charge </th>
-                                            <th id="forecast_role">Role </th>
-                                            <th id="forecast_explanation">Explanation </th>
-                                            <th id="forecast_company">Company Name </i></th>
-                                            <th id="forecast_grade">Grade </th>
-                                            <th id="forecast_unitprice"><span>Unit Price</span> </th>
-                                            <th>10月</th>
-                                            <th>11月</th>
-                                            <th>12月</th>
-                                            <th>1月</th>
-                                            <th>2月</th>
-                                            <th>3月</th>
-                                            <th>4月</th>
-                                            <th>5月</th>
-                                            <th>6月</th>
-                                            <th>7月</th>
-                                            <th>8月</th>
-                                            <th>9月</th>
-                                            <th>Oct</th>
-                                            <th>Nov</th>
-                                            <th>Dec</th>
-                                            <th>Jan</th>
-                                            <th>Feb</th>
-                                            <th>Mar</th>
-                                            <th>Apr</th>
-                                            <th>May</th>
-                                            <th>Jun</th>
-                                            <th>Jul</th>
-                                            <th>Aug</th>
-                                            <th>Sep</th>
-                                        </tr>
-                                    `);
+
+                                                <tr>
+                                                    <th id="forecast_name">Name </th>
+                                                    <th id="forecast_section">Section </th>
+                                                    <th id="forecast_department">Department </th>
+                                                    <th id="forecast_incharge">In-Charge </th>
+                                                    <th id="forecast_role">Role </th>
+                                                    <th id="forecast_explanation">Explanation </th>
+                                                    <th id="forecast_company">Company Name </i></th>
+                                                    <th id="forecast_grade">Grade </th>
+                                                    <th id="forecast_unitprice"><span>Unit Price</span> </th>
+                                                    <th>10月</th>
+                                                    <th>11月</th>
+                                                    <th>12月</th>
+                                                    <th>1月</th>
+                                                    <th>2月</th>
+                                                    <th>3月</th>
+                                                    <th>4月</th>
+                                                    <th>5月</th>
+                                                    <th>6月</th>
+                                                    <th>7月</th>
+                                                    <th>8月</th>
+                                                    <th>9月</th>
+                                                    <th>Oct</th>
+                                                    <th>Nov</th>
+                                                    <th>Dec</th>
+                                                    <th>Jan</th>
+                                                    <th>Feb</th>
+                                                    <th>Mar</th>
+                                                    <th>Apr</th>
+                                                    <th>May</th>
+                                                    <th>Jun</th>
+                                                    <th>Jul</th>
+                                                    <th>Aug</th>
+                                                    <th>Sep</th>
+                                                </tr>
+                                            `);
                         //Forecast_DatatableLoad(data);
                         var _id = 0;
                         var _companyName = '';
@@ -1761,12 +1763,12 @@
                                     render: function (employeeNameWithCodeRemarks) {
                                         var splittedString = employeeNameWithCodeRemarks.split('$');
                                         _id = parseInt(splittedString[3]); // id
-                                        if (splittedString[2]=='true') {
+                                        if (splittedString[2] == 'true') {
                                             return `<span title='initial' data-name='${splittedString[0]}' style='color:red;'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
                                         } else {
                                             return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
                                         }
-                                        
+
                                     }
                                 },
                                 {
@@ -2122,7 +2124,7 @@
                     }
                 });
 
-                
+
             });
 
 

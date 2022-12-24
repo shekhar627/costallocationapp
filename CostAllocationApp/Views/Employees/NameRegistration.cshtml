@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "Name Registration";
 }
+
+@section Styles {
+    <link href="@Url.Content("~/Content/nameregistration.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/common.css")" rel="stylesheet" type="text/css" />
+}
+
 <div class="content container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -48,28 +54,22 @@
                                         <input type="text" id="memo_new" value="" placeholder="memo">
                                     </td>
                                     <td>
-                                        <select id="section_new" class="select_section">                                            
-                                        </select>
+                                        <select id="section_new" class="select_section"></select>
                                     </td>
                                     <td>
-                                        <select id="department_new" class="select_department">
-                                        </select>
+                                        <select id="department_new" class="select_department"></select>
                                     </td>
                                     <td>
-                                        <select id="incharge_new" class="select_incharge">                                            
-                                        </select>
+                                        <select id="incharge_new" class="select_incharge"></select>
                                     </td>
                                     <td>
-                                        <select id="role_new" class="select_role">                                            
-                                        </select>
+                                        <select id="role_new" class="select_role"></select>
                                     </td>
                                     <td>
-                                        <select id="explanation_new" class="select_explanation">                                            
-                                        </select>
+                                        <select id="explanation_new" class="select_explanation"></select>
                                     </td>
                                     <td>
-                                        <select id="company_new" class="select_company">                                           
-                                        </select>
+                                        <select id="company_new" class="select_company"></select>
                                     </td>
                                     <td>
                                         <input type="text" class="col-12" id="grade_new" placeholder="grade" readonly="">
@@ -110,10 +110,13 @@
 <input type="hidden" id="hid_unitPrice" />
 
 @section Scripts{
+    <script src="/Scripts/nameregistration.js"></script>
+    <script src="/Scripts/common.js"></script>
+
     <script>
-        
+
         $(document).ready(function () {
-            
+
             //Department fill after section select
             $(document).on('change', '#section_new', function () {
                 var sectionId = $(this).val();
@@ -124,15 +127,15 @@
                         $('#department_new').append(`<option value=''>Select Department</option>`);
                         var departmentId = $("#hid_departmentId").val();
                         $.each(data, function (key, item) {
-                            if(departmentId == item.Id){
+                            if (departmentId == item.Id) {
                                 $('#department_new').append(`<option selected value='${item.Id}'>${item.DepartmentName}</option>`);
-                            }else{
+                            } else {
                                 $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                             }
                         });
                     });
             });
-            
+
             function FillDropdownOfNameRegistration() {
                 SetRegistrationValueInHiddenField();
 
@@ -143,9 +146,9 @@
                         $('#section_new').append(`<option value=''>Select Section</option>`);
                         var sectionId = $("#hid_sectionId").val();
                         $.each(data, function (key, item) {
-                            if(sectionId == item.Id){
+                            if (sectionId == item.Id) {
                                 $('#section_new').append(`<option selected value='${item.Id}'>${item.SectionName}</option>`);
-                            }else{
+                            } else {
                                 $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                             }
                         });
@@ -177,9 +180,9 @@
                         $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
                         var inchargeId = $("#hid_inchargeId").val();
                         $.each(data, function (key, item) {
-                            if(inchargeId == item.Id){
+                            if (inchargeId == item.Id) {
                                 $('#incharge_new').append(`<option selected value='${item.Id}'>${item.InChargeName}</option>`);
-                            }else{
+                            } else {
                                 $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
                             }
                         });
@@ -191,9 +194,9 @@
                         $('#role_new').append(`<option value=''>Select Role</option>`);
                         var roleId = $("#hid_roleId").val();
                         $.each(data, function (key, item) {
-                            if(roleId == item.Id){
+                            if (roleId == item.Id) {
                                 $('#role_new').append(`<option selected value='${item.Id}'>${item.RoleName}</option>`);
-                            }else{
+                            } else {
                                 $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
                             }
                         });
@@ -206,9 +209,9 @@
                         $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
                         var explantionId = $("#hid_explanationId").val();
                         $.each(data, function (key, item) {
-                            if(explantionId == item.Id){
+                            if (explantionId == item.Id) {
                                 $('#explanation_new').append(`<option selected value='${item.Id}'>${item.ExplanationName}</option>`);
-                            }else{
+                            } else {
                                 $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                             }
                         });
@@ -220,16 +223,16 @@
                         $('#company_new').append(`<option value=''>Select Company</option>`);
                         var companyid = $("#hid_companyId").val();
                         $.each(data, function (key, item) {
-                            if(companyid == item.Id){
+                            if (companyid == item.Id) {
                                 $('#company_new').append(`<option selected value='${item.Id}'>${item.CompanyName}</option>`);
-                            }else{
+                            } else {
                                 $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                             }
                         });
                     });
             }
             FillDropdownOfNameRegistration();
-            
+
             $('#section_registration').on('hidden.bs.modal', function () {
                 var isPageLoad = $("#page_load_after_modal_close").val();
                 if (isPageLoad == "yes") {
@@ -288,7 +291,7 @@
                 let name = $("#identity_new").val();
                 let memo = $("#memo_new").val();
                 let sectionId = $('#section_new').find(":selected").val();
-                console.log("set: sectionId: "+sectionId);
+                console.log("set: sectionId: " + sectionId);
                 let departmentId = $('#department_new').find(":selected").val();
                 let inchargeId = $('#incharge_new').find(":selected").val();
                 let roleId = $('#role_new').find(":selected").val();
@@ -317,7 +320,7 @@
 
 
         //Grade point with unit price value change
-        $('#unitprice_new').on('change', function() {
+        $('#unitprice_new').on('change', function () {
             var _unitPrice = $(this).val();
             var _companyName = $("#company_new option:selected").text();
 
@@ -328,7 +331,7 @@
                 //data: {
                 //    unitPrice: _unitPrice
                 //},
-                success: function(data) {
+                success: function (data) {
                     if (_companyName.toLowerCase() == "mw") {
                         $('#grade_new_hidden').val(data.Id);
                         $('#grade_new').val(data.SalaryGrade);
@@ -337,7 +340,7 @@
                         $('#grade_new').val('');
                     }
                 },
-                error: function() {
+                error: function () {
                     $('#grade_new_hidden').val('');
                     $('#grade_new').val('');
                 }
@@ -372,85 +375,85 @@
                     $('#grade_edit_hidden').val('');
                 }
             });
-        });   
-        
+        });
+
         //cancel button click: close tab
         $('#add_name_cancel').click(function () {
             window.top.close();
         });
 
         //save name registration data
-        $('#add_name_add_new').on('click', function() {
+        $('#add_name_add_new').on('click', function () {
 
-                var employeeName = $('#identity_new').val();
-                var sectionId = $('#section_new').find(":selected").val();
-                var inchargeId = $('#incharge_new').find(":selected").val();
-                var departmentId = $('#department_new').find(":selected").val();
-                var roleId = $('#role_new').find(":selected").val();
-                var companyId = $('#company_new').find(":selected").val();
-                var explanationId = $('#explanation_new').find(":selected").val();
-                var unitPrice = $('#unitprice_new').val();
-                var gradeId = $('#grade_new_hidden').val();
-                var remarks = $('#memo_new').val();
-
-
-
-                var data = {
-                    EmployeeName: employeeName,
-                    SectionId: sectionId,
-                    DepartmentId: departmentId,
-                    InchargeId: inchargeId,
-                    RoleId: roleId,
-                    ExplanationId: explanationId,
-                    CompanyId: companyId,
-                    UnitPrice: unitPrice,
-                    GradeId: gradeId,
-                    Remarks: remarks,
-                    SubCode: 1
+            var employeeName = $('#identity_new').val();
+            var sectionId = $('#section_new').find(":selected").val();
+            var inchargeId = $('#incharge_new').find(":selected").val();
+            var departmentId = $('#department_new').find(":selected").val();
+            var roleId = $('#role_new').find(":selected").val();
+            var companyId = $('#company_new').find(":selected").val();
+            var explanationId = $('#explanation_new').find(":selected").val();
+            var unitPrice = $('#unitprice_new').val();
+            var gradeId = $('#grade_new_hidden').val();
+            var remarks = $('#memo_new').val();
 
 
-                };
 
-                console.log(data);
+            var data = {
+                EmployeeName: employeeName,
+                SectionId: sectionId,
+                DepartmentId: departmentId,
+                InchargeId: inchargeId,
+                RoleId: roleId,
+                ExplanationId: explanationId,
+                CompanyId: companyId,
+                UnitPrice: unitPrice,
+                GradeId: gradeId,
+                Remarks: remarks,
+                SubCode: 1
 
-                $.ajax({
-                    url: '/api/Employees',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function(data) {
 
-                        Command: toastr["success"](data, "Success")
+            };
 
-                            toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-                        alert('Success');
-                        location.reload();
-                    },
-                    error: function(data) {
-                        alert(data.responseJSON.Message);
-                        //$('#modal_add_name_new').modal('toggle');
+            console.log(data);
+
+            $.ajax({
+                url: '/api/Employees',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (data) {
+
+                    Command: toastr["success"](data, "Success")
+
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
                     }
-                });
-
-
-
+                    alert('Success');
+                    location.reload();
+                },
+                error: function (data) {
+                    alert(data.responseJSON.Message);
+                    //$('#modal_add_name_new').modal('toggle');
+                }
             });
+
+
+
+        });
     </script>
 }
 @Html.Partial("_Modals")

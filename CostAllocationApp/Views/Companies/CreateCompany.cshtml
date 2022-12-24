@@ -3,6 +3,9 @@
     ViewBag.Title = "Company Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+    <link href="@Url.Content("~/Content/master_setting.css")" rel="stylesheet" type="text/css" />
+}
 
 <div class="content container-fluid">
 
@@ -73,6 +76,8 @@
 
 </div>
 @section Scripts{
+    <script src="/Scripts/master_setting.js"></script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {

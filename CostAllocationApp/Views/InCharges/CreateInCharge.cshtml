@@ -1,9 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "In-Charge Registration";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!--Main Body-->
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/incharge.css" />
+}
+
 <div class="content container-fluid">
 
     <!--List-->
@@ -21,7 +24,7 @@
                     <tbody id="incharge_list_tbody"></tbody>
                 </table>
                 <label id="incharge_delete_btn">
-                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#del_incharge_modal">Delete</a>
+                    <a id="incharge_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#del_incharge_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -41,7 +44,7 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <input class="form-control" id="in_charge_name" type="text" placeholder="incharge name...">
-                                <div class="department-name-error">
+                                <div class="incharge_name_err">
                                     Please provide a In-Charge name.
                                 </div>
                             </div>
@@ -50,8 +53,8 @@
                 </div>
                 <div class="row">
                     <div class="cutom_button_group_incharge">
-                        <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddInCharge();">Registration</a>
+                        <a href="javascript:void(0);" id="incharge_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="incharge_registration" onclick="InsertInCharge();">Registration</a>
                     </div>
                 </div>
                 <style>
@@ -67,151 +70,8 @@
     <!--Section Create End-->
 
 </div>
-@section Scripts{
-    <script type="text/javascript">
 
-        $(document).ready(function () {
-            $.getJSON('/api/InCharges/')
-                .done(function (data) {
-                    $('#incharge_list_tbody').empty();
-                    $.each(data, function (key, item) {
-                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
-                    });
-                });
-
-
-            $('#confirm_delete').on('click', function (event) {
-                event.preventDefault();
-                let id = GetCheckedIds("incharge_list_tbody");
-
-                id = id.slice(0, -1);
-                console.log(id);
-
-                $.ajax({
-                    url: '/api/InCharges?inChargeIds=' + id,
-                    type: 'DELETE',
-                    success: function (data) {
-                        Command: toastr["success"](data, "Success")
-
-                        toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-
-
-                        $.getJSON('/api/InCharges/')
-                            .done(function (data) {
-                                $('#incharge_list_tbody').empty();
-                                $.each(data, function (key, item) {
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
-                                });
-                            });
-                    },
-                    error: function (data) {
-                        Command: toastr["warning"](data.responseText, "Warning")
-
-                        toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-
-                    }
-                });
-
-                $('#del_incharge_modal').modal('toggle');
-
-            });
-
-            $('#delete_button').on('click', function (event) {
-
-                let id = GetCheckedIds("incharge_list_tbody");
-
-                if (id == "") {
-                    alert("Please check first to delete.");
-                    return false;
-                } else {
-
-                }
-            });
-
-            //$('.in_charge_list_chk').on('click', function (event) {
-            //    alert("test");
-            //});
-        });
-    </script>
-
-}
-
-<!-- /Page Content -->
-<!-- Edit Salary Modal -->
-<div id="edit_section_modal" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Section</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-4">
-                            <label for="divison-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-8">
-                            <div class="form-group">
-                                <input class="form-control" id="divison-name" type="text" value="Development" placeholder="section name..">
-                                <div class="division-name-error">
-                                    Please provide a section name.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                            </div>
-                            <div class="col-6">
-                                <a href="javascript:void(0);" class="btn btn-primary continue-btn" data-dismiss="modal" onclick="AddDivision();">Update</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Edit Salary Modal -->
-<!-- Delete Salary Modal -->
+<!-- incharge inactive modal -->
 <div class="modal custom-modal fade" id="del_incharge_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -226,7 +86,7 @@
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="incharge_inactive_confirm_btn">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -234,4 +94,9 @@
         </div>
     </div>
 </div>
-<!-- /Delete Salary Modal -->
+
+@section Scripts{
+    <script src="/Scripts/common.js"></script>    
+    <script src="/Scripts/incharge.js"></script>            
+}
+

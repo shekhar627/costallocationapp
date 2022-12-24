@@ -24,8 +24,8 @@ namespace CostAllocationApp
                             "~/Scripts/bootstrap-datetimepicker.min.js",
                             "~/Scripts/jquery.dataTables.min.js",
                             "~/Scripts/dataTables.bootstrap4.min.js",
-                            "~/Scripts/toastr.min.js",
-                            "~/Scripts/Custome.js"
+                            "~/Scripts/toastr.min.js"
+ 
                             //,
                             //"~/Scripts/loader.js",
                             //"~/Scripts/Chart.min.js"
@@ -43,8 +43,9 @@ namespace CostAllocationApp
                       "~/Content/select2.min.css",
                       "~/Content/bootstrap-datetimepicker.min.css",
                       "~/Content/toastr.min.css",
-                      "~/Content/style.css",
-                      "~/Content/custom.css"
+                      "~/Content/style.css"
+                      //,
+                      //"~/Content/custom.css"
                       ));
 
         }

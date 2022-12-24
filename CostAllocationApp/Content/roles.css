@@ -1,0 +1,277 @@
+﻿/*-----------------Section Master-----------------------*/
+#section_inactive_btn {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#section_table td, th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+
+#section_table td, th:nth-of-type(9) {
+    text-align: center;
+    width: 20px;
+}
+
+#section_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+
+
+#custom_submit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+#custom_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.cutom_button_group {
+    float: right;
+}
+
+
+
+#delete_button {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+/*-----------------
+	4. In-Charge Registration
+-----------------------*/
+
+#incharge_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+#incharge_table {
+    width: 47%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#incharge_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+.cutom_button_group_incharge {
+    float: right;
+    margin-left: 69%;
+}
+
+#incharge_table tbody tr td:last-child {
+    /*width: 200px;
+    text-align: left;
+    height: 31px;*/
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+
+/*-----------------
+	5. Department Registration
+-----------------------*/
+
+#department_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+#department_table {
+    width: 57%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#department_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+.cutom_button_group_department {
+    float: right;
+    margin-left: 69%;
+}
+
+#department_table tbody tr td:last-child {
+    width: 200px;
+}
+
+
+/*-----------------
+	6. Section Registration
+-----------------------*/
+
+
+
+#department_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+#department_table td:nth-of-type(3) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+#section_table {
+    width: 65%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#section_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+#section_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#section_table thead th:nth-of-type(3) {
+    width: 100px
+}
+
+#section_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#section_delete_btn {
+    padding-left: 386px;
+}
+
+#department_delete_btn {
+    padding-left: 539px;
+}
+
+#incharge_delete_btn {
+    padding-left: 429px;
+}
+
+.cutom_button_group_section {
+    float: right;
+    margin-left: 69%;
+}
+
+
+/*------------------------------------Entry Pages: Input Field Error Message-----------------------------------------*/
+
+.division-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+.department-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+
+/*------------------------------------Section Master-----------------------------------------*/
+#section_list_tbody {
+    text-align: center;
+    /*height: 133px;*/
+    /*height: 77px;*/
+}
+
+#section_name_lbl {
+    padding-top: 10px;
+}
+
+#section_body {
+    width: 59% !important;
+}
+
+#department_body {
+    width: 59% !important;
+}
+
+#incharge_body {
+    width: 59% !important;
+}
+
+
+/*------------------------------------Department Master-----------------------------------------*/
+
+#department_list_tbody {
+    text-align: center;
+    /*height: 133px;*/
+}
+
+#department_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#department_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#department_table thead th:nth-of-type(3) {
+    width: 100px
+}
+
+
+/*------------------------------------In-Charge Master-----------------------------------------*/
+
+#incharge_list_tbody {
+    text-align: center;
+    /*height: 133px;*/
+}
+
+#incharge_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#incharge_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+

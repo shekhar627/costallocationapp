@@ -3,6 +3,10 @@
     ViewBag.Title = "Explanation Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+    <link href="@Url.Content("~/Content/master_setting.css")" rel="stylesheet" type="text/css" />
+}
+
 <!--Main Body-->
 <div class="content container-fluid">
     <!--List-->
@@ -17,8 +21,7 @@
                             <th>Explanation</th>
                         </tr>
                     </thead>
-                    <tbody id="incharge_list_tbody">                       
-                    </tbody>
+                    <tbody id="incharge_list_tbody"></tbody>
                 </table>
                 <label id="incharge_delete_btn">
                     <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#inactive_incharge_modal">Delete</a>
@@ -73,6 +76,8 @@
 
 </div>
 @section Scripts{
+    <script src="/Scripts/master_setting.js"></script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {

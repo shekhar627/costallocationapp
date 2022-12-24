@@ -1,7 +1,8 @@
 ﻿@{ ViewBag.Title = "Name List"; }
 
 @section Styles {
-    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/namelist.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/common.css")" rel="stylesheet" type="text/css" />
 }
 
 <div class="content container-fluid">
@@ -397,6 +398,9 @@
 
 @Html.Partial("_Modals")
 @section Scripts{
+    <script src="/Scripts/namelist.js"></script>
+    <script src="/Scripts/common.js"></script>
+
     <script type="text/javascript">
         let previousAssignmentRow = 0;
         let unitPrices = [];

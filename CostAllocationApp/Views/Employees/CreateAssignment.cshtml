@@ -1,6 +1,9 @@
 @{
     ViewBag.Title = "Add Name";
 }
+@section Styles {
+    <link href="@Url.Content("~/Content/addname.css")" rel="stylesheet" type="text/css" />
+}
 
 <div class="content container-fluid">
     <!-- /Page Header -->
@@ -50,7 +53,8 @@
                         <td></td>
                     </tr>
                 </tbody>
-            </table>        </div>
+            </table>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 custom_add_name">
@@ -223,8 +227,8 @@
                     <tbody>
                         <tr>
                             @*<td>
-                                <input type="text" class=" col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
-                            </td>*@
+                                    <input type="text" class=" col-12" id="identity" value="Chandra Shekhar Das" placeholder="name">
+                                </td>*@
                             <td>
                                 <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
                             </td>
@@ -305,7 +309,7 @@
 
 
 @section Scripts{
-
+    <script src="/Scripts/addname.js"></script>
     <script type="text/javascript">
         let previousAssignmentRow = 0;
         let unitPrices = [];
@@ -313,7 +317,7 @@
         function loadSingleAssignmentData(id) {
 
             $.ajax({
-                url: '/api/Utilities/AssignmentById/'+id,
+                url: '/api/Utilities/AssignmentById/' + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function (assignmentData) {
@@ -448,7 +452,7 @@
 
                     var count = 1;
                     $.each(assignmentData, function (index, item) {
-                       // console.log(item);
+                        // console.log(item);
                         unitPrices.push(item.UnitPrice);
                         previousAssignmentRow = item.SubCode;
                         tr += '<tr class="sub_thead">';
@@ -493,42 +497,42 @@
         function addNew() {
             //
             previousAssignmentRow++;
-        var text = `
-            <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
-                <td>${previousAssignmentRow}</td>
-                <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" style='width: 141px;' value="${$('#fixed_hidden_name').val()}" readonly /></td>
-                <td><input class="" value="${previousAssignmentRow}"  style='width: 47px;' id='sub_code_row_${previousAssignmentRow}' readonly /></td>
-                <td><input class=" col-12" style='width: 89px;' id="memo_row_${previousAssignmentRow}" /></td>`;
+            var text = `
+                    <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
+                        <td>${previousAssignmentRow}</td>
+                        <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" style='width: 141px;' value="${$('#fixed_hidden_name').val()}" readonly /></td>
+                        <td><input class="" value="${previousAssignmentRow}"  style='width: 47px;' id='sub_code_row_${previousAssignmentRow}' readonly /></td>
+                        <td><input class=" col-12" style='width: 89px;' id="memo_row_${previousAssignmentRow}" /></td>`;
 
             // for add new
-                $.ajax({
-                    url: '/api/Sections/',
-                    type: 'GET',
-                    async: false,
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                        text += '<td>';
-                        text += `
-                               <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
-                                    <option value=''>Select Section</option>
-                            `;
-                        $.each(data, function (key, item) {
-                            text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
-                        });
-                        text += '</select></td>';
-                    },
-                    error: function () {
+            $.ajax({
+                url: '/api/Sections/',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    text += '<td>';
+                    text += `
+                                       <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
+                                            <option value=''>Select Section</option>
+                                    `;
+                    $.each(data, function (key, item) {
+                        text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
+                    });
+                    text += '</select></td>';
+                },
+                error: function () {
 
-                    }
+                }
             });
 
 
             text += `
-                <td>
-                    <select id="department_row_${previousAssignmentRow}" class=" col-12 department_row"></select>
-                 </td>
-                `;
+                        <td>
+                            <select id="department_row_${previousAssignmentRow}" class=" col-12 department_row"></select>
+                         </td>
+                        `;
 
             $.ajax({
                 url: '/api/incharges/',
@@ -539,9 +543,9 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="incharge_row_${previousAssignmentRow}" class=" col-12">
-                                    <option value=''>Select In-Charge</option>
-                            `;
+                                       <select id="incharge_row_${previousAssignmentRow}" class=" col-12">
+                                            <option value=''>Select In-Charge</option>
+                                    `;
                     $.each(data, function (key, item) {
                         text += `<option value = '${item.Id}'> ${item.InChargeName}</option>`;
                     });
@@ -561,9 +565,9 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="role_row_${previousAssignmentRow}" class=" col-12">
-                                    <option value=''>Select Role</option>
-                            `;
+                                       <select id="role_row_${previousAssignmentRow}" class=" col-12">
+                                            <option value=''>Select Role</option>
+                                    `;
                     $.each(data, function (key, item) {
                         text += `<option value = '${item.Id}'> ${item.RoleName}</option>`;
                     });
@@ -583,9 +587,9 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12">
-                                    <option value=''>Select Role</option>
-                            `;
+                                       <select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12">
+                                            <option value=''>Select Role</option>
+                                    `;
                     $.each(data, function (key, item) {
                         text += `<option value = '${item.Id}'> ${item.ExplanationName}</option>`;
                     });
@@ -605,9 +609,9 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                               <select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(this);">
-                                    <option value=''>Select Role</option>
-                            `;
+                                       <select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(this);">
+                                            <option value=''>Select Role</option>
+                                    `;
                     $.each(data, function (key, item) {
                         text += `<option value = '${item.Id}'> ${item.CompanyName}</option>`;
                     });
@@ -618,14 +622,14 @@
                 }
             });
             text += `
-                 <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>
-                 <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
-                 <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-            </tr>
+                         <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>
+                         <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+                         <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+                    </tr>
 
-            `;
+                    `;
 
-            $(`#remove_row_${previousAssignmentRow - 1}`).css('display','none');
+            $(`#remove_row_${previousAssignmentRow - 1}`).css('display', 'none');
 
             $('#add_name_table_2 tbody').append(text);
 
@@ -691,7 +695,7 @@
         }
 
 
-        function unitPriceChange(rowId,element) {
+        function unitPriceChange(rowId, element) {
             let _unitPrice = $(element).val();
             $("#add_name_unit_price_hidden").val(_unitPrice);
             $("#add_name_row_no_hidden").val(rowId);
@@ -704,7 +708,7 @@
             //var _unitPrice = $("#add_name_unit_price_hidden").val();
 
             console.log("_unitPrice: " + _unitPrice);
-            
+
 
             //if (!unitPrices.includes(_unitPrice)) {
             if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
@@ -729,7 +733,7 @@
                     console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
                     console.log("_companyName.toLowerCase(): " + typeof (_companyName));
                     console.log("_rowId: " + _rowId);
-                    //if (_companyName.toLowerCase == 'mw') {                    
+                    //if (_companyName.toLowerCase == 'mw') {
                     if (_companyName.toLowerCase().indexOf("mw") > 0) {
                         console.log("test- equal");
                         $('#grade_row_' + rowId).attr('data-id', data.Id);
@@ -741,7 +745,7 @@
                         $('#grade_row_' + _rowId).val('');
                     }
 
-                    
+
                     //$('#grade_row_' + rowId).val(data.SalaryGrade);
                 },
                 error: function () {
@@ -753,7 +757,7 @@
             });
         }
 
-        function onSave(){
+        function onSave() {
             const rows = document.querySelectorAll("#add_name_table_2 > tbody > tr");
             //$('#add_name_add').css('display','none');
             console.log(rows);
@@ -885,13 +889,13 @@
                     });
                 });
             // for add new
-                $.getJSON('/api/Explanations/')
-                    .done(function (data) {
-                        $('#explanation_new').empty();
-                        $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
-                        $.each(data, function (key, item) {
-                            $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
-                        });
+            $.getJSON('/api/Explanations/')
+                .done(function (data) {
+                    $('#explanation_new').empty();
+                    $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
+                    $.each(data, function (key, item) {
+                        $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                    });
                 });
             // for search
             $.getJSON('/api/Explanations/')
@@ -903,15 +907,15 @@
                     });
                 });
             // for add new
-                $.getJSON('/api/Companies/')
-                    .done(function (data) {
-                        $('#company_new').empty();
-                        $('#company_new').append(`<option value=''>Select Company</option>`);
-                        $.each(data, function (key, item) {
-                            $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
-                        });
+            $.getJSON('/api/Companies/')
+                .done(function (data) {
+                    $('#company_new').empty();
+                    $('#company_new').append(`<option value=''>Select Company</option>`);
+                    $.each(data, function (key, item) {
+                        $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+                    });
                 });
-             // for search
+            // for search
             $.getJSON('/api/Companies/')
                 .done(function (data) {
                     $('#company_search').empty();
@@ -922,13 +926,13 @@
                 });
 
             // for add new
-                $.getJSON('/api/incharges/')
-                    .done(function (data) {
-                        $('#incharge_new').empty();
-                        $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
-                        $.each(data, function (key, item) {
-                            $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
-                        });
+            $.getJSON('/api/incharges/')
+                .done(function (data) {
+                    $('#incharge_new').empty();
+                    $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
+                    $.each(data, function (key, item) {
+                        $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                    });
                 });
             // for search
             $.getJSON('/api/incharges/')
@@ -940,23 +944,23 @@
                     });
                 });
             // for add new
-                $.getJSON('/api/sections/')
-                    .done(function (data) {
-                        $('#section_new').empty();
-                        $('#section_new').append(`<option value=''>Select Section</option>`);
-                        $.each(data, function (key, item) {
-                            $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
-                        });
+            $.getJSON('/api/sections/')
+                .done(function (data) {
+                    $('#section_new').empty();
+                    $('#section_new').append(`<option value=''>Select Section</option>`);
+                    $.each(data, function (key, item) {
+                        $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                    });
                 });
             // for search
-                $.getJSON('/api/sections/')
-                    .done(function (data) {
-                        $('#section_search').empty();
-                        $('#section_search').append(`<option value=''>Select Section</option>`);
-                        $.each(data, function (key, item) {
-                            $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
-                        });
+            $.getJSON('/api/sections/')
+                .done(function (data) {
+                    $('#section_search').empty();
+                    $('#section_search').append(`<option value=''>Select Section</option>`);
+                    $.each(data, function (key, item) {
+                        $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                     });
+                });
 
 
             $(document).on('change', '#section_edit', function () {
@@ -975,7 +979,7 @@
             });
 
 
-            $(document).on('change','#section_new', function () {
+            $(document).on('change', '#section_new', function () {
 
                 var sectionId = $(this).val();
                 console.log(sectionId);
@@ -1204,7 +1208,7 @@
                                 },
                                 {
                                     data: 'DepartmentName',
-                                    
+
                                 },
                                 {
                                     data: 'InchargeName',
@@ -1284,7 +1288,7 @@
                     EmployeeName: employeeName,
                     SectionId: sectionId,
                     DepartmentId: departmentId,
-                    InchargeId: inchargeId ,
+                    InchargeId: inchargeId,
                     RoleId: roleId,
                     ExplanationId: explanationId,
                     CompanyId: companyId,

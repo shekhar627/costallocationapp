@@ -1,0 +1,91 @@
+﻿/*-----------------Section Master-----------------------*/
+#section_inactive_btn {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+#section_registration {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#section_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.cutom_button_group_section {
+    float: right;
+    margin-left: 69%;
+}
+#section_table td, th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+#section_table td, th:nth-of-type(9) {
+    text-align: center;
+    width: 20px;
+}
+#section_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+#section_list_tbody {
+    text-align: center;
+}
+
+#section_name_lbl {
+    padding-top: 10px;
+}
+
+#section_body {
+    width: 59% !important;
+}
+#section_table {
+    width: 65%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#section_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+#section_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#section_table thead th:nth-of-type(3) {
+    width: 100px
+}
+
+#section_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#section_delete_btn {
+    padding-left: 386px;
+}
+
+.section_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
