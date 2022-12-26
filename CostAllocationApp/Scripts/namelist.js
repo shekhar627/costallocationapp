@@ -3,13 +3,13 @@
 
     //search by employee name
     $(document).on('change', '#name_search', function() {
-        $("#multi_search_clicked_id").val('');                
-        GetMultiSearch_AjaxData('name');                
+        $("#multi_search_clicked_id").val('');
+        GetMultiSearch_AjaxData('name');
     });
 
     //searcy by multi sections
     $(document).on('click', '#sectionChks input[type="checkbox"]', function() {
-        $("#multi_search_clicked_id").val('');  
+        $("#multi_search_clicked_id").val('');
         var clicked_checkbox = $(this).attr("id");
         $("#multi_search_clicked_id").val(clicked_checkbox);
         GetMultiSearch_AjaxData('section');
@@ -17,31 +17,31 @@
 
     //search by multi department
     $(document).on('click', '#departmentChks input[type="checkbox"]', function() {
-        $("#multi_search_clicked_id").val('');  
+        $("#multi_search_clicked_id").val('');
         var clicked_checkbox = $(this).attr("id");
         $("#multi_search_clicked_id").val(clicked_checkbox);
-        GetMultiSearch_AjaxData('dept');       
+        GetMultiSearch_AjaxData('dept');
     });
 
     //search by multi incharge
     $(document).on('click', '#inchargeChks input[type="checkbox"]', function() {
-        $("#multi_search_clicked_id").val('');  
+        $("#multi_search_clicked_id").val('');
         var clicked_checkbox = $(this).attr("id");
         $("#multi_search_clicked_id").val(clicked_checkbox);
-        GetMultiSearch_AjaxData('incharge');  
+        GetMultiSearch_AjaxData('incharge');
     });
 
     //search by multi roles
     $(document).on('click', '#RoleChks input[type="checkbox"]', function() {
-        $("#multi_search_clicked_id").val('');  
+        $("#multi_search_clicked_id").val('');
         var clicked_checkbox = $(this).attr("id");
         $("#multi_search_clicked_id").val(clicked_checkbox);
-        GetMultiSearch_AjaxData('role');           
+        GetMultiSearch_AjaxData('role');
     });
 
     //search by multi explanations
     $(document).on('click', '#ExplanationChks input[type="checkbox"]', function() {
-        $("#multi_search_clicked_id").val('');  
+        $("#multi_search_clicked_id").val('');
         var clicked_checkbox = $(this).attr("id");
         $("#multi_search_clicked_id").val(clicked_checkbox);
         GetMultiSearch_AjaxData('explanation');
@@ -49,7 +49,7 @@
 
     //search by multi companies
     $(document).on('click', '#CompanyChks input[type="checkbox"]', function() {
-        $("#multi_search_clicked_id").val('');  
+        $("#multi_search_clicked_id").val('');
         var clicked_checkbox = $(this).attr("id");
         $("#multi_search_clicked_id").val(clicked_checkbox);
         GetMultiSearch_AjaxData('company');
@@ -74,7 +74,7 @@
     });
 
     //save edit information
-    $('#add_name_edit').on('click', function () {
+    $('#add_name_edit').on('click', function() {
         var sectionId = $('#section_edit').find(":selected").val();
         var inchargeId = $('#incharge_edit').find(":selected").val();
         var departmentId = $('#department_edit').find(":selected").val();
@@ -85,7 +85,7 @@
         var gradeId = $('#grade_edit_hidden').val();
         var rowId = $('#row_id_hidden_edit').val();
         var remarks = $('#memo_edit').val();
-        
+
         var dataSingleAssignmentUpdate = {
             Id: rowId,
             SectionId: sectionId,
@@ -143,15 +143,15 @@
     });
 
     //edit employee assignment: compare grade with company name
-    $('#company_edit').on('change', function () {
+    $('#company_edit').on('change', function() {
         var _companyName = $("#company_edit option:selected").text();
         var _unitPrice = $("#unitprice_edit").val();
 
         $.ajax({
             url: `/api/utilities/CompareGrade/${_unitPrice}`,
             type: 'GET',
-            dataType: 'json',            
-            success: function (data) {
+            dataType: 'json',
+            success: function(data) {
                 $('#grade_edit_hidden').val(data.Id);
                 if (_companyName.toLowerCase() == "mw") {
                     $('#grade_edit').val(data.SalaryGrade);
@@ -159,7 +159,7 @@
                     $('#grade_edit').val('');
                 }
             },
-            error: function () {
+            error: function() {
                 $('#grade_edit').val('');
                 $('#grade_edit_hidden').val('');
             }
@@ -180,7 +180,7 @@
     });
 
     //Section Registration Modal
-    $('#section_registration').on('hidden.bs.modal', function () {
+    $('#section_registration').on('hidden.bs.modal', function() {
         var isPageLoad = $("#page_load_after_modal_close").val();
         if (isPageLoad == "yes") {
             GetListDropdownValue();
@@ -188,7 +188,7 @@
     })
 
     //Department Registration Modal
-    $('#department_registration').on('hidden.bs.modal', function () {
+    $('#department_registration').on('hidden.bs.modal', function() {
         var isPageLoad = $("#page_load_after_modal_close").val();
         if (isPageLoad == "yes") {
             GetListDropdownValue();
@@ -196,7 +196,7 @@
     })
 
     //Incharge Registration Modal
-    $('#in-charge_registration').on('hidden.bs.modal', function () {
+    $('#in-charge_registration').on('hidden.bs.modal', function() {
         var isPageLoad = $("#page_load_after_modal_close").val();
         if (isPageLoad == "yes") {
             GetListDropdownValue();
@@ -204,7 +204,7 @@
     })
 
     //Role Registration Modal
-    $('#role_registration_modal').on('hidden.bs.modal', function () {
+    $('#role_registration_modal').on('hidden.bs.modal', function() {
         var isPageLoad = $("#page_load_after_modal_close").val();
         if (isPageLoad == "yes") {
             GetListDropdownValue();
@@ -212,7 +212,7 @@
     })
 
     //Explanation Registration Modal
-    $('#explanation_modal').on('hidden.bs.modal', function () {
+    $('#explanation_modal').on('hidden.bs.modal', function() {
         var isPageLoad = $("#page_load_after_modal_close").val();
         if (isPageLoad == "yes") {
             GetListDropdownValue();
@@ -220,7 +220,7 @@
     })
 
     //Company Registration Modal
-    $('#company_reg_modal').on('hidden.bs.modal', function () {
+    $('#company_reg_modal').on('hidden.bs.modal', function() {
         var isPageLoad = $("#page_load_after_modal_close").val();
         if (isPageLoad == "yes") {
             GetListDropdownValue();
@@ -345,15 +345,14 @@ function NameList_DatatableLoad(data) {
             //},
             {
                 data: 'EmployeeNameWithCodeRemarks',
-                render: function (employeeNameWithCodeRemarks) {
+                render: function(employeeNameWithCodeRemarks) {
                     var splittedString = employeeNameWithCodeRemarks.split('$');
                     if (splittedString[2] == 'true') {
                         return `<span style='color:red;' class='namelist_addname' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
-                    }
-                    else {
+                    } else {
                         return `<span class='namelist_addname' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
                     }
-                    
+
                 }
             },
             {
@@ -373,18 +372,18 @@ function NameList_DatatableLoad(data) {
             },
             {
                 data: 'CompanyName',
-                render: function (companyName) {
+                render: function(companyName) {
                     tempCompanyName = companyName;
                     return companyName;
                 }
             },
             {
                 data: 'GradePoint',
-                render: function (grade) {
+                render: function(grade) {
                     if (tempCompanyName.toLowerCase() == "mw") {
                         return grade;
                     } else {
-                        return "<span style='display:none;'>" + grade+"</span>";
+                        return "<span style='display:none;'>" + grade + "</span>";
                     }
                 }
             },
@@ -393,7 +392,7 @@ function NameList_DatatableLoad(data) {
             },
             {
                 data: 'Id',
-                render: function (Id) {
+                render: function(Id) {
                     if (tempCompanyName.toLowerCase() == 'mw') {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
                     } else {
@@ -405,56 +404,56 @@ function NameList_DatatableLoad(data) {
     });
 }
 
-function GetMultiSearch_AjaxData(searchType){
-    let isSectionAllChk =       $("#chk_sec_all").is(':checked');
-    var isDepartmentAllCheck =  $("#chk_dept_all").is(':checked');
-    var isInChargeAllCheck =    $("#chk_incharge_all").is(':checked');
-    var isRoleAllCheck =        $("#chk_role_all").is(':checked');
+function GetMultiSearch_AjaxData(searchType) {
+    let isSectionAllChk = $("#chk_sec_all").is(':checked');
+    var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+    var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+    var isRoleAllCheck = $("#chk_role_all").is(':checked');
     var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-    var isCompanytAllCheck =    $("#chk_comopany_all").is(':checked');
-    
-    
+    var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+
     var all_check_uncheck = $("#multi_search_clicked_id").val();
-    if(searchType.toLowerCase() == 'section'){    
+    if (searchType.toLowerCase() == 'section') {
         if (all_check_uncheck.toLowerCase() == "chk_sec_all") {
             $(".section_checkbox").prop("checked", isSectionAllChk);
         } else {
             $("#chk_sec_all").prop("checked", false);
         }
-    }else if(searchType.toLowerCase() == 'dept'){        
+    } else if (searchType.toLowerCase() == 'dept') {
         if (all_check_uncheck.toLowerCase() == "chk_dept_all") {
             $(".department_checkbox").prop("checked", isDepartmentAllCheck);
         } else {
             $("#chk_dept_all").prop("checked", false);
         }
-    }else if(searchType.toLowerCase() == 'incharge'){        
+    } else if (searchType.toLowerCase() == 'incharge') {
         if (all_check_uncheck.toLowerCase() == "chk_incharge_all") {
             $(".incharge_checkbox").prop("checked", isInChargeAllCheck);
         } else {
             $("#chk_incharge_all").prop("checked", false);
         }
-    }else if(searchType.toLowerCase() == 'role'){        
+    } else if (searchType.toLowerCase() == 'role') {
         if (all_check_uncheck.toLowerCase() == "chk_role_all") {
             $(".role_checkbox").prop("checked", isRoleAllCheck);
         } else {
             $("#chk_role_all").prop("checked", false);
         }
-    }else if(searchType.toLowerCase() == 'explanation'){        
+    } else if (searchType.toLowerCase() == 'explanation') {
         if (all_check_uncheck.toLowerCase() == "chk_explanation_all") {
             $(".explanation_checkbox").prop("checked", isExplanationAllCheck);
         } else {
             $("#chk_explanation_all").prop("checked", false);
         }
-    }else if(searchType.toLowerCase() == 'company'){        
+    } else if (searchType.toLowerCase() == 'company') {
         if (all_check_uncheck.toLowerCase() == "chk_comopany_all") {
             $(".comopany_checkbox").prop("checked", isCompanytAllCheck);
         } else {
             $("#chk_comopany_all").prop("checked", false);
         }
-    }    
+    }
     all_check_uncheck = "";
 
-    var employeeName =  "";
+    var employeeName = "";
     var sectionCheck = [];
     var departmentCheck = [];
     var inchargeCheck = [];
@@ -524,8 +523,7 @@ function GetMultiSearch_AjaxData(searchType){
             NameList_DatatableLoad(data);
             NameListSort_OnChange();
         },
-        error: function() {
-        }
+        error: function() {}
     });
     //return data_info;
 }
@@ -535,15 +533,14 @@ function NameListSort(sort_asc, sort_desc) {
     if (nameAsc == 'inline-block') {
         $('#' + sort_asc).css('display', 'none');
         $('#' + sort_desc).css('display', 'inline-block');
-    }
-    else {
+    } else {
         $('#' + sort_asc).css('display', 'inline-block');
         $('#' + sort_desc).css('display', 'none');
     }
 }
 
 function SectionCheck() {
-    DismissOtherDropdown ("section");
+    DismissOtherDropdown("section");
 
     var checkboxes = document.getElementById("sectionChks");
     if (!expanded) {
@@ -556,9 +553,9 @@ function SectionCheck() {
     }
 }
 
-function DismissOtherDropdown(requestType){
+function DismissOtherDropdown(requestType) {
     var section_display = "";
-    if(requestType.toLowerCase() != "section"){
+    if (requestType.toLowerCase() != "section") {
         section_display = $('#sectionChks');
         if (section_display.css("display") == "block") {
             let checkboxes = document.getElementById("sectionChks");
@@ -566,8 +563,8 @@ function DismissOtherDropdown(requestType){
             expanded = false;
         }
     }
-    
-    if(requestType.toLowerCase() != "dept"){
+
+    if (requestType.toLowerCase() != "dept") {
         section_display = "";
         section_display = $('#departmentChks');
         if (section_display.css("display") == "block") {
@@ -576,8 +573,8 @@ function DismissOtherDropdown(requestType){
             expanded = false;
         }
     }
-    
-    if(requestType.toLowerCase() != "incharge"){
+
+    if (requestType.toLowerCase() != "incharge") {
         section_display = "";
         section_display = $('#inchargeChks');
         if (section_display.css("display") == "block") {
@@ -586,8 +583,8 @@ function DismissOtherDropdown(requestType){
             expanded = false;
         }
     }
-    
-    if(requestType.toLowerCase() != "role"){
+
+    if (requestType.toLowerCase() != "role") {
         section_display = "";
         section_display = $('#RoleChks');
         if (section_display.css("display") == "block") {
@@ -596,8 +593,8 @@ function DismissOtherDropdown(requestType){
             expanded = false;
         }
     }
-    
-    if(requestType.toLowerCase() != "explanation"){
+
+    if (requestType.toLowerCase() != "explanation") {
         section_display = "";
         section_display = $('#ExplanationChks');
         if (section_display.css("display") == "block") {
@@ -606,8 +603,8 @@ function DismissOtherDropdown(requestType){
             expanded = false;
         }
     }
-    
-    if(requestType.toLowerCase() != "company"){
+
+    if (requestType.toLowerCase() != "company") {
         section_display = "";
         section_display = $('#CompanyChks');
         if (section_display.css("display") == "block") {
@@ -615,7 +612,7 @@ function DismissOtherDropdown(requestType){
             checkboxes.style.display = "none";
             expanded = false;
         }
-    }    
+    }
 }
 
 function NameListSort_OnChange() {
@@ -648,7 +645,7 @@ function NameListSort_OnChange() {
 }
 
 function DepartmentCheck() {
-    DismissOtherDropdown ("dept");
+    DismissOtherDropdown("dept");
 
     var checkboxes = document.getElementById("departmentChks");
     if (!expanded) {
@@ -661,7 +658,7 @@ function DepartmentCheck() {
 }
 
 function InchargeCheck() {
-    DismissOtherDropdown ("incharge");
+    DismissOtherDropdown("incharge");
     var checkboxes = document.getElementById("inchargeChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -673,7 +670,7 @@ function InchargeCheck() {
 }
 
 function RoleCheck() {
-    DismissOtherDropdown ("role");
+    DismissOtherDropdown("role");
     var checkboxes = document.getElementById("RoleChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -685,7 +682,7 @@ function RoleCheck() {
 }
 
 function ExplanationCheck() {
-    DismissOtherDropdown ("explanation");
+    DismissOtherDropdown("explanation");
     var checkboxes = document.getElementById("ExplanationChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -697,7 +694,7 @@ function ExplanationCheck() {
 }
 
 function CompanyCheck() {
-    DismissOtherDropdown ("company");
+    DismissOtherDropdown("company");
     var checkboxes = document.getElementById("CompanyChks");
     if (!expanded) {
         checkboxes.style.display = "block";
@@ -837,12 +834,12 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (assignmentData) {
+        success: function(assignmentData) {
             console.log(assignmentData);
             $('#fixed_hidden_name').val(assignmentData[0].EmployeeName);
 
             var count = 1;
-            $.each(assignmentData, function (index, item) {
+            $.each(assignmentData, function(index, item) {
                 // console.log(item);
                 unitPrices.push(item.UnitPrice);
                 previousAssignmentRow = item.SubCode;
@@ -859,8 +856,7 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
                 tr += `<td><input type='text' class=" col-12" style='width:81px;'   value='${item.CompanyName}' readonly /></td>`;
                 if (item.CompanyName.toLowerCase() == "mw") {
                     tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly style='width: 55px;' /></td>`;
-                }
-                else {
+                } else {
                     tr += `<td><input type='text' class=" col-12" value='' readonly style='width: 55px;' /></td>`;
                 }
                 tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
@@ -878,7 +874,7 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
             });
 
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -901,19 +897,19 @@ function addNew() {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             text += '<td>';
             text += `
                         <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
                             <option value=''>Select Section</option>
                     `;
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
             });
             text += '</select></td>';
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -930,19 +926,19 @@ function addNew() {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             text += '<td>';
             text += `
                         <select id="incharge_row_${previousAssignmentRow}" class=" col-12">
                             <option value=''>Select In-Charge</option>
                     `;
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 text += `<option value = '${item.Id}'> ${item.InChargeName}</option>`;
             });
             text += '</select></td>';
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -952,19 +948,19 @@ function addNew() {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             text += '<td>';
             text += `
                         <select id="role_row_${previousAssignmentRow}" class=" col-12">
                             <option value=''>Select Role</option>
                     `;
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 text += `<option value = '${item.Id}'> ${item.RoleName}</option>`;
             });
             text += '</select></td>';
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -974,19 +970,19 @@ function addNew() {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             text += '<td>';
             text += `
                         <select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12">
                             <option value=''>Select Role</option>
                     `;
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 text += `<option value = '${item.Id}'> ${item.ExplanationName}</option>`;
             });
             text += '</select></td>';
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -996,19 +992,19 @@ function addNew() {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             text += '<td>';
             text += `
                         <select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(this);">
                             <option value=''>Select Role</option>
                     `;
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 text += `<option value = '${item.Id}'> ${item.CompanyName}</option>`;
             });
             text += '</select></td>';
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -1039,7 +1035,7 @@ function onSave() {
     const rows = document.querySelectorAll("#add_name_table_2 > tbody > tr");
     //$('#add_name_add').css('display','none');
     console.log(rows);
-    $.each(rows, function (index, data) {
+    $.each(rows, function(index, data) {
         var rowId = data.dataset.id;
 
         var employeeName = $('#identity_row_' + rowId).val();
@@ -1079,11 +1075,11 @@ function onSave() {
             async: false,
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
 
                 Command: toastr["success"](data, "Success")
 
-                toastr.options = {
+                    toastr.options = {
                     "closeButton": false,
                     "debug": false,
                     "newestOnTop": false,
@@ -1104,7 +1100,7 @@ function onSave() {
                 location.reload();
                 //$('#modal_add_name_new').modal('toggle');
             },
-            error: function () {
+            error: function() {
                 alert("Error please try again");
                 //$('#modal_add_name_new').modal('toggle');
             }
@@ -1145,11 +1141,11 @@ function unitPriceChange(rowId, element) {
         url: `/api/utilities/CompareGrade/${_unitPrice}`,
         type: 'GET',
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             $('#grade_edit_hidden').val(data.Id);
             console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
-            console.log("_companyName.toLowerCase(): " + typeof (_companyName));
+            console.log("_companyName.toLowerCase(): " + typeof(_companyName));
             console.log("_rowId: " + _rowId);
             //if (_companyName.toLowerCase == 'mw') {
             if (_companyName.toLowerCase().indexOf("mw") > 0) {
@@ -1165,7 +1161,7 @@ function unitPriceChange(rowId, element) {
 
             //$('#grade_row_' + rowId).val(data.SalaryGrade);
         },
-        error: function () {
+        error: function() {
             $('#grade_row_' + rowId).attr('data-id', '');
             $('#grade_row_' + rowId).val('');
             $('#grade_row_new_' + rowId).val('');
@@ -1183,14 +1179,14 @@ function changeVal(rowId, element) {
         type: 'GET',
         async: false,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             $('#department_row_' + rowId).empty();
             $('#department_row_' + rowId).append(`<option value=''>Select Department</option>`);
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 $('#department_row_' + rowId).append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
             });
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -1213,10 +1209,10 @@ function LoadGradeValue(sel) {
         //data: {
         //    unitPrice: _unitPrice
         //},
-        success: function (data) {
+        success: function(data) {
             $('#grade_edit_hidden').val(data.Id);
             console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
-            console.log("_companyName.toLowerCase(): " + typeof (_companyName));
+            console.log("_companyName.toLowerCase(): " + typeof(_companyName));
             console.log("_rowId: " + _rowId);
             //if (_companyName.toLowerCase == 'mw') {
             if (_companyName.toLowerCase().indexOf("mw") > 0) {
@@ -1230,7 +1226,7 @@ function LoadGradeValue(sel) {
                 $('#grade_row_new_' + _rowId).val('');
             }
         },
-        error: function () {
+        error: function() {
             $('#grade_row_' + _rowId).attr('data-id', '');
             $('#grade_row_' + _rowId).val('');
             $('#grade_row_new_' + _rowId).val('');
@@ -1243,7 +1239,7 @@ function loadAssignmentRowData(id) {
 }
 
 var expanded = false;
-$(document).on("click", function (event) {
+$(document).on("click", function(event) {
     var $trigger = $(".multiselect");
     //alert("trigger: "+$trigger);
     if ($trigger !== event.target && !$trigger.has(event.target).length) {

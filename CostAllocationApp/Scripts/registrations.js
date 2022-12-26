@@ -5,8 +5,7 @@ function InsertSection() {
     if (sectionName == "") {
         $(".section_name_err").show();
         return false;
-    }
-    else {
+    } else {
         var data = {
             SectionName: sectionName
         };
@@ -16,14 +15,14 @@ function InsertSection() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 ToastMessageSuccess(data);
-                
+
                 $('#section-name').val('');
-                GetSectionList();                
+                GetSectionList();
             },
-            error: function (data) {
+            error: function(data) {
                 alert(data.responseJSON.Message);
             }
         });
@@ -32,13 +31,13 @@ function InsertSection() {
 //Get section list
 function GetSectionList() {
     $.getJSON('/api/sections/')
-        .done(function (data) {
+        .done(function(data) {
             $('#section_list_tbody').empty();
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
             });
         });
-}  
+}
 
 //insert department
 function InsertDepartment() {
@@ -72,7 +71,7 @@ function InsertDepartment() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 $("#department_name").val('');
                 $("#section_list").val('');
@@ -81,7 +80,7 @@ function InsertDepartment() {
                 $('#section-name').val('');
                 GetDepartments();
             },
-            error: function (data) {
+            error: function(data) {
                 alert(data.responseJSON.Message);
             }
         });
@@ -89,14 +88,14 @@ function InsertDepartment() {
 }
 
 //get department list
-function GetDepartments(){
+function GetDepartments() {
     $.getJSON('/api/departments/')
-    .done(function (data) {
-        $('#department_list_tbody').empty();
-        $.each(data, function (key, item) {
-            $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+        .done(function(data) {
+            $('#department_list_tbody').empty();
+            $.each(data, function(key, item) {
+                $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+            });
         });
-    });
 }
 
 //insert department
@@ -106,8 +105,7 @@ function InsertInCharge() {
     if (in_charge_name == "") {
         $(".incharge_name_err").show();
         return false;
-    }
-    else {
+    } else {
         $(".incharge_name_err").hide();
         var data = {
             InChargeName: in_charge_name
@@ -118,7 +116,7 @@ function InsertInCharge() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 $("#in_charge_name").val('');
                 ToastMessageSuccess(data)
@@ -126,7 +124,7 @@ function InsertInCharge() {
 
                 GetInchargeList();
             },
-            error: function (data) {
+            error: function(data) {
                 alert(data.responseJSON.Message);
             }
         });
@@ -134,14 +132,14 @@ function InsertInCharge() {
 }
 
 //get department list
-function GetInchargeList(){
+function GetInchargeList() {
     $.getJSON('/api/InCharges/')
-    .done(function (data) {
-        $('#incharge_list_tbody').empty();
-        $.each(data, function (key, item) {
-            $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
+        .done(function(data) {
+            $('#incharge_list_tbody').empty();
+            $.each(data, function(key, item) {
+                $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.InChargeName}</td></tr>`);
+            });
         });
-    });
 }
 
 //insert role
@@ -151,8 +149,7 @@ function InsertRoles() {
     if (roleName == "") {
         $(".role_name_err").show();
         return false;
-    }
-    else {
+    } else {
         $(".role_name_err").hide();
         var data = {
             RoleName: roleName
@@ -163,14 +160,14 @@ function InsertRoles() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 $("#role_name").val('');
-                ToastMessageSuccess(data);                
+                ToastMessageSuccess(data);
                 $('#section-name').val('');
-                GetRoleList();                
+                GetRoleList();
             },
-            error: function (data) {
+            error: function(data) {
                 alert(data.responseJSON.Message);
             }
         });
@@ -178,26 +175,26 @@ function InsertRoles() {
 }
 
 //Get role list
-function GetRoleList(){
+function GetRoleList() {
     $.getJSON('/api/Roles/')
-    .done(function (data) {
-        $('#role_list_tbody').empty();
-        $.each(data, function (key, item) {
-            // Add a list item for the product.
-            $('#role_list_tbody').append(`<tr><td><input type="checkbox" class="role_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+        .done(function(data) {
+            $('#role_list_tbody').empty();
+            $.each(data, function(key, item) {
+                // Add a list item for the product.
+                $('#role_list_tbody').append(`<tr><td><input type="checkbox" class="role_list_chk" data-id='${item.Id}' /></td><td>${item.RoleName}</td></tr>`);
+            });
         });
-    });
 }
 
-function GetExplanationList(){
+function GetExplanationList() {
     $.getJSON('/api/Explanations/')
-    .done(function (data) {
-        $('#explanations_list_tbody').empty();
-        $.each(data, function (key, item) {
-            $('#explanations_list_tbody').append(`<tr><td><input type="checkbox" class="explanation_list_chk" data-id='${item.Id}' /></td><td>${item.ExplanationName}</td></tr>`);
+        .done(function(data) {
+            $('#explanations_list_tbody').empty();
+            $.each(data, function(key, item) {
+                $('#explanations_list_tbody').append(`<tr><td><input type="checkbox" class="explanation_list_chk" data-id='${item.Id}' /></td><td>${item.ExplanationName}</td></tr>`);
+            });
         });
-    });
-} 
+}
 
 function InsertExplanations() {
     var apiurl = "/api/Explanations/";
@@ -205,8 +202,7 @@ function InsertExplanations() {
     if (explanationName == "") {
         $(".explanations_name_err").show();
         return false;
-    }
-    else {
+    } else {
         $(".explanations_name_err").hide();
         var data = {
             ExplanationName: explanationName
@@ -217,36 +213,36 @@ function InsertExplanations() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 $("#explanation_name").val('');
                 ToastMessageSuccess(data);
-                GetExplanationList();     
+                GetExplanationList();
             },
-            error: function (data) {
+            error: function(data) {
                 ToastMessageFailed(data);
             }
         });
     }
 }
 
-function GetCompanyList(){
+function GetCompanyList() {
     $.getJSON('/api/Companies/')
-    .done(function (data) {
-        $('#company_list_tbody').empty();
-        $.each(data, function (key, item) {
-            $('#company_list_tbody').append(`<tr><td><input type="checkbox" class="company_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
+        .done(function(data) {
+            $('#company_list_tbody').empty();
+            $.each(data, function(key, item) {
+                $('#company_list_tbody').append(`<tr><td><input type="checkbox" class="company_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
+            });
         });
-    });
 }
+
 function InsertCompanies() {
     var apiurl = "/api/Companies/";
     let companyName = $("#companyName").val().trim();
     if (companyName == "") {
         $(".company_name_err").show();
         return false;
-    }
-    else {
+    } else {
         $(".company_name_err").hide();
         var data = {
             CompanyName: companyName
@@ -257,28 +253,29 @@ function InsertCompanies() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 $("#companyName").val('');
                 ToastMessageSuccess(data);
                 GetCompanyList();
             },
-            error: function (data) {
+            error: function(data) {
                 ToastMessageFailed(data);
             }
         });
     }
 }
 
-function GetSalaries(){
+function GetSalaries() {
     $.getJSON('/api/Salaries/')
-    .done(function (data) {
-        $('#salary_list_tbody').empty();
-        $.each(data, function (key, item) {
-            $('#salary_list_tbody').append(`<tr><td><input type="checkbox" class="salary_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPointWithComma} ～ ${item.SalaryHighPointWithComma}</td><td>${item.SalaryGrade}</td></tr>`);
+        .done(function(data) {
+            $('#salary_list_tbody').empty();
+            $.each(data, function(key, item) {
+                $('#salary_list_tbody').append(`<tr><td><input type="checkbox" class="salary_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPointWithComma} ～ ${item.SalaryHighPointWithComma}</td><td>${item.SalaryGrade}</td></tr>`);
+            });
         });
-    });
-}    
+}
+
 function InsertSalaries() {
     var apiurl = "/api/Salaries/";
     let lowUnitPrice = $("#lowUnitPrice").val().trim();
@@ -289,8 +286,7 @@ function InsertSalaries() {
     if (lowUnitPrice == "") {
         $("#lowPrice").show();
         isValidRequest = false;
-    }
-    else {
+    } else {
         $("#lowPrice").hide();
     }
     if (highUnitPrice == "") {
@@ -318,12 +314,12 @@ function InsertSalaries() {
             type: 'POST',
             dataType: 'json',
             data: data,
-            success: function (data) {
+            success: function(data) {
 
                 ToastMessageSuccess(data);
-                GetSalaries();    
+                GetSalaries();
             },
-            error: function (data) {
+            error: function(data) {
                 ToastMessageFailed(data);
             }
         });
