@@ -203,9 +203,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\common.css" />
+    <Content Include="Content\companies.css" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
     <Content Include="Content\departments.css" />
+    <Content Include="Content\explanations.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\forecast.css" />
     <Content Include="Content\fullcalendar.min.css" />
@@ -215,6 +217,7 @@
     <Content Include="Content\namelist.css" />
     <Content Include="Content\nameregistration.css" />
     <Content Include="Content\roles.css" />
+    <Content Include="Content\salaries.css" />
     <Content Include="Content\sections.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\style.css" />
@@ -563,11 +566,13 @@
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\companies.js" />
     <Content Include="Scripts\Custome-Reporting.js" />
     <Content Include="Scripts\Custome.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\departments.js" />
     <Content Include="Scripts\dropfiles.js" />
+    <Content Include="Scripts\explanations.js" />
     <Content Include="Scripts\forecast.js" />
     <Content Include="Scripts\form-validation.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
@@ -596,8 +601,10 @@
     <Content Include="Scripts\namelist.js" />
     <Content Include="Scripts\nameregistration.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\registrations.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\roles.js" />
+    <Content Include="Scripts\salaries.js" />
     <Content Include="Scripts\sections.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\task.js" />

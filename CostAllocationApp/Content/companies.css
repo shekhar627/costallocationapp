@@ -1,5 +1,5 @@
-﻿/*-----------------Role Master-----------------------*/
-#role_registration {
+﻿/*-----------------Company Master-----------------------*/
+#company_registration {
     background-color: #3c4b5d;
     color: white;
     padding: 5px;
@@ -7,8 +7,7 @@
     margin-top: 10px;
     display: inline-block;
 }
-
-#role_cancel {
+#company_cancel {
     background-color: #FC4136;
     color: white;
     padding: 5px;
@@ -16,7 +15,7 @@
     margin-top: 10px;
     display: inline-block;
 }
-#role_inactive_btn {
+#company_inactive_btn {
     background: indianred;
     color: white;
     border-radius: 5px;
@@ -24,51 +23,51 @@
     margin: 5px;
     display: inline-block;
 }
-#role_table td, th {
+#copmany_table td, th {
     border: 1px solid;
     padding: 0px !important;
 }
-#role_table {
+#copmany_table {
     width: 47%;
     border-collapse: collapse;
     font-size: 14px;
     border: 1px solid;
 }
-#role_table thead tr:nth-of-type(1) {
+#copmany_table thead tr:nth-of-type(1) {
     background-color: #3c4b5d;
     color: white;
     text-align: center;
 }
-.cutom_button_group_role {
+.cutom_button_group_company {
     float: right;
     margin-left: 69%;
 }
-#role_table tbody tr td:last-child {
+#copmany_table tbody tr td:last-child {
     border: 1px solid;
     padding: 2px !important;
     text-align: left;
     text-indent: 1em;
 }
-#role_delete_btn {
+#company_delete_btn {
     padding-left: 429px;
 }
-.role_name_err {
+.company_name_err {
     display: none;
     width: 100%;
     margin-top: 0.25rem;
     font-size: 100%;
     color: #dc3545;
 }
-#role_body {
+#company_body {
     width: 59% !important;
 }
-#role_list_tbody {
+#company_list_tbody {
     text-align: center;
 }
-#role_table thead th:nth-of-type(1) {
+#copmany_table thead th:nth-of-type(1) {
     width: 45px;
 }
-#role_table thead th:nth-of-type(2) {
+#copmany_table thead th:nth-of-type(2) {
     width: 200px
 }
 

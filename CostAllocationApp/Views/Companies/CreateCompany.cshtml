@@ -1,225 +1,70 @@
 ﻿
 @{
     ViewBag.Title = "Company Registration";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles {
-    <link href="@Url.Content("~/Content/master_setting.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Content/common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/companies.css" />
 }
 
 <div class="content container-fluid">
-
-    <!--List-->
+    <!--Company List-->
     <h4 style="text-align:left;">List</h4>
     <div class="row">
         <div class="col-md-12">
             <div class="">
-                <table class="" id="incharge_table">
+                <table id="copmany_table">
                     <thead>
                         <tr>
                             <th>Check</th>
                             <th>Company Name</th>
                         </tr>
                     </thead>
-                    <tbody id="incharge_list_tbody"></tbody>
+                    <tbody id="company_list_tbody"></tbody>
                 </table>
-                <label id="incharge_delete_btn">
-                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#inactive_incharge_modal">Delete</a>
+                <label id="company_delete_btn">
+                    <a id="company_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#inactive_company_modal">Delete</a>
                 </label>
             </div>
         </div>
     </div>
-    <!--Section List End-->
     <br />
-    <!-- Add Designation Modal -->
-    <div class="modal-content" id="section_body">
-        <style>
-        </style>
+
+    <!-- Company Reg. -->
+    <div class="modal-content" id="company_body">
         <div class="modal-body">
             <form>
                 <div id="main-div">
-
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="department-name">Company Name <span class="text-danger">*</span></label>
+                                <label for="companyName">Company Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <input class="form-control" id="companyName" type="text" placeholder="company name...">
-                                <div class="department-name-error">
+                                <div class="company_name_err">
                                     Please provide a company name.
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
-                    <div class="cutom_button_group_incharge">
-                        <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddCompany();">Registration</a>
+                    <div class="cutom_button_group_company">
+                        <a href="javascript:void(0);" id="company_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="company_registration" onclick="InsertCompanies();">Registration</a>
                     </div>
                 </div>
-                <style>
-
-                    #plus-icon {
-                        visibility: hidden;
-                    }
-                </style>
             </form>
         </div>
     </div>
     <br><br>
-    <!--Section Create End-->
-
 </div>
-@section Scripts{
-    <script src="/Scripts/master_setting.js"></script>
 
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $.getJSON('/api/Companies/')
-                .done(function (data) {
-                    $('#incharge_list_tbody').empty();
-                    $.each(data, function (key, item) {
-                        // Add a list item for the product.
-                        $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
-                    });
-                });
-
-
-            $('#confirm_delete').on('click', function (event) {
-                event.preventDefault();
-                let id = GetCheckedIds("incharge_list_tbody");
-
-                id = id.slice(0, -1);
-                console.log(id);
-
-                $.ajax({
-                    url: '/api/Companies?companyIds=' + id,
-                    type: 'DELETE',
-                    success: function (data) {
-                        Command: toastr["success"](data, "Success")
-
-                        toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-
-
-                        $.getJSON('/api/Companies/')
-                            .done(function (data) {
-                                $('#incharge_list_tbody').empty();
-                                $.each(data, function (key, item) {
-                                    // Add a list item for the product.
-                                    $('#incharge_list_tbody').append(`<tr><td><input type="checkbox" class="in_charge_list_chk" data-id='${item.Id}' /></td><td>${item.CompanyName}</td></tr>`);
-                                });
-                            });
-                    },
-                    error: function (data) {
-                        Command: toastr["warning"](data.responseText, "Warning")
-
-                        toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-
-                    }
-                });
-
-                $('#inactive_incharge_modal').modal('toggle');
-
-            });
-
-            $('#delete_button').on('click', function (event) {
-
-                let id = GetCheckedIds("incharge_list_tbody");
-                if (id == "") {
-                    alert("Please check first to delete.");
-                    return false;
-                }
-            });
-
-        });
-
-    </script>
-
-}
-
-<!-- /Page Content -->
-<!-- Edit Salary Modal -->
-<div id="edit_section_modal" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Section</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-4">
-                            <label for="divison-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-8">
-                            <div class="form-group">
-                                <input class="form-control" id="divison-name" type="text" value="Development" placeholder="section name..">
-                                <div class="division-name-error">
-                                    Please provide a section name.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                            </div>
-                            <div class="col-6">
-                                <a href="javascript:void(0);" class="btn btn-primary continue-btn" data-dismiss="modal" onclick="AddDivision();">Update</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Edit Salary Modal -->
-<!-- Delete Salary Modal -->
-<div class="modal custom-modal fade" id="inactive_incharge_modal" role="dialog">
+<!-- Inactive company Modal -->
+<div class="modal custom-modal fade" id="inactive_company_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -233,7 +78,7 @@
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="company_inactive_confirm_btn">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -241,4 +86,8 @@
         </div>
     </div>
 </div>
-<!-- /Delete Salary Modal -->
+
+@section Scripts{
+    <script src="/Scripts/common.js"></script> 
+    <script src="/Scripts/companies.js"></script>           
+}

@@ -88,4 +88,6 @@
 #department_table thead th:nth-of-type(3) {
     width: 100px
 }
-
+#department_body {
+    width: 59% !important;
+}

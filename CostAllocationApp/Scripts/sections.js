@@ -70,6 +70,37 @@ function GetSectionList() {
     $.getJSON('/api/sections/')
         .done(function (data) {
             $('#section_list_tbody').empty();
+
+            // $('#section_table').DataTable({
+            //     destroy: true,
+            //     data: data,
+            //     ordering: true,
+            //     orderCellsTop: true,
+            //     pageLength: 5,
+            //     searching: false,
+            //     bLengthChange: false,
+            //     columns: [                  
+            //         {
+            //             data: 'Id',
+            //             render: function (id) {
+            //                 return `<input type="checkbox" class="section_list_chk" data-id='${id}' />`;
+            //             }
+            //         },
+            //         {
+            //             data: 'SectionName'
+            //         }
+            //         // {
+            //         //     data: 'Id',
+            //         //     render: function (Id) {
+            //         //         if (tempCompanyName.toLowerCase() == 'mw') {
+            //         //             return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+            //         //         } else {
+            //         //             return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
+            //         //         }
+            //         //     }
+            //         // }
+            //     ]
+            // });
             $.each(data, function (key, item) {
                 $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
             });

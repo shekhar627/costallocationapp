@@ -21,7 +21,7 @@
             }
         });
 
-        $('#delDepartmentModal').modal('toggle');
+        $('#inactive_department_modal').modal('toggle');
 
     });
 

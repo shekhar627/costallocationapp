@@ -90,6 +90,8 @@
 #incharge_table thead th:nth-of-type(2) {
     width: 200px
 }
-
+#incharge_body {
+    width: 59% !important;
+}
 
 

@@ -1,41 +1,36 @@
 ﻿
 @{
     ViewBag.Title = "Roles Registration";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section Styles {
     <link rel="stylesheet" type="text/css" href="/Content/common.css" />
     <link rel="stylesheet" type="text/css" href="/Content/roles.css" />
 }
-
-<!--Main Body-->
 <div class="content container-fluid">
-    <!--List-->
     <h4 style="text-align:left;">List</h4>
     <div class="row">
         <div class="col-md-12">
             <div class="">
-
-                <table class="" id="incharge_table">
+                <table id="role_table">
                     <thead>
                         <tr>
                             <th>Check</th>
                             <th>Role Name</th>
                         </tr>
                     </thead>
-                    <tbody id="incharge_list_tbody"></tbody>
+                    <tbody id="role_list_tbody"></tbody>
                 </table>
-
-                <label id="incharge_delete_btn">
-                    <a id="delete_button" href="javascript:void();" data-toggle="modal" data-target="#inactive_incharge_modal">Delete</a>
+                <label id="role_delete_btn">
+                    <a id="role_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#inactive_role_modal">Delete</a>
                 </label>
             </div>
         </div>
-    </div>
-    <!--Section List End-->
+    </div>    
     <br />
-    <!-- Add Designation Modal -->
-    <div class="modal-content" id="section_body">
+
+    <!-- Role Reg. -->
+    <div class="modal-content" id="role_body">
         <style>
         </style>
         <div class="modal-body">
@@ -45,13 +40,13 @@
                     <div class="row">
                         <div class="col-sm-4 module-label-txt">
                             <div class="form-group">
-                                <label for="department-name">Role Name <span class="text-danger">*</span></label>
+                                <label for="role_name">Role Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <input class="form-control" id="role_name" type="text" placeholder="role name...">
-                                <div class="department-name-error">
+                                <div class="role_name_err">
                                     Please provide a role name.
                                 </div>
                             </div>
@@ -60,27 +55,19 @@
 
                 </div>
                 <div class="row">
-                    <div class="cutom_button_group_incharge">
-                        <a href="javascript:void(0);" id="custom_cancel">Cancel</a>
-                        <a href="javascript:void(0);" id="custom_submit" onclick="AddRoles();">Registration</a>
+                    <div class="cutom_button_group_role">
+                        <a href="javascript:void(0);" id="role_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="role_registration" onclick="InsertRoles();">Registration</a>
                     </div>
-                </div>
-                <style>
-
-                    #plus-icon {
-                        visibility: hidden;
-                    }
-                </style>
+                </div>                
             </form>
         </div>
     </div>
     <br><br>
-    <!--Section Create End-->
-
 </div>
 
 <!-- Role Inactive Modal -->
-<div class="modal custom-modal fade" id="inactive_incharge_modal" role="dialog">
+<div class="modal custom-modal fade" id="inactive_role_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -94,7 +81,7 @@
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="confirm_delete">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="role_inactive_confirm_btn">Delete</a>
                         </div>
                     </div>
                 </div>
