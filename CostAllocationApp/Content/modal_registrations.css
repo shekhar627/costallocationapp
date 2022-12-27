@@ -1,0 +1,1874 @@
+﻿/*-----------------Modal Registration: START-----------------------*/
+.module-label-txt {
+    text-align: right;
+}
+#section_name_lbl {
+    padding-top: 10px;
+}
+.section_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.cutom_button_group_section {
+    float: right;
+    margin-left: 69%;
+}
+#section_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#section_registration_btn {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.dept_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.section_with_dept_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.cutom_button_group_department {
+    float: right;
+    margin-left: 69%;
+}
+#department_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#department_registration_btn {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.incharge_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.custom_btn_icharge {
+    float: right;
+    margin-left: 69%;
+}
+#incharge_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#incharge_registration {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.role_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.custom_btn_role {
+    float: right;
+    margin-left: 69%;
+}
+#role_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#role_registration {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.explanations_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+.custom_btn_explanations {
+    float: right;
+    margin-left: 69%;
+}
+#explanation_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#explanation_registration {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.custom_btn_company {
+    float: right;
+    margin-left: 69%;
+}
+#company_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+#company_registration {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.company_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.division-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+
+#custom_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+
+
+#custom_submit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/*-----------------Modal Registration: END-----------------------*/
+
+body {
+    overflow-x: auto;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3c4b5d !important;
+    border-color: #3c4b5d !important;
+    color: white !important;
+}
+
+.page-link {
+    color: black !important;
+}
+
+
+/*-----------------
+	2. Name List
+-----------------------*/
+
+#name-list td,
+th {
+    border: 1px solid;
+}
+
+#name-list {
+    width: 120% !important;
+    /*width: 120%;*/
+    border-collapse: collapse !important;
+    /*border: 1px solid;*/
+    /*font-size: 14px;*/
+    font-size: 10px !important;
+    /*font-family: Meiryo;*/
+    font-family: Yu Gothic !important;
+}
+
+#name-list>tbody>tr>td {
+    width: 1px !important;
+    white-space: nowrap !important;
+}
+
+.name_list_th {
+    border: none;
+    text-align: center;
+}
+
+#name-list thead tr:nth-of-type(2) th {
+    text-align: center;
+}
+
+.name_list_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#name-list tbody td:nth-of-type(9) {
+    text-align: right;
+    /* padding: 1rem; */
+    /* text-align: center; */
+}
+
+#name-list tbody td:nth-of-type(10) {
+    width: 62px;
+    text-align: right;
+    /*padding: 5px;*/
+}
+
+#name-list thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+}
+
+
+/*-----------------
+	3. Name Registration
+-----------------------*/
+
+#name_registration td,
+th {
+    border: 1px solid;
+    padding: 2px;
+}
+
+#name_registration {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+.name_registration_th {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+
+/*#name_registration input[type='text'], select {
+    height: 25px;
+    border: none;
+    width: 150px !important;
+}*/
+
+
+/*#name_registration input[type='text'], select {
+    height: 25px;
+    border: none;
+    width: 112px !important;
+}*/
+
+.input_name {
+    height: 25px;
+    border: none;
+    width: 120px !important;
+}
+
+.input_memo {
+    height: 25px;
+    border: none;
+    width: 64px !important;
+}
+
+.select_section {
+    height: 25px;
+    border: none;
+    width: 100px !important;
+}
+
+.input_code {
+    height: 25px;
+    border: none;
+    width: 50px !important;
+}
+
+.select_department {
+    height: 25px;
+    border: none;
+    width: 110px !important;
+}
+
+.select_incharge {
+    height: 25px;
+    border: none;
+    width: 110px !important;
+}
+
+.select_role {
+    height: 25px;
+    border: none;
+    width: 75px !important;
+}
+
+.input_explanation {
+    height: 25px;
+    border: none;
+    width: 100px !important;
+}
+
+.select_company {
+    height: 25px;
+    border: none;
+    width: 90px !important;
+}
+
+.input_grade {
+    height: 25px;
+    border: none;
+    width: 50px !important;
+}
+
+.input_unitprice {
+    height: 25px;
+    border: none;
+    width: 65px !important;
+}
+
+.name_registration_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#name_registration thead tr:nth-of-type(2) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+.cutom_button_group {
+    float: right;
+}
+
+#name_registration tbody td i {
+    padding: 10px;
+}
+
+
+/*-----------------
+	4. In-Charge Registration
+-----------------------*/
+
+#incharge_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+#incharge_table {
+    width: 47%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#incharge_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+.cutom_button_group_incharge {
+    float: right;
+    margin-left: 69%;
+}
+
+#incharge_table tbody tr td:last-child {
+    /*width: 200px;
+    text-align: left;
+    height: 31px;*/
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+
+/*-----------------
+	5. Department Registration
+-----------------------*/
+
+#department_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+#department_table {
+    width: 57%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#department_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+.cutom_button_group_department {
+    float: right;
+    margin-left: 69%;
+}
+
+#department_table tbody tr td:last-child {
+    width: 200px;
+}
+
+
+/*-----------------
+	6. Section Registration
+-----------------------*/
+
+#section_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+
+#section_table td,
+th:nth-of-type(9) {
+    text-align: center;
+    width: 20px;
+}
+
+#section_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+#department_table td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+#department_table td:nth-of-type(3) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+}
+
+#section_table {
+    width: 65%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#section_table thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+#section_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#section_table thead th:nth-of-type(3) {
+    width: 100px
+}
+
+#section_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#section_delete_btn {
+    padding-left: 386px;
+}
+
+#department_delete_btn {
+    padding-left: 539px;
+}
+
+#incharge_delete_btn {
+    padding-left: 429px;
+}
+
+
+
+
+/*-----------------
+	7. Forecast Create
+-----------------------*/
+
+#forecast_table {
+    /*width: 250% !important;*/
+    border-collapse: collapse;
+    border: 1px solid;
+    font-size: 12px;
+}
+
+
+/*#forecast_table > thead > tr > th{
+    width: 0px !important;
+}*/
+
+.forecast_th {
+    text-align: center;
+}
+
+.forecast_th:nth-of-type(2) {
+    background-color: #f18973;
+}
+
+.forecast_th:nth-of-type(3) {
+    background-color: #80ced6;
+}
+
+#forecast_table input[type='text'] {
+    height: 25px;
+    border: 1px solid gray;
+    width: 50px;
+    text-align: center;
+}
+
+.forecast_table a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#forecast_table thead tr:nth-of-type(2) th {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+.cutom_button_group_forecast {
+    float: right;
+    margin-left: 33%;
+    display: none;
+}
+
+#forecast_table>tbody>tr>td {
+    width: 1px !important;
+    white-space: nowrap !important;
+}
+
+
+/*-----------------
+	7. Forecast Search
+-----------------------*/
+
+#forecast_search thead th {
+    border: none !important;
+    text-align: center;
+}
+
+#forecast_search tbody td {
+    border: none !important;
+}
+
+#forecast_search {
+    border: none !important;
+    margin-bottom: -17px;
+    font-size: 14px;
+}
+
+#forecast_search tbody tr:nth-of-type(1) td input,
+select {
+    border: 1px solid black !important;
+}
+
+
+/*#forecast_search {
+    border: 1px solid black !important;
+}*/
+
+#forecast_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+
+/*-----------------
+	8. Add Name
+-----------------------*/
+
+#add_name_search thead th {
+    border: none !important;
+    text-align: center;
+}
+
+#add_name_search tbody td {
+    border: none !important;
+}
+
+#add_name_search {
+    border: none !important;
+    border: 1px solid black !important;
+}
+
+#add_name_search tbody tr:nth-of-type(1) td input,
+select {
+    border: 1px solid black !important;
+}
+
+#add_name_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+#add_name_table_1 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_1 {
+    border: 1px solid black !important;
+    width: 138% !important;
+}
+
+#add_name_table_1>tbody>tr>td {
+    width: 1px !important;
+    white-space: nowrap !important;
+}
+
+#add_name_table_1 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
+
+#add_name_table_1 thead tr:nth-of-type(2) select,
+input {
+    /*height:40px !important;*/
+}
+
+#add_name_table_1 th,
+td:nth-of-type(3) {
+    text-align: center;
+}
+
+#add_name_table_1 th,
+td:nth-of-type(12) {
+    /*text-align: right;*/
+    /* padding: 1rem; */
+}
+
+.link_add {
+    display: inline-block;
+    background-color: #3c4b5d;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    margin-right: 20px;
+    margin: 5px;
+}
+
+.link_add:hover {
+    color: white;
+}
+
+.link_edit {
+    display: inline-block;
+    background-color: #3c4b5d;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    margin-right: 20px;
+    margin: 5px;
+}
+
+.link_edit:hover {
+    color: white;
+}
+
+.add_name_btn_group a {
+    display: inline-block;
+    background-color: #3c4b5d;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    margin-right: 20px;
+    margin: 5px;
+}
+
+#add_name_table_2 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_2 {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+
+#add_name_table_2 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
+
+#add_name_table_2 tbody tr:nth-of-type(1) {
+    background-color: #F2F2F2;
+}
+
+#add_name_table_2 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_new {
+    border: 1px solid black !important;
+    /*display: none;*/
+}
+
+#add_name_table_new thead tr:nth-of-type(2) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
+
+#add_name_table_new tbody tr:nth-of-type(1) {
+    background-color: #F2F2F2;
+}
+
+#add_name_table_3 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_3 {
+    border: 1px solid black !important;
+    width: 100%;
+}
+
+#add_name_table_3 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
+
+.custom_add_name {
+    margin-bottom: 50px;
+}
+
+#add_name_add,
+#add_name_add_new,
+#save_forecast,
+#cancel_forecast {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#add_name_edit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#add_name_cancel {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+
+/*-----------------
+	9. Name List
+-----------------------*/
+
+
+/*#name-list tbody {
+    display: none;
+}
+.page-header {
+    display: none;
+}
+#namelist_tbl_header {
+    display: none;
+}*/
+
+#namelist_tbl_header {
+    line-height: 0;
+    height: 17px;
+}
+
+#namelist_tbl_search {
+    /*line-height: 0;*/
+    height: 17px;
+}
+
+#name_list_search thead th {
+    border: none !important;
+    text-align: center;
+}
+
+#name_list_search tbody td {
+    border: none !important;
+}
+
+
+/*#name_list_search tbody tr:nth-of-type(1) td input, select {
+    border: 1px solid black !important;
+    width: auto;
+    border: 1px solid #ccc !important;
+    border-radius: 13px;
+}*/
+
+#name_list_search tbody tr:nth-of-type(1) td input,
+select {
+    /*border: 1px solid black !important;*/
+    width: auto;
+    /*border: 1px solid #ccc !important;*/
+    /*border: 1px solid #C97 !important;*/
+    /*border-radius: 13px;*/
+}
+
+
+/*#section, #department, #incharge, #role, #company {
+    border: 1px solid #C97 !important;
+    border-radius: 13px;
+}*/
+
+.namelist_search {
+    border: 1px solid #ccc !important;
+    border-radius: 13px;
+}
+
+
+/*.namelist_listbody,tr,td,#namelist_tbl_search {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}*/
+
+.namelist_listbody,
+td {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+.namelist_tbl,
+td {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+#name_list_search {
+    border: 1px solid #ccc !important;
+    /*border: hidden;
+    border-collapse: collapse;
+    border-radius: 18px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px #ccc;*/
+}
+
+#namelist_search_tr {
+    /*border: hidden !important;*/
+}
+
+#name_list_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+
+/*------------------------------------Add/Edit/Delete Links-----------------------------------------*/
+
+#edit_button {
+    background: cornflowerblue;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#delete_button {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+#add_name {
+    background: indianred;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+
+/*------------------------------------Edit Informaton-----------------------------------------*/
+
+#edit_employee_name {
+    border: none;
+    width: 119px;
+}
+
+#edit_section {
+    /*border: none;
+    width: 86px !important;*/
+}
+
+#edit_department {
+    /*border: none;
+    width: 117px !important;*/
+}
+
+#edit_incharge {
+    /*border: none;
+    width: 105px !important;*/
+}
+
+#edit_role {
+    border: none;
+    width: 70px !important;
+}
+
+#edit_company {
+    border: none;
+    width: 98px !important;
+}
+
+#edit_price {
+    border: none;
+    width: 57px !important;
+}
+
+
+/*------------------------------------Entry Pages: Input Field Error Message-----------------------------------------*/
+
+.division-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+.department-name-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+
+
+/*------------------------------------Section List: tbody-----------------------------------------*/
+
+#section_list_tbody {
+    text-align: center;
+    /*height: 133px;*/
+    /*height: 77px;*/
+}
+
+
+
+
+/*------------------------------------Section body resize-----------------------------------------*/
+
+#section_body {
+    width: 59% !important;
+}
+
+#department_body {
+    width: 59% !important;
+}
+
+#incharge_body {
+    width: 59% !important;
+}
+
+
+/*------------------------------------Department List-----------------------------------------*/
+
+#department_list_tbody {
+    text-align: center;
+    /*height: 133px;*/
+}
+
+#department_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#department_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#department_table thead th:nth-of-type(3) {
+    width: 100px
+}
+
+
+/*------------------------------------In-Charge List-----------------------------------------*/
+
+#incharge_list_tbody {
+    text-align: center;
+    /*height: 133px;*/
+}
+
+#incharge_table thead th:nth-of-type(1) {
+    width: 45px;
+}
+
+#incharge_table thead th:nth-of-type(2) {
+    width: 200px
+}
+
+
+/*------------------------------------Section Modal-----------------------------------------*/
+
+.cutom_button_group_section_modal {
+    float: right;
+    margin-left: 45%;
+}
+
+
+/*------------------------------------Name list: Dropdown check -----------------------------------------*/
+
+.multiselect {
+    position: absolute;
+    /*background-color: aliceblue;*/
+    margin: -12px;
+    padding-left: 13px;
+}
+
+.selectBox {
+    position: relative;
+}
+
+
+/*.selectBox select {
+    width: 100%;
+    font-weight: normal;
+    }*/
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+
+/*------Section -------*/
+
+#sectionChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#sectionChks label {
+    display: block;
+}
+
+#sectionChks label:hover {
+    background-color: #1e90ff;
+}
+
+
+/*------Department -------*/
+
+#departmentChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#departmentChks label {
+    display: block;
+}
+
+#departmentChks label:hover {
+    background-color: #1e90ff;
+}
+
+
+/*------Incharge -------*/
+
+#inchargeChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#inchargeChks label {
+    display: block;
+}
+
+#inchargeChks label:hover {
+    background-color: #1e90ff;
+}
+
+
+/*------Role -------*/
+
+#RoleChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#RoleChks label {
+    display: block;
+}
+
+#RoleChks label:hover {
+    background-color: #1e90ff;
+}
+
+#ExplanationChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+
+/*------Company -------*/
+
+#CompanyChks {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#CompanyChks label {
+    display: block;
+}
+
+#CompanyChks label:hover {
+    background-color: #1e90ff;
+}
+
+.commonselect {
+    font-weight: normal !important;
+    background-color: aliceblue;
+    text-align: left;
+}
+
+
+/*------Name List: Edit -------*/
+
+#name_list_edit_modal {
+    width: 100% !important;
+}
+
+#name_list_edit_modal thead tr {
+    text-align: center;
+}
+
+
+/*-----------------------------------------------Module Label text align ----------------------------*/
+
+
+
+
+/*---------------------------------------Name List: Search,list,modal--------------------------*/
+
+#employee_name_search {
+    border: none;
+    width: 119px;
+}
+
+
+/*---------------------------------------add name previous--------------------------*/
+
+#fixed_employee_info {
+    background-color: khaki;
+}
+
+
+/*---------------------------------------name list: look and feel like excel sheet--------------------------*/
+
+.namelist_td.name {
+    text-align: center;
+    width: 165px !important;
+}
+
+.namelist_td.section {
+    text-align: center;
+    width: 74px !important;
+}
+
+.namelist_td.department {
+    text-align: center;
+    width: 90px !important;
+}
+
+.namelist_td.InCharge {
+    text-align: center;
+    width: 115px !important;
+}
+
+.namelist_td.Role {
+    text-align: center;
+    width: 70px !important;
+}
+
+.namelist_td.Explanation {
+    text-align: left;
+    width: 250px !important;
+    text-indent: 1em;
+}
+
+.namelist_td.Company {
+    text-align: left;
+    width: 80px !important;
+    text-indent: 1em;
+}
+
+.namelist_td.Action {
+    text-align: left;
+    width: 100px !important;
+}
+
+.namelist_td.GradePoint {
+    text-align: center;
+    width: 45px !important;
+    text-indent: 1em;
+}
+
+.namelist_td.UnitPrice {
+    text-align: center;
+    width: 60px !important;
+    text-indent: 1em;
+}
+
+
+/*---------------------------------------Name list: Dropdown width--------------------------*/
+
+
+/* .selectBox.section select {
+    width: 71px;
+    font-weight: normal;
+}
+.selectBox.department select {
+    width: 87px;
+    font-weight: normal;
+}
+.selectBox.incharge select {
+    width: 111px;
+    font-weight: normal;
+}
+.selectBox.role select {
+    width: 65px;
+    font-weight: normal;
+}
+.selectBox.explanation select {
+    width: 247px;
+    font-weight: normal;
+}
+.selectBox.company select {
+    width: 76px;
+    font-weight: normal;
+} */
+
+
+/*---------------------------------------add name: design modify--------------------------*/
+
+#add_name_table_1 {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+
+.odd {
+    line-height: 2px;
+}
+
+.even {
+    line-height: 2px;
+}
+
+#add_name_action {
+    width: 126px;
+}
+
+
+/*---------------------------------------Name list: Dropdown width--------------------------*/
+
+.selectBox.section select {
+    width: 80px;
+    font-weight: normal;
+    height: 22px;
+}
+
+.selectBox.department select {
+    width: 110px;
+    font-weight: normal;
+    height: 22px;
+}
+
+.selectBox.incharge select {
+    width: 75px;
+    font-weight: normal;
+    height: 22px;
+}
+
+.selectBox.role select {
+    width: 48px;
+    font-weight: normal;
+    height: 22px;
+}
+
+.selectBox.explanation select {
+    width: 255px;
+    font-weight: normal;
+    height: 22px;
+}
+
+.selectBox.company select {
+    width: 86px;
+    font-weight: normal;
+    height: 22px;
+}
+
+
+/*---------------------------------------Name list: dropdown close outside click--------------------------*/
+
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.selectBox {
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+}
+
+.forecast_checkbox {
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+}
+
+.commonselect {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width: 150px;
+}
+
+
+/* #sectionChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#departmentChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#inchargeChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#RoleChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#ExplanationChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+}
+#CompanyChks{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background: #eee;
+    padding: 1rem;
+    z-index: 2;
+    width:150px;
+} */
+
+
+/*---------------------------------------Name list: edit popup--------------------------*/
+
+#modal_edit_name {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+
+#name_edit {
+    width: 131px;
+    opacity: .7;
+}
+
+#memo_edit {
+    width: 90px;
+}
+
+#section_edit {
+    width: 89px;
+}
+
+#department_edit {
+    width: 100px;
+}
+
+#incharge_edit {
+    width: 120px;
+}
+
+#role_edit {
+    width: 73px;
+}
+
+#explanation_edit {
+    width: 220px;
+}
+
+#company_edit {
+    width: 109px;
+}
+
+#grade_edit {
+    width: 46px;
+}
+
+#unitprice_edit {
+    width: 100px;
+}
+
+
+/*---------------------------------------name registration popup--------------------------*/
+
+#modal_add_name_new {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+
+#identity_new {
+    width: 110px;
+}
+
+#memo_new {
+    width: 83px;
+}
+
+#section_new {
+    width: 100px;
+}
+
+#department_new {
+    width: 110px;
+}
+
+#incharge_new {
+    width: 100px;
+}
+
+#role_new {
+    width: 84px;
+}
+
+#explanation_new {
+    width: 220px;
+}
+
+#company_new {
+    width: 96px;
+}
+
+#grade_new {
+    width: 64px;
+}
+
+#unitprice_new {
+    width: 86px;
+}
+
+/*---------------------------------------name registration--------------------------*/
+
+#name_registration {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+
+#name_registration {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic
+}
+
+
+/*---------------------------------------name list: datatable--------------------------*/
+
+
+/*.name_list_table_header{
+    background-color:slategray;
+    color:white;
+}
+table.dataTable > thead .sorting,
+table.dataTable > thead .sorting .sorting_asc,
+table.dataTable > thead .sorting .sorting_desc, {
+    background: none;
+}
+
+.arrow-icon{
+    margin-left:5px;
+}
+.sorting .arrow-icon {
+    background: url('../img/sort.png') no-repeat top left;
+    position: absolute;
+    height: 16px;
+    width: 10px;
+    background-size: 10px 13px;
+    margin-top: 3px;
+}
+.sorting_asc .arrow-icon {
+    background: url('../img/sortDown.png') no-repeat top left;
+    position: absolute;
+    height: 16px;
+    width: 10px;
+    background-size: 8px 14px;
+    margin-top: 3px;
+}
+.sorting_desc.arrow-icon {
+    background: url('../img/sortUp.png') no-repeat top left;
+    position: absolute;
+    height: 16px;
+    width: 10px;
+    background-size: 8px 14px;
+    margin-top: 3px;
+}*/
+
+
+/*---------------------------------------namelist: registration popup button--------------------------*/
+
+.master_setting_popup {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+
+.name_list_th.name {
+    text-align: center;
+    width: 195px !important;
+}
+
+.name_list_th.section {
+    text-align: center;
+    width: 101px !important;
+}
+
+.name_list_th.department {
+    text-align: center;
+    width: 91px !important;
+}
+
+.name_list_th.InCharge {
+    text-align: center;
+    width: 97px !important;
+}
+
+.name_list_th.company {
+    text-align: center;
+    margin-left: 185px;
+}
+
+
+/*---------------------------------------create forecast: search filters--------------------------*/
+
+.create_forecast.name_search {
+    width: 160px;
+}
+
+.create_forecast.section_search {
+    width: 110px;
+}
+
+.create_forecast.department_search {
+    width: 110px;
+}
+
+.create_forecast.incharge_search {
+    width: 110px;
+}
+
+.create_forecast.role_search {
+    width: 90px;
+}
+
+.create_forecast.explanation_search {
+    width: 250px;
+}
+
+.create_forecast.company_search {
+    width: 100px;
+}
+
+
+/* .create_forecast.period_search{
+    width:85px;   
+} */
+
+.forecast_multiselect {
+    position: absolute;
+    /*background-color: aliceblue;*/
+    margin: -12px;
+    padding-left: 13px;
+}
+
+.forecast_checkbox.section select {
+    width: 102px;
+    font-weight: normal;
+}
+
+.forecast_checkbox.department select {
+    width: 108px;
+    font-weight: normal;
+}
+
+.forecast_checkbox.incharge select {
+    width: 104px;
+    font-weight: normal;
+}
+
+.forecast_checkbox.role select {
+    width: 84px;
+    font-weight: normal;
+}
+
+.forecast_checkbox.explanation select {
+    width: 237px;
+    font-weight: normal;
+}
+
+.forecast_checkbox.company select {
+    width: 93px;
+    font-weight: normal;
+}
+
+
+/*---------------------------------------add name: search filters--------------------------*/
+
+#add_name_search {
+    /* border-collapse: collapse; */
+    font-size: 14px;
+    /*font-family: Yu Gothic;*/
+    /* font-size: 10px;
+    font-family: Yu Gothic;
+    border: none !important; */
+    border: none !important;
+    margin-bottom: -18px;
+}
+
+.add_name_name_filter {
+    width: 160px;
+}
+
+.add_name_section_filter {
+    width: 110px;
+}
+
+.add_name_department_filter {
+    width: 110px;
+}
+
+.add_name_incharge_filter {
+    width: 110px;
+}
+
+.add_name_role_filter {
+    width: 90px;
+}
+
+.add_name_explanation_filter {
+    width: 250px;
+}
+
+.add_name_company_filter {
+    width: 110px;
+}
+
+
+/*---------------------------------------name list: search filter: auto width--------------------------*/
+
+#name_search {
+    min-width: 100%;
+}
+
+.namelist_addname {
+    text-decoration: underline;
+    cursor: pointer;
+}

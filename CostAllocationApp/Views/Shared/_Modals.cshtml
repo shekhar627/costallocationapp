@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="cutom_button_group_section">
                             <a href="javascript:void(0);" id="section_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="section_registration" onclick="InsertSection();">Registration</a>
+                            <a href="javascript:void(0);" id="section_registration_btn" onclick="InsertSection();">Registration</a>
                         </div>
                     </div>
 
@@ -39,9 +39,8 @@
 </div>
 <!--section registration modal: end-->
 
-<!--department_registration modal: start-->
+<!--department registration modal: start-->
 <div id="department_registration" class="modal custom-modal fade" role="dialog">
-    @*<div class="modal-dialog modal-dialog-centered modal-md" role="document">*@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,13 +55,13 @@
                         <div class="row">
                             <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
-                                    <label for="department-name">Department Name <span class="text-danger">*</span></label>
+                                    <label for="department_name">Department Name <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <input class="form-control" id="department_name" type="text" placeholder="department name...">
-                                    <div class="department-name-error" id="department_name_err">
+                                    <div class="dept_name_err" id="department_name_err">
                                         Please provide a department name.
                                     </div>
                                 </div>
@@ -71,14 +70,14 @@
                         <div class="row">
                             <div class="col-sm-4 module-label-txt">
                                 <div class="form-group">
-                                    <label for="department-name">Section Name <span class="text-danger">*</span></label>
+                                    <label for="section_list">Section Name <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <select id="section_list" class="form-control col-12" style="width:100% !important; border:1px solid #e3e3e3 !important;">
                                     </select>
-                                    <div class="department-name-error" id="section_ist_error">
+                                    <div class="section_with_dept_err" id="section_list_error">
                                         Please select a section!
                                     </div>
                                 </div>
@@ -88,17 +87,17 @@
 
                     <div class="row">
                         <div class="cutom_button_group_department">
-                            <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddDepartment();">Registration</a>
+                            <a href="javascript:void(0);" id="department_cancel" data-dismiss="modal">Cancel</a>
+                            <a href="javascript:void(0);" id="department_registration_btn" onclick="InsertDepartment();">Registration</a>
                         </div>
                     </div>
                 </form>
             </div>
-            <!--Section Create End-->
         </div>
     </div>
 </div>
 <!--section registration modal: end-->
+
 <!--in-charge_registration modal: start-->
 <div id="in-charge_registration" class="modal custom-modal fade" role="dialog">
     @*<div class="modal-dialog modal-dialog-centered modal-md" role="document">*@
@@ -123,16 +122,16 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <input class="form-control" id="in_charge_name" type="text" placeholder="incharge name...">
-                                <div class="department-name-error">
+                                <div class="incharge_name_err">
                                     Please provide a In-Charge name.
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="cutom_button_group_incharge">
-                            <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddInCharge();">Registration</a>
+                        <div class="custom_btn_icharge">
+                            <a href="javascript:void(0);" id="incharge_cancel" data-dismiss="modal">Cancel</a>
+                            <a href="javascript:void(0);" id="incharge_registration" onclick="InsertInCharge();">Registration</a>
                         </div>
                     </div>
                 </form>
@@ -142,7 +141,7 @@
     </div>
 </div>
 <!--section registration modal: end-->
-<!--section registration modal: end-->
+
 <!--Role Modal-->
 <div id="role_registration_modal" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-md" role="document">
@@ -167,7 +166,7 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <input class="form-control" id="role_name" type="text" placeholder="role name...">
-                                    <div class="department-name-error">
+                                    <div class="role_name_err">
                                         Please provide a role name.
                                     </div>
                                 </div>
@@ -175,9 +174,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="cutom_button_group_incharge">
-                            <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddRoles();">Registration</a>
+                        <div class="custom_btn_role">
+                            <a href="javascript:void(0);" id="role_cancel" data-dismiss="modal">Cancel</a>
+                            <a href="javascript:void(0);" id="role_registration" onclick="InsertRoles();">Registration</a>
                         </div>
                     </div>
                 </form>
@@ -210,7 +209,7 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <input class="form-control" id="explanation_name" type="text" placeholder="explanation  name...">
-                                    <div class="department-name-error">
+                                    <div class="explanations_name_err">
                                         Please provide a explanation  name.
                                     </div>
                                 </div>
@@ -218,9 +217,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="cutom_button_group_incharge">
-                            <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddExplanations();">Registration</a>
+                        <div class="custom_btn_explanations">
+                            <a href="javascript:void(0);" id="explanation_cancel" data-dismiss="modal">Cancel</a>
+                            <a href="javascript:void(0);" id="explanation_registration" onclick="InsertExplanations();">Registration</a>
                         </div>
                     </div>
                 </form>
@@ -229,7 +228,7 @@
     </div>
 </div>
 
-<!-- Explanation Modal-->
+<!-- Company Modal-->
 <div id="company_reg_modal" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -253,7 +252,7 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <input class="form-control" id="companyName" type="text" placeholder="company name...">
-                                    <div class="department-name-error">
+                                    <div class="company_name_err">
                                         Please provide a company name.
                                     </div>
                                 </div>
@@ -261,121 +260,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="cutom_button_group_incharge">
-                            <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                            <a href="javascript:void(0);" id="custom_submit" onclick="AddCompany();">Registration</a>
+                        <div class="custom_btn_company">
+                            <a href="javascript:void(0);" id="company_cancel" data-dismiss="modal">Cancel</a>
+                            <a href="javascript:void(0);" id="company_registration" onclick="InsertCompanies();">Registration</a>
                         </div>
                     </div>
 
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--Name List Edit-->
-<div id="namelst_edit" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-xl" role="document" style="width: 80%;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form>
-                    <div id="main-div">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table id="name_list_edit_modal">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Section</th>
-                                            <th>Department</th>
-                                            <th>In-Charge</th>
-                                            <th>Role</th>
-                                            <th>Explanation</th>
-                                            <th>Company</th>
-                                            <th>Grade</th>
-                                            <th>Unit Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <input type="text" value="sudipto sarker" id="edit_employee_name" style="height: 25px" />
-                                            </td>
-                                            <td>
-                                                <select id="edit_section" style="width: 125px;">
-                                                    <option value="">Select Section</option>
-                                                    <option value="" selected>Section-1</option>
-                                                    <option value="">Section-2</option>
-                                                    <option value="">Section-3</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select id="edit_department">
-                                                    <option value="">Select Department</option>
-                                                    <option value="" selected>Department-1</option>
-                                                    <option value="">Department-2</option>
-                                                    <option value="">Department-3</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select id="edit_incharge">
-                                                    <option value="">Select In-Charge</option>
-                                                    <option value="" selected>Work Domain-1</option>
-                                                    <option value="">Work Domain-2</option>
-                                                    <option value="">Work Domain-3</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select id="edit_role">
-                                                    <option value="">Select Role</option>
-                                                    <option value="" selected>Role-1</option>
-                                                    <option value="">Role-2</option>
-                                                    <option value="">Role-3</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" value="development site" id="edit_employee_name" />
-                                            </td>
-                                            <td>
-                                                <select id="edit_company">
-                                                    <option value="">Select Company</option>
-                                                    <option value="" selected>Company-1</option>
-                                                    <option value="">Company-2</option>
-                                                    <option value="">Company-3</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" value="1" id="employee_grade_edit" style="width:59px;" />
-                                            </td>
-                                            <td>
-                                                <input type="text" value="500" id="employee_unit_price_edit" style="width:80px;" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="padding-left:86%;">
-                                <a href="javascript:void(0);" id="custom_cancel" data-dismiss="modal">Cancel</a>
-                                <a href="javascript:void(0);" id="custom_submit" onclick="InsertSection();">Update</a>
-                            </div>
-                        </div>
-                    </div>
-                    <style>
-
-                        #plus-icon {
-                            visibility: hidden;
-                        }
-                    </style>
                 </form>
             </div>
         </div>

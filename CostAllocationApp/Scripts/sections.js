@@ -42,6 +42,7 @@ function InsertSection() {
         return false;
     }
     else {
+        $(".section_name_err").hide();
         var data = {
             SectionName: sectionName
         };

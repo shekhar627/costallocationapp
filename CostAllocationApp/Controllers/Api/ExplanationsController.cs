@@ -28,7 +28,6 @@ namespace CostAllocationApp.Controllers.Api
                 explanation.CreatedDate = DateTime.Now;
                 explanation.IsActive = true;
 
-
                 int result = explanationsBLL.CreateExplanation(explanation);
                 if (result > 0)
                 {
