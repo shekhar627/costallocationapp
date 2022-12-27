@@ -114,5 +114,63 @@ namespace CostAllocationApp.DAL
                 return result;
             }
         }
+        public int GetCompanyCountWithEmployeeAsignment(int companyId)
+        {
+            string query = "select * from EmployeesAssignments where CompanyId=" + companyId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return result;
+        }
+
+        public Company GetCompanyByCompanyId(int companyId)
+        {
+            Company company = null;
+            string query = "select * from Companies where Id = " + companyId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            company = new Company();
+                            company.CompanyName = rdr["Name"].ToString();
+                            company.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    company = null;
+                }
+
+                return company;
+            }
+        }
     }
 }

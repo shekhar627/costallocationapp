@@ -34,5 +34,13 @@ namespace CostAllocationApp.BLL
         {
             return departmentDAL.CheckDepartment(department);
         }
+        public int GetDepartmentCountWithEmployeeAsignment(int departmentId)
+        {
+            return departmentDAL.GetDepartmentCountWithEmployeeAsignment(departmentId);
+        }
+        public Department GetDepartmentByDepartemntId(int departmentId)
+        {
+            return departmentDAL.GetDepartmentByDepartemntId(departmentId);
+        }
     }
 }

@@ -163,6 +163,63 @@ namespace CostAllocationApp.DAL
             }
         }
 
+        public int GetDepartmentCountWithEmployeeAsignment(int departmentId)
+        {
+            string query = "select * from EmployeesAssignments where DepartmentId=" + departmentId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
 
+                }
+            }
+
+            return result;
+        }
+
+        public Department GetDepartmentByDepartemntId(int departmentId)
+        {
+            Department department = null;
+            string query = "select * from Departments where Id = " + departmentId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            department = new Department();
+                            department.DepartmentName = rdr["Name"].ToString();
+                            department.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    department = null;
+                }
+
+                return department;
+            }
+        }
     }
 }

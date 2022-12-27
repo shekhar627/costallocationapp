@@ -116,5 +116,64 @@ namespace CostAllocationApp.DAL
                 return result;
             }
         }
+
+        public int GetSectionCountWithEmployeeAsignment(int sectionId)
+        {
+            string query = "select * from EmployeesAssignments where SectionId=" + sectionId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return result;
+        }
+
+        public Section GetSectionBySectionId(int sectionId)
+        {
+            Section section = null;
+            string query = "select * from Sections where Id = "+sectionId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            section = new Section();
+                            section.SectionName = rdr["Name"].ToString();
+                            section.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    section = null;
+                }
+
+                return section;
+            }
+        }
     }
 }

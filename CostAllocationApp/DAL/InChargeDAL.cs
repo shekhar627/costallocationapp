@@ -114,6 +114,63 @@ namespace CostAllocationApp.DAL
                 return result;
             }
         }
+        public int GetInChargeCountWithEmployeeAsignment(int inChargeId)
+        {
+            string query = "select * from EmployeesAssignments where InChargeId=" + inChargeId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
 
+                }
+            }
+
+            return result;
+        }
+
+        public InCharge GetInChargeByInChargeId(int inChargeId)
+        {
+            InCharge incharge = null;
+            string query = "select * from InCharges where Id = " + inChargeId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            incharge = new InCharge();
+                            incharge.InChargeName = rdr["Name"].ToString();
+                            incharge.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    incharge = null;
+                }
+
+                return incharge;
+            }
+        }
     }
 }

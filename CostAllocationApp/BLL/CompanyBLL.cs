@@ -30,5 +30,13 @@ namespace CostAllocationApp.BLL
         {
             return companyDAL.CheckComany(companyName);
         }
+        public int GetCompanyCountWithEmployeeAsignment(int companyId)
+        {
+            return companyDAL.GetCompanyCountWithEmployeeAsignment(companyId);
+        }
+        public Company GetCompanyByCompanyId(int companyId)
+        {
+            return companyDAL.GetCompanyByCompanyId(companyId);
+        }
     }
 }

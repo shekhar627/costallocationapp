@@ -123,5 +123,64 @@ namespace CostAllocationApp.DAL
             }
 
         }
+
+        public int GetExplanationCountWithEmployeeAsignment(int explanationId)
+        {
+            string query = "select * from EmployeesAssignments where ExplanationId=" + explanationId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return result;
+        }
+
+        public Explanation GetExplanationByExplanationId(int explanationId)
+        {
+            Explanation explanation = null;
+            string query = "select * from Explanations where Id = " + explanationId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            explanation = new Explanation();
+                            explanation.ExplanationName = rdr["Name"].ToString();
+                            explanation.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    explanation = null;
+                }
+
+                return explanation;
+            }
+        }
     }
 }

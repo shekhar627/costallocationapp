@@ -32,6 +32,16 @@ namespace CostAllocationApp.BLL
             return salaryDAL.CheckGrade(salary);
         }
 
+        public int GetSalaryCountWithEmployeeAsignment(int gradeId)
+        {
+            return salaryDAL.GetSalaryCountWithEmployeeAsignment(gradeId);
+        }
+
+        public Salary GetSalaryBySalaryId(int salaryId)
+        {
+            return salaryDAL.GetSalaryBySalaryId(salaryId);
+        }
+
         public Salary CompareSalary(decimal unitPrice)
         {
             Salary salary = null;
