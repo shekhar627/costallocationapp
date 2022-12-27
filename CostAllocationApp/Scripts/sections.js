@@ -7,16 +7,23 @@
     //is section checked
     $('#section_inactive_btn').on('click', function (event) {
         let id = GetCheckedIds("section_list_tbody");
+        IsSectionAssigned(id);
         if (id == "") {
             alert("Please check first to delete.");
             return false;
         }
     });
-
     //inactive section
     $('#section_inactive_confirm_btn').on('click', function (event) {
         event.preventDefault();
         let id = GetCheckedIds("section_list_tbody");
+
+        var sectionWarningTxt = $("#section_warning_text").val();
+        $("#section_warning").html(sectionWarningTxt);
+        var tempVal = $("#section_warning").html();
+        alert(tempVal)
+       
+
         id = id.slice(0, -1);
         $.ajax({
             url: '/api/sections?sectionIds=' + id,
@@ -32,6 +39,39 @@
         $('#delete_section').modal('toggle');
     });
 });
+//function GetCheckedIds(sectionId) {
+//    var hidSectionIds = $("#section_chk_ids").val();
+//    if (hidSectionIds == '') {
+//        $("#section_chk_ids").val(hidSectionIds);
+//    } else {
+
+//    }
+//    alert("test: " + sectionId);
+//}
+
+//Get Assgined Section Count
+function IsSectionAssigned(sectionIds) {
+    var returnVal = "";
+    var apiurl = '/api/utilities/SectionCount?sectionIds=' + sectionIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (key, item) {
+                if (returnVal == "") {
+                    returnVal = item;
+                } else {
+                    returnVal = returnVal + ". " + item;
+                }
+            });
+            $("#section_warning_text").val(returnVal);
+        },
+        error: function (data) {
+            $("#section_warning_text").val(returnVal);
+        }
+    });    
+}
 
 //sections insert
 function InsertSection() {
@@ -40,8 +80,7 @@ function InsertSection() {
     if (sectionName == "") {
         $(".section_name_err").show();
         return false;
-    }
-    else {
+    } else {
         $(".section_name_err").hide();
         var data = {
             SectionName: sectionName
@@ -55,9 +94,9 @@ function InsertSection() {
             success: function (data) {
                 $("#page_load_after_modal_close").val("yes");
                 ToastMessageSuccess(data);
-                
+
                 $('#section-name').val('');
-                GetSectionList();                
+                GetSectionList();
             },
             error: function (data) {
                 alert(data.responseJSON.Message);
@@ -71,39 +110,8 @@ function GetSectionList() {
     $.getJSON('/api/sections/')
         .done(function (data) {
             $('#section_list_tbody').empty();
-
-            // $('#section_table').DataTable({
-            //     destroy: true,
-            //     data: data,
-            //     ordering: true,
-            //     orderCellsTop: true,
-            //     pageLength: 5,
-            //     searching: false,
-            //     bLengthChange: false,
-            //     columns: [                  
-            //         {
-            //             data: 'Id',
-            //             render: function (id) {
-            //                 return `<input type="checkbox" class="section_list_chk" data-id='${id}' />`;
-            //             }
-            //         },
-            //         {
-            //             data: 'SectionName'
-            //         }
-            //         // {
-            //         //     data: 'Id',
-            //         //     render: function (Id) {
-            //         //         if (tempCompanyName.toLowerCase() == 'mw') {
-            //         //             return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
-            //         //         } else {
-            //         //             return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
-            //         //         }
-            //         //     }
-            //         // }
-            //     ]
-            // });
             $.each(data, function (key, item) {
-                $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
+                $('#section_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.SectionName}</td></tr>`);
             });
         });
-}  
+}

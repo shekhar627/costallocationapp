@@ -62,6 +62,8 @@
     <br><br>
 </div>
 
+<input type="hidden" id="section_warning_text" />
+<input type="hidden" id="section_chk_ids" />
 <!-- Inactive section modal -->
 <div class="modal custom-modal fade" id="delete_section" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -69,6 +71,7 @@
             <div class="modal-body">
                 <div class="form-header">
                     <h3>Delete Section</h3>
+                    <p id="section_warning" style="display:none;"></p>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

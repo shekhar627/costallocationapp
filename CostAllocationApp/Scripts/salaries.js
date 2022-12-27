@@ -5,6 +5,9 @@
         event.preventDefault();
         let id = GetCheckedIds("salary_list_tbody");
         id = id.slice(0, -1);
+        var salaryWarningTxt = $("#salary_warning_text").val();
+        alert(salaryWarningTxt);
+
         $.ajax({
             url: '/api/Salaries?salaryIds=' + id,
             type: 'DELETE',
@@ -23,6 +26,7 @@
     $('#salary_inactive_btn').on('click', function (event) {
 
         let id = GetCheckedIds("salary_list_tbody");
+        IsSalaryAssigned(id);
         if (id == "") {
             alert("Please check first to delete.");
             return false;
@@ -30,7 +34,28 @@
     });
 
 });
-
+function IsSalaryAssigned(salaryIds) {
+    var returnVal = "";
+    var apiurl = '/api/utilities/SalaryCount?salaryIds=' + salaryIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (key, item) {
+                if (returnVal == "") {
+                    returnVal = item;
+                } else {
+                    returnVal = returnVal + ". " + item;
+                }
+            });
+            $("#salary_warning_text").val(returnVal);
+        },
+        error: function (data) {
+            $("#salary_warning_text").val(returnVal);
+        }
+    });
+}
 function GetSalaries(){
     $.getJSON('/api/Salaries/')
     .done(function (data) {

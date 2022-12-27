@@ -6,7 +6,8 @@
         let id = GetCheckedIds("incharge_list_tbody");
 
         id = id.slice(0, -1);
-        console.log(id);
+        var inchargeWarningTxt = $("#incharge_warning_text").val();
+        alert(inchargeWarningTxt);
 
         $.ajax({
             url: '/api/InCharges?inChargeIds=' + id,
@@ -27,7 +28,7 @@
     $('#incharge_inactive_btn').on('click', function (event) {
 
         let id = GetCheckedIds("incharge_list_tbody");
-
+        IsInchargeAssigned(id);
         if (id == "") {
             alert("Please check first to delete.");
             return false;
@@ -36,6 +37,29 @@
         }
     });
 });
+
+function IsInchargeAssigned(inChargeIds) {
+    var returnVal = "";
+    var apiurl = '/api/utilities/InChargeCount?inChargeIds=' + inChargeIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (key, item) {
+                if (returnVal == "") {
+                    returnVal = item;
+                } else {
+                    returnVal = returnVal + ". " + item;
+                }
+            });
+            $("#incharge_warning_text").val(returnVal);
+        },
+        error: function (data) {
+            $("#incharge_warning_text").val(returnVal);
+        }
+    });
+}
 
 //insert department
 function InsertInCharge() {

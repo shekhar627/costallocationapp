@@ -363,7 +363,15 @@ namespace CostAllocationApp.Controllers.Api
                             if (section != null)
                             {
                                 int result = sectionBLL.GetSectionCountWithEmployeeAsignment(tempSectionId);
-                                countMessage.Add(result + " rows counted for " + section.SectionName);
+                                //countMessage.Add(result + " rows counted for " + section.SectionName);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + section.SectionName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + section.SectionName);
+                                }
                             }
                         }
                     }
@@ -403,7 +411,15 @@ namespace CostAllocationApp.Controllers.Api
                             if (department != null)
                             {
                                 int result = departmentBLL.GetDepartmentCountWithEmployeeAsignment(tempDepartmentId);
-                                countMessage.Add(result + " rows counted for " + department.DepartmentName);
+                                //countMessage.Add(result + " rows counted for " + department.DepartmentName);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + department.DepartmentName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + department.DepartmentName);
+                                }
                             }
                         }
                     }
@@ -443,7 +459,15 @@ namespace CostAllocationApp.Controllers.Api
                             if (company != null)
                             {
                                 int result = companyBLL.GetCompanyCountWithEmployeeAsignment(tempCompanyId);
-                                countMessage.Add(result + " rows counted for " + company.CompanyName);
+                                //countMessage.Add(result + " rows counted for " + company.CompanyName);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + company.CompanyName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + company.CompanyName);
+                                }
                             }
                         }
                     }
@@ -483,7 +507,15 @@ namespace CostAllocationApp.Controllers.Api
                             if (inCharge != null)
                             {
                                 int result = inChargeBLL.GetInChargeCountWithEmployeeAsignment(tempInChargeId);
-                                countMessage.Add(result + " rows counted for " + inCharge.InChargeName);
+                                //countMessage.Add(result + " rows counted for " + inCharge.InChargeName);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + inCharge.InChargeName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + inCharge.InChargeName);
+                                }
                             }
                         }
                     }
@@ -523,7 +555,16 @@ namespace CostAllocationApp.Controllers.Api
                             if (role != null)
                             {
                                 int result = roleBLL.GetRoleCountWithEmployeeAsignment(tempRoleId);
-                                countMessage.Add(result + " rows counted for " + role.RoleName);
+                                //countMessage.Add(result + " rows counted for " + role.RoleName);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + role.RoleName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + role.RoleName);
+
+                                }
                             }
                         }
                     }
@@ -564,6 +605,14 @@ namespace CostAllocationApp.Controllers.Api
                             {
                                 int result = explanationsBLL.GetExplanationCountWithEmployeeAsignment(tempExplanationId);
                                 countMessage.Add(result + " rows counted for " + explanation.ExplanationName);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + explanation.ExplanationName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + explanation.ExplanationName);
+                                }
                             }
                         }
                     }
@@ -603,7 +652,15 @@ namespace CostAllocationApp.Controllers.Api
                             if (salary != null)
                             {
                                 int result = salaryBLL.GetSalaryCountWithEmployeeAsignment(tempSalaryId);
-                                countMessage.Add(result + " rows counted for " + salary.SalaryGrade);
+                                //countMessage.Add(result + " rows counted for " + salary.SalaryGrade);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + salary.SalaryGrade);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + salary.SalaryGrade);
+                                }
                             }
                         }
                     }

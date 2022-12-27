@@ -6,7 +6,8 @@
         let id = GetCheckedIds("role_list_tbody");
 
         id = id.slice(0, -1);
-        console.log(id);
+        var roleWarningTxt = $("#role_warning_text").val();
+        alert(roleWarningTxt);
 
         $.ajax({
             url: '/api/Roles?roleIds=' + id,
@@ -27,12 +28,35 @@
     $('#role_inactive_btn').on('click', function (event) {
 
         let id = GetCheckedIds("role_list_tbody");
+        IsRoleAssigned(id);
         if (id == "") {
             alert("Please check first to delete.");
             return false;
         }
     });
 });
+function IsRoleAssigned(roleIds) {
+    var returnVal = "";
+    var apiurl = '/api/utilities/RoleCount?roleIds=' + roleIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (key, item) {
+                if (returnVal == "") {
+                    returnVal = item;
+                } else {
+                    returnVal = returnVal + ". " + item;
+                }
+            });
+            $("#role_warning_text").val(returnVal);
+        },
+        error: function (data) {
+            $("#role_warning_text").val(returnVal);
+        }
+    });
+}
 
 //insert role
 function InsertRoles() {
