@@ -30,5 +30,13 @@ namespace CostAllocationApp.BLL
         {
             return inChargeDAL.CheckInCharge(incharegeName);
         }
+        public int GetInChargeCountWithEmployeeAsignment(int inChargeId)
+        {
+            return inChargeDAL.GetInChargeCountWithEmployeeAsignment(inChargeId);
+        }
+        public InCharge GetInChargeByInChargeId(int inChargeId)
+        {
+            return inChargeDAL.GetInChargeByInChargeId(inChargeId);
+        }
     }
 }

@@ -121,5 +121,64 @@ namespace CostAllocationApp.DAL
                 return result;
             }
         }
+
+        public int GetSalaryCountWithEmployeeAsignment(int gradeId)
+        {
+            string query = "select * from EmployeesAssignments where GradeId=" + gradeId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return result;
+        }
+
+        public Salary GetSalaryBySalaryId(int salaryId)
+        {
+            Salary salary = null;
+            string query = "select * from Grades where Id = " + salaryId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            salary = new Salary();
+                            salary.SalaryGrade = rdr["GradePoints"].ToString();
+                            salary.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    salary = null;
+                }
+
+                return salary;
+            }
+        }
     }
 }

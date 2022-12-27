@@ -33,5 +33,14 @@ namespace CostAllocationApp.BLL
         {
             return sectionDAL.CheckSection(sectionName);
         }
+
+        public int GetSectionCountWithEmployeeAsignment(int sectionId)
+        {
+            return sectionDAL.GetSectionCountWithEmployeeAsignment(sectionId);
+        }
+        public Section GetSectionBySectionId(int sectionId)
+        {
+            return sectionDAL.GetSectionBySectionId(sectionId);
+        }
     }
 }

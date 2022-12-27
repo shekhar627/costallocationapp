@@ -30,5 +30,13 @@ namespace CostAllocationApp.BLL
         {
             return explanationDAL.GetSingleExplanationByExplanationId(id);
         }
+        public int GetExplanationCountWithEmployeeAsignment(int explanationId)
+        {
+            return explanationDAL.GetExplanationCountWithEmployeeAsignment(explanationId);
+        }
+        public Explanation GetExplanationByExplanationId(int explanationId)
+        {
+            return explanationDAL.GetExplanationByExplanationId(explanationId);
+        }
     }
 }

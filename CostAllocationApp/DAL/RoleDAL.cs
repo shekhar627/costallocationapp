@@ -115,6 +115,63 @@ namespace CostAllocationApp.DAL
                 return result;
             }
         }
+        public int GetRoleCountWithEmployeeAsignment(int roleId)
+        {
+            string query = "select * from EmployeesAssignments where RoleId=" + roleId;
+            int result = 0;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            result++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
 
+                }
+            }
+
+            return result;
+        }
+
+        public Role GetRoleByRoleId(int roleId)
+        {
+            Role role = null;
+            string query = "select * from Roles where Id = " + roleId;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            role = new Role();
+                            role.RoleName = rdr["Name"].ToString();
+                            role.Id = Convert.ToInt32(rdr["Id"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    role = null;
+                }
+
+                return role;
+            }
+        }
     }
 }

@@ -16,11 +16,22 @@ namespace CostAllocationApp.Controllers.Api
         DepartmentBLL departmentBLL = null;
         EmployeeAssignmentBLL employeeAssignmentBLL = null;
         SalaryBLL salaryBLL = null;
+        SectionBLL sectionBLL = null;
+        CompanyBLL companyBLL = new CompanyBLL();
+        InChargeBLL inChargeBLL = null;
+        RoleBLL roleBLL = null;
+        ExplanationsBLL explanationsBLL = null;
+
         public UtilitiesController()
         {
             departmentBLL = new DepartmentBLL();
             employeeAssignmentBLL = new EmployeeAssignmentBLL();
             salaryBLL = new SalaryBLL();
+            sectionBLL = new SectionBLL();
+            companyBLL = new CompanyBLL();
+            inChargeBLL = new InChargeBLL();
+            roleBLL = new RoleBLL();
+            explanationsBLL = new ExplanationsBLL();
         }
 
 
@@ -332,5 +343,284 @@ namespace CostAllocationApp.Controllers.Api
             return Ok(employeeAssignmentViewModels);
         }
 
+        [HttpGet]
+        public IHttpActionResult SectionCount(string sectionIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(sectionIds))
+            {
+                int tempSectionId = 0;
+                String[] _ids = sectionIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempSectionId);
+                        if (tempSectionId > 0)
+                        {
+                            var section = sectionBLL.GetSectionBySectionId(tempSectionId);
+                            if (section != null)
+                            {
+                                int result = sectionBLL.GetSectionCountWithEmployeeAsignment(tempSectionId);
+                                countMessage.Add(result + " rows counted for " + section.SectionName);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult DepartmentCount(string departmentIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(departmentIds))
+            {
+                int tempDepartmentId = 0;
+                String[] _ids = departmentIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempDepartmentId);
+                        if (tempDepartmentId > 0)
+                        {
+                            var department = departmentBLL.GetDepartmentByDepartemntId(tempDepartmentId);
+                            if (department != null)
+                            {
+                                int result = departmentBLL.GetDepartmentCountWithEmployeeAsignment(tempDepartmentId);
+                                countMessage.Add(result + " rows counted for " + department.DepartmentName);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult CompanyCount(string companyIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(companyIds))
+            {
+                int tempCompanyId = 0;
+                String[] _ids = companyIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempCompanyId);
+                        if (tempCompanyId > 0)
+                        {
+                            var company = companyBLL.GetCompanyByCompanyId(tempCompanyId);
+                            if (company != null)
+                            {
+                                int result = companyBLL.GetCompanyCountWithEmployeeAsignment(tempCompanyId);
+                                countMessage.Add(result + " rows counted for " + company.CompanyName);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult InChargeCount(string inChargeIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(inChargeIds))
+            {
+                int tempInChargeId = 0;
+                String[] _ids = inChargeIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempInChargeId);
+                        if (tempInChargeId > 0)
+                        {
+                            var inCharge = inChargeBLL.GetInChargeByInChargeId(tempInChargeId);
+                            if (inCharge != null)
+                            {
+                                int result = inChargeBLL.GetInChargeCountWithEmployeeAsignment(tempInChargeId);
+                                countMessage.Add(result + " rows counted for " + inCharge.InChargeName);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult RoleCount(string roleIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(roleIds))
+            {
+                int tempRoleId = 0;
+                String[] _ids = roleIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempRoleId);
+                        if (tempRoleId > 0)
+                        {
+                            var role = roleBLL.GetRoleByRoleId(tempRoleId);
+                            if (role != null)
+                            {
+                                int result = roleBLL.GetRoleCountWithEmployeeAsignment(tempRoleId);
+                                countMessage.Add(result + " rows counted for " + role.RoleName);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult ExplanationCount(string explanationIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(explanationIds))
+            {
+                int tempExplanationId = 0;
+                String[] _ids = explanationIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempExplanationId);
+                        if (tempExplanationId > 0)
+                        {
+                            var explanation = explanationsBLL.GetExplanationByExplanationId(tempExplanationId);
+                            if (explanation != null)
+                            {
+                                int result = explanationsBLL.GetExplanationCountWithEmployeeAsignment(tempExplanationId);
+                                countMessage.Add(result + " rows counted for " + explanation.ExplanationName);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult SalaryCount(string salaryIds)
+        {
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(salaryIds))
+            {
+                int tempSalaryId = 0;
+                String[] _ids = salaryIds.Split(',');
+
+                if (_ids.Length > 0)
+                {
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempSalaryId);
+                        if (tempSalaryId > 0)
+                        {
+                            var salary = salaryBLL.GetSalaryBySalaryId(tempSalaryId);
+                            if (salary != null)
+                            {
+                                int result = salaryBLL.GetSalaryCountWithEmployeeAsignment(tempSalaryId);
+                                countMessage.Add(result + " rows counted for " + salary.SalaryGrade);
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
+                }
+                else
+                {
+                    return BadRequest("Invalid Data");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest("Invalid Data");
+            }
+
+        }
     }
 }

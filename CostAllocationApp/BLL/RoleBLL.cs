@@ -29,5 +29,13 @@ namespace CostAllocationApp.BLL
         {
             return roleDAL.CheckRole(roleName);
         }
+        public int GetRoleCountWithEmployeeAsignment(int roleId)
+        {
+            return roleDAL.GetRoleCountWithEmployeeAsignment(roleId);
+        }
+        public Role GetRoleByRoleId(int roleId)
+        {
+            return roleDAL.GetRoleByRoleId(roleId);
+        }
     }
 }
