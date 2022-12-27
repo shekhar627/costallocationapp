@@ -1,9 +1,27 @@
-﻿/*-----------------
-	1. General
------------------------*/
+﻿/*-----------------Name List-----------------------*/
 
-body {
-    overflow-x: auto;
+#name-list tbody td:nth-of-type(2) {
+    text-align: center;
+}
+
+#name-list tbody td:nth-of-type(3) {
+    text-align: center;
+}
+
+#name-list tbody td:nth-of-type(4) {
+    text-align: center;
+}
+
+#name-list tbody td:nth-of-type(5) {
+    text-align: center;
+}
+
+#name-list tbody td:nth-of-type(7) {
+    text-align: center;
+}
+
+#name-list tbody td:nth-of-type(8) {
+    text-align: center;
 }
 
 .pagination>.active>a,
@@ -1531,23 +1549,29 @@ table.dataTable > thead .sorting .sorting_desc, {
 
 .name_list_th.section {
     text-align: center;
-    width: 101px !important;
+    width: 119px !important;
 }
 
 .name_list_th.department {
     text-align: center;
-    width: 91px !important;
+    width: 82px !important;
 }
 
-.name_list_th.InCharge {
+.name_list_th.incharge {
     text-align: center;
-    width: 97px !important;
+    width: 131px !important;
 }
 
 .name_list_th.company {
     text-align: center;
     margin-left: 185px;
 }
+
+
+/* .name_list_th.role {
+    text-align: center;
+    width: 131px !important;
+} */
 
 
 /*---------------------------------------create forecast: search filters--------------------------*/

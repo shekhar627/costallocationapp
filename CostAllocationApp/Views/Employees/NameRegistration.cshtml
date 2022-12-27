@@ -4,8 +4,9 @@
 }
 
 @section Styles {
-    <link href="@Url.Content("~/Content/nameregistration.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/common.css")" rel="stylesheet" type="text/css" />
+    <link href="/Content/common.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/nameregistration.css" rel="stylesheet" type="text/css" />    
+    <link href="/Content/modal_registrations.css" rel="stylesheet" type="text/css" /> 
 }
 
 <div class="content container-fluid">
@@ -109,9 +110,12 @@
 <input type="hidden" id="hid_gradeId" />
 <input type="hidden" id="hid_unitPrice" />
 
+@Html.Partial("_Modals")
+
 @section Scripts{
-    <script src="/Scripts/nameregistration.js"></script>
     <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/nameregistration.js"></script>
+    <script src="/Scripts/modal_registrations.js"></script>
 
     <script>
 
@@ -456,4 +460,3 @@
         });
     </script>
 }
-@Html.Partial("_Modals")

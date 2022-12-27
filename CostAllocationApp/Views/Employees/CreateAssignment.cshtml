@@ -2,9 +2,9 @@
     ViewBag.Title = "Add Name";
 }
 @section Styles {
-    <link href="@Url.Content("~/Content/addname.css")" rel="stylesheet" type="text/css" />
+    <link href="/Content/common.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/addname.css" rel="stylesheet" type="text/css" />    
 }
-
 <div class="content container-fluid">
     <!-- /Page Header -->
     <div class="row">
@@ -309,7 +309,9 @@
 
 
 @section Scripts{
+    <script src="/Scripts/common.js"></script>
     <script src="/Scripts/addname.js"></script>
+
     <script type="text/javascript">
         let previousAssignmentRow = 0;
         let unitPrices = [];

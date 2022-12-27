@@ -6,6 +6,7 @@ function InsertSection() {
         $(".section_name_err").show();
         return false;
     } else {
+        $(".section_name_err").hide();
         var data = {
             SectionName: sectionName
         };
@@ -40,12 +41,12 @@ function GetSectionList() {
 }
 
 //Load Section 
-$('#department_modal_href').click(function () {
+$('#department_modal_href').click(function() {
     $.getJSON('/api/sections/')
-        .done(function (data) {
+        .done(function(data) {
             $('#section_list').empty();
             $('#section_list').append(`<option value=''>Select Section</option>`)
-            $.each(data, function (key, item) {
+            $.each(data, function(key, item) {
                 $('#section_list').append(`<option value='${item.Id}'>&nbsp;&nbsp; ${item.SectionName}</option>`)
             });
         });
