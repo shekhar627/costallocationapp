@@ -215,8 +215,10 @@
     <Content Include="Content\line-awesome.min.css" />
     <Content Include="Content\master_setting.css" />
     <Content Include="Content\modal_registrations.css" />
+    <Content Include="Content\namelist-responsive.css" />
     <Content Include="Content\namelist.css" />
     <Content Include="Content\nameregistration.css" />
+    <Content Include="Content\responsive.css" />
     <Content Include="Content\roles.css" />
     <Content Include="Content\salaries.css" />
     <Content Include="Content\sections.css" />

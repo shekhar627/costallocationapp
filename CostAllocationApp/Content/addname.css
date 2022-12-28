@@ -1,6 +1,9 @@
 ﻿/*-----------------Add Name-----------------------*/
+#add_name_table_1 > thead > tr > th:before, #add_name_table_1 > thead > tr > th:after{
+    content:none !important;
+}
 
-#add_name_table_1>tbody>tr>td:nth-of-type(3) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(3) {
     text-align: center !important;
 }
 

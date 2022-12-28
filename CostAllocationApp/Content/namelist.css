@@ -786,6 +786,11 @@ td {
     border-spacing: 4px;
 }
 
+.namelist_tbl > thead > tr > th:before, .namelist_tbl > thead > tr > th:after {
+    content: none !important;
+}
+
+
 .namelist_tbl,
 td {
     border: 1px solid #ccc !important;
