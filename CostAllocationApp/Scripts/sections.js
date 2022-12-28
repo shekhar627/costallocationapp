@@ -1,18 +1,26 @@
-﻿$(document).ready(function () {
+﻿function onSectionInactiveClick() {
+    let sectionIds = GetCheckedIds("section_list_tbody");
+    var apiurl = '/api/utilities/SectionCount?sectionIds=' + sectionIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $('.section_count').empty();
+            $.each(data, function (key, item) {
+                $('.section_count').append(`<li class='text-info'>${item}</li>`);
+            });
+        },
+        error: function (data) {
+        }
+    });  
+}
+$(document).ready(function () {
     //------------------Section Master----------------------//
 
     //show sections on page load
     GetSectionList();
 
-    //is section checked
-    $('#section_inactive_btn').on('click', function (event) {
-        let id = GetCheckedIds("section_list_tbody");
-        IsSectionAssigned(id);
-        if (id == "") {
-            alert("Please check first to delete.");
-            return false;
-        }
-    });
     //inactive section
     $('#section_inactive_confirm_btn').on('click', function (event) {
         event.preventDefault();
@@ -21,7 +29,7 @@
         var sectionWarningTxt = $("#section_warning_text").val();
         $("#section_warning").html(sectionWarningTxt);
         var tempVal = $("#section_warning").html();
-        alert(tempVal)
+        //alert(tempVal)
        
 
         id = id.slice(0, -1);

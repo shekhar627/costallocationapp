@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Section Registration";    
+    ViewBag.Title = "Section Registration";
 }
 @section Styles {
     <link rel="stylesheet" type="text/css" href="/Content/common.css" />
@@ -22,7 +22,7 @@
                     <tbody id="section_list_tbody"></tbody>
                 </table>
                 <label id="section_delete_btn">
-                    <a id="section_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_section">Delete</a>
+                    <a id="section_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_section" onClick="onSectionInactiveClick()">Delete</a>
                 </label>
             </div>
         </div>
@@ -72,6 +72,7 @@
                 <div class="form-header">
                     <h3>Delete Section</h3>
                     <p id="section_warning" style="display:none;"></p>
+                    <ol class="section_count" style="text-align:left;"></ol>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">
@@ -90,6 +91,7 @@
 </div>
 
 @section Scripts{
-    <script src="/Scripts/common.js"></script> 
-    <script src="/Scripts/sections.js"></script>           
+
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/sections.js"></script>
 }
