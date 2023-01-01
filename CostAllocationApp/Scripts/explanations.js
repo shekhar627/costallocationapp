@@ -1,13 +1,29 @@
-﻿$(document).ready(function () {
+﻿function onExplanationInactiveClick() {
+    let explanationIds = GetCheckedIds("explanations_list_tbody");
+    var apiurl = '/api/utilities/ExplanationCount?roleIds=' + explanationIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $('.explanation_count').empty();
+            $.each(data, function (key, item) {
+                $('.explanation_count').append(`<li class='text-info'>${item}</li>`);
+            });
+        },
+        error: function (data) {
+        }
+    });
+}
+
+$(document).ready(function () {
     GetExplanationList();
        
     $('#explanations_inactive_confirm_btn').on('click', function (event) {
         event.preventDefault();
         let id = GetCheckedIds("explanations_list_tbody");
         id = id.slice(0, -1);
-        var explanationWarningTxt = $("#explanation_warning_text").val();
-        alert(explanationWarningTxt);
-
+        
         $.ajax({
             url: '/api/Explanations?explanationIds=' + id,
             type: 'DELETE',
@@ -23,8 +39,7 @@
     });
 
     $('#explanations_inactive_btn').on('click', function (event) {
-        let id = GetCheckedIds("explanations_list_tbody");
-        IsExplanationAssigned(id);
+        let id = GetCheckedIds("explanations_list_tbody");        
         if (id == "") {
             alert("Please check first to delete.");
             return false;
@@ -32,30 +47,6 @@
     });
 
 });
-
-function IsExplanationAssigned(explanationIds) {
-    var returnVal = "";
-    var apiurl = '/api/utilities/ExplanationCount?roleIds=' + explanationIds;
-    $.ajax({
-        url: apiurl,
-        type: 'Get',
-        dataType: 'json',
-        success: function (data) {
-            $.each(data, function (key, item) {
-                if (returnVal == "") {
-                    returnVal = item;
-                } else {
-                    returnVal = returnVal + ". " + item;
-                }
-            });
-            $("#explanation_warning_text").val(returnVal);
-        },
-        error: function (data) {
-            $("#explanation_warning_text").val(returnVal);
-        }
-    });
-}
-
 
 function GetExplanationList(){
     $.getJSON('/api/Explanations/')

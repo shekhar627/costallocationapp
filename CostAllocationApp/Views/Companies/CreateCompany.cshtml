@@ -23,7 +23,7 @@
                     <tbody id="company_list_tbody"></tbody>
                 </table>
                 <label id="company_delete_btn">
-                    <a id="company_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#inactive_company_modal">Delete</a>
+                    <a id="company_inactive_btn" href="javascript:void();" data-toggle="modal" onclick="onCompanyInactiveClick();" data-target="#inactive_company_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -71,6 +71,7 @@
             <div class="modal-body">
                 <div class="form-header">
                     <h3>Delete Company</h3>
+                    <ol class="company_count" style="text-align:left;"></ol>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

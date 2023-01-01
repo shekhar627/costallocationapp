@@ -1,4 +1,22 @@
-﻿$(document).ready(function () {    
+﻿function onDepartmentInactiveClick() {
+    let departmentIds = GetCheckedIds("department_list_tbody");    
+    var apiurl = '/api/utilities/DepartmentCount?departmentIds=' + departmentIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $('.department_count').empty();
+            $.each(data, function (key, item) {
+                $('.department_count').append(`<li class='text-info'>${item}</li>`);
+            });
+        },
+        error: function (data) {
+        }
+    });  
+}
+
+$(document).ready(function () {    
     GetDepartments();
     LoadSectionDropdown();
     
@@ -6,9 +24,6 @@
         event.preventDefault();
         let id = GetCheckedIds("department_list_tbody");
         id = id.slice(0, -1);
-
-        var deptWarningTxt = $("#department_warning_text").val();
-        alert(deptWarningTxt);
 
         $.ajax({
             url: '/api/departments?departmentIds=' + id,
@@ -29,36 +44,14 @@
 
     $('#department_inactive_btn').on('click', function (event) {
 
-        let id = GetCheckedIds("department_list_tbody");
-        IsDepartmentAssigned(id);
+        let id = GetCheckedIds("department_list_tbody");        
         if (id == "") {
             alert("Please check first to delete.");
             return false;
         }
     });
 });
-function IsDepartmentAssigned(departmentIds) {
-    var returnVal = "";
-    var apiurl = '/api/utilities/DepartmentCount?departmentIds=' + departmentIds;
-    $.ajax({
-        url: apiurl,
-        type: 'Get',
-        dataType: 'json',
-        success: function (data) {
-            $.each(data, function (key, item) {
-                if (returnVal == "") {
-                    returnVal = item;
-                } else {
-                    returnVal = returnVal + ". " + item;
-                }
-            });
-            $("#department_warning_text").val(returnVal);
-        },
-        error: function (data) {
-            $("#department_warning_text").val(returnVal);
-        }
-    });   
-}
+
 //insert department
 function InsertDepartment() {
     var apiurl = "/api/Departments/";

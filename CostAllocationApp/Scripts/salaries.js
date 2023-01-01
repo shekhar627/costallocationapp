@@ -1,13 +1,28 @@
-﻿$(document).ready(function () {
+﻿function onSalaryInactiveClick() {
+    let salaryIds = GetCheckedIds("salary_list_tbody");
+    var apiurl = '/api/utilities/SalaryCount?salaryIds=' + salaryIds;
+    $.ajax({
+        url: apiurl,
+        type: 'Get',
+        dataType: 'json',
+        success: function (data) {
+            $('.salary_count').empty();
+            $.each(data, function (key, item) {
+                $('.salary_count').append(`<li class='text-info'>${item}</li>`);
+            });
+        },
+        error: function (data) {
+        }
+    });
+}
+
+$(document).ready(function () {
     GetSalaries();
 
     $('#salary_inactive_confirm_btn').on('click', function (event) {
         event.preventDefault();
         let id = GetCheckedIds("salary_list_tbody");
-        id = id.slice(0, -1);
-        var salaryWarningTxt = $("#salary_warning_text").val();
-        alert(salaryWarningTxt);
-
+        id = id.slice(0, -1);        
         $.ajax({
             url: '/api/Salaries?salaryIds=' + id,
             type: 'DELETE',
@@ -26,7 +41,6 @@
     $('#salary_inactive_btn').on('click', function (event) {
 
         let id = GetCheckedIds("salary_list_tbody");
-        IsSalaryAssigned(id);
         if (id == "") {
             alert("Please check first to delete.");
             return false;
@@ -34,28 +48,6 @@
     });
 
 });
-function IsSalaryAssigned(salaryIds) {
-    var returnVal = "";
-    var apiurl = '/api/utilities/SalaryCount?salaryIds=' + salaryIds;
-    $.ajax({
-        url: apiurl,
-        type: 'Get',
-        dataType: 'json',
-        success: function (data) {
-            $.each(data, function (key, item) {
-                if (returnVal == "") {
-                    returnVal = item;
-                } else {
-                    returnVal = returnVal + ". " + item;
-                }
-            });
-            $("#salary_warning_text").val(returnVal);
-        },
-        error: function (data) {
-            $("#salary_warning_text").val(returnVal);
-        }
-    });
-}
 function GetSalaries(){
     $.getJSON('/api/Salaries/')
     .done(function (data) {

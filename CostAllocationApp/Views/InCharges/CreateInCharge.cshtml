@@ -24,7 +24,7 @@
                     <tbody id="incharge_list_tbody"></tbody>
                 </table>
                 <label id="incharge_delete_btn">
-                    <a id="incharge_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#del_incharge_modal">Delete</a>
+                    <a id="incharge_inactive_btn" href="javascript:void();" data-toggle="modal" onclick="onInchargeInactiveClick();" data-target="#del_incharge_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -78,6 +78,7 @@
             <div class="modal-body">
                 <div class="form-header">
                     <h3>Delete In-Charge</h3>
+                    <ol class="incharge_count" style="text-align:left;"></ol>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

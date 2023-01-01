@@ -23,7 +23,7 @@
                     <tbody id="explanations_list_tbody"></tbody>
                 </table>
                 <label id="explanation_delete_btn">
-                    <a id="explanations_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#inactive_explanation_modal">Delete</a>
+                    <a id="explanations_inactive_btn" href="javascript:void();" data-toggle="modal" onclick="onExplanationInactiveClick();" data-target="#inactive_explanation_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -72,6 +72,7 @@
             <div class="modal-body">
                 <div class="form-header">
                     <h3>Delete Explanations</h3>
+                    <ol class="explanation_count" style="text-align:left;"></ol>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

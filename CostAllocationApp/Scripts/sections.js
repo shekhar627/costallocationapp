@@ -47,6 +47,14 @@ $(document).ready(function () {
         $('#delete_section').modal('toggle');
     });
 });
+$('#section_inactive_btn').on('click', function (event) {
+
+    let id = GetCheckedIds("section_list_tbody");
+    if (id == "") {
+        alert("Please check first to delete.");
+        return false;
+    }
+});
 //function GetCheckedIds(sectionId) {
 //    var hidSectionIds = $("#section_chk_ids").val();
 //    if (hidSectionIds == '') {

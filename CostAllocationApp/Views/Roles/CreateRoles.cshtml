@@ -22,7 +22,7 @@
                     <tbody id="role_list_tbody"></tbody>
                 </table>
                 <label id="role_delete_btn">
-                    <a id="role_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#inactive_role_modal">Delete</a>
+                    <a id="role_inactive_btn" href="javascript:void();" data-toggle="modal" onclick="onRoleInactiveClick();" data-target="#inactive_role_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -73,6 +73,7 @@
             <div class="modal-body">
                 <div class="form-header">
                     <h3>Delete Roles</h3>
+                    <ol class="role_count" style="text-align:left;"></ol>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">
