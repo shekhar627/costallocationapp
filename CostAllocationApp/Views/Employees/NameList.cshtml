@@ -1,342 +1,219 @@
 ﻿@{ ViewBag.Title = "Name List"; }
 
 @section Styles {
-    <link href="/Content/common.css" rel="stylesheet" type="text/css" />
+    @* <link href="/Content/common.css" rel="stylesheet" type="text/css" />
     <link href="/Content/namelist.css" rel="stylesheet" type="text/css" />    
     <link href="/Content/modal_registrations.css" rel="stylesheet" type="text/css" />   
-    <link href="/Content/namelist-responsive.css" rel="stylesheet" type="text/css" />   
+    <link href="/Content/namelist-responsive.css" rel="stylesheet" type="text/css" />    *@
+    
+    <link href="/Content/jquery.dataTables.min.css" rel="stylesheet" type="text/css" /> 
+    <link href="/Content/namelist.scss" rel="stylesheet" type="text/scss" />     
+}
+<style>
+    html, body {
+    width: 100%;
+    height: 100%;
 }
 
-<div class="content container-fluid">
-    <div id="name_list_body">
-        <div class="row">
-            <div class="col-md-12">
-                <div>
-                    <section class="container" tabIndex="1">
-                        <div>
-                            <table>
-                                <thead>
-                                    <tr class="master_setting_popup">
-                                        <th class="name_list_th name"><a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a></th>
-                                        <th class="name_list_th section">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
-                                        </th>
-                                        <th class="name_list_th department">
-                                            <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
-                                        </th>
-                                        <th class="name_list_th incharge">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
-                                        </th>
-                                        <th class="name_list_th role">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
-                                        </th>
-                                        <th class="name_list_th explanation">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
-                                        </th>
-                                        <th class="name_list_th company">
-                                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal" style="margin-left:212px;" id="com_reg">Com. Reg.</a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <table class="namelist_tbl" id="name-list">
-                            <thead class="name_list_table_header">
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-                                <tr id="namelist_tbl_header">
-                                    <th id="name_list_name"         onclick="NameListSort('name_asc','name_desc');">Name <i class="fa fa-sort-amount-asc" id="name_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="name_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_section"      onclick="NameListSort('section_asc','section_desc');" style="width: 97px !important;">Section <i class="fa fa-sort-amount-asc" id="section_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="section_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_department"   onclick="NameListSort('department_asc','department_desc');">Department <i class="fa fa-sort-amount-asc" id="department_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="department_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_incharge"     onclick="NameListSort('incharge_asc','incharge_desc');" style="width: 99px !important;">In-Charge <i class="fa fa-sort-amount-asc" id="incharge_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="incharge_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_role"         onclick="NameListSort('role_asc','role_desc');" style="width: 60px !important;">Role <i class="fa fa-sort-amount-asc" id="role_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="role_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_explanation"  onclick="NameListSort('explanation_asc','explanation_desc');">Explanation <i class="fa fa-sort-amount-asc" id="explanation_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="explanation_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_company"      onclick="NameListSort('company_asc','company_desc');">Company Name <i class="fa fa-sort-amount-asc" id="company_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="company_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_grade"        onclick="NameListSort('grade_asc','grade_desc');">Grade <i class="fa fa-sort-amount-asc" id="grade_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="grade_desc" aria-hidden="true"></i></th>
-                                    <th id="name_list_unit"         onclick="NameListSort('unit_asc','unit_desc');"style="width:67px !important">Unit Price <i class="fa fa-sort-amount-asc" id="unit_asc" aria-hidden="true"></i><i class="fa fa-sort-amount-desc" style="display:none;" id="unit_desc" aria-hidden="true"></i></th>
-                                    <th style="">Action</th>
-                                </tr>
-                                <tr id="namelist_tbl_search">
+.dropdown-container, .instructions {
+    width: 200px;
+    margin: 20px auto 0;
+    font-size: 14px;
+    font-family: sans-serif;
+    overflow: auto;
+}
 
-                                    <th class="namelist_td name"><input type="text" value="" id="name_search" style="border: 1px solid black; width:159px;" /></th>
+.instructions {
+    width: 100%;
+    text-align: center;
+}
 
-                                    <th class="namelist_td section">
+.dropdown-button {
+    float: left;
+    width: 100%;
+    background: whitesmoke;
+    padding: 10px 12px;
 
-                                        <div class="multiselect">
-                                            <div class="selectBox section" id="section_click" onclick="SectionCheck()">
-                                                <select>
-                                                    <option>All</option>
-                                                </select>
-                                                <div class="overSelect"></div>
-                                            </div>
+    cursor: pointer;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+    
+    .dropdown-label, .dropdown-quantity {
+        float: left;
+    }
+    
+    .dropdown-quantity {
+        margin-left: 4px;
+    }
+    
+    .fa-filter {
+        float: right;
+    }
+}
 
-                                            <div id="sectionChks" class="commonselect">
+.dropdown-list {
+    float: left;
+    width: 100%;
 
-                                            </div>
-                                        </div>
-                                    </th>
+    border: 1px solid lightgray;
+    border-top: none;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    
+    input[type="search"] {
+        padding: 5px 0;
+    }
+    
+    ul {
+        margin: 10px 0;
+        max-height: 200px;
+        overflow-y: auto;
+        
+        input[type="checkbox"] {
+            position: relative;
+            top: 2px;
+        }
+    }
+}
 
-                                    <th class="namelist_td department">
-                                        <div class="multiselect">
-                                            <div class="selectBox department" onclick="DepartmentCheck()">
-                                                <select>
-                                                    <option>All</option>
-                                                </select>
-                                                <div class="overSelect"></div>
-                                            </div>
-                                            <div id="departmentChks" class="commonselect">
+</style>
+<div class="container">
+    <select class="select" multiple data-mdb-filter="true">
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+        <option value="5">Five</option>
+        <option value="6">Six</option>
+        <option value="7">Seven</option>
+        <option value="8">Eight</option>
+        <option value="9">Nine</option>
+        <option value="10">Ten</option>
+    </select>
+    <table id="namelist" class="display nowrap" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Section</th>
+                <th>Department</th>
+                <th>In-Charge</th>
+                <th>Role</th>
+                <th>Explanations</th>
+                <th>Company</th>
+                <th>Grade</th>
+                <th>Unit Price</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                @* <th>Name</th> *@
+                <th>
+                    <select class="select" multiple data-mdb-filter="true">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                    <option value="6">Six</option>
+                    <option value="7">Seven</option>
+                    <option value="8">Eight</option>
+                    <option value="9">Nine</option>
+                    <option value="10">Ten</option>
+                    </select>
+                </th>
+                <th>Section</th>
+                <th>Department</th>
+                <th>In-Charge</th>
+                <th>Role</th>
+                <th>Explanations</th>
+                <th>Company</th>
+                <th>Grade</th>
+                <th>Unit Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="namelist_td incharge">
-                                        <div class="multiselect">
-                                            <div class="selectBox incharge" onclick="InchargeCheck()">
-                                                <select>
-                                                    <option>All</option>
-                                                </select>
-                                                <div class="overSelect"></div>
-                                            </div>
-                                            <div id="inchargeChks" class="commonselect">
-
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="namelist_td role">
-                                        <div class="multiselect">
-                                            <div class="selectBox role" onclick="RoleCheck()">
-                                                <select>
-                                                    <option>All</option>
-                                                </select>
-                                                <div class="overSelect"></div>
-                                            </div>
-                                            <div id="RoleChks" class="commonselect">
-
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="namelist_td explanation">
-                                        <div class="multiselect">
-                                            <div class="selectBox explanation" onclick="ExplanationCheck()">
-                                                <select>
-                                                    <option>All</option>
-                                                </select>
-                                                <div class="overSelect"></div>
-                                            </div>
-                                            <div id="ExplanationChks" class="commonselect">
-
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="namelist_td company">
-                                        <div class="multiselect">
-                                            <div class="selectBox company" onclick="CompanyCheck()">
-                                                <select>
-                                                    <option>All</option>
-                                                </select>
-                                                <div class="overSelect"></div>
-                                            </div>
-                                            <div id="CompanyChks" class="commonselect">
-
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-
-                                    </th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-
-                            <tbody class="namelist_listbody" id="employee_list_search_results"></tbody>
-                        </table>
-                    </section>
-                </div>
-            </div>
-        </div>
-    </div>
+        <tbody class="namelist_tbody">
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$3,120</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$3,120</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$3,120</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$3,120</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>System Architect</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$3,120</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<!-- NameList: Add Employee Assignment Modal -->
-<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Name</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="col-12 modal-body">
-                <table id="add_name_table_2">
-                    <thead>
-                        <tr id="main_head">
-                            <th>SL</th>
-                            <th>Name</th>
-                            <th>Sub Code</th>
-                            <th>Memo</th>
-                            <th>Section</th>
-                            <th>Department</th>
-                            <th>In-Charge</th>
-                            <th>Role</th>
-                            <th>Explanation</th>
-                            <th>Company</th>
-                            <th>Grade</th>
-                            <th>Unit Price</th>
-                            <th>Action <input type="hidden" value="" id="fixed_hidden_name" /></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <div class="add_name_tbl_2_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
-                    <a href="javascript:void(0);" class="" id="add_name_add" onclick="onSave()">Save</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <input type="hidden" id="add_name_unit_price_hidden" />
-    <input type="hidden" id="add_name_row_no_hidden" />
-
-    <input type="hidden" id="multi_search_clicked_id" />
-</div>
-
-<!-- NameList: Edit Employee Assignment Modal -->
-<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Info of <span id="edit_model_span"></span></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="col-12 modal-body">
-                <table id="add_name_table_3">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Memo</th>
-                            <th>Section</th>
-                            <th>Department</th>
-                            <th>In-Charge</th>
-                            <th>Role</th>
-                            <th>Explanation</th>
-                            <th>Company</th>
-                            <th>Grade</th>
-                            <th>Unit Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-
-                            <td>
-                                <input type="text" class="col-12" id="name_edit" value="Chandra Shekhar Das" placeholder="name" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
-                            </td>
-                            <td>
-                                <input type="hidden" value="" id="row_id_hidden_edit" />
-                                <select id="section_edit" class=" col-12">
-                                    <option value="">Select Section</option>
-                                    <option value="" selected>Section-1</option>
-                                    <option value="">Section-2</option>
-                                    <option value="">Section-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="department_edit" class=" col-12">
-                                    <option value="">Select Dept</option>
-                                    <option value="" selected>Department-1</option>
-                                    <option value="">Department-2</option>
-                                    <option value="">Department-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="incharge_edit" class=" col-12">
-                                    <option value="">Select In-Charge</option>
-                                    <option value="" selected>Work Domain-1</option>
-                                    <option value="">Work Domain-2</option>
-                                    <option value="">Work Domain-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="role_edit" class=" col-12">
-                                    <option value="">Select Role</option>
-                                    <option value="" selected>Role-1</option>
-                                    <option value="">Role-2</option>
-                                    <option value="">Role-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="explanation_edit" class=" col-12">
-                                    <option value="">Select Company</option>
-                                    <option value="" selected>Company-1</option>
-                                    <option value="">Company-2</option>
-                                    <option value="">Company-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="company_edit" class=" col-12">
-                                    <option value="">Select Company</option>
-                                    <option value="" selected>Company-1</option>
-                                    <option value="">Company-2</option>
-                                    <option value="">Company-3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" class=" col-12" id="grade_edit" placeholder="" readonly style="background-color: aliceblue;">
-
-                            </td>
-                            <td>
-                                <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="add_name_tbl_3_btn">
-                    <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
-                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
-                </div>
-            </div>
-        </div>
-        <input type="hidden" id="grade_edit_hidden" />
-        <input type="hidden" id="grade_new_hidden" />
-
-        <input type="hidden" id="page_load_after_modal_close" />
-    </div>
-</div>
-
-<!-- NameList: Delete Employee Assignment Modal -->
-<div class="modal custom-modal fade" id="namelist_delete" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="form-header">
-                    <h3>Inactivation</h3>
-                    <p>Are you sure want to inactive?</p>
-                </div>
-                <div class="modal-btn delete-action">
-                    <div class="row">
-                        <div class="col-6">
-                            <input type="hidden" id="namelist_inactive_rowid" value=""/>
-                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="namelist_inactive">Inactive</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@Html.Partial("_Modals")
+@* @Html.Partial("_Modals") *@
 
 @section Scripts{    
-    <script src="/Scripts/common.js"></script>
+    @* <script src="/Scripts/jquery-3.5.1.js"></script> *@
+    @* <script src="/Scripts/dataTables.fixedHeader.min.js"></script> *@
+    @* <script src="/Scripts/common.js"></script>
     <script src="/Scripts/namelist.js"></script>
-    <script src="/Scripts/modal_registrations.js"></script>
+    <script src="/Scripts/modal_registrations.js"></script> *@
+    <script src="/Scripts/lodash.min.js"></script>
+    <script src="/Scripts/namelist.js"></script>
 }

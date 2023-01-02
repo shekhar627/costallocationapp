@@ -1,0 +1,99 @@
+﻿/*----------------------------------------------Name List: Start----------------------------------------------*/
+/* body {
+    font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #fff;
+} */
+.container{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 1;
+}
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3c4b5d !important;
+    border-color: #3c4b5d !important;
+    color: white !important;
+}
+.page-link {
+    color: black !important;
+}
+
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.dropdown-container, .instructions {
+    width: 200px;
+    margin: 20px auto 0;
+    font-size: 14px;
+    font-family: sans-serif;
+    overflow: auto;
+}
+
+.instructions {
+    width: 100%;
+    text-align: center;
+}
+
+.dropdown-button {
+    float: left;
+    width: 100%;
+    background: whitesmoke;
+    padding: 10px 12px;
+
+    cursor: pointer;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+    
+    .dropdown-label, .dropdown-quantity {
+        float: left;
+    }
+    
+    .dropdown-quantity {
+        margin-left: 4px;
+    }
+    
+    .fa-filter {
+        float: right;
+    }
+}
+
+.dropdown-list {
+    float: left;
+    width: 100%;
+
+    border: 1px solid lightgray;
+    border-top: none;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    
+    input[type="search"] {
+        padding: 5px 0;
+    }
+    
+    ul {
+        margin: 10px 0;
+        max-height: 200px;
+        overflow-y: auto;
+        
+        input[type="checkbox"] {
+            position: relative;
+            top: 2px;
+        }
+    }
+}
+/*----------------------------------------------Name List: END----------------------------------------------*/

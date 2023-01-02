@@ -1,14 +1,13 @@
 ﻿@media only screen and (min-width:1000px) and (max-width:1366px) {
-    .name_list_th a {
+     .name_list_th a {
         width:100px;
     } 
-    /* 
     #com_reg{
         margin-left:0px !important;
     }
     #namelist_tbl_header {
         font-size: 6px;
-    } */
+    }
 
     /*.name_list_th name {
         width:191px !important;
