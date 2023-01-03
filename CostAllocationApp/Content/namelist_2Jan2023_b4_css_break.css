@@ -198,11 +198,11 @@ td {
     width: 100%;
 }
 
-    #add_name_table_3 thead tr:nth-of-type(1) {
-        text-align: center;
-        background-color: #3c4b5d;
-        color: white;
-    }
+#add_name_table_3 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
 
 
 #add_name_add {

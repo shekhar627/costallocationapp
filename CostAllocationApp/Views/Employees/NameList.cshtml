@@ -5,101 +5,60 @@
     <link href="/Content/namelist.css" rel="stylesheet" type="text/css" />    
     <link href="/Content/modal_registrations.css" rel="stylesheet" type="text/css" />   
     <link href="/Content/namelist-responsive.css" rel="stylesheet" type="text/css" />    *@
-    
+    @* <link href="/Content/bootstrap-3.3.2.min.css" rel="stylesheet" type="text/css" /> 
+    <link href="/Content/bootstrap-example.min.css" rel="stylesheet" type="text/css" /> 
+    <link href="/Content/prettify.min.css" rel="stylesheet" type="text/css" /> 
+    *@
+    <link href="/Content/bootstrap-3.3.2.min.css" rel="stylesheet" type="text/css" />
+    @* <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" /> *@
+    <link href="/Content/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />  
     <link href="/Content/jquery.dataTables.min.css" rel="stylesheet" type="text/css" /> 
-    <link href="/Content/namelist.scss" rel="stylesheet" type="text/scss" />     
+    <link href="/Content/namelist.css" rel="stylesheet" type="text/css" />     
 }
-<style>
-    html, body {
-    width: 100%;
-    height: 100%;
-}
-
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.dropdown-container, .instructions {
-    width: 200px;
-    margin: 20px auto 0;
-    font-size: 14px;
-    font-family: sans-serif;
-    overflow: auto;
-}
-
-.instructions {
-    width: 100%;
-    text-align: center;
-}
-
-.dropdown-button {
-    float: left;
-    width: 100%;
-    background: whitesmoke;
-    padding: 10px 12px;
-
-    cursor: pointer;
-    border: 1px solid lightgray;
-    box-sizing: border-box;
-    
-    .dropdown-label, .dropdown-quantity {
-        float: left;
-    }
-    
-    .dropdown-quantity {
-        margin-left: 4px;
-    }
-    
-    .fa-filter {
-        float: right;
-    }
-}
-
-.dropdown-list {
-    float: left;
-    width: 100%;
-
-    border: 1px solid lightgray;
-    border-top: none;
-    box-sizing: border-box;
-    padding: 10px 12px;
-    
-    input[type="search"] {
-        padding: 5px 0;
-    }
-    
-    ul {
-        margin: 10px 0;
-        max-height: 200px;
-        overflow-y: auto;
-        
-        input[type="checkbox"] {
-            position: relative;
-            top: 2px;
-        }
-    }
-}
-
-</style>
+@* <div class="form-group">
+    <label class="col-sm-2 control-label">Multiselect</label>
+    <div class="col-sm-10">
+        <select id="example-post" name="multiselect[]" multiple="multiple">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+            <option value="4">Option 4</option>
+            <option value="5">Option 5</option>
+            <option value="6">Option 6</option>
+        </select>
+    </div>
+</div> *@
 <div class="container">
-    <select class="select" multiple data-mdb-filter="true">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-        <option value="4">Four</option>
-        <option value="5">Five</option>
-        <option value="6">Six</option>
-        <option value="7">Seven</option>
-        <option value="8">Eight</option>
-        <option value="9">Nine</option>
-        <option value="10">Ten</option>
-    </select>
-    <table id="namelist" class="display nowrap" width="100%">
+    <!--Registration buttons-->
+    @* <div>
+        <table>
+            <thead>
+                <tr class="master_setting_popup">
+                    <th class="name_list_th name"><a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a></th>
+                    <th class="name_list_th section">
+                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
+                    </th>
+                    <th class="name_list_th department">
+                        <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                    </th>
+                    <th class="name_list_th incharge">
+                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#in-charge_registration">In-Charge Reg.</a>
+                    </th>
+                    <th class="name_list_th role">
+                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#role_registration_modal">Role Reg.</a>
+                    </th>
+                    <th class="name_list_th explanation">
+                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#explanation_modal">Explanation Reg.</a>
+                    </th>
+                    <th class="name_list_th company">
+                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal" style="margin-left:185px;">Com. Reg.</a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div> *@
+
+    <table id="namelist" class="cell-border" style="width:100%">
         <thead>
             <tr>
                 <th>Name</th>
@@ -114,99 +73,218 @@
                 <th>Action</th>
             </tr>
             <tr>
-                @* <th>Name</th> *@
+                <th id="name_search">Name</th>               
                 <th>
-                    <select class="select" multiple data-mdb-filter="true">
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                    <option value="4">Four</option>
-                    <option value="5">Five</option>
-                    <option value="6">Six</option>
-                    <option value="7">Seven</option>
-                    <option value="8">Eight</option>
-                    <option value="9">Nine</option>
-                    <option value="10">Ten</option>
-                    </select>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="section_multi_search" name="multiselect[]" multiple="multiple">                               
+                            </select>
+                        </div>
+                    </div>
                 </th>
-                <th>Section</th>
-                <th>Department</th>
-                <th>In-Charge</th>
-                <th>Role</th>
-                <th>Explanations</th>
-                <th>Company</th>
-                <th>Grade</th>
-                <th>Unit Price</th>
-                <th>Action</th>
+                <th>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="dept_multi_search" name="multiselect[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="incharge_multi_search" name="multiselect[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="role_multi_search" name="multiselect[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="explanation_multi_search" name="multiselect[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="company_multi_search" name="multiselect[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
 
-        <tbody class="namelist_tbody">
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$3,120</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$3,120</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$3,120</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$3,120</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>System Architect</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$3,120</td>
-            </tr>
-        </tbody>
+         <tbody class="namelist_listbody" id="employee_list_search_results"></tbody>
     </table>
 </div>
 
-@* @Html.Partial("_Modals") *@
+<!-- NameList: Add Employee Assignment Modal -->
+<div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-12 modal-body">
+                <table id="add_name_table_2">
+                    <thead>
+                        <tr id="main_head">
+                            <th>SL</th>
+                            <th>Name</th>
+                            <th>Sub Code</th>
+                            <th>Memo</th>
+                            <th>Section</th>
+                            <th>Department</th>
+                            <th>In-Charge</th>
+                            <th>Role</th>
+                            <th>Explanation</th>
+                            <th>Company</th>
+                            <th>Grade</th>
+                            <th>Unit Price</th>
+                            <th>Action <input type="hidden" value="" id="fixed_hidden_name" /></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="add_name_tbl_2_btn">
+                    <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_add" onclick="onSave()">Save</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="add_name_unit_price_hidden" />
+    <input type="hidden" id="add_name_row_no_hidden" />
+
+    <input type="hidden" id="multi_search_clicked_id" />
+</div>
+
+<!-- NameList: Edit Employee Assignment Modal -->
+<div class="modal fade" id="modal_edit_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding-right: 0px !important;">
+    @* <div class="modal-dialog modal-xl"> *@
+    <div class="modal-dialog" ></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Info of <span id="edit_model_span"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-12 modal-body">
+                <table id="add_name_table_3">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Memo</th>
+                            <th>Section</th>
+                            <th>Department</th>
+                            <th>In-Charge</th>
+                            <th>Role</th>
+                            <th>Explanation</th>
+                            <th>Company</th>
+                            <th>Grade</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>                            
+                            <td>
+                                <input type="text" class="col-12" id="name_edit" value="Chandra Shekhar Das" placeholder="name" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class=" col-12" id="memo_edit" value="" placeholder="">
+                            </td>
+                            <td>
+                                <input type="hidden" value="" id="row_id_hidden_edit" />
+                                <select id="section_edit" class=" col-12">                                    
+                                </select>
+                            </td>
+                            <td>
+                                <select id="department_edit" class=" col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="incharge_edit" class=" col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="role_edit" class=" col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="explanation_edit" class=" col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="company_edit" class=" col-12">
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class=" col-12" id="grade_edit" placeholder="" readonly style="background-color: aliceblue;">
+
+                            </td>
+                            <td>
+                                <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="add_name_tbl_3_btn">
+                    <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="add_name_edit">Save</a>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="grade_edit_hidden" />
+        <input type="hidden" id="grade_new_hidden" />
+
+        <input type="hidden" id="page_load_after_modal_close" />
+    </div>
+</div>
+
+<!-- NameList: Delete Employee Assignment Modal -->
+<div class="modal custom-modal fade" id="namelist_delete" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Inactivation</h3>
+                    <p>Are you sure want to inactive?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="hidden" id="namelist_inactive_rowid" value=""/>
+                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="namelist_inactive">Inactive</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_Modals")
 
 @section Scripts{    
     @* <script src="/Scripts/jquery-3.5.1.js"></script> *@
@@ -214,6 +292,9 @@
     @* <script src="/Scripts/common.js"></script>
     <script src="/Scripts/namelist.js"></script>
     <script src="/Scripts/modal_registrations.js"></script> *@
+    <script src="/Scripts/bootstrap-3.3.2.min.js"></script>
+    <script src="/Scripts/prettify.min.js"></script>
     <script src="/Scripts/lodash.min.js"></script>
+    <script src="/Scripts/bootstrap-multiselect.js"></script>
     <script src="/Scripts/namelist.js"></script>
 }

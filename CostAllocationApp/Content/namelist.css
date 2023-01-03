@@ -10,7 +10,8 @@
     border-collapse: collapse;
     font-size: 10px;
     font-family: Yu Gothic;
-    line-height: 1;
+    line-height: 0;
+    white-space: nowrap !important;
 }
 .pagination>.active>a,
 .pagination>.active>a:focus,
@@ -25,6 +26,114 @@
 .page-link {
     color: black !important;
 }
+/*----------------Edit/Delete Links-------------------*/
+#edit_button {
+    background: cornflowerblue;
+    color: white;
+    border-radius: 5px; 
+    /* border-radius: 5px; 
+     padding: 5px;*/
+    margin: 5px;
+    /*display: inline-block; */
+}
+
+#delete_button {
+    background: indianred;
+    color: white;
+    margin: 5px;
+    border-radius: 5px; 
+    /* border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block; */
+}
+/*--------------Name list: edit popup------------*/
+#modal_edit_name {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    width: 101% !important;
+}
+#add_name_table_3 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_3 {
+    border: 1px solid black !important;
+    width: 100%;
+}
+
+#add_name_table_3 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
 
 
+#name_edit {
+    width: 131px;
+    opacity: .7;
+}
+
+#memo_edit {
+    width: 90px;
+}
+
+#section_edit {
+    width: 89px;
+}
+
+#department_edit {
+    width: 100px;
+}
+
+#incharge_edit {
+    width: 120px;
+}
+
+#role_edit {
+    width: 73px;
+}
+
+#explanation_edit {
+    width: 220px;
+}
+
+#company_edit {
+    width: 109px;
+}
+
+#grade_edit {
+    width: 46px;
+}
+
+#unitprice_edit {
+    width: 100px;
+}
+
+#add_name_cancel {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+#add_name_edit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+@media screen and (min-width: 676px) {
+    .modal-dialog {
+      max-width: 600px; /* New width for default modal */
+    }
+}
 /*----------------------------------------------Name List: END----------------------------------------------*/

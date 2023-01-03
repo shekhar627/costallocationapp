@@ -36,14 +36,15 @@ namespace CostAllocationApp
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
-                      "~/Content/font-awesome.min.css",
-                      "~/Content/line-awesome.min.css",
-                      "~/Content/dataTables.bootstrap4.min.css",
-                      "~/Content/select2.min.css",
-                      "~/Content/bootstrap-datetimepicker.min.css",
-                      "~/Content/toastr.min.css",
-                      "~/Content/style.css"
+                        //"~/Content/bootstrap.min.css",
+                        //"~/Content/bootstrap-3.3.2.min.css",
+                        "~/Content/font-awesome.min.css",
+                        "~/Content/line-awesome.min.css",
+                        "~/Content/dataTables.bootstrap4.min.css",
+                        "~/Content/select2.min.css",
+                        "~/Content/bootstrap-datetimepicker.min.css",
+                        "~/Content/toastr.min.css",
+                        "~/Content/style.css"
                       //,
                       //"~/Content/custom.css"
                       ));
