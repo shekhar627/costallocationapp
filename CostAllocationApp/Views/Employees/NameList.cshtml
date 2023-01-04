@@ -9,28 +9,22 @@
     <link href="/Content/bootstrap-example.min.css" rel="stylesheet" type="text/css" /> 
     <link href="/Content/prettify.min.css" rel="stylesheet" type="text/css" /> 
     *@
-    <link href="/Content/bootstrap-3.3.2.min.css" rel="stylesheet" type="text/css" />
+    @* <link href="/Content/bootstrap-3.3.2.min.css" rel="stylesheet" type="text/css" /> *@
+
+
+    @* <link href="/Content/bootstrap-3.3.2.min.css" rel="stylesheet" type="text/css" /> *@
     @* <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" /> *@
     <link href="/Content/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />  
     <link href="/Content/jquery.dataTables.min.css" rel="stylesheet" type="text/css" /> 
+    <link href="/Content/common.css" rel="stylesheet" type="text/css" />
     <link href="/Content/namelist.css" rel="stylesheet" type="text/css" />     
-}
-@* <div class="form-group">
-    <label class="col-sm-2 control-label">Multiselect</label>
-    <div class="col-sm-10">
-        <select id="example-post" name="multiselect[]" multiple="multiple">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-            <option value="4">Option 4</option>
-            <option value="5">Option 5</option>
-            <option value="6">Option 6</option>
-        </select>
-    </div>
-</div> *@
-<div class="container">
+    <link href="/Content/modal_registrations.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/namelist-responsive.css" rel="stylesheet" type="text/css" /> 
+} 
+@* <div class="container"> *@
+<div class="container content container-fluid">
     <!--Registration buttons-->
-    @* <div>
+    <div>
         <table>
             <thead>
                 <tr class="master_setting_popup">
@@ -56,11 +50,11 @@
                 </tr>
             </thead>
         </table>
-    </div> *@
+    </div>
 
     <table id="namelist" class="cell-border" style="width:100%">
         <thead>
-            <tr>
+            <tr id="namelist_table_header">
                 <th>Name</th>
                 <th>Section</th>
                 <th>Department</th>
@@ -72,9 +66,10 @@
                 <th>Unit Price</th>
                 <th>Action</th>
             </tr>
-            <tr>
-                <th id="name_search">Name</th>               
-                <th>
+            <tr id="namelist_multi_search_header">
+                <th class="namelist_td name">Name</th>    
+
+                <th class="namelist_td section">
                     <div class="form-group">
                         <div class="col-sm-10">
                             <select id="section_multi_search" name="multiselect[]" multiple="multiple">                               
@@ -82,7 +77,7 @@
                         </div>
                     </div>
                 </th>
-                <th>
+                <th class="namelist_td department"> 
                     <div class="form-group">
                         <div class="col-sm-10">
                             <select id="dept_multi_search" name="multiselect[]" multiple="multiple">
@@ -90,7 +85,7 @@
                         </div>
                     </div>
                 </th>
-                <th>
+                <th class="namelist_td incharge">
                     <div class="form-group">
                         <div class="col-sm-10">
                             <select id="incharge_multi_search" name="multiselect[]" multiple="multiple">
@@ -98,7 +93,7 @@
                         </div>
                     </div>
                 </th>
-                <th>
+                <th class="namelist_td role">
                     <div class="form-group">
                         <div class="col-sm-10">
                             <select id="role_multi_search" name="multiselect[]" multiple="multiple">
@@ -106,7 +101,7 @@
                         </div>
                     </div>
                 </th>
-                <th>
+                <th class="namelist_td explanation">
                     <div class="form-group">
                         <div class="col-sm-10">
                             <select id="explanation_multi_search" name="multiselect[]" multiple="multiple">
@@ -114,7 +109,7 @@
                         </div>
                     </div>
                 </th>
-                <th>
+                <th class="namelist_td company">
                     <div class="form-group">
                         <div class="col-sm-10">
                             <select id="company_multi_search" name="multiselect[]" multiple="multiple">
@@ -134,7 +129,8 @@
 
 <!-- NameList: Add Employee Assignment Modal -->
 <div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    @* <div class="modal-dialog modal-xl"> *@
+    <div class="modal-dialog"></div>
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Name</h5>
@@ -293,8 +289,11 @@
     <script src="/Scripts/namelist.js"></script>
     <script src="/Scripts/modal_registrations.js"></script> *@
     <script src="/Scripts/bootstrap-3.3.2.min.js"></script>
+    @* <script src="/Scripts/bootstrap-3.3.2.min.js"></script>
     <script src="/Scripts/prettify.min.js"></script>
-    <script src="/Scripts/lodash.min.js"></script>
-    <script src="/Scripts/bootstrap-multiselect.js"></script>
+    <script src="/Scripts/lodash.min.js"></script> *@    
+    <script src="/Scripts/common.js"></script>
     <script src="/Scripts/namelist.js"></script>
+    <script src="/Scripts/modal_registrations.js"></script>
+    <script src="/Scripts/bootstrap-multiselect.js"></script>
 }

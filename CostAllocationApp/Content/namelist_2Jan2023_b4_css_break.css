@@ -173,20 +173,20 @@ td {
     font-family: Yu Gothic;
 }
 
-    #add_name_table_2 thead tr:nth-of-type(1) {
-        text-align: center;
-        background-color: #3c4b5d;
-        color: white;
-    }
+#add_name_table_2 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
 
-    #add_name_table_2 tbody tr:nth-of-type(1) {
-        background-color: #F2F2F2;
-    }
+#add_name_table_2 tbody tr:nth-of-type(1) {
+    background-color: #F2F2F2;
+}
 
-    #add_name_table_2 th,
-    td {
-        border: 1px solid black !important;
-    }
+#add_name_table_2 th,
+td {
+    border: 1px solid black !important;
+}
 
 #add_name_table_3 th,
 td {

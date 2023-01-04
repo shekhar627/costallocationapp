@@ -36,7 +36,7 @@ namespace CostAllocationApp
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        //"~/Content/bootstrap.min.css",
+                        "~/Content/bootstrap.min.css",
                         //"~/Content/bootstrap-3.3.2.min.css",
                         "~/Content/font-awesome.min.css",
                         "~/Content/line-awesome.min.css",

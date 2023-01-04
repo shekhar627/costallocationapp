@@ -6,7 +6,14 @@
     color: #333;
     background-color: #fff;
 } */
-.container{
+/* .container{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+} */
+#employee_list_search_results{
     border-collapse: collapse;
     font-size: 10px;
     font-family: Yu Gothic;
@@ -135,5 +142,148 @@ td {
     .modal-dialog {
       max-width: 600px; /* New width for default modal */
     }
+}
+#namelist td,th {
+    border: 1px solid;
+    text-align: center;
+}
+/* #section_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+
+#section_table td,
+th:nth-of-type(9) {
+    text-align: center;
+    width: 20px;
+} */
+
+/*--------------Name list: add name popup------------*/
+#add_name_table_2 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_2 {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    width: 101% !important;
+}
+
+#add_name_table_2 thead tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #3c4b5d;
+    color: white;
+}
+
+#add_name_table_2 tbody tr:nth-of-type(1) {
+    background-color: #F2F2F2;
+}
+
+#add_name_table_2 th,
+td {
+    border: 1px solid black !important;
+}
+#modal_add_name{
+    padding-right: 0px !important;
+}
+#add_name_add {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+#namelist_table_header{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+    background-color: #3c4b5d;
+    color: white;
+}
+#namelist_multi_search_header{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+}
+.namelist_listbody, td{
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+.namelist_td{
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+/*-------namelist: registration popup button-------*/
+.master_setting_popup {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+
+.name_list_th.name {
+    text-align: center;
+    width: 195px !important;
+}
+
+.name_list_th.section {
+    text-align: center;
+    width: 119px !important;
+}
+
+.name_list_th.department {
+    text-align: center;
+    width: 82px !important;
+}
+
+.name_list_th.incharge {
+    text-align: center;
+    width: 131px !important;
+}
+
+.name_list_th.company {
+    text-align: center;
+    margin-left: 185px;
+}
+.name_registration_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+.name_registration_th {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+.name_list_th {
+    border: none;
+    text-align: center;
+}
+.name_list_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+.namelist_addname {
+    text-decoration: underline;
+    cursor: pointer;
 }
 /*----------------------------------------------Name List: END----------------------------------------------*/

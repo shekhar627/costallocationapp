@@ -2,6 +2,7 @@
     ViewBag.Title = "Add Name";
 }
 @section Styles {
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/Content/common.css" rel="stylesheet" type="text/css" />
     <link href="/Content/addname.css" rel="stylesheet" type="text/css" />    
 }
@@ -1137,7 +1138,7 @@
                             destroy: true,
                             data: data,
                             ordering: true,
-                            pageLength: 100,
+                            pageLength: 10,
                             searching: false,
                             bLengthChange: false,
                             columns: [
