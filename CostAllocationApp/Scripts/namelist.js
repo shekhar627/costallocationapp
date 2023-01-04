@@ -1,9 +1,16 @@
 ﻿$(document).ready(function() {
     var count=1;
+    //$('#namelist thead tr:eq(1) th').each( function () {
+    //    if(count == 1){
+    //        var title = $(this).text();
+    //        $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search" Id="name_search"/>' );
+    //    }  
+    //    count = count +1;      
+    //} );
     $('#namelist thead tr:eq(1) th').each( function () {
         if(count == 1){
             var title = $(this).text();
-            $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search" Id="name_search"/>' );
+            $(this).html( '<input type="text" placeholder="Search '+title+'" class="" Id="name_search"/>' );
         }  
         count = count +1;      
     } );
