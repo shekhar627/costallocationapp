@@ -864,7 +864,7 @@ function NameList_DatatableLoad(data) {
         data: data,
         ordering: true,
         orderCellsTop: true,
-        pageLength: 100,
+        pageLength: 10,
         searching: false,
         bLengthChange: false,
         //pagingType: 'full_numbers',

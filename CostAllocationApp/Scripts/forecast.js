@@ -1,4 +1,5 @@
 ﻿var globalSearchObject = '';
+var globalPreviousValue='0.0';
 
 function DismissOtherDropdown(requestType) {
     var section_display = "";
@@ -398,19 +399,32 @@ function ForecastSearchDropdownInLoad() {
 }
 
 function checkPoint_click(e) {
+    //alert('clicked');
+    //globalPreviousValue = '0.0';
+    globalPreviousValue = $("#" + e.id).val();
+    console.log('prev: '+globalPreviousValue);
+
     if (e.value <= 0) {
+        globalPreviousValue='';
         $("#" + e.id).val('');
     }
+}
+function checkPoint_onmouseover(e) {
+    globalPreviousValue = $("#" + e.id).val();
 }
 function checkPoint(element) {
 
     var pointValue = $(element).val();
-    if (isNaN(pointValue) || pointValue == undefined || pointValue == '') {
-        $(element).val('0.0');
+    if (isNaN(pointValue) || pointValue == undefined || pointValue == '') {        
+        $(element).val(globalPreviousValue);
     }
     else {
-        if (pointValue > 1 || pointValue < 0) {
-            $(element).val('0.0');
+        if ((pointValue > 1 || pointValue < 0) ) {
+            alert('total month point can not be grater than 1 Or less than 0');
+            $(element).val(globalPreviousValue);
+        }
+        else{
+            $(element).val(pointValue);
         }
     }
 
@@ -444,16 +458,21 @@ function checkPoint(element) {
             sameNameTr.push(value);
         }
     });
-    if (totalMonthPoint > 1) {
-        alert('total month point can not be grater than 1');
-        $(element).val('0.0');
-    }
+    // console.log("totalMonthPoint: "+totalMonthPoint);
+    // if (totalMonthPoint > 1) {
+    //     console.log("before alert!")
+    //     alert('total month point can not be grater than 1');
+    //     $(element).val(globalPreviousValue);
+    // }
 
 
     //console.log($(tr).find('td').eq(1).data('name'));
 
 }
 function onCancel() {
+    $("#forecast_table_wrapper").css("display", "none");
+    $("#loading").css("display", "block");
+    
     if (globalSearchObject == '') {
         return;
     }
@@ -469,6 +488,9 @@ function onCancel() {
             dataType: 'json',
             data: globalSearchObject,
             success: function (data) {
+                $("#forecast_table_wrapper").css("display", "block");
+                $("#loading").css("display", "none");
+
                 $('#forecast_table>thead').empty();
                 $('#forecast_table>tbody').empty();
 
@@ -608,9 +630,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='oct_${_id}'   onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='oct_${_id}'  onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='oct_${_id}'   onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='oct_${_id}'  onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -621,9 +643,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='nov_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='nov_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='nov_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='nov_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -634,9 +656,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='dec_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='dec_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='dec_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='dec_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -647,9 +669,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='jan_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='jan_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='jan_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='jan_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -660,9 +682,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='feb_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='feb_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='feb_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='feb_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -673,9 +695,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='mar_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='mar_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='mar_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='mar_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -686,9 +708,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='apr_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='apr_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='apr_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='apr_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -699,9 +721,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='may_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='may_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='may_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='may_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -712,9 +734,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='jun_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='jun_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='jun_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='jun_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -725,9 +747,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='jul_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='jul_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='jul_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='jul_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -738,9 +760,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='aug_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='aug_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='aug_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='aug_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -751,9 +773,9 @@ function onCancel() {
                             render: function (_forecast) {
 
                                 if (_forecast.length > 0) {
-                                    return `<td><input type='text' id='sep_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='sep_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
                                 } else {
-                                    return `<td><input type='text' id='sep_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
+                                    return `<td><input type='text' id='sep_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
                                 }
 
                             },
@@ -927,7 +949,8 @@ function onCancel() {
 }
 
 function onSave() {
-    $("#loading").css("display", "inline-block");
+    
+
     var saveFlag = false;
     const rows = document.querySelectorAll("#forecast_table > tbody > tr");
     if (rows.length <= 0) {
@@ -992,7 +1015,6 @@ function onSave() {
                 assignmentId: assignmentId
             },
             success: function (data) {
-
                 saveFlag = data
 
                 //$('#modal_add_name_new').modal('toggle');
@@ -1011,7 +1033,7 @@ function onSave() {
     });
 
     if (saveFlag) {
-        $("#loading").css("display", "none");
+        
         //$('#save_forecast').css('display', 'none');
 
         Command: toastr["success"]('Data Saved Successfully', "Success")
@@ -1034,7 +1056,7 @@ function onSave() {
             "hideMethod": "fadeOut"
         }
     }
-
+    
     //$('#forecast_table > tbody').empty();
     //$('#forecast_table').DataTable().destroy();
     $('#forecast_table').empty();
@@ -1760,7 +1782,6 @@ var expanded = false;
 
 
             $('#forecast_search_button').on('click', function () {
-                $("#loading").css("display", "none");
                 var sectionId = $('#section_search').find(":selected").val();
                 var inchargeId = $('#incharge_search').find(":selected").val();
                 var departmentId = $('#department_search').find(":selected").val();
@@ -1776,6 +1797,8 @@ var expanded = false;
                     alert('select year');
                     return false;
                 }
+                $("#forecast_table_wrapper").css("display", "none");
+                $("#loading").css("display", "block");
 
                 $('#cancel_forecast').css('display', 'inline-block');
                 $('#save_forecast').css('display', 'inline-block');
@@ -1898,9 +1921,11 @@ var expanded = false;
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
+                        $("#loading").css("display", "none");
+                        $("#forecast_table_wrapper").css("display", "block");
+
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();
-
                         $('#forecast_table>thead').append(`
 
                                                 <tr>
@@ -2037,9 +2062,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='oct_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='oct_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='oct_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='oct_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2050,9 +2075,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='nov_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='nov_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='nov_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='nov_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2063,9 +2088,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='dec_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='dec_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='dec_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='dec_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2076,9 +2101,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jan_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jan_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jan_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jan_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2089,9 +2114,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='feb_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='feb_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='feb_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='feb_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2102,9 +2127,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='mar_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='mar_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='mar_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='mar_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2115,9 +2140,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='apr_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='apr_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='apr_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='apr_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2128,9 +2153,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='may_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='may_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='may_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='may_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2141,9 +2166,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jun_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jun_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jun_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jun_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2154,9 +2179,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jul_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='jul_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='jul_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2167,9 +2192,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='aug_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='aug_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='aug_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
@@ -2180,9 +2205,9 @@ var expanded = false;
                                     render: function (_forecast) {
 
                                         if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='sep_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
                                         } else {
-                                            return `<td><input type='text' id='sep_${_id}' onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
+                                            return `<td><input type='text' id='sep_${_id}' onmouseover ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
                                         }
 
                                     },
