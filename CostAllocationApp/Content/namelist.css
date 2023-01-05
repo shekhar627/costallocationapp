@@ -320,6 +320,9 @@ th.namelist_td{
     text-decoration: underline;
     cursor: pointer;
 }
+.container, .container-fluid{
+    margin-left: 0px;
+}
 
 /**************************namelist custom css for multi selection ***************************/
 /* .form-group{
