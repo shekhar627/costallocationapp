@@ -470,73 +470,85 @@ function checkPoint(element) {
 
 }
 function LoaderShow(){
-    $("#forecast_table_wrapper").css("display", "none");
-    $("#loading").css("display", "block");
+
 }
 function LoaderHide(){
-    $("#forecast_table_wrapper").css("display", "block");
-    $("#loading").css("display", "none");
+
+}
+function LoadForecastData(){
+
 }
 
-function LoadForecastData(){
+function onCancel() {
+    $("#forecast_table_wrapper").css("display", "none");
+    $("#loading").css("display", "block");
+    
     if (globalSearchObject == '') {
         return;
     }
     else {
         $.ajax({
+            //url: `/api/utilities/SearchForecastEmployee`,
+            //type: 'GET',
+            //dataType: 'json',
+            //data: data_info,
             url: `/api/utilities/SearchForecastEmployee`,
             contentType: 'application/json',
             type: 'GET',
-            async: true,
             dataType: 'json',
-            data: globalSearchObject,            
+            data: globalSearchObject,
             success: function (data) {
-                LoaderHide();
+                $("#forecast_table_wrapper").css("display", "block");
+                $("#loading").css("display", "none");
+
                 $('#forecast_table>thead').empty();
                 $('#forecast_table>tbody').empty();
+
                 $('#forecast_table>thead').append(`
-                    <tr>
-                        <th id="forecast_name">Name </th>
-                        <th id="forecast_section">Section </th>
-                        <th id="forecast_department">Department </th>
-                        <th id="forecast_incharge">In-Charge </th>
-                        <th id="forecast_role">Role </th>
-                        <th id="forecast_explanation">Explanation </th>
-                        <th id="forecast_company">Company Name </i></th>
-                        <th id="forecast_grade">Grade </th>
-                        <th id="forecast_unitprice"><span>Unit Price</span> </th>
-                        <th>10月</th>
-                        <th>11月</th>
-                        <th>12月</th>
-                        <th>1月</th>
-                        <th>2月</th>
-                        <th>3月</th>
-                        <th>4月</th>
-                        <th>5月</th>
-                        <th>6月</th>
-                        <th>7月</th>
-                        <th>8月</th>
-                        <th>9月</th>
-                        <th>Oct</th>
-                        <th>Nov</th>
-                        <th>Dec</th>
-                        <th>Jan</th>
-                        <th>Feb</th>
-                        <th>Mar</th>
-                        <th>Apr</th>
-                        <th>May</th>
-                        <th>Jun</th>
-                        <th>Jul</th>
-                        <th>Aug</th>
-                        <th>Sep</th>
-                    </tr>
-                `);
+
+                                        <tr>
+                                            <th id="forecast_name">Name </th>
+                                            <th id="forecast_section">Section </th>
+                                            <th id="forecast_department">Department </th>
+                                            <th id="forecast_incharge">In-Charge </th>
+                                            <th id="forecast_role">Role </th>
+                                            <th id="forecast_explanation">Explanation </th>
+                                            <th id="forecast_company">Company Name </i></th>
+                                            <th id="forecast_grade">Grade </th>
+                                            <th id="forecast_unitprice"><span>Unit Price</span> </th>
+                                            <th>10月</th>
+                                            <th>11月</th>
+                                            <th>12月</th>
+                                            <th>1月</th>
+                                            <th>2月</th>
+                                            <th>3月</th>
+                                            <th>4月</th>
+                                            <th>5月</th>
+                                            <th>6月</th>
+                                            <th>7月</th>
+                                            <th>8月</th>
+                                            <th>9月</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dec</th>
+                                            <th>Jan</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Apr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Aug</th>
+                                            <th>Sep</th>
+                                        </tr>
+                                    `);
                 //Forecast_DatatableLoad(data);
                 var _id = 0;
                 var _companyName = '';
                 var _oct = 0;
                 var _octTotal = 0;
 
+                console.log(data);
                 $('#forecast_table').DataTable({
                     destroy: true,
                     data: data,
@@ -545,6 +557,15 @@ function LoadForecastData(){
                     autoWidth: false,
                     pageLength: 100,
                     columns: [
+                        //{
+                        //    data: 'Id',
+                        //    render: function (id) {
+                        //        _id = id;
+                        //        return null;
+                        //    },
+                        //    //ordering: false
+
+                        //},
                         {
                             data: 'EmployeeNameWithCodeRemarks',
                             render: function (employeeNameWithCodeRemarks) {
@@ -937,20 +958,18 @@ function LoadForecastData(){
     }
 }
 
-function onCancel() {  
-    LoaderShow();  
-    LoadForecastData()    
-}
+function onSave() {
+    
 
-function onSave() {   
     var saveFlag = false;
     const rows = document.querySelectorAll("#forecast_table > tbody > tr");
     if (rows.length <= 0) {
         alert('No Rows Selected');
         return false;
     }
-    LoaderShow();
     $.each(rows, function (index, data) {
+        console.log(data);
+        //var rowId = data.dataset.rowid;
         var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
         var year = $('#period_search').find(":selected").val();
         var assignmentId = $('#row_id_' + rowId).val();
@@ -994,29 +1013,41 @@ function onSave() {
 
         var data = `10_${oct_point}_${oct_output},11_${nov_point}_${nov_output},12_${dec_point}_${dec_output},1_${jan_point}_${jan_output},2_${feb_point}_${feb_output},3_${mar_point}_${mar_output},4_${apr_point}_${apr_output},5_${may_point}_${may_output},6_${jun_point}_${jun_output},7_${jul_point}_${jul_output},8_${aug_point}_${aug_output},9_${sep_point}_${sep_output}`;
 
+
         $.ajax({
             url: '/api/Forecasts',
             type: 'GET',
-            async: true,
+            async: false,
             dataType: 'json',
             data: {
                 data: data,
                 year: year,
                 assignmentId: assignmentId
             },
-            success: function (data) {                
-                saveFlag = data;
+            success: function (data) {
+                saveFlag = data
+
+                //$('#modal_add_name_new').modal('toggle');
+                //$("#loading").css("display", "inline-block");
+
             },
+
             error: function (data) {
+                console.log(data);
                 $("#loading").css("display", "none");
                 saveFlag = false;
                 alert("Error please try again");
+                //$('#modal_add_name_new').modal('toggle');
             }
         });
     });
 
     if (saveFlag) {
+        
+        //$('#save_forecast').css('display', 'none');
+
         Command: toastr["success"]('Data Saved Successfully', "Success")
+
         toastr.options = {
             "closeButton": false,
             "debug": false,
@@ -1034,9 +1065,13 @@ function onSave() {
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
-    }    
+    }
+    
+    //$('#forecast_table > tbody').empty();
+    //$('#forecast_table').DataTable().destroy();
     $('#forecast_table').empty();
-    LoadForecastData();   
+    onCancel();
+
 }
 var expanded = false;
         $(document).on("click", function (event) {
@@ -1772,7 +1807,8 @@ var expanded = false;
                     alert('select year');
                     return false;
                 }
-                LoaderShow();
+                $("#forecast_table_wrapper").css("display", "none");
+                $("#loading").css("display", "block");
 
                 $('#cancel_forecast').css('display', 'inline-block');
                 $('#save_forecast').css('display', 'inline-block');
@@ -1895,7 +1931,8 @@ var expanded = false;
                     dataType: 'json',
                     data: data_info,
                     success: function (data) {
-                        LoaderHide();
+                        $("#loading").css("display", "none");
+                        $("#forecast_table_wrapper").css("display", "block");
 
                         $('#forecast_table>thead').empty();
                         $('#forecast_table>tbody').empty();

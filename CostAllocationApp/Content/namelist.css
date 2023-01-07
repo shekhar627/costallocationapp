@@ -436,4 +436,28 @@ element.style {
     border-right: 0;
 } */
 /* <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> */
+select[multiple],select[size]{
+    height:auto !important;
+}
+select[multiple].input-sm,textarea.input-sm{
+    height:auto !important;
+}
+select[multiple].form-group-sm .form-control,textarea.form-group-sm .form-control{
+    height:auto !important;
+}
+select[multiple].input-lg,textarea.input-lg{
+    height:auto !important;
+}
+select[multiple].input-lg,textarea.input-lg{
+    height:auto !important;
+}
+select[multiple].form-group-lg .form-control,textarea.form-group-lg .form-control{
+    height:auto !important;
+}
+select[multiple].input-group-lg>.form-control,select[multiple].input-group-lg>.input-group-addon,select[multiple].input-group-lg>.input-group-btn>.btn,textarea.input-group-lg>.form-control,textarea.input-group-lg>.input-group-addon,textarea.input-group-lg>.input-group-btn>.btn{
+    height:auto !important;
+}
+select[multiple].input-group-sm>.form-control,select[multiple].input-group-sm>.input-group-addon,select[multiple].input-group-sm>.input-group-btn>.btn,textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon,textarea.input-group-sm>.input-group-btn>.btn{
+    height:auto !important;
+}
 /*----------------------------------------------Name List: END----------------------------------------------*/

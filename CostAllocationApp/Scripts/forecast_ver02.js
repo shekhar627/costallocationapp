@@ -1,5 +1,6 @@
 ﻿var globalSearchObject = '';
 var globalPreviousValue='0.0';
+var globalPreviousId = '';
 
 function DismissOtherDropdown(requestType) {
     var section_display = "";
@@ -142,10 +143,7 @@ function CompanyCheck() {
 function LoadGradeValue(sel) {
     var _rowId = $("#add_name_row_no_hidden").val();
     var _companyName = $('#company_row_' + _rowId).find(":selected").text();
-    console.log("_companyName: " + _companyName);
     var _unitPrice = $("#add_name_unit_price_hidden").val();
-
-    console.log("_unitPrice: " + _unitPrice);
 
     $.ajax({
         url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -156,16 +154,11 @@ function LoadGradeValue(sel) {
         //},
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
-            console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
-            console.log("_companyName.toLowerCase(): " + typeof (_companyName));
-            console.log("_rowId: " + _rowId);
             //if (_companyName.toLowerCase == 'mw') {
             if (_companyName.toLowerCase().indexOf("mw") > 0) {
-                console.log("test- equal");
                 //$('#grade_new_hidden').val(data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
             } else {
-                console.log("test- not equal");
                 $('#grade_row_' + _rowId).val('');
             }
         },
@@ -397,20 +390,70 @@ function ForecastSearchDropdownInLoad() {
             });
         });
 }
+function CheckPreviousManMonthIdValuePoint(e){
+    let clickedId = e.id;
+    console.log("clickedId: "+clickedId);
+    if(globalPreviousId == ''){
+        globalPreviousId = clickedId;
+    }
+
+    if(globalPreviousId == clickedId){
+        let pointValue = $("#" + e.id).val();
+        if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+            globalPreviousValue = globalPreviousValue;
+        }else{
+            globalPreviousValue = $("#" + e.id).val();
+        }    
+    
+        if (e.value <= 0) {
+            //globalPreviousValue='';
+            $("#" + e.id).val('');
+        }
+    }else{
+                
+        let pointValue = $("#" + globalPreviousId).val();
+        if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+            globalPreviousValue = globalPreviousValue;
+        }else{
+            globalPreviousValue = $("#" + globalPreviousId).val();
+        }    
+    
+        if (e.value <= 0) {
+            //globalPreviousValue='';
+            $("#" + e.id).val('');
+        }
+        globalPreviousId = clickedId;
+    
+    }
+    console.log("clickedId: "+clickedId);
+    console.log("globalPreviousId: "+globalPreviousId);
+    console.log("globalPreviousValue: "+globalPreviousValue);
+}
 
 function checkPoint_click(e) {
-    //alert('clicked');
-    //globalPreviousValue = '0.0';
-    globalPreviousValue = $("#" + e.id).val();
-    console.log('prev: '+globalPreviousValue);
+    console.log("click: "+globalPreviousValue);
+    let pointValue = $("#" + e.id).val();
+    if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+        globalPreviousValue = globalPreviousValue;
+    }else{
+        globalPreviousValue = $("#" + e.id).val();
+    }    
 
     if (e.value <= 0) {
-        globalPreviousValue='';
+        //globalPreviousValue='';
         $("#" + e.id).val('');
     }
 }
+
 function checkPoint_onmouseover(e) {
-    globalPreviousValue = $("#" + e.id).val();
+    let pointValue = $("#" + e.id).val();
+    if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+        globalPreviousValue = globalPreviousValue;
+    }else{
+        globalPreviousValue = $("#" + e.id).val();
+    }
+    
+    console.log(globalPreviousValue);
 }
 function checkPoint(element) {
 
@@ -434,15 +477,9 @@ function checkPoint(element) {
     var tr = element.closest('tr');
     //var trId = $(tr).data('rowid');
     var trName = $(tr).find('td').eq(0).children('span').data('name');
-    console.log('name:' + trName);
     var allTr = $('#forecast_table > tbody > tr');
     //var monthNumber = $(element).data('month');
     var columnIndex = $(element).parent().index();
-
-    console.log('index: ' + columnIndex);
-
-
-
 
     $.each(allTr, function (index, value) {
         var tempTrName = $(value).find('td').eq(0).children('span').data('name');
@@ -454,20 +491,13 @@ function checkPoint(element) {
             else {
                 totalMonthPoint += parseFloat(monthPoint);
             }
-            //console.log(td);
             sameNameTr.push(value);
         }
     });
-    // console.log("totalMonthPoint: "+totalMonthPoint);
     // if (totalMonthPoint > 1) {
-    //     console.log("before alert!")
     //     alert('total month point can not be grater than 1');
     //     $(element).val(globalPreviousValue);
     // }
-
-
-    //console.log($(tr).find('td').eq(1).data('name'));
-
 }
 function LoaderShow(){
     $("#forecast_table_wrapper").css("display", "none");
@@ -1691,14 +1721,9 @@ var expanded = false;
 
                 //var rowId = parseInt($(this).closest('tr').data('rowid'));
                 var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
-                console.log('row_d:' + rowId);
-                //console.log($(this).closest('tr').find('td').eq(1).children('input').val());
                 var month = parseInt($(this).data('month'));
-                console.log('month ' + month);
                 var unitPrice = parseFloat($('#up_' + rowId).data('unitprice').replace(/,/g, ''));
-                console.log('unitprice ' + unitPrice)
                 var pointValue = parseFloat($(this).val());
-                console.log('point ' + pointValue)
                 let result = 0;
                 switch (month) {
                     case 1:
@@ -1942,8 +1967,6 @@ var expanded = false;
                         var _companyName = '';
                         var _oct = 0;
                         var _octTotal = 0;
-
-                        console.log(data);
                         $('#forecast_table').DataTable({
                             destroy: true,
                             data: data,
@@ -2357,7 +2380,6 @@ var expanded = false;
             $(document).on('change', '#section_search', function () {
 
                 var sectionId = $(this).val();
-                console.log(sectionId);
 
                 $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
                     .done(function (data) {
