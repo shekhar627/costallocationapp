@@ -410,10 +410,21 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
                 // console.log(item);
                 unitPrices.push(item.UnitPrice);
                 previousAssignmentRow = item.SubCode;
+                if(count==1){
+                    firstRowUnitPrice = item.UnitPrice;
+                }
+
                 tr += '<tr class="sub_thead">';
                 tr += `<td>${item.SubCode}</td>`;
-                tr += `<td><input type='text' class=" col-12" style='width: 141px;' value='${item.EmployeeName}' readonly/></td>`;
-                tr += `<td><input type='text' class=" col-12" style='width: 47px;' value='${item.SubCode}' readonly /></td>`;
+                var colorMark = '';
+                if(firstRowUnitPrice.toString() == item.UnitPrice.toString()){
+                    tr += `<td><input type='text' class=" col-12" style='width: 141px;' value='${item.EmployeeName}' readonly/></td>`;
+                    tr += `<td><input type='text' class=" col-12" style='width: 47px;' value='${item.SubCode}' readonly /></td>`;
+                }else{
+                    tr += `<td><input type='text' class=" col-12" style='width: 141px;color:red;' value='${item.EmployeeName}' readonly/></td>`;
+                    tr += `<td><input type='text' class=" col-12" style='width: 47px;color:red;' value='${item.SubCode}' readonly /></td>`;
+                }
+                
                 tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.Remarks}' readonly /></td>`;
                 tr += `<td><input type='text' class=" col-12" style='width: 87px;' value='${item.SectionName}' readonly /></td>`;
                 tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.DepartmentName}' readonly /></td>`;
