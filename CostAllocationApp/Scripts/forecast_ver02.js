@@ -433,15 +433,21 @@ function CheckPreviousManMonthIdValuePoint(e){
 function checkPoint_click(e) {
     console.log("click: "+globalPreviousValue);
     let pointValue = $("#" + e.id).val();
-    if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+    let comparePreviousGlobalValue = parseFloat(globalPreviousValue);
+    if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && comparePreviousGlobalValue > 0) {
         globalPreviousValue = globalPreviousValue;
-    }else{
-        globalPreviousValue = $("#" + e.id).val();
+    }
+    else if (comparePreviousGlobalValue > 0) {
+        globalPreviousValue = globalPreviousValue;
+    }
+    else {
+        //globalPreviousValue = $("#" + e.id).val();
+        globalPreviousValue = '0.0';
     }    
 
     if (e.value <= 0) {
         //globalPreviousValue='';
-        $("#" + e.id).val('');
+        $("#" + e.id).val('0.0');
     }
 }
 
@@ -494,10 +500,10 @@ function checkPoint(element) {
             sameNameTr.push(value);
         }
     });
-    // if (totalMonthPoint > 1) {
-    //     alert('total month point can not be grater than 1');
-    //     $(element).val(globalPreviousValue);
-    // }
+     if (totalMonthPoint > 1) {
+         alert('total month point can not be grater than 1');
+         $(element).val(globalPreviousValue);
+     }
 }
 function LoaderShow(){
     $("#forecast_table_wrapper").css("display", "none");

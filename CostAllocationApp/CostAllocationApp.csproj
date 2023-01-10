@@ -210,6 +210,7 @@
     <Content Include="Content\explanations.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\forecast.css" />
+    <Content Include="Content\forecast_ver02.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\incharge.css" />
     <Content Include="Content\line-awesome.min.css" />
@@ -577,6 +578,7 @@
     <Content Include="Scripts\dropfiles.js" />
     <Content Include="Scripts\explanations.js" />
     <Content Include="Scripts\forecast.js" />
+    <Content Include="Scripts\forecast_ver02.js" />
     <Content Include="Scripts\form-validation.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\glimpse.js" />
