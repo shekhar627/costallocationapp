@@ -506,7 +506,7 @@ function checkPoint(element) {
          $(element).val(globalPreviousValue);
      }
 }
-function LoaderShow(){
+function LoaderShow() {
     $("#forecast_table_wrapper").css("display", "none");
     $("#loading").css("display", "block");
 }
@@ -525,11 +525,12 @@ function LoadForecastData(){
             url: `/api/utilities/SearchForecastEmployee`,
             contentType: 'application/json',
             type: 'GET',
-            async: true,
+            async: false,
             dataType: 'json',
             data: globalSearchObject,            
             success: function (data) {
                 LoaderHide();
+                console.log(data);
                 $('#forecast_table>thead').empty();
                 $('#forecast_table>tbody').empty();
                 $('#forecast_table>thead').append(`
@@ -976,14 +977,16 @@ function LoadForecastData(){
 }
 
 function onCancel() {  
-    LoaderShow();  
-    LoadForecastData()    
+    LoaderShow();
+    LoadForecastData();  
 }
 
-function onSave(e){
-    e.preventDefault();
+function onSave() {
+    //LoaderShow();
+   // e.preventDefault();
+    
     $.when(ForecastDataSave()).then(LoadForecastData());
-    LoadForecastData();
+    //LoadForecastData();
 }
 
 function ForecastDataSave() {   
@@ -993,8 +996,7 @@ function ForecastDataSave() {
         alert('No Rows Selected');
         return false;
     }
-    LoaderShow();    
-
+    LoaderShow();
     $.each(rows, function (index, data) {
         var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
         var year = $('#period_search').find(":selected").val();
@@ -1042,7 +1044,7 @@ function ForecastDataSave() {
         $.ajax({
             url: '/api/Forecasts',
             type: 'GET',
-            async: true,
+            async: false,
             dataType: 'json',
             data: {                
                 data: data,
@@ -1050,17 +1052,19 @@ function ForecastDataSave() {
                 assignmentId: assignmentId
             },
             success: function (data) {                
-                saveFlag = data;
+                //saveFlag = data;
+                //LoaderHide();
+                //LoaderShow(); 
                 console.log("saved-1");
             },
             error: function (data) {
                 $("#loading").css("display", "none");
-                saveFlag = false;
+                //saveFlag = false;
                 alert("Error please try again");
             }
         });
     });
-
+    //LoaderShow(); 
     ToastMessageSuccess("Data Saved Successfully");  
 }
 
