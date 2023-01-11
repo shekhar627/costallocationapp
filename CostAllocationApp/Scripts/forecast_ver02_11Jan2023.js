@@ -980,21 +980,14 @@ function onCancel() {
     LoadForecastData()    
 }
 
-function onSave(e){
-    e.preventDefault();
-    $.when(ForecastDataSave()).then(LoadForecastData());
-    LoadForecastData();
-}
-
-function ForecastDataSave() {   
+function onSave() {   
     var saveFlag = false;
     const rows = document.querySelectorAll("#forecast_table > tbody > tr");
     if (rows.length <= 0) {
         alert('No Rows Selected');
         return false;
     }
-    LoaderShow();    
-
+    LoaderShow();
     $.each(rows, function (index, data) {
         var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
         var year = $('#period_search').find(":selected").val();
@@ -1061,9 +1054,32 @@ function ForecastDataSave() {
         });
     });
 
-    ToastMessageSuccess("Data Saved Successfully");  
+    if (saveFlag) {
+        console.log("saved-2");
+        // $('#forecast_table').empty();
+        // LoadForecastData();   
+        Command: toastr["success"]('Data Saved Successfully', "Success")
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    }    
+    $('#forecast_table').empty();
+    LoadForecastData();   
 }
-
 var expanded = false;
         $(document).on("click", function (event) {
             var $trigger = $(".forecast_multiselect");

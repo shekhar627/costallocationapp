@@ -74,6 +74,7 @@
     LoadNameListTableOnLoad();
 
     function LoadNameListTableOnLoad() {
+        LoaderShow();
         let employeeName = "";
         let sectionId = "";
         let departmentId = "";
@@ -108,7 +109,7 @@
                     $('#employee_list_search_results').append("<tr><td colspan='8' style='text-align:center;font-size:20px;'>No Data found!</td></tr>");
 
                 }
-
+                LoaderHide();
             });
         GetListDropdownValue();
     }
@@ -985,3 +986,12 @@ $('#explanation_multi_search').change(function() {
 $('#company_multi_search').change(function() {
     GetMultiSearch_AjaxData();
 });
+
+function LoaderShow(){
+    $("#namelist").css("display", "none");
+    $("#loading").css("display", "block");
+}
+function LoaderHide(){
+    $("#namelist").css("display", "block");
+    $("#loading").css("display", "none");
+}
