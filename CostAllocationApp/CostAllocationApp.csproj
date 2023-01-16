@@ -606,6 +606,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\multiselect.min.js" />
     <Content Include="Scripts\namelist.js" />
+    <Content Include="Scripts\namelist_modal_registrations.js" />
     <Content Include="Scripts\namelist_ver02.js" />
     <Content Include="Scripts\nameregistration.js" />
     <Content Include="Scripts\popper.min.js" />

@@ -988,8 +988,9 @@ function onSave(e) {
 
     setTimeout(() => {
         LoadForecastData();
+        ToastMessageSuccess("Data Saved Successfully");
     }
-        , 10000);
+        , 5000);
     //LoadForecastData();
     //LoadForecastData(); 
     //LoadForecastData();
@@ -1070,7 +1071,7 @@ function ForecastDataSave() {
         });
     });
 
-    ToastMessageSuccess("Data Saved Successfully");
+    //ToastMessageSuccess("Data Saved Successfully");
 }
 
 var expanded = false;

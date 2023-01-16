@@ -21,7 +21,7 @@ function InsertSection() {
                 ToastMessageSuccess(data);
 
                 $('#section-name').val('');
-                //GetSectionList();
+                GetSectionList();
             },
             error: function(data) {
                 alert(data.responseJSON.Message);
@@ -337,4 +337,169 @@ function InsertSalaries() {
             }
         });
     }
+}
+
+$('#section_registration').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        //SetRegistrationValueInHiddenField();
+        //window.location.reload(true);
+        //RetainRegistrationValue()
+        FillDropdownOfNameRegistration();
+    }
+})
+$('#department_registration').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        //SetRegistrationValueInHiddenField();
+        //window.location.reload(true);
+        //RetainRegistrationValue()
+        FillDropdownOfNameRegistration();
+    }
+})
+$('#in-charge_registration').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        //SetRegistrationValueInHiddenField();
+        //window.location.reload(true);
+        //RetainRegistrationValue();
+        FillDropdownOfNameRegistration();
+    }
+})
+$('#role_registration_modal').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        //SetRegistrationValueInHiddenField();
+        //window.location.reload(true);
+        //RetainRegistrationValue();
+        FillDropdownOfNameRegistration();
+    }
+})
+$('#explanation_modal').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        //SetRegistrationValueInHiddenField();
+        //window.location.reload(true);
+        //RetainRegistrationValue()
+        FillDropdownOfNameRegistration();
+    }
+})
+$('#company_reg_modal').on('hidden.bs.modal', function () {
+    var isPageLoad = $("#page_load_after_modal_close").val();
+    if (isPageLoad == "yes") {
+        //window.location.reload(true);
+        //RetainRegistrationValue()
+        FillDropdownOfNameRegistration();
+    }
+})
+function FillDropdownOfNameRegistration() {
+    SetRegistrationValueInHiddenField();
+
+    //SectionDropdown fill
+    $.getJSON('/api/sections/')
+        .done(function (data) {
+            $('#section_multi_search').empty();
+            var sectionId = $("#hid_sectionId").val();
+            console.log(sectionId);
+            $.each(data, function (key, item) {
+                if (sectionId == item.Id) {
+                    $('#section_multi_search').append(`<option selected class='section_checkbox' id="section_checkbox_${item.Id}" value='${item.Id}' >${item.SectionName}</option>`);
+                } else {
+                    $('#section_multi_search').append(`<option class='section_checkbox' id="section_checkbox_${item.Id}" value='${item.Id}' >${item.SectionName}</option>`)
+                }
+            });
+            $('#section_multi_search').multiselect('rebuild');
+        });
+
+    $.getJSON(`/api/Departments/`)
+        .done(function (data) {
+            $('#dept_multi_search').empty();
+            var departmentId = $("#hid_departmentId").val();
+            $.each(data, function (key, item) {
+                if (departmentId == item.Id) {
+                    $('#dept_multi_search').append(`<option selected class='department_checkbox' id="department_checkbox_${item.Id}" value='${item.Id}'>${item.DepartmentName}</option>`)
+                } else {
+                    $('#dept_multi_search').append(`<option class='department_checkbox' id="department_checkbox_${item.Id}" value='${item.Id}'>${item.DepartmentName}</option>`)
+                }
+            });
+            $('#dept_multi_search').multiselect('rebuild');
+        });
+
+    //InCharge dropdown fill
+    $.getJSON('/api/incharges/')
+        .done(function (data) {
+            $('#incharge_multi_search').empty();
+            var inchargeId = $("#hid_inchargeId").val();
+            $.each(data, function (key, item) {
+                if (inchargeId == item.Id) {
+                    $('#incharge_multi_search').append(`<option selected class='incharge_checkbox' id="incharge_checkbox_${item.Id}" value='${item.Id}'>${item.InChargeName}</option>`)
+                } else {
+                    $('#incharge_multi_search').append(`<option class='incharge_checkbox' id="incharge_checkbox_${item.Id}" value='${item.Id}'>${item.InChargeName}</option>`)
+                }
+            });
+            $('#incharge_multi_search').multiselect('rebuild');
+        });
+    //Role dropdown fill
+    $.getJSON('/api/Roles/')
+        .done(function (data) {
+            $('#role_multi_search').empty();
+            var roleId = $("#hid_roleId").val();
+            $.each(data, function (key, item) {
+                if (roleId == item.Id) {
+                    $('#role_multi_search').append(`<option selected class='role_checkbox' id="role_checkbox_${item.Id}" value='${item.Id}'>${item.RoleName}</option>`)
+                } else {
+                    $('#role_multi_search').append(`<option class='role_checkbox' id="role_checkbox_${item.Id}" value='${item.Id}'>${item.RoleName}</option>`)
+                }
+            });
+            $('#role_multi_search').multiselect('rebuild');
+        });
+
+    //Explanation dropdown fill
+    $.getJSON('/api/Explanations/')
+        .done(function (data) {
+            $('#explanation_multi_search').empty();
+            var explantionId = $("#hid_explanationId").val();
+            $.each(data, function (key, item) {
+                if (explantionId == item.Id) {
+                    $('#explanation_multi_search').append(`<option selected class='explanation_checkbox' id="explanation_checkbox_${item.Id}" value='${item.Id}'>${item.ExplanationName}</option>`)
+                } else {
+                    $('#explanation_multi_search').append(`<option class='explanation_checkbox' id="explanation_checkbox_${item.Id}" value='${item.Id}'>${item.ExplanationName}</option>`)
+                }
+            });
+            $('#explanation_multi_search').multiselect('rebuild');
+        });
+    //Company dropdown fill
+    $.getJSON('/api/Companies/')
+        .done(function (data) {
+            $('#company_multi_search').empty();
+            var companyid = $("#hid_companyId").val();
+            $.each(data, function (key, item) {
+                if (companyid == item.Id) {
+                    $('#company_multi_search').append(`<option selected class='comopany_checkbox' id="comopany_checkbox_${item.Id}" value='${item.Id}'>${item.CompanyName}</option>`)
+                } else {
+                    $('#company_multi_search').append(`<option class='comopany_checkbox' id="comopany_checkbox_${item.Id}" value='${item.Id}'>${item.CompanyName}</option>`)
+                }
+            });
+            $('#company_multi_search').multiselect('rebuild');
+        });
+}
+function SetRegistrationValueInHiddenField() {
+    let name = $("#name_search").val();
+    let sectionId = $('#section_multi_search').find(":selected").val();
+    let departmentId = $('#dept_multi_search').find(":selected").val();
+    let inchargeId = $('#incharge_multi_search').find(":selected").val();
+    let roleId = $('#role_multi_search').find(":selected").val();
+    let explantionId = $('#explanation_multi_search').find(":selected").val();
+    let companyid = $('#company_multi_search').find(":selected").val();
+    let companyName = $('#company_multi_search').find(":selected").text();
+
+    $("#hid_name").val(name);
+    $("#hid_sectionId").val(sectionId);
+
+    $("#hid_departmentId").val(departmentId);
+    $("#hid_inchargeId").val(inchargeId);
+    $("#hid_roleId").val(roleId);
+    $("#hid_explanationId").val(explantionId);
+    $("#hid_companyId").val(companyid);
+    $("#hid_companyName").val(companyName);
 }
