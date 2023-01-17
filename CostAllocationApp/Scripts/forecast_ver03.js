@@ -1,5 +1,5 @@
 ﻿var globalSearchObject = '';
-var globalPreviousValue='0.0';
+var globalPreviousValue = '0.0';
 var globalPreviousId = '';
 
 function DismissOtherDropdown(requestType) {
@@ -390,48 +390,48 @@ function ForecastSearchDropdownInLoad() {
             });
         });
 }
-function CheckPreviousManMonthIdValuePoint(e){
+function CheckPreviousManMonthIdValuePoint(e) {
     let clickedId = e.id;
-    console.log("clickedId: "+clickedId);
-    if(globalPreviousId == ''){
+    console.log("clickedId: " + clickedId);
+    if (globalPreviousId == '') {
         globalPreviousId = clickedId;
     }
 
-    if(globalPreviousId == clickedId){
+    if (globalPreviousId == clickedId) {
         let pointValue = $("#" + e.id).val();
-        if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+        if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue > 0) {
             globalPreviousValue = globalPreviousValue;
-        }else{
+        } else {
             globalPreviousValue = $("#" + e.id).val();
-        }    
-    
+        }
+
         if (e.value <= 0) {
             //globalPreviousValue='';
             $("#" + e.id).val('');
         }
-    }else{
-                
+    } else {
+
         let pointValue = $("#" + globalPreviousId).val();
-        if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+        if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue > 0) {
             globalPreviousValue = globalPreviousValue;
-        }else{
+        } else {
             globalPreviousValue = $("#" + globalPreviousId).val();
-        }    
-    
+        }
+
         if (e.value <= 0) {
             //globalPreviousValue='';
             $("#" + e.id).val('');
         }
         globalPreviousId = clickedId;
-    
+
     }
-    console.log("clickedId: "+clickedId);
-    console.log("globalPreviousId: "+globalPreviousId);
-    console.log("globalPreviousValue: "+globalPreviousValue);
+    console.log("clickedId: " + clickedId);
+    console.log("globalPreviousId: " + globalPreviousId);
+    console.log("globalPreviousValue: " + globalPreviousValue);
 }
 
 function checkPoint_click(e) {
-    console.log("click: "+globalPreviousValue);
+    console.log("click: " + globalPreviousValue);
     let pointValue = $("#" + e.id).val();
     let comparePreviousGlobalValue = parseFloat(globalPreviousValue);
     if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && comparePreviousGlobalValue > 0) {
@@ -443,7 +443,7 @@ function checkPoint_click(e) {
     else {
         //globalPreviousValue = $("#" + e.id).val();
         globalPreviousValue = '0.0';
-    }    
+    }
 
     if (e.value <= 0) {
         //globalPreviousValue='';
@@ -454,26 +454,26 @@ function checkPoint_click(e) {
 
 function checkPoint_onmouseover(e) {
     let pointValue = $("#" + e.id).val();
-    if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue >0){
+    if ((isNaN(pointValue) || pointValue == undefined || pointValue == '') && globalPreviousValue > 0) {
         globalPreviousValue = globalPreviousValue;
-    }else{
+    } else {
         globalPreviousValue = $("#" + e.id).val();
     }
-    
+
     console.log(globalPreviousValue);
 }
 function checkPoint(element) {
 
     var pointValue = $(element).val();
-    if (isNaN(pointValue) || pointValue == undefined || pointValue == '') {        
+    if (isNaN(pointValue) || pointValue == undefined || pointValue == '') {
         $(element).val(globalPreviousValue);
     }
     else {
-        if ((pointValue > 1 || pointValue < 0) ) {
+        if ((pointValue > 1 || pointValue < 0)) {
             alert('total month point can not be grater than 1 Or less than 0');
             $(element).val(globalPreviousValue);
         }
-        else{
+        else {
             $(element).val(pointValue);
         }
     }
@@ -501,21 +501,21 @@ function checkPoint(element) {
             sameNameTr.push(value);
         }
     });
-     if (totalMonthPoint > 1) {
-         alert('total month point can not be grater than 1');
-         $(element).val(globalPreviousValue);
-     }
+    if (totalMonthPoint > 1) {
+        alert('total month point can not be grater than 1');
+        $(element).val(globalPreviousValue);
+    }
 }
 function LoaderShow() {
     $("#forecast_table_wrapper").css("display", "none");
     $("#loading").css("display", "block");
 }
-function LoaderHide(){
+function LoaderHide() {
     $("#forecast_table_wrapper").css("display", "block");
     $("#loading").css("display", "none");
 }
 
-function LoadForecastData(){
+function LoadForecastData() {
     console.log("saved-3");
     if (globalSearchObject == '') {
         return;
@@ -525,12 +525,11 @@ function LoadForecastData(){
             url: `/api/utilities/SearchForecastEmployee`,
             contentType: 'application/json',
             type: 'GET',
-            async: false,
+            async: true,
             dataType: 'json',
-            data: globalSearchObject,            
+            data: globalSearchObject,
             success: function (data) {
                 LoaderHide();
-                console.log(data);
                 $('#forecast_table>thead').empty();
                 $('#forecast_table>tbody').empty();
                 $('#forecast_table>thead').append(`
@@ -976,20 +975,28 @@ function LoadForecastData(){
     }
 }
 
-function onCancel() {  
+function onCancel() {
     LoaderShow();
-    LoadForecastData();  
+    LoadForecastData()
 }
 
-function onSave() {
-    //LoaderShow();
-   // e.preventDefault();
-    
-    $.when(ForecastDataSave()).then(LoadForecastData());
+function onSave(e) {
+
+    e.preventDefault();
+    //$.when(ForecastDataSave()).then(LoadForecastData());
+    ForecastDataSave();
+
+    setTimeout(() => {
+        LoadForecastData();
+        ToastMessageSuccess("Data Saved Successfully");
+    }
+        , 5000);
+    //LoadForecastData();
+    //LoadForecastData(); 
     //LoadForecastData();
 }
 
-function ForecastDataSave() {   
+function ForecastDataSave() {
     var saveFlag = false;
     const rows = document.querySelectorAll("#forecast_table > tbody > tr");
     if (rows.length <= 0) {
@@ -997,6 +1004,7 @@ function ForecastDataSave() {
         return false;
     }
     LoaderShow();
+
     $.each(rows, function (index, data) {
         var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
         var year = $('#period_search').find(":selected").val();
@@ -1044,887 +1052,885 @@ function ForecastDataSave() {
         $.ajax({
             url: '/api/Forecasts',
             type: 'GET',
-            async: false,
+            async: true,
             dataType: 'json',
-            data: {                
+            data: {
                 data: data,
                 year: year,
                 assignmentId: assignmentId
             },
-            success: function (data) {                
-                //saveFlag = data;
-                //LoaderHide();
-                //LoaderShow(); 
+            success: function (data) {
+                saveFlag = data;
                 console.log("saved-1");
             },
             error: function (data) {
                 $("#loading").css("display", "none");
-                //saveFlag = false;
+                saveFlag = false;
                 alert("Error please try again");
             }
         });
     });
-    //LoaderShow(); 
-    ToastMessageSuccess("Data Saved Successfully");  
+
+    //ToastMessageSuccess("Data Saved Successfully");
 }
 
 var expanded = false;
-        $(document).on("click", function (event) {
-            var $trigger = $(".forecast_multiselect");
-            //alert("trigger: "+$trigger);
-            if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                $(".commonselect").slideUp("fast");
-                expanded = false;
-            }
-        });
-        $(document).ready(function () {
-            $('#forecast_name').click(function () {
-                NameListSort("name_asc", "name_desc");
-            });
-            $('#forecast_section').click(function () {
-                NameListSort("section_asc", "section_desc");
-            });
-            $('#forecast_department').click(function () {
-                NameListSort("department_asc", "department_desc");
-            });
-            $('#forecast_incharge').click(function () {
-                NameListSort("incharge_asc", "incharge_desc");
-            });
-            $('#forecast_role').click(function () {
-                NameListSort("role_asc", "role_desc");
-            });
-            $('#forecast_explanation').click(function () {
-                NameListSort("explanation_asc", "explanation_desc");
-            });
-            $('#forecast_company').click(function () {
-                NameListSort("company_asc", "company_desc");
-            });
-            $('#forecast_grade').click(function () {
-                NameListSort("grade_asc", "grade_desc");
-            });
-            $('#forecast_unitprice').click(function () {
-                NameListSort("unit_asc", "unit_desc");
-            });
+$(document).on("click", function (event) {
+    var $trigger = $(".forecast_multiselect");
+    //alert("trigger: "+$trigger);
+    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+        $(".commonselect").slideUp("fast");
+        expanded = false;
+    }
+});
+$(document).ready(function () {
+    $('#forecast_name').click(function () {
+        NameListSort("name_asc", "name_desc");
+    });
+    $('#forecast_section').click(function () {
+        NameListSort("section_asc", "section_desc");
+    });
+    $('#forecast_department').click(function () {
+        NameListSort("department_asc", "department_desc");
+    });
+    $('#forecast_incharge').click(function () {
+        NameListSort("incharge_asc", "incharge_desc");
+    });
+    $('#forecast_role').click(function () {
+        NameListSort("role_asc", "role_desc");
+    });
+    $('#forecast_explanation').click(function () {
+        NameListSort("explanation_asc", "explanation_desc");
+    });
+    $('#forecast_company').click(function () {
+        NameListSort("company_asc", "company_desc");
+    });
+    $('#forecast_grade').click(function () {
+        NameListSort("grade_asc", "grade_desc");
+    });
+    $('#forecast_unitprice').click(function () {
+        NameListSort("unit_asc", "unit_desc");
+    });
 
-            // multiple search by section
-            $(document).on('click', '#sectionChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+    // multiple search by section
+    $(document).on('click', '#sectionChks input[type="checkbox"]', function () {
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
 
-                var clicked_checkbox = $(this).attr("id")
+        var clicked_checkbox = $(this).attr("id")
 
-                if (clicked_checkbox.toLowerCase() == "chk_sec_all") {
-                    $(".section_checkbox").prop("checked", isSectionAllChk);
+        if (clicked_checkbox.toLowerCase() == "chk_sec_all") {
+            $(".section_checkbox").prop("checked", isSectionAllChk);
+        } else {
+            $("#chk_sec_all").prop("checked", false);
+        }
+
+
+        clicked_checkbox = "";
+
+        var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+        employeeName = $('#name_search').val();
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        $("#hidSectionId").val('');
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                sectionCheck.push(item.value);
+            });
+        }
+        $("#hidSectionId").val(sectionCheck);
+
+        $("#hidDepartmentId").val('');
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                departmentCheck.push(item.value);
+            });
+        }
+        $("#hidDepartmentId").val(departmentCheck);
+
+        $("#hidInChargeId").val('');
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                inchargeCheck.push(item.value);
+            });
+        }
+        $("#hidInChargeId").val(inchargeCheck);
+
+        $("#hidRoleId").val('');
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                roleCheck.push(item.value);
+            });
+        }
+        $("#hidRoleId").val(roleCheck);
+
+        $("#hidExplanationId").val('');
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                explanationCheck.push(item.value);
+            });
+        }
+        $("#hidExplanationId").val(explanationCheck);
+
+        $("#hidCompanyid").val('');
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                companyCheck.push(item.value);
+            });
+        }
+        $("#hidCompanyid").val(companyCheck);
+
+        //var sectionSearchId = "";
+        //if (!isSectionAllChk) {
+        //    $.each(sectionCheckedBoxes, function(index, item) {
+        //        if(sectionSearchId == ""){
+        //            sectionSearchId = item.value;
+        //        }
+        //        else{
+        //            sectionSearchId = sectionSearchId + ","+item.value;
+        //        }
+        //    });
+        //}
+        //$("#hidSectionId").val(sectionSearchId);
+    });
+
+    // multiple search by departments
+    $(document).on('click', '#departmentChks input[type="checkbox"]', function () {
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+        var clicked_checkbox = $(this).attr("id")
+
+        if (clicked_checkbox.toLowerCase() == "chk_dept_all") {
+            $(".department_checkbox").prop("checked", isDepartmentAllCheck);
+        } else {
+            $("#chk_dept_all").prop("checked", false);
+        }
+
+        var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+
+
+        employeeName = $('#name_search').val();
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        $("#hidSectionId").val('');
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                sectionCheck.push(item.value);
+            });
+        }
+        $("#hidSectionId").val(sectionCheck);
+
+        $("#hidDepartmentId").val('');
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                departmentCheck.push(item.value);
+            });
+        }
+        $("#hidDepartmentId").val(departmentCheck);
+
+        $("#hidInChargeId").val('');
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                inchargeCheck.push(item.value);
+            });
+        }
+        $("#hidInChargeId").val(inchargeCheck);
+
+        $("#hidRoleId").val('');
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                roleCheck.push(item.value);
+            });
+        }
+        $("#hidRoleId").val(roleCheck);
+
+        $("#hidExplanationId").val('');
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                explanationCheck.push(item.value);
+            });
+        }
+        $("#hidExplanationId").val(explanationCheck);
+
+        $("#hidCompanyid").val('');
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                companyCheck.push(item.value);
+            });
+        }
+        $("#hidCompanyid").val(companyCheck);
+
+        //var departmentIds = "";
+        //$("#hidDepartmentId").val('');
+        //if (!isDepartmentAllCheck) {
+        //    $.each(departmentCheckedBoxes, function(index, item) {
+        //        //sectionCheck.push(item.value);
+        //        if(departmentIds == ""){
+        //            departmentIds = item.value;
+        //        }
+        //        else{
+        //            departmentIds = departmentIds + ","+item.value;
+        //        }
+        //    });
+        //}
+        //$("#hidDepartmentId").val(departmentIds);
+    });
+
+    // multiple search by incharges
+    $(document).on('click', '#inchargeChks input[type="checkbox"]', function () {
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+        var clicked_checkbox = $(this).attr("id")
+
+        if (clicked_checkbox.toLowerCase() == "chk_incharge_all") {
+            $(".incharge_checkbox").prop("checked", isInChargeAllCheck);
+        } else {
+            $("#chk_incharge_all").prop("checked", false);
+        }
+
+        var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+
+
+        employeeName = $('#name_search').val();
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        $("#hidSectionId").val('');
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                sectionCheck.push(item.value);
+            });
+        }
+        $("#hidSectionId").val(sectionCheck);
+
+        $("#hidDepartmentId").val('');
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                departmentCheck.push(item.value);
+            });
+        }
+        $("#hidDepartmentId").val(departmentCheck);
+
+        $("#hidInChargeId").val('');
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                inchargeCheck.push(item.value);
+            });
+        }
+        $("#hidInChargeId").val(inchargeCheck);
+
+        $("#hidRoleId").val('');
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                roleCheck.push(item.value);
+            });
+        }
+        $("#hidRoleId").val(roleCheck);
+
+        $("#hidExplanationId").val('');
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                explanationCheck.push(item.value);
+            });
+        }
+        $("#hidExplanationId").val(explanationCheck);
+
+        $("#hidCompanyid").val('');
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                companyCheck.push(item.value);
+            });
+        }
+        $("#hidCompanyid").val(companyCheck);
+
+        //var inchargeIds = "";
+        //$("#hidInChargeId").val('');
+        //if (!isInChargeAllCheck) {
+        //    $.each(inchargeCheckedBoxes, function(index, item) {
+        //        //sectionCheck.push(item.value);
+        //        if(inchargeIds == ""){
+        //            inchargeIds = item.value;
+        //        }
+        //        else{
+        //            inchargeIds = inchargeIds + ","+item.value;
+        //        }
+        //    });
+        //}
+        //$("#hidInChargeId").val(inchargeIds);
+    });
+
+    // multiple search by roles
+    $(document).on('click', '#RoleChks input[type="checkbox"]', function () {
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+        var clicked_checkbox = $(this).attr("id")
+
+        if (clicked_checkbox.toLowerCase() == "chk_role_all") {
+            $(".role_checkbox").prop("checked", isRoleAllCheck);
+        } else {
+            $("#chk_role_all").prop("checked", false);
+        }
+
+
+        var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+
+
+        employeeName = $('#name_search').val();
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        $("#hidSectionId").val('');
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                sectionCheck.push(item.value);
+            });
+        }
+        $("#hidSectionId").val(sectionCheck);
+
+        $("#hidDepartmentId").val('');
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                departmentCheck.push(item.value);
+            });
+        }
+        $("#hidDepartmentId").val(departmentCheck);
+
+        $("#hidInChargeId").val('');
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                inchargeCheck.push(item.value);
+            });
+        }
+        $("#hidInChargeId").val(inchargeCheck);
+
+        $("#hidRoleId").val('');
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                roleCheck.push(item.value);
+            });
+        }
+        $("#hidRoleId").val(roleCheck);
+
+        $("#hidExplanationId").val('');
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                explanationCheck.push(item.value);
+            });
+        }
+        $("#hidExplanationId").val(explanationCheck);
+
+        $("#hidCompanyid").val('');
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                companyCheck.push(item.value);
+            });
+        }
+        $("#hidCompanyid").val(companyCheck);
+
+        //var roleIds = "";
+        //$("#hidRoleId").val('');
+        //if (!isRoleAllCheck) {
+        //    $.each(roleCheckedBoxes, function(index, item) {
+        //        //sectionCheck.push(item.value);
+        //        if(roleIds == ""){
+        //            roleIds = item.value;
+        //        }
+        //        else{
+        //            roleIds = roleIds + ","+item.value;
+        //        }
+        //    });
+        //}
+        //$("#hidRoleId").val(roleIds);
+
+    });
+
+    // multiple search by explanations
+    $(document).on('click', '#ExplanationChks input[type="checkbox"]', function () {
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+        var clicked_checkbox = $(this).attr("id")
+
+        if (clicked_checkbox.toLowerCase() == "chk_explanation_all") {
+            $(".explanation_checkbox").prop("checked", isExplanationAllCheck);
+        } else {
+            $("#chk_explanation_all").prop("checked", false);
+        }
+
+        var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+
+
+        employeeName = $('#name_search').val();
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        $("#hidSectionId").val('');
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                sectionCheck.push(item.value);
+            });
+        }
+        $("#hidSectionId").val(sectionCheck);
+
+        $("#hidDepartmentId").val('');
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                departmentCheck.push(item.value);
+            });
+        }
+        $("#hidDepartmentId").val(departmentCheck);
+
+        $("#hidInChargeId").val('');
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                inchargeCheck.push(item.value);
+            });
+        }
+        $("#hidInChargeId").val(inchargeCheck);
+
+        $("#hidRoleId").val('');
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                roleCheck.push(item.value);
+            });
+        }
+        $("#hidRoleId").val(roleCheck);
+
+        $("#hidExplanationId").val('');
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                explanationCheck.push(item.value);
+            });
+        }
+        $("#hidExplanationId").val(explanationCheck);
+
+        $("#hidCompanyid").val('');
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                companyCheck.push(item.value);
+            });
+        }
+        $("#hidCompanyid").val(companyCheck);
+
+        //var explanationIds = "";
+        //$("#hidExplanationId").val('');
+        //if (!isExplanationAllCheck) {
+        //    $.each(explanationCheckedBoxes, function(index, item) {
+        //        //sectionCheck.push(item.value);
+        //        if(explanationIds == ""){
+        //            explanationIds = item.value;
+        //        }
+        //        else{
+        //            explanationIds = explanationIds + ","+item.value;
+        //        }
+        //    });
+        //}
+        //$("#hidExplanationId").val(explanationIds);
+    });
+
+    // multiple search by companies
+    $(document).on('click', '#CompanyChks input[type="checkbox"]', function () {
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+        var clicked_checkbox = $(this).attr("id")
+
+        if (clicked_checkbox.toLowerCase() == "chk_comopany_all") {
+            $(".comopany_checkbox").prop("checked", isCompanytAllCheck);
+        } else {
+            $("#chk_comopany_all").prop("checked", false);
+        }
+
+        var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+
+
+        employeeName = $('#name_search').val();
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        $("#hidSectionId").val('');
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                sectionCheck.push(item.value);
+            });
+        }
+        $("#hidSectionId").val(sectionCheck);
+
+        $("#hidDepartmentId").val('');
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                departmentCheck.push(item.value);
+            });
+        }
+        $("#hidDepartmentId").val(departmentCheck);
+
+        $("#hidInChargeId").val('');
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                inchargeCheck.push(item.value);
+            });
+        }
+        $("#hidInChargeId").val(inchargeCheck);
+
+        $("#hidRoleId").val('');
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                roleCheck.push(item.value);
+            });
+        }
+        $("#hidRoleId").val(roleCheck);
+
+        $("#hidExplanationId").val('');
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                explanationCheck.push(item.value);
+            });
+        }
+        $("#hidExplanationId").val(explanationCheck);
+
+        $("#hidCompanyid").val('');
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                companyCheck.push(item.value);
+            });
+        }
+        $("#hidCompanyid").val(companyCheck);
+
+        //var companyIds = "";
+        //$("#hidCompanyid").val('');
+        //if (!isCompanytAllCheck) {
+        //    $.each(companyCheckedBoxes, function(index, item) {
+        //        //sectionCheck.push(item.value);
+        //        if(companyIds == ""){
+        //            companyIds = item.value;
+        //        }
+        //        else{
+        //            companyIds = companyIds + ","+item.value;
+        //        }
+        //    });
+        //}
+        //$("#hidCompanyid").val(companyIds);
+    });
+
+
+
+    // var expanded = false;
+    // $(document).on("click", function (event) {
+    //     var $trigger = $(".forecast_multiselect");
+    //     //alert("trigger: "+$trigger);
+    //     if ($trigger !== event.target && !$trigger.has(event.target).length) {
+    //         $(".commonselect").slideUp("fast");
+    //     }
+    // });
+
+    ForecastSearchDropdownInLoad();
+    // $('.container').blur(function (e) {
+    //     $('.commonselect').fadeOut(100);
+    // });
+
+    $('#forecast_table').on('change', '.input_month', function () {
+
+        //var rowId = parseInt($(this).closest('tr').data('rowid'));
+        var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
+        var month = parseInt($(this).data('month'));
+        var unitPrice = parseFloat($('#up_' + rowId).data('unitprice').replace(/,/g, ''));
+        var pointValue = parseFloat($(this).val());
+        let result = 0;
+        switch (month) {
+            case 1:
+                result = unitPrice * pointValue;
+                $('#jan_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 2:
+                result = unitPrice * pointValue;
+                $('#feb_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 3:
+                result = unitPrice * pointValue;
+                $('#mar_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 4:
+                result = unitPrice * pointValue;
+                $('#apr_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 5:
+                result = unitPrice * pointValue;
+                $('#may_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 6:
+                result = unitPrice * pointValue;
+                $('#jun_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 7:
+                result = unitPrice * pointValue;
+                $('#jul_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 8:
+                result = unitPrice * pointValue;
+                $('#aug_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 9:
+                result = unitPrice * pointValue;
+                $('#sep_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 10:
+                result = unitPrice * pointValue;
+                $('#oct_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 11:
+                result = unitPrice * pointValue;
+                $('#nov_output_' + rowId).val(result.toLocaleString());
+                break;
+            case 12:
+                result = unitPrice * pointValue;
+                $('#dec_output_' + rowId).val(result.toLocaleString());
+                break;
+
+        }
+
+
+    });
+
+
+    $('#forecast_search_button').on('click', function () {
+        var sectionId = $('#section_search').find(":selected").val();
+        var inchargeId = $('#incharge_search').find(":selected").val();
+        var departmentId = $('#department_search').find(":selected").val();
+        var roleId = $('#role_search').find(":selected").val();
+        var companyId = $('#company_search').find(":selected").val();
+        var explanationId = $('#explanation_search').find(":selected").val();
+        var employeeName = $('#identity_search').val();
+
+        var year = $('#period_search').find(":selected").val();
+
+        if (year == '' || year == undefined) {
+
+            alert('select year');
+            return false;
+        }
+        LoaderShow();
+
+        $('#cancel_forecast').css('display', 'inline-block');
+        $('#save_forecast').css('display', 'inline-block');
+
+        //if (departmentId == undefined) {
+        //    departmentId = '';
+        //}
+        let isSectionAllChk = $("#chk_sec_all").is(':checked');
+        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
+        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
+        var isRoleAllCheck = $("#chk_role_all").is(':checked');
+        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
+        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
+
+        //var employeeName = "";
+        var sectionCheck = [];
+        var departmentCheck = [];
+        var inchargeCheck = [];
+        var roleCheck = [];
+        var explanationCheck = [];
+        var companyCheck = [];
+
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
+        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
+        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
+        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
+
+        sectionId = "";
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                //sectionCheck.push(item.value);
+                if (sectionId == "") {
+                    sectionId = item.value;
                 } else {
-                    $("#chk_sec_all").prop("checked", false);
+                    sectionId = sectionId + "##" + item.value;
                 }
-
-
-                clicked_checkbox = "";
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var sectionSearchId = "";
-                //if (!isSectionAllChk) {
-                //    $.each(sectionCheckedBoxes, function(index, item) {
-                //        if(sectionSearchId == ""){
-                //            sectionSearchId = item.value;
-                //        }
-                //        else{
-                //            sectionSearchId = sectionSearchId + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidSectionId").val(sectionSearchId);
             });
+        }
 
-            // multiple search by departments
-            $(document).on('click', '#departmentChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_dept_all") {
-                    $(".department_checkbox").prop("checked", isDepartmentAllCheck);
+        departmentId = "";
+        if (!isDepartmentAllCheck) {
+            $.each(departmentCheckedBoxes, function (index, item) {
+                //departmentCheck.push(item.value);
+                if (departmentId == "") {
+                    departmentId = item.value;
                 } else {
-                    $("#chk_dept_all").prop("checked", false);
+                    departmentId = departmentId + "##" + item.value;
                 }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var departmentIds = "";
-                //$("#hidDepartmentId").val('');
-                //if (!isDepartmentAllCheck) {
-                //    $.each(departmentCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(departmentIds == ""){
-                //            departmentIds = item.value;
-                //        }
-                //        else{
-                //            departmentIds = departmentIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidDepartmentId").val(departmentIds);
             });
+        }
 
-            // multiple search by incharges
-            $(document).on('click', '#inchargeChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_incharge_all") {
-                    $(".incharge_checkbox").prop("checked", isInChargeAllCheck);
+        inchargeId = "";
+        if (!isInChargeAllCheck) {
+            $.each(inchargeCheckedBoxes, function (index, item) {
+                //inchargeCheck.push(item.value);
+                if (inchargeId == "") {
+                    inchargeId = item.value;
                 } else {
-                    $("#chk_incharge_all").prop("checked", false);
+                    inchargeId = inchargeId + "##" + item.value;
                 }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var inchargeIds = "";
-                //$("#hidInChargeId").val('');
-                //if (!isInChargeAllCheck) {
-                //    $.each(inchargeCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(inchargeIds == ""){
-                //            inchargeIds = item.value;
-                //        }
-                //        else{
-                //            inchargeIds = inchargeIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidInChargeId").val(inchargeIds);
             });
-
-            // multiple search by roles
-            $(document).on('click', '#RoleChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_role_all") {
-                    $(".role_checkbox").prop("checked", isRoleAllCheck);
+        }
+        roleId = "";
+        if (!isRoleAllCheck) {
+            $.each(roleCheckedBoxes, function (index, item) {
+                //roleCheck.push(item.value);
+                if (roleId == "") {
+                    roleId = item.value;
                 } else {
-                    $("#chk_role_all").prop("checked", false);
+                    roleId = roleId + "##" + item.value;
                 }
-
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var roleIds = "";
-                //$("#hidRoleId").val('');
-                //if (!isRoleAllCheck) {
-                //    $.each(roleCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(roleIds == ""){
-                //            roleIds = item.value;
-                //        }
-                //        else{
-                //            roleIds = roleIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidRoleId").val(roleIds);
-
             });
-
-            // multiple search by explanations
-            $(document).on('click', '#ExplanationChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_explanation_all") {
-                    $(".explanation_checkbox").prop("checked", isExplanationAllCheck);
+        }
+        explanationId = "";
+        if (!isExplanationAllCheck) {
+            $.each(explanationCheckedBoxes, function (index, item) {
+                //explanationCheck.push(item.value);
+                if (explanationId == "") {
+                    explanationId = item.value;
                 } else {
-                    $("#chk_explanation_all").prop("checked", false);
+                    explanationId = explanationId + "##" + item.value;
                 }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var explanationIds = "";
-                //$("#hidExplanationId").val('');
-                //if (!isExplanationAllCheck) {
-                //    $.each(explanationCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(explanationIds == ""){
-                //            explanationIds = item.value;
-                //        }
-                //        else{
-                //            explanationIds = explanationIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidExplanationId").val(explanationIds);
             });
-
-            // multiple search by companies
-            $(document).on('click', '#CompanyChks input[type="checkbox"]', function () {
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                var clicked_checkbox = $(this).attr("id")
-
-                if (clicked_checkbox.toLowerCase() == "chk_comopany_all") {
-                    $(".comopany_checkbox").prop("checked", isCompanytAllCheck);
+        }
+        companyId = "";
+        if (!isCompanytAllCheck) {
+            $.each(companyCheckedBoxes, function (index, item) {
+                //companyCheck.push(item.value);
+                if (companyId == "") {
+                    companyId = item.value;
                 } else {
-                    $("#chk_comopany_all").prop("checked", false);
+                    companyId = companyId + "##" + item.value;
                 }
-
-                var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-
-
-                employeeName = $('#name_search').val();
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                $("#hidSectionId").val('');
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        sectionCheck.push(item.value);
-                    });
-                }
-                $("#hidSectionId").val(sectionCheck);
-
-                $("#hidDepartmentId").val('');
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        departmentCheck.push(item.value);
-                    });
-                }
-                $("#hidDepartmentId").val(departmentCheck);
-
-                $("#hidInChargeId").val('');
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        inchargeCheck.push(item.value);
-                    });
-                }
-                $("#hidInChargeId").val(inchargeCheck);
-
-                $("#hidRoleId").val('');
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        roleCheck.push(item.value);
-                    });
-                }
-                $("#hidRoleId").val(roleCheck);
-
-                $("#hidExplanationId").val('');
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        explanationCheck.push(item.value);
-                    });
-                }
-                $("#hidExplanationId").val(explanationCheck);
-
-                $("#hidCompanyid").val('');
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        companyCheck.push(item.value);
-                    });
-                }
-                $("#hidCompanyid").val(companyCheck);
-
-                //var companyIds = "";
-                //$("#hidCompanyid").val('');
-                //if (!isCompanytAllCheck) {
-                //    $.each(companyCheckedBoxes, function(index, item) {
-                //        //sectionCheck.push(item.value);
-                //        if(companyIds == ""){
-                //            companyIds = item.value;
-                //        }
-                //        else{
-                //            companyIds = companyIds + ","+item.value;
-                //        }
-                //    });
-                //}
-                //$("#hidCompanyid").val(companyIds);
             });
+        }
 
+        var data_info = {
+            employeeName: employeeName,
+            sectionId: sectionId,
+            departmentId: departmentId,
+            inchargeId: inchargeId,
+            roleId: roleId,
+            explanationId: explanationId,
+            companyId: companyId,
+            status: '', year: ''
+        };
 
+        globalSearchObject = data_info;
 
-            // var expanded = false;
-            // $(document).on("click", function (event) {
-            //     var $trigger = $(".forecast_multiselect");
-            //     //alert("trigger: "+$trigger);
-            //     if ($trigger !== event.target && !$trigger.has(event.target).length) {
-            //         $(".commonselect").slideUp("fast");
-            //     }
-            // });
+        $.ajax({
+            //url: `/api/utilities/SearchForecastEmployee`,
+            //type: 'GET',
+            //dataType: 'json',
+            //data: data_info,
+            url: `/api/utilities/SearchForecastEmployee`,
+            contentType: 'application/json',
+            type: 'GET',
+            dataType: 'json',
+            data: data_info,
+            success: function (data) {
+                LoaderHide();
 
-            ForecastSearchDropdownInLoad();
-            // $('.container').blur(function (e) {
-            //     $('.commonselect').fadeOut(100);
-            // });
-
-            $('#forecast_table').on('change', '.input_month', function () {
-
-                //var rowId = parseInt($(this).closest('tr').data('rowid'));
-                var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
-                var month = parseInt($(this).data('month'));
-                var unitPrice = parseFloat($('#up_' + rowId).data('unitprice').replace(/,/g, ''));
-                var pointValue = parseFloat($(this).val());
-                let result = 0;
-                switch (month) {
-                    case 1:
-                        result = unitPrice * pointValue;
-                        $('#jan_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 2:
-                        result = unitPrice * pointValue;
-                        $('#feb_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 3:
-                        result = unitPrice * pointValue;
-                        $('#mar_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 4:
-                        result = unitPrice * pointValue;
-                        $('#apr_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 5:
-                        result = unitPrice * pointValue;
-                        $('#may_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 6:
-                        result = unitPrice * pointValue;
-                        $('#jun_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 7:
-                        result = unitPrice * pointValue;
-                        $('#jul_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 8:
-                        result = unitPrice * pointValue;
-                        $('#aug_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 9:
-                        result = unitPrice * pointValue;
-                        $('#sep_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 10:
-                        result = unitPrice * pointValue;
-                        $('#oct_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 11:
-                        result = unitPrice * pointValue;
-                        $('#nov_output_' + rowId).val(result.toLocaleString());
-                        break;
-                    case 12:
-                        result = unitPrice * pointValue;
-                        $('#dec_output_' + rowId).val(result.toLocaleString());
-                        break;
-
-                }
-
-
-            });
-
-
-            $('#forecast_search_button').on('click', function () {
-                var sectionId = $('#section_search').find(":selected").val();
-                var inchargeId = $('#incharge_search').find(":selected").val();
-                var departmentId = $('#department_search').find(":selected").val();
-                var roleId = $('#role_search').find(":selected").val();
-                var companyId = $('#company_search').find(":selected").val();
-                var explanationId = $('#explanation_search').find(":selected").val();
-                var employeeName = $('#identity_search').val();
-
-                var year = $('#period_search').find(":selected").val();
-
-                if (year == '' || year == undefined) {
-
-                    alert('select year');
-                    return false;
-                }
-                LoaderShow();
-
-                $('#cancel_forecast').css('display', 'inline-block');
-                $('#save_forecast').css('display', 'inline-block');
-
-                //if (departmentId == undefined) {
-                //    departmentId = '';
-                //}
-                let isSectionAllChk = $("#chk_sec_all").is(':checked');
-                var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-                var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-                var isRoleAllCheck = $("#chk_role_all").is(':checked');
-                var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-                var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-                //var employeeName = "";
-                var sectionCheck = [];
-                var departmentCheck = [];
-                var inchargeCheck = [];
-                var roleCheck = [];
-                var explanationCheck = [];
-                var companyCheck = [];
-
-                var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-                var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-                var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-                var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-                var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-                var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-                sectionId = "";
-                if (!isSectionAllChk) {
-                    $.each(sectionCheckedBoxes, function (index, item) {
-                        //sectionCheck.push(item.value);
-                        if (sectionId == "") {
-                            sectionId = item.value;
-                        } else {
-                            sectionId = sectionId + "##" + item.value;
-                        }
-                    });
-                }
-
-                departmentId = "";
-                if (!isDepartmentAllCheck) {
-                    $.each(departmentCheckedBoxes, function (index, item) {
-                        //departmentCheck.push(item.value);
-                        if (departmentId == "") {
-                            departmentId = item.value;
-                        } else {
-                            departmentId = departmentId + "##" + item.value;
-                        }
-                    });
-                }
-
-                inchargeId = "";
-                if (!isInChargeAllCheck) {
-                    $.each(inchargeCheckedBoxes, function (index, item) {
-                        //inchargeCheck.push(item.value);
-                        if (inchargeId == "") {
-                            inchargeId = item.value;
-                        } else {
-                            inchargeId = inchargeId + "##" + item.value;
-                        }
-                    });
-                }
-                roleId = "";
-                if (!isRoleAllCheck) {
-                    $.each(roleCheckedBoxes, function (index, item) {
-                        //roleCheck.push(item.value);
-                        if (roleId == "") {
-                            roleId = item.value;
-                        } else {
-                            roleId = roleId + "##" + item.value;
-                        }
-                    });
-                }
-                explanationId = "";
-                if (!isExplanationAllCheck) {
-                    $.each(explanationCheckedBoxes, function (index, item) {
-                        //explanationCheck.push(item.value);
-                        if (explanationId == "") {
-                            explanationId = item.value;
-                        } else {
-                            explanationId = explanationId + "##" + item.value;
-                        }
-                    });
-                }
-                companyId = "";
-                if (!isCompanytAllCheck) {
-                    $.each(companyCheckedBoxes, function (index, item) {
-                        //companyCheck.push(item.value);
-                        if (companyId == "") {
-                            companyId = item.value;
-                        } else {
-                            companyId = companyId + "##" + item.value;
-                        }
-                    });
-                }
-
-                var data_info = {
-                    employeeName: employeeName,
-                    sectionId: sectionId,
-                    departmentId: departmentId,
-                    inchargeId: inchargeId,
-                    roleId: roleId,
-                    explanationId: explanationId,
-                    companyId: companyId,
-                    status: '', year: ''
-                };
-
-                globalSearchObject = data_info;
-
-                $.ajax({
-                    //url: `/api/utilities/SearchForecastEmployee`,
-                    //type: 'GET',
-                    //dataType: 'json',
-                    //data: data_info,
-                    url: `/api/utilities/SearchForecastEmployee`,
-                    contentType: 'application/json',
-                    type: 'GET',
-                    dataType: 'json',
-                    data: data_info,
-                    success: function (data) {
-                        LoaderHide();
-
-                        $('#forecast_table>thead').empty();
-                        $('#forecast_table>tbody').empty();
-                        $('#forecast_table>thead').append(`
+                $('#forecast_table>thead').empty();
+                $('#forecast_table>tbody').empty();
+                $('#forecast_table>thead').append(`
 
                                                 <tr>
                                                     <th id="forecast_name">Name </th>
@@ -1962,434 +1968,434 @@ var expanded = false;
                                                     <th>Sep</th>
                                                 </tr>
                                             `);
-                        //Forecast_DatatableLoad(data);
-                        var _id = 0;
-                        var _companyName = '';
-                        var _oct = 0;
-                        var _octTotal = 0;
-                        $('#forecast_table').DataTable({
-                            destroy: true,
-                            data: data,
-                            searching: false,
-                            bLengthChange: false,
-                            autoWidth: false,
-                            pageLength: 100,
-                            columns: [
-                                //{
-                                //    data: 'Id',
-                                //    render: function (id) {
-                                //        _id = id;
-                                //        return null;
-                                //    },
-                                //    //ordering: false
+                //Forecast_DatatableLoad(data);
+                var _id = 0;
+                var _companyName = '';
+                var _oct = 0;
+                var _octTotal = 0;
+                $('#forecast_table').DataTable({
+                    destroy: true,
+                    data: data,
+                    searching: false,
+                    bLengthChange: false,
+                    autoWidth: false,
+                    pageLength: 100,
+                    columns: [
+                        //{
+                        //    data: 'Id',
+                        //    render: function (id) {
+                        //        _id = id;
+                        //        return null;
+                        //    },
+                        //    //ordering: false
 
-                                //},
-                                {
-                                    data: 'EmployeeNameWithCodeRemarks',
-                                    render: function (employeeNameWithCodeRemarks) {
-                                        var splittedString = employeeNameWithCodeRemarks.split('$');
-                                        _id = parseInt(splittedString[3]); // id
-                                        if (splittedString[2] == 'true') {
-                                            return `<span title='initial' data-name='${splittedString[0]}' style='color:red;'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
-                                        } else {
-                                            return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
-                                        }
+                        //},
+                        {
+                            data: 'EmployeeNameWithCodeRemarks',
+                            render: function (employeeNameWithCodeRemarks) {
+                                var splittedString = employeeNameWithCodeRemarks.split('$');
+                                _id = parseInt(splittedString[3]); // id
+                                if (splittedString[2] == 'true') {
+                                    return `<span title='initial' data-name='${splittedString[0]}' style='color:red;'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                } else {
+                                    return `<span title='initial' data-name='${splittedString[0]}'> ${splittedString[1]}</span> <input type='hidden' id='row_id_${_id}' value='${_id}'/>`;
+                                }
 
-                                    }
-                                },
-                                {
-                                    data: 'SectionName',
-                                    render: function (sectionName) {
-                                        return `<td title='initial'>${sectionName}</td>`;
-                                    }
-                                },
-                                {
-                                    data: 'DepartmentName',
-                                    render: function (departmentName) {
-                                        return `<td title='initial'>${departmentName}</td>`;
-                                    }
-                                },
-                                {
-                                    data: 'InchargeName',
-                                    render: function (inchargeName) {
-                                        return `<td title='initial'>${inchargeName}</td>`;
-                                    }
-                                },
-                                {
-                                    data: 'RoleName',
-                                    render: function (roleName) {
-                                        return `<td title='initial'>${roleName}</td>`;
-                                    }
-                                },
-                                {
-                                    data: 'ExplanationName',
-                                    render: function (explanationName) {
-                                        return `<span title='initial' class='forecast_explanation'>${explanationName}</span>`;
-                                    }
-                                },
-                                {
-                                    data: 'CompanyName',
-                                    render: function (companyName) {
-                                        _companyName = companyName;
-                                        return `<td title='initial'>${companyName}</td>`;
-                                    }
-                                },
-                                {
-                                    data: 'GradePoint',
-                                    render: function (gradePoint) {
+                            }
+                        },
+                        {
+                            data: 'SectionName',
+                            render: function (sectionName) {
+                                return `<td title='initial'>${sectionName}</td>`;
+                            }
+                        },
+                        {
+                            data: 'DepartmentName',
+                            render: function (departmentName) {
+                                return `<td title='initial'>${departmentName}</td>`;
+                            }
+                        },
+                        {
+                            data: 'InchargeName',
+                            render: function (inchargeName) {
+                                return `<td title='initial'>${inchargeName}</td>`;
+                            }
+                        },
+                        {
+                            data: 'RoleName',
+                            render: function (roleName) {
+                                return `<td title='initial'>${roleName}</td>`;
+                            }
+                        },
+                        {
+                            data: 'ExplanationName',
+                            render: function (explanationName) {
+                                return `<span title='initial' class='forecast_explanation'>${explanationName}</span>`;
+                            }
+                        },
+                        {
+                            data: 'CompanyName',
+                            render: function (companyName) {
+                                _companyName = companyName;
+                                return `<td title='initial'>${companyName}</td>`;
+                            }
+                        },
+                        {
+                            data: 'GradePoint',
+                            render: function (gradePoint) {
 
-                                        if (_companyName.toLowerCase() == 'mw') {
-                                            return `<td title='initial'>${gradePoint}</td>`;
-                                        }
-                                        else {
-                                            return `<td title='initial'></td>`;
-                                        }
+                                if (_companyName.toLowerCase() == 'mw') {
+                                    return `<td title='initial'>${gradePoint}</td>`;
+                                }
+                                else {
+                                    return `<td title='initial'></td>`;
+                                }
 
-                                    }
-                                },
-                                {
-                                    data: 'UnitPrice',
-                                    render: function (unitPrice) {
-                                        return `<span id='up_${_id}' data-unitprice=${unitPrice}> ${unitPrice}</span>`;
-                                    }
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            }
+                        },
+                        {
+                            data: 'UnitPrice',
+                            render: function (unitPrice) {
+                                return `<span id='up_${_id}' data-unitprice=${unitPrice}> ${unitPrice}</span>`;
+                            }
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='oct_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='oct_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='oct_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='${_forecast[0].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='oct_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)"  data-month='10' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='nov_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='nov_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='nov_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='${_forecast[1].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='nov_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='11' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='dec_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='dec_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='dec_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='${_forecast[2].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='dec_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='12' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jan_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jan_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='jan_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='${_forecast[3].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='jan_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='1' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='feb_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='feb_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='feb_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='${_forecast[4].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='feb_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='2' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='mar_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='mar_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='mar_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='${_forecast[5].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='mar_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='3' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='apr_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='apr_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='apr_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='${_forecast[6].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='apr_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='4' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='may_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='may_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='may_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='${_forecast[7].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='may_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='5' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jun_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jun_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='jun_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='${_forecast[8].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='jun_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='6' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jul_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='jul_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='${_forecast[9].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='jul_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='7' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='aug_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='aug_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='${_forecast[10].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='aug_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='8' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='sep_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='sep_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='${_forecast[11].Points.toFixed(1)}' class='input_month'/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='sep_${_id}' onfocus ="checkPoint_onmouseover(this);" onclick="checkPoint_click(this)" onChange="checkPoint(this)" data-month='9' value='0.0' class='input_month'/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='oct_output_${_id}' value='${_forecast[0].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='oct_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='oct_output_${_id}' value='${_forecast[0].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='oct_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='nov_output_${_id}' value='${_forecast[1].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='nov_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='nov_output_${_id}' value='${_forecast[1].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='nov_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='dec_output_${_id}' value='${_forecast[2].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='dec_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='dec_output_${_id}' value='${_forecast[2].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='dec_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jan_output_${_id}' value='${_forecast[3].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jan_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='jan_output_${_id}' value='${_forecast[3].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='jan_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='feb_output_${_id}' value='${_forecast[4].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='feb_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='feb_output_${_id}' value='${_forecast[4].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='feb_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='mar_output_${_id}' value='${_forecast[5].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='mar_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='mar_output_${_id}' value='${_forecast[5].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='mar_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='apr_output_${_id}' value='${_forecast[6].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='apr_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='apr_output_${_id}' value='${_forecast[6].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='apr_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='may_output_${_id}' value='${_forecast[7].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='may_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='may_output_${_id}' value='${_forecast[7].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='may_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jun_output_${_id}' value='${_forecast[8].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jun_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='jun_output_${_id}' value='${_forecast[8].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='jun_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='jul_output_${_id}' value='${_forecast[9].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='jul_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='jul_output_${_id}' value='${_forecast[9].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='jul_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='aug_output_${_id}' value='${_forecast[10].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='aug_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='aug_output_${_id}' value='${_forecast[10].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='aug_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                                {
-                                    data: 'forecasts',
-                                    render: function (_forecast) {
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: 'forecasts',
+                            render: function (_forecast) {
 
-                                        if (_forecast.length > 0) {
-                                            return `<td><input type='text' id='sep_output_${_id}' value='${_forecast[11].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        } else {
-                                            return `<td><input type='text' id='sep_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
-                                        }
+                                if (_forecast.length > 0) {
+                                    return `<td><input type='text' id='sep_output_${_id}' value='${_forecast[11].Total}' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                } else {
+                                    return `<td><input type='text' id='sep_output_${_id}' value='0' style='background-color:#E6E6E3;text-align:right;' readonly/></td>`;
+                                }
 
-                                    },
-                                    orderable: false
-                                },
-                            ],
-                        });
-
-                    },
-                    error: function () {
-                        $('#add_name_table_1 tbody').empty();
-                    }
+                            },
+                            orderable: false
+                        },
+                    ],
                 });
 
-
-            });
-
-            $(document).on('change', '#section_search', function () {
-
-                var sectionId = $(this).val();
-
-                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
-                        $('#department_search').empty();
-                        $('#department_search').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
-                            $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                        });
-                    });
-            });
-
-
+            },
+            error: function () {
+                $('#add_name_table_1 tbody').empty();
+            }
         });
+
+
+    });
+
+    $(document).on('change', '#section_search', function () {
+
+        var sectionId = $(this).val();
+
+        $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+            .done(function (data) {
+                $('#department_search').empty();
+                $('#department_search').append(`<option value=''>Select Department</option>`);
+                $.each(data, function (key, item) {
+                    $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                });
+            });
+    });
+
+
+});
