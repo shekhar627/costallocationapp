@@ -185,6 +185,7 @@
     <Compile Include="DAL\SectionDAL.cs" />
     <Compile Include="Dtos\EmployeeAssignmentDTO.cs" />
     <Compile Include="Dtos\ForecastDto.cs" />
+    <Compile Include="Dtos\SendToForecaseApiDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
