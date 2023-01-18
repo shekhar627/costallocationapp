@@ -77,7 +77,20 @@ namespace CostAllocationApp.Controllers
                         dt_ = reader.AsDataSet().Tables[0];         
                         for (int i = 1; i < rowcount; i++)
                         {
-                            tempAssignmentId = CreateAssignmentForExcelUpload(dt_, i);
+                            if (String.IsNullOrEmpty(dt_.Rows[i][5].ToString()))
+                            {
+                                continue;
+                            }
+                            var assignmentViewModels = employeeAssignmentBLL.GetEmployeesByName(dt_.Rows[i][5].ToString().Trim());
+                            if (assignmentViewModels.Count > 0)
+                            {
+                                tempAssignmentId = CreateAssignmentForExcelUpload(dt_, i, assignmentViewModels.Count);
+                            }
+                            else
+                            {
+                                tempAssignmentId = CreateAssignmentForExcelUpload(dt_, i);
+                            }
+                            
 
                             //tempAssignmentId = EmployeeAssignment();
                             //EmployeeAssignmentViewModel employeeAssignment = employeeAssignmentBLL.GetAssignmentById(tempAssignmentId);
@@ -139,7 +152,7 @@ namespace CostAllocationApp.Controllers
             }
 
         }
-        public int CreateAssignmentForExcelUpload(DataTable dt_, int i)
+        public int CreateAssignmentForExcelUpload(DataTable dt_, int i,int subCodeCount=0)
         {
             EmployeeAssignmentDTO employeeAssignmentDTO = new EmployeeAssignmentDTO();
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
@@ -154,7 +167,7 @@ namespace CostAllocationApp.Controllers
             employeeAssignmentDTO.ExplanationId = dt_.Rows[i][4].ToString();
             employeeAssignmentDTO.UnitPrice = dt_.Rows[i][8].ToString();
             employeeAssignmentDTO.GradeId = dt_.Rows[i][7].ToString();
-            employeeAssignmentDTO.SubCode = 1;
+            employeeAssignmentDTO.SubCode = subCodeCount+1;
             //var remarks = $('#memo_new').val();
 
             int tempValue = 0;
