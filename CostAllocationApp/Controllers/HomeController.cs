@@ -74,7 +74,7 @@ namespace CostAllocationApp.Controllers
                         int tempAssignmentId = 0;
                         string tempRow = "";
                         int tempYear = 2023;
-                        dt_ = reader.AsDataSet().Tables[0];         
+                        dt_ = reader.AsDataSet().Tables[0];
                         for (int i = 1; i < rowcount; i++)
                         {
                             if (String.IsNullOrEmpty(dt_.Rows[i][5].ToString()))
@@ -90,12 +90,13 @@ namespace CostAllocationApp.Controllers
                             {
                                 tempAssignmentId = CreateAssignmentForExcelUpload(dt_, i);
                             }
-                            
+
 
                             //tempAssignmentId = EmployeeAssignment();
                             //EmployeeAssignmentViewModel employeeAssignment = employeeAssignmentBLL.GetAssignmentById(tempAssignmentId);
                             //tempAssignmentId = Convert.ToInt32(dt_.Rows[i][0]);
-                            tempRow += $@"10_{dt_.Rows[i][9].ToString()}_{dt_.Rows[i][21].ToString()},11_{dt_.Rows[i][10].ToString()}_{dt_.Rows[i][22].ToString()},12_{dt_.Rows[i][11].ToString()}_{dt_.Rows[i][23].ToString()},1_{dt_.Rows[i][12].ToString()}_{dt_.Rows[i][24].ToString()},2_{dt_.Rows[i][13].ToString()}_{dt_.Rows[i][25].ToString()},3_{dt_.Rows[i][14].ToString()}_{dt_.Rows[i][26].ToString()},4_{dt_.Rows[i][15].ToString()}_{dt_.Rows[i][27].ToString()},5_{dt_.Rows[i][16].ToString()}_{dt_.Rows[i][28].ToString()},6_{dt_.Rows[i][17].ToString()}_{dt_.Rows[i][29].ToString()},7_{dt_.Rows[i][18].ToString()}_{dt_.Rows[i][30].ToString()},8_{dt_.Rows[i][19].ToString()}_{dt_.Rows[i][31].ToString()},9_{dt_.Rows[i][20].ToString()}_{dt_.Rows[i][31].ToString()}";
+                            //tempMonthWiseUnitPrice
+                            tempRow += $@"10_{dt_.Rows[i][9].ToString()}_{Convert.ToDecimal(dt_.Rows[i][9]) * Convert.ToDecimal(dt_.Rows[i][8])},11_{dt_.Rows[i][10].ToString()}_{Convert.ToDecimal(dt_.Rows[i][10]) * Convert.ToDecimal(dt_.Rows[i][8])},12_{dt_.Rows[i][11].ToString()}_{Convert.ToDecimal(dt_.Rows[i][11])* Convert.ToDecimal(dt_.Rows[i][8])},1_{dt_.Rows[i][12].ToString()}_{Convert.ToDecimal(dt_.Rows[i][12]) * Convert.ToDecimal(dt_.Rows[i][8])},2_{dt_.Rows[i][13].ToString()}_{Convert.ToDecimal(dt_.Rows[i][13])* Convert.ToDecimal(dt_.Rows[i][8])},3_{dt_.Rows[i][14].ToString()}_{Convert.ToDecimal(dt_.Rows[i][14])* Convert.ToDecimal(dt_.Rows[i][8])},4_{dt_.Rows[i][15].ToString()}_{Convert.ToDecimal(dt_.Rows[i][15])* Convert.ToDecimal(dt_.Rows[i][8])},5_{dt_.Rows[i][16].ToString()}_{Convert.ToDecimal(dt_.Rows[i][16])* Convert.ToDecimal(dt_.Rows[i][8])},6_{dt_.Rows[i][17].ToString()}_{Convert.ToDecimal(dt_.Rows[i][17])* Convert.ToDecimal(dt_.Rows[i][8])},7_{dt_.Rows[i][18].ToString()}_{Convert.ToDecimal(dt_.Rows[i][18])* Convert.ToDecimal(dt_.Rows[i][8])},8_{dt_.Rows[i][19].ToString()}_{Convert.ToDecimal(dt_.Rows[i][19])* Convert.ToDecimal(dt_.Rows[i][8])},9_{dt_.Rows[i][20].ToString()}_{Convert.ToDecimal(dt_.Rows[i][20])* Convert.ToDecimal(dt_.Rows[i][8])}";
 
                             SendToApi(tempAssignmentId, tempRow, tempYear);
                         }
@@ -104,7 +105,7 @@ namespace CostAllocationApp.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ModelState.AddModelError("File", "Unable to Upload file!");
+                        ModelState.AddModelError("File", ex);
                         return View();
                     }
 
@@ -138,7 +139,7 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data="+row+"&year="+year+ "&assignmentId="+assignmentId);
+                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId);
 
                 //HTTP POST
                 var postTask = client.GetAsync("");
@@ -152,7 +153,7 @@ namespace CostAllocationApp.Controllers
             }
 
         }
-        public int CreateAssignmentForExcelUpload(DataTable dt_, int i,int subCodeCount=0)
+        public int CreateAssignmentForExcelUpload(DataTable dt_, int i, int subCodeCount = 0)
         {
             EmployeeAssignmentDTO employeeAssignmentDTO = new EmployeeAssignmentDTO();
             EmployeeAssignment employeeAssignment = new EmployeeAssignment();
@@ -167,7 +168,7 @@ namespace CostAllocationApp.Controllers
             employeeAssignmentDTO.ExplanationId = dt_.Rows[i][4].ToString();
             employeeAssignmentDTO.UnitPrice = dt_.Rows[i][8].ToString();
             employeeAssignmentDTO.GradeId = dt_.Rows[i][7].ToString();
-            employeeAssignmentDTO.SubCode = subCodeCount+1;
+            employeeAssignmentDTO.SubCode = subCodeCount + 1;
             //var remarks = $('#memo_new').val();
 
             int tempValue = 0;
@@ -230,18 +231,25 @@ namespace CostAllocationApp.Controllers
             {
                 return 0;
             }
-            if (int.TryParse(employeeAssignmentDTO.RoleId, out tempValue))
+            if (String.IsNullOrEmpty(employeeAssignmentDTO.RoleId))
             {
-                if (tempValue <= 0)
-                {
-                    return 0;
-
-                }
-                employeeAssignment.RoleId = tempValue;
+                employeeAssignment.ExplanationId = null;
             }
             else
             {
-                return 0;
+                if (int.TryParse(employeeAssignmentDTO.RoleId, out tempValue))
+                {
+                    if (tempValue <= 0)
+                    {
+                        return 0;
+
+                    }
+                    employeeAssignment.RoleId = tempValue;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             if (String.IsNullOrEmpty(employeeAssignmentDTO.ExplanationId))
             {
