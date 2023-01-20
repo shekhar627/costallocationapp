@@ -21,11 +21,28 @@ body {
     color: black !important;
 }
 
+/*-----------------
+	Export Links
+-----------------------*/
+.export_links {
+    margin-bottom: 20px;
+}
+.export_links ul {
+    list-style: none;
+    
+}
+.export_links ul li{}
+.export_links ul li a{
+    padding:10px;
+    background-color:#0056b3;
+    float:left;
+    margin:5px;
+    color:white;
+}
 
 /*-----------------
 	2. Name List
 -----------------------*/
-
 #name-list td,
 th {
     border: 1px solid;

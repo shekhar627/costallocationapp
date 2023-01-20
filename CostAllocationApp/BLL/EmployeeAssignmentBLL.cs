@@ -452,5 +452,10 @@ namespace CostAllocationApp.BLL
             return employees;
         }
 
+        public int GetLastId()
+        {
+            return employeeAssignmentDAL.GetLastId();
+        }
+
     }
 }
