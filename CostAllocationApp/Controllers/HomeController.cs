@@ -79,6 +79,7 @@ namespace CostAllocationApp.Controllers
                         
                         for (int i = 1; i < rowcount; i++)
                         {
+                            //var secionId = _bll.GetSectionByName(dt_.Rows[i][7].ts().trim());
                             if (Convert.ToInt32(dt_.Rows[i][7])==0)
                             {
                                 continue;
