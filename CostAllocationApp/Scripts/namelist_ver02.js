@@ -267,11 +267,16 @@ function loadSingleAssignmentData(id) {
                     });
                 });
             $('#unitprice_edit').val(assignmentData.UnitPrice);
-            if (assignmentData.CompanyName.toLowerCase() == "mw") {
-                $('#grade_edit').val(assignmentData.GradePoint);
+            if (assignmentData.CompanyName != '' && assignmentData.CompanyName != null) {
+                if (assignmentData.CompanyName.toLowerCase() == "mw") {
+                    $('#grade_edit').val(assignmentData.GradePoint);
+                } else {
+                    $('#grade_edit').val("");
+                }
             } else {
                 $('#grade_edit').val("");
             }
+            
             $('#grade_edit_hidden').val(assignmentData.GradeId);
 
         },

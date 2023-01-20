@@ -15,7 +15,7 @@ namespace CostAllocationApp.DAL
         public int CreateAssignment(EmployeeAssignment employeeAssignment)
         {
             int result = 0;
-            string query = $@"insert into EmployeesAssignments(EmployeeName,SectionId,DepartmentId,InChargeId,RoleId,ExplanationId,CompanyId,UnitPrice,GradeId,CreatedBy,CreatedDate,IsActive,Remarks,SubCode) values(@employeeName,@sectionId,@departmentId,@inChargeId,@roleId,@explanationId,@companyId,@unitPrice,@gradeId,@createdBy,@createdDate,@isActive,@remarks,@subCode)";
+            string query = $@"insert into EmployeesAssignments(EmployeeName,SectionId,DepartmentId,InChargeId,RoleId,ExplanationId,CompanyId,UnitPrice,GradeId,CreatedBy,CreatedDate,IsActive,Remarks,SubCode) values(@employeeName,@sectionId,@departmentId,@inChargeId,@roleId,@explanationId,@companyId,@unitPrice,@gradeId,@createdBy,@createdDate,@isActive,@remarks,@subCode) select scope_identity()";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -24,7 +24,17 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@sectionId", employeeAssignment.SectionId);
                 cmd.Parameters.AddWithValue("@departmentId", employeeAssignment.DepartmentId);
                 cmd.Parameters.AddWithValue("@inChargeId", employeeAssignment.InchargeId);
-                cmd.Parameters.AddWithValue("@roleId", employeeAssignment.RoleId);
+                ///cmd.Parameters.AddWithValue("@roleId", employeeAssignment.RoleId);
+
+                if (String.IsNullOrEmpty(employeeAssignment.RoleId.ToString()))
+                {
+                    cmd.Parameters.AddWithValue("@roleId", DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@roleId", employeeAssignment.RoleId);
+                }
+
                 if (String.IsNullOrEmpty(employeeAssignment.ExplanationId))
                 {
                     cmd.Parameters.AddWithValue("@explanationId", DBNull.Value);
@@ -45,7 +55,8 @@ namespace CostAllocationApp.DAL
 
                 try
                 {
-                    result = cmd.ExecuteNonQuery();
+                    //result = cmd.ExecuteNonQuery();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
                 }
                 catch (Exception ex)
                 {
@@ -291,9 +302,9 @@ namespace CostAllocationApp.DAL
                             from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
                             join Departments dep on ea.DepartmentId = dep.Id
                             join Companies com on ea.CompanyId = com.Id
-                            join Roles rl on ea.RoleId = rl.Id
+                            left join Roles rl on ea.RoleId = rl.Id
                             join InCharges inc on ea.InChargeId = inc.Id 
-                            join Grades gd on ea.GradeId = gd.Id
+                            left join Grades gd on ea.GradeId = gd.Id
                             where {where}
                             order by ea.EmployeeName asc, ea.Id";
                             //ORDER BY ea.EmployeeName asc, ea.Id";
