@@ -1,0 +1,474 @@
+﻿/*----------------------------------------------Name List: Start----------------------------------------------*/
+/* body {
+    font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #fff;
+} */
+/* .container{
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+} */
+#employee_list_search_results {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #3c4b5d !important;
+    border-color: #3c4b5d !important;
+    color: white !important;
+}
+
+.page-link {
+    color: black !important;
+}
+/*----------------Edit/Delete Links-------------------*/
+#edit_button {
+    background: cornflowerblue;
+    color: white;
+    border-radius: 5px;
+    /* border-radius: 5px; 
+     padding: 5px;*/
+    margin: 5px;
+    /*display: inline-block; */
+}
+
+#delete_button {
+    background: indianred;
+    color: white;
+    margin: 5px;
+    border-radius: 5px;
+    /* border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block; */
+}
+/*--------------Name list: edit popup------------*/
+#modal_edit_name {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    width: 101% !important;
+}
+
+#add_name_table_3 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_3 {
+    border: 1px solid black !important;
+    width: 100%;
+}
+
+    #add_name_table_3 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
+
+
+#name_edit {
+    width: 131px;
+    opacity: .7;
+}
+
+#memo_edit {
+    width: 90px;
+}
+
+#section_edit {
+    width: 89px;
+}
+
+#department_edit {
+    width: 100px;
+}
+
+#incharge_edit {
+    width: 120px;
+}
+
+#role_edit {
+    width: 73px;
+}
+
+#explanation_edit {
+    width: 220px;
+}
+
+#company_edit {
+    width: 109px;
+}
+
+#grade_edit {
+    width: 46px;
+}
+
+#unitprice_edit {
+    width: 100px;
+}
+
+#add_name_cancel {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#add_name_edit {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+@media screen and (min-width: 676px) {
+    .modal-dialog {
+        max-width: 600px; /* New width for default modal */
+    }
+}
+
+#namelist td, th {
+    border: 1px solid;
+    text-align: center;
+}
+#namelist tbody tr td:nth-of-type(1) {
+    border: 1px solid;
+    text-align: left;
+}
+#namelist tbody tr td:nth-of-type(6) {
+    border: 1px solid;
+    text-align: left;
+}
+#namelist tbody tr td:nth-of-type(9) {
+    border: 1px solid;
+    text-align: right;
+}
+/* #section_table td,
+th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+
+#section_table td,th:nth-of-type(9) {
+    text-align: center;
+    width: 20px;
+} */
+
+/*--------------Name list: add name popup------------*/
+#add_name_table_2 th,
+td {
+    border: 1px solid black !important;
+}
+
+#add_name_table_2 {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    width: 101% !important;
+}
+
+    #add_name_table_2 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
+
+    #add_name_table_2 tbody tr:nth-of-type(1) {
+        background-color: #F2F2F2;
+    }
+
+    #add_name_table_2 th,
+    td {
+        border: 1px solid black !important;
+    }
+
+#modal_add_name {
+    padding-right: 0px !important;
+}
+
+#add_name_add {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#namelist_table_header {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+    background-color: #3c4b5d;
+    color: white;
+}
+
+#namelist_multi_search_header {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: 0;
+    white-space: nowrap !important;
+}
+
+.namelist_listbody, td {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+.namelist_td {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+.namelist_td.name {
+    padding: 0px !important;
+}
+
+#name_search {
+    width: 100% !important;
+}
+button.multiselect{
+    padding:0px !important;
+    border: none;
+}
+th.namelist_td{
+    padding:0px !important;
+}
+/*li.paginate_button:hover{
+    background-color:red !important;
+}*/
+/*-------namelist: registration popup button-------*/
+.master_setting_popup {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+}
+
+.name_list_th.name {
+    text-align: center;
+    width: 195px !important;
+}
+
+.name_list_th.section {
+    text-align: center;
+    width: 119px !important;
+}
+
+.name_list_th.department {
+    text-align: center;
+    width: 82px !important;
+}
+
+.name_list_th.incharge {
+    text-align: center;
+    width: 131px !important;
+}
+
+.name_list_th.company {
+    text-align: center;
+    margin-left: 185px;
+}
+
+.name_registration_th a {
+    background: #4472C4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+.name_registration_th {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+.name_list_th {
+    border: none;
+    text-align: center;
+}
+
+    .name_list_th a {
+        background: #4472C4;
+        color: white;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+.namelist_addname {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.container, .container-fluid{
+    margin-left: 0px;
+}
+
+/**************************namelist custom css for multi selection ***************************/
+/* .form-group{
+    margin-bottom: 15px !important;
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
+    position: relative;
+    padding-left: 15px;
+} 
+button, input, select, textarea{
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+button, select{
+    text-transform: none;
+}
+button, input, optgroup, select, textarea{
+    font: inherit;
+    color: inherit;
+}
+.btn-group, .btn-group-vertical {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.btn-default{
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+element.style {
+    position: absolute;
+    will-change: transform;
+    top: 0px;
+    left: 0px;
+    transform: translate3d(0px, 15px, 0px);
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+    box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+    box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+}
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.input-group-addon:first-child {
+    border-right: 0;
+} */
+/* <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> */
+select[multiple],select[size]{
+    height:auto !important;
+}
+select[multiple].input-sm,textarea.input-sm{
+    height:auto !important;
+}
+select[multiple].form-group-sm .form-control,textarea.form-group-sm .form-control{
+    height:auto !important;
+}
+select[multiple].input-lg,textarea.input-lg{
+    height:auto !important;
+}
+select[multiple].input-lg,textarea.input-lg{
+    height:auto !important;
+}
+select[multiple].form-group-lg .form-control,textarea.form-group-lg .form-control{
+    height:auto !important;
+}
+select[multiple].input-group-lg>.form-control,select[multiple].input-group-lg>.input-group-addon,select[multiple].input-group-lg>.input-group-btn>.btn,textarea.input-group-lg>.form-control,textarea.input-group-lg>.input-group-addon,textarea.input-group-lg>.input-group-btn>.btn{
+    height:auto !important;
+}
+select[multiple].input-group-sm>.form-control,select[multiple].input-group-sm>.input-group-addon,select[multiple].input-group-sm>.input-group-btn>.btn,textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon,textarea.input-group-sm>.input-group-btn>.btn{
+    height:auto !important;
+}
+/*----------------------------------------------Name List: END----------------------------------------------*/
