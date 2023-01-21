@@ -163,6 +163,7 @@
     <Compile Include="BLL\RoleBLL.cs" />
     <Compile Include="BLL\SalaryBLL.cs" />
     <Compile Include="BLL\SectionBLL.cs" />
+    <Compile Include="BLL\UploadExcelBLL.cs" />
     <Compile Include="Controllers\Api\CompaniesController.cs" />
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\EmployeesController.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\SalaryDAL.cs" />
     <Compile Include="DAL\SectionDAL.cs" />
+    <Compile Include="DAL\UploadExcelDAL.cs" />
     <Compile Include="Dtos\EmployeeAssignmentDTO.cs" />
     <Compile Include="Dtos\ForecastDto.cs" />
     <Compile Include="Dtos\SendToForecaseApiDto.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Salary.cs" />
     <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\UploadExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\EmployeeAssignmentViewModel.cs" />
     <Compile Include="ViewModels\ForecastAssignmentViewModel.cs" />
