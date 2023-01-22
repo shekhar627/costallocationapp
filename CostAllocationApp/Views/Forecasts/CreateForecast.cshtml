@@ -17,84 +17,57 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            @*<div class="col">
                 <a href="/Home/Index"><i class="fa fa-upload" aria-hidden="true"></i> Upload Excel</a>
+            </div>*@
+
+            <div class="col">
+                @using (Html.BeginForm("Index", "Forecasts", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+                {
+                    <div class="form-group mb-2">
+                        <input type="file" class="form-control-file" name="uploaded_file">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select id="inputState" class="form-control" name="upload_year">
+                            <option value="0">Select Year</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success mb-2"><i class="fa fa-upload" aria-hidden="true"></i> Upload Excel</button>
+                    @Html.AntiForgeryToken()
+
+
+                }
+                @if ((Int32)ViewBag.ErrorCount > 0)
+                {
+                    <div class="alert alert-danger col-4">
+                        @Html.ValidationSummary()
+                    </div>
+                }
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alert alert-success col-4">
+                       @ViewBag.Success
+                    </div>
+                }
+
             </div>
         </div>
-        @using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form-group mb-2">
-                <label for="staticEmail2" class="sr-only">Email</label>
-                <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
-            </div>
-            <div class="form-group mx-sm-3 mb-2">
-                <label for="inputPassword2" class="sr-only">Password</label>
-                <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
-            <div class="form-inline">
-
-            </div>
-            <div class="info2">
-                @Html.AntiForgeryToken()
-                <div class="form-group" name="Fichier1">
-                    <!-- COMPONENT START -->
-                    <div class="form-group">
-                        <div class="input-group input-file">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default btn-choose" type="button">Choose</button>
-                            </span>
-                            <input type="text" class="form-control" placeholder='Choose a file...' />
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Upload" class="btn btn-default" />
-                </div>
-
-
-                <div class="alert alert-danger">
-                    @Html.ValidationSummary()
-                    @*<strong></strong> asdasd*@
-                </div>
-            </div>
-
-            @*if (Model != null)
-            {
-                <table id="table1" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            @foreach (DataColumn col in Model.Columns)
-                            {
-                                <th>@col.ColumnName</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (DataRow row in Model.Rows)
-                        {
-                            <tr>
-                                @foreach (DataColumn col in Model.Columns)
-                                {
-                                    <td>@row[col.ColumnName]</td>
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }*@
-        }
     </div>
     <!-- /Page Header -->
     <div class="row">
         <div class="col-md-12">
             <div class="export_links">
                 <ul>
-                    <li><a href="/Exports/PlanningLayout"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Planning Layout</a></li>
-                    <li><a href="/Exports/DevPlacement"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Dev Placement</a></li>
+                    @if (ViewBag.Sections.Count > 0)
+                    {
+                        foreach (var item in ViewBag.Sections)
+                        {
+                            <li><a href="/Exports/ExportBySection?sectionId=@item.Id&sectionName=@item.SectionName"><i class="fa fa-file-excel-o" aria-hidden="true"></i> @item.SectionName</a></li>
+                            @*<li><a href="/Exports/DevPlacement"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Dev Placement</a></li>*@
+                        }
+                    }
+
                 </ul>
             </div>
         </div>

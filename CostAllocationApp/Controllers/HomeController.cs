@@ -39,26 +39,26 @@ namespace CostAllocationApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(HttpPostedFileBase upload)
+        public ActionResult Index(HttpPostedFileBase uploaded_file, int upload_year)
         {
             Dictionary<int, int> check = new Dictionary<int, int>();
             if (ModelState.IsValid)
             {
 
-                if (upload != null && upload.ContentLength > 0)
+                if (uploaded_file != null && uploaded_file.ContentLength > 0)
                 {
                     // ExcelDataReader works with the binary Excel file, so it needs a FileStream
                     // to get started. This is how we avoid dependencies on ACE or Interop:
-                    Stream stream = upload.InputStream;
+                    Stream stream = uploaded_file.InputStream;
 
                     IExcelDataReader reader = null;
 
 
-                    if (upload.FileName.EndsWith(".xls"))
+                    if (uploaded_file.FileName.EndsWith(".xls"))
                     {
                         reader = ExcelReaderFactory.CreateBinaryReader(stream);
                     }
-                    else if (upload.FileName.EndsWith(".xlsx"))
+                    else if (uploaded_file.FileName.EndsWith(".xlsx"))
                     {
                         reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     }
@@ -76,7 +76,7 @@ namespace CostAllocationApp.Controllers
                     {
                         int tempAssignmentId = 0;
                         string tempRow = "";
-                        int tempYear = 2023;
+                        int tempYear = upload_year;
                         dt_ = reader.AsDataSet().Tables[0];
                         int rowcount = dt_.Rows.Count;
                         
@@ -271,12 +271,16 @@ namespace CostAllocationApp.Controllers
                     //Session["tmpdata"] = tmp;  //store datatable into session
                     return RedirectToAction("Index");
                 }
+                else if (upload_year==0)
+                {
+                    ModelState.AddModelError("Year", "Select Year");
+                }
                 else
                 {
                     ModelState.AddModelError("File", "Please Upload Your file");
                 }
             }
-            return View();
+            return View("CreateForecast", "Forecasts");
         }
 
         public int EmployeeAssignment()
