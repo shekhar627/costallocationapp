@@ -1,4 +1,5 @@
-﻿
+﻿@model CostAllocationApp.ViewModels.ForecastViewModal
+
 @{
     ViewBag.Title = "Create Forecast";
 }
@@ -59,9 +60,9 @@
         <div class="col-md-12">
             <div class="export_links">
                 <ul>
-                    @if (ViewBag.Sections.Count > 0)
+                    @if (Model._sections.Count>0)
                     {
-                        foreach (var item in ViewBag.Sections)
+                        foreach (var item in Model._sections)
                         {
                             <li><a href="/Exports/ExportBySection?sectionId=@item.Id&sectionName=@item.SectionName"><i class="fa fa-file-excel-o" aria-hidden="true"></i> @item.SectionName</a></li>
                             @*<li><a href="/Exports/DevPlacement"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Dev Placement</a></li>*@

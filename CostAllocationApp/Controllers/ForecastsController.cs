@@ -25,7 +25,7 @@ namespace CostAllocationApp.Controllers
         SectionBLL sectionBLL = new SectionBLL();
         // GET: Forecasts
         public ActionResult CreateForecast()
-        {
+        {            
             if (TempData["seccess"]!=null)
             {
                 ViewBag.Success = TempData["seccess"];
@@ -35,15 +35,22 @@ namespace CostAllocationApp.Controllers
                 ViewBag.Success = null;
                 
             }
-            ViewBag.Sections = sectionBLL.GetAllSections();
+            ForecastViewModal forecastViewModal = new ForecastViewModal
+            {
+                _sections = sectionBLL.GetAllSections()
+            };            
             ViewBag.ErrorCount = 0;
-            return View();
+            return View(forecastViewModal);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(HttpPostedFileBase uploaded_file, int upload_year)
         {
+            ForecastViewModal forecastViewModal = new ForecastViewModal
+            {
+                _sections = sectionBLL.GetAllSections()
+            };
             TempData["seccess"] = null;
             Dictionary<int, int> check = new Dictionary<int, int>();
             if (ModelState.IsValid)
@@ -266,7 +273,7 @@ namespace CostAllocationApp.Controllers
                     {
                         ModelState.AddModelError("File", ex);
                         ViewBag.ErrorCount = 1;
-                        return View("CreateForecast");
+                        return View("CreateForecast", forecastViewModal);
                     }
 
                     //DataSet result = new DataSet();
@@ -281,10 +288,10 @@ namespace CostAllocationApp.Controllers
                 else
                 {
                     ViewBag.ErrorCount = 1;
-                    ModelState.AddModelError("File", "invalid File or Year");
+                    ModelState.AddModelError("File", "invalid File or Year");                    
                 }
             }
-            return View("CreateForecast");
+            return View("CreateForecast", forecastViewModal);
         }
 
         public void SendToApi(int assignmentId, string row, int year)
