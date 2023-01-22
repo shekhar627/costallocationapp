@@ -11,6 +11,13 @@ namespace CostAllocationApp.BLL
 {
     public class UploadExcelBLL
     {
+        SalaryDAL salaryDAL = null;
+        SalaryBLL salaryBLL = null;
+        public UploadExcelBLL()
+        {
+            salaryDAL = new SalaryDAL();
+            salaryBLL = new SalaryBLL();
+        }
         UploadExcelDAL _uploadExcelDAL = new UploadExcelDAL();
         public int GetSectionIdByName(string sectionName)
         {
@@ -28,7 +35,7 @@ namespace CostAllocationApp.BLL
         {
             return _uploadExcelDAL.GetRoleIdByName(roleName);
         }
-        public int GetExplanationIdByName(string explanationName)
+        public int? GetExplanationIdByName(string explanationName)
         {
             return _uploadExcelDAL.GetExplanationIdByName(explanationName);
         }
@@ -36,9 +43,26 @@ namespace CostAllocationApp.BLL
         {
             return _uploadExcelDAL.GetCompanyIdByName(companyName);
         }        
-        public int GetGradeIdByUnitPrice(int unitPrice)
+        public int GetGradeIdByUnitPrice(string unitPrice)
         {
-            return _uploadExcelDAL.GetGradeIdByUnitPrice(unitPrice);
+            Salary salary = null;
+            decimal tempVal = 0;
+            if (decimal.TryParse(unitPrice, out tempVal))
+            {
+                if (tempVal > 0)
+                {
+                    salary = salaryBLL.CompareSalary(tempVal);                    
+            }
+            }
+            //return _uploadExcelDAL.GetGradeIdByUnitPrice(unitPrice);
+            if(salary == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return salary.Id;
+            }            
         }
         public bool IsValidMasterSetting(int masterSettingId)
         {

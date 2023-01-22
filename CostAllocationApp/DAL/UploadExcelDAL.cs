@@ -13,6 +13,7 @@ namespace CostAllocationApp.DAL
 {
     public class UploadExcelDAL : DbContext
     {
+
         public int GetSectionIdByName(string sectionName)
         {
             int sectionId = 0;
@@ -172,9 +173,9 @@ namespace CostAllocationApp.DAL
             return roleId;
         }
 
-        public int GetExplanationIdByName(string explanationName)
+        public int? GetExplanationIdByName(string explanationName)
         {
-            int explanationId = 0;
+            int? explanationId = null;
             string where = "";
             string query = "";
             if (!string.IsNullOrEmpty(explanationName))
@@ -254,6 +255,8 @@ namespace CostAllocationApp.DAL
 
         public int GetGradeIdByUnitPrice(int unitPrice)
         {
+            
+
             int gradeId = 0;
             string where = "";
             string query = "";
