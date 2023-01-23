@@ -20,8 +20,8 @@ namespace CostAllocationApp.Controllers
             List<ForecastAssignmentViewModel> forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -126,7 +126,8 @@ namespace CostAllocationApp.Controllers
                             }
                             else
                             {
-                                tdPoints += $@"<td style='padding-right:20px;'>{forecastItem.Total}</td>";
+                                //tdPoints += $@"<td style='padding-right:20px;text-align: right;'>{forecastItem.Total}</td>";
+                                tdPoints += $@"<td style='text-align: right;'>{forecastItem.Total}</td>";
                             }
 
                         }

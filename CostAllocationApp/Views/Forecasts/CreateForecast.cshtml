@@ -48,11 +48,25 @@
                 @if (ViewBag.Success != null)
                 {
                     <div class="alert alert-success col-4">
-                       @ViewBag.Success
+                        @ViewBag.Success
                     </div>
                 }
-
             </div>
+        </div>
+        <div class="row">
+            <div class="form-group mx-sm-3 mb-2">
+                <select id="inputState" class="form-control" name="upload_year">
+                    <option value="0">Select Year</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-danger" onclick="DeleteRecords();">
+                    @*<i class="bi bi-trash"></i>*@
+                    Delete Records
+                </button>
+            </div>
+
         </div>
     </div>
     <!-- /Page Header -->

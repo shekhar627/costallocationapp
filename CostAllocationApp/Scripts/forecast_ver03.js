@@ -2399,3 +2399,14 @@ $(document).ready(function () {
 
 
 });
+
+function DeleteRecords() {
+    $.getJSON(`/api/utilities/DeleteAssignments/`)
+        .done(function (data) {
+            //$('#department_search').empty();
+            //$('#department_search').append(`<option value=''>Select Department</option>`);
+            //$.each(data, function (key, item) {
+            //    $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            //});
+        });
+}

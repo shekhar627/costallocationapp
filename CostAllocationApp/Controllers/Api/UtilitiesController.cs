@@ -679,5 +679,33 @@ namespace CostAllocationApp.Controllers.Api
             }
 
         }
+
+        [Route("api/utilities/DeleteAssignments/")]
+        [HttpGet]
+        [ActionName("DeleteAssignments")]
+        public IHttpActionResult DeleteAssignments()
+        {
+            string id = 0;
+            int tempValue = 0;
+            if (int.TryParse(id, out tempValue))
+            {
+                if (tempValue > 0)
+                {
+                    List<Department> departments = departmentBLL.GetAllDepartmentsBySectionId(sectionId: tempValue);
+                    return Ok(departments);
+                }
+                else
+                {
+                    return BadRequest("Something Went Wrong!!!");
+                }
+            }
+            else
+            {
+                return BadRequest("Something Went Wrong!!!");
+            }
+
+
+        }
+
     }
 }
