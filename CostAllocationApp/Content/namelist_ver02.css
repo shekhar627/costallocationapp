@@ -156,13 +156,16 @@ td {
     border: 1px solid;
     text-align: left;
 }
-#namelist tbody tr td:nth-of-type(6) {
+/*#namelist tbody tr td:nth-of-type(6) {
     border: 1px solid;
     text-align: left;
-}
-#namelist tbody tr td:nth-of-type(9) {
+}*/
+#namelist tbody tr td:nth-of-type(6) {
     border: 1px solid;
     text-align: right;
+}
+#namelist_title_header {
+    text-align: center !important;
 }
 /* #section_table td,
 th {
@@ -175,7 +178,6 @@ th {
     text-align: center;
     width: 20px;
 } */
-
 /*--------------Name list: add name popup------------*/
 #add_name_table_2 th,
 td {
@@ -279,12 +281,12 @@ th.namelist_td{
 
 .name_list_th.section {
     text-align: center;
-    width: 119px !important;
+    width: 271px !important;
 }
 
 .name_list_th.department {
     text-align: center;
-    width: 82px !important;
+    width: 294px !important
 }
 
 .name_list_th.incharge {

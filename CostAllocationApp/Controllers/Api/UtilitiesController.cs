@@ -16,11 +16,12 @@ namespace CostAllocationApp.Controllers.Api
         DepartmentBLL departmentBLL = null;
         EmployeeAssignmentBLL employeeAssignmentBLL = null;
         SalaryBLL salaryBLL = null;
-        SectionBLL sectionBLL = null;
+        SectionBLL sectionBLL = null;       
         CompanyBLL companyBLL = new CompanyBLL();
         InChargeBLL inChargeBLL = null;
         RoleBLL roleBLL = null;
         ExplanationsBLL explanationsBLL = null;
+        AllocationBLL _allocationBLL = new AllocationBLL();
 
         public UtilitiesController()
         {
@@ -678,32 +679,80 @@ namespace CostAllocationApp.Controllers.Api
 
         }
 
-        [Route("api/utilities/DeleteAssignments/")]
         [HttpGet]
-        [ActionName("DeleteAssignments")]
-        public IHttpActionResult DeleteAssignments()
+        public IHttpActionResult AllocationCount(string allocationIds)
         {
-            string id = 0;
-            int tempValue = 0;
-            if (int.TryParse(id, out tempValue))
+            List<string> countMessage = new List<string>();
+            if (!String.IsNullOrEmpty(allocationIds))
             {
-                if (tempValue > 0)
+                int tempAllocationId = 0;
+                String[] _ids = allocationIds.Split(',');
+
+                if (_ids.Length > 0)
                 {
-                    List<Department> departments = departmentBLL.GetAllDepartmentsBySectionId(sectionId: tempValue);
-                    return Ok(departments);
+                    foreach (string item in _ids)
+                    {
+                        Int32.TryParse(item, out tempAllocationId);
+                        if (tempAllocationId > 0)
+                        {
+                            var allocation = _allocationBLL.GetAllocationByAllocationId(tempAllocationId);
+                            if (allocation != null)
+                            {
+                                int result = _allocationBLL.GetAllocationCountWithEmployeeAsignment(tempAllocationId);
+                                if (result > 1)
+                                {
+                                    countMessage.Add(result + " projects assigned for " + allocation.AllocationName);
+                                }
+                                else
+                                {
+                                    countMessage.Add(result + " project assigned for " + allocation.AllocationName);
+                                }
+                            }
+                        }
+                    }
+                    return Ok(countMessage);
                 }
                 else
                 {
-                    return BadRequest("Something Went Wrong!!!");
+                    return BadRequest("Invalid Data");
                 }
+
+
             }
             else
             {
-                return BadRequest("Something Went Wrong!!!");
+                return BadRequest("Invalid Data");
             }
 
-
         }
+
+
+        //[Route("api/utilities/DeleteAssignments/")]
+        //[HttpGet]
+        //[ActionName("DeleteAssignments")]
+        //public IHttpActionResult DeleteAssignments()
+        //{
+        //    string id = 0;
+        //    int tempValue = 0;
+        //    if (int.TryParse(id, out tempValue))
+        //    {
+        //        if (tempValue > 0)
+        //        {
+        //            List<Department> departments = departmentBLL.GetAllDepartmentsBySectionId(sectionId: tempValue);
+        //            return Ok(departments);
+        //        }
+        //        else
+        //        {
+        //            return BadRequest("Something Went Wrong!!!");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return BadRequest("Something Went Wrong!!!");
+        //    }
+
+
+        //}
 
     }
 }

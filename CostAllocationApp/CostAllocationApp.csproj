@@ -153,6 +153,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\AllocationBLL.cs" />
     <Compile Include="BLL\CompanyBLL.cs" />
     <Compile Include="BLL\DepartmentBLL.cs" />
     <Compile Include="BLL\EmployeeBLL.cs" />
@@ -164,6 +165,8 @@
     <Compile Include="BLL\SalaryBLL.cs" />
     <Compile Include="BLL\SectionBLL.cs" />
     <Compile Include="BLL\UploadExcelBLL.cs" />
+    <Compile Include="Controllers\AllocationController.cs" />
+    <Compile Include="Controllers\Api\AllocationController.cs" />
     <Compile Include="Controllers\Api\CompaniesController.cs" />
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\EmployeesController.cs" />
@@ -187,6 +190,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SalariesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
+    <Compile Include="DAL\AllocationDAL.cs" />
     <Compile Include="DAL\CompanyDAL.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
@@ -205,6 +209,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Allocation.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\EmployeeAssignmentForecast.cs" />
@@ -245,6 +250,7 @@
     <Content Include="Content\modal_registrations.css" />
     <Content Include="Content\namelist-responsive.css" />
     <Content Include="Content\namelist.css" />
+    <Content Include="Content\namelist_ver02.css" />
     <Content Include="Content\nameregistration.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\roles.css" />
@@ -678,6 +684,8 @@
     <Content Include="Views\Forecasts\CreateForecast.cshtml" />
     <Content Include="Views\Employees\NameRegistration.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Allocation\Index.cshtml" />
+    <Content Include="Views\Allocation\CreateAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

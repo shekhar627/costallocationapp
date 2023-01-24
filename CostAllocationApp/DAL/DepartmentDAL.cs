@@ -12,13 +12,12 @@ namespace CostAllocationApp.DAL
         public int CreateDepartment(Department department)
         {
             int result = 0;
-            string query = $@"insert into departments(Name,SectionId,CreatedBy,CreatedDate,IsActive) values(@departmentName,@sectionId,@createdBy,@createdDate,@isActive)";
+            string query = $@"insert into departments(Name,CreatedBy,CreatedDate,IsActive) values(@departmentName,@createdBy,@createdDate,@isActive)";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlConnection);
                 cmd.Parameters.AddWithValue("@departmentName", department.DepartmentName);
-                cmd.Parameters.AddWithValue("@sectionId", department.SectionId);
                 cmd.Parameters.AddWithValue("@createdBy", department.CreatedBy);
                 cmd.Parameters.AddWithValue("@createdDate", department.CreatedDate);
                 cmd.Parameters.AddWithValue("@isActive", department.IsActive);
@@ -39,9 +38,8 @@ namespace CostAllocationApp.DAL
         {
             List<Department> departments = new List<Department>();
             string query = "";
-            query = "SELECT dpt.*,sc.Name as SectionName ";
+            query = "SELECT dpt.*";
             query = query + "FROM Departments dpt ";
-            query = query + "    INNER JOIN Sections sc ON dpt.SectionId = sc.Id ";
             query = query + "WHERE dpt.isactive=1 ";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
@@ -57,8 +55,6 @@ namespace CostAllocationApp.DAL
                             Department department = new Department();
                             department.Id = Convert.ToInt32(rdr["Id"]);
                             department.DepartmentName = rdr["Name"].ToString();
-                            department.SectionName = rdr["SectionName"].ToString();
-                            department.SectionId = Convert.ToInt32(rdr["SectionId"]);
                             department.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             department.CreatedBy = rdr["CreatedBy"].ToString();
 

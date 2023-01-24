@@ -28,170 +28,117 @@
                         if (url.ToLower().Contains("namelist"))
                         {
                             <li>
-                                <a href="/Employees/NameList" class="active"><i class="la la-cube"></i> <span>Name List</span></a>
+                                <a href="/Employees/NameList" class="active"><i class="la la-cube"></i> <span>Name List (名簿)</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Employees/NameList"><i class="la la-cube"></i> <span>Name List</span></a>
+                                <a href="/Employees/NameList"><i class="la la-cube"></i> <span>Name List (名簿)</span></a>
                             </li>
                         }
                         if (url.ToLower().Contains("createassignment"))
                         {
                             <li>
-                                <a href="javascriopt:void(0);" class="active"><i class="la la-cube"></i> <span>Add Name</span></a>
+                                <a href="javascriopt:void(0);" class="active"><i class="la la-cube"></i> <span>Add Name（追加）</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Employees/CreateAssignment"><i class="la la-cube"></i> <span>Add Name</span></a>
+                                <a href="/Employees/CreateAssignment"><i class="la la-cube"></i> <span>Add Name（追加）</span></a>
                             </li>
                         }
-                        if (url.ToLower().Contains("createforecast"))
-                        {
-                            <li>
-                                <a href="/Forecasts/CreateForecast" class="active"><i class="la la-bullhorn"></i> <span>Create Forecast</span></a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="/Forecasts/CreateForecast"><i class="la la-bullhorn"></i> <span>Create Forecast</span></a>
-                            </li>
-                        }
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <i class="la la-bullhorn"></i>
+                                <span>Create Allocation (配置作成)</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: none;">
+                                @{
+                                    if (url.ToLower().Contains("createforecast"))
+                                    {
+                                        <li><a href="/Forecasts/CreateForecast" class="active">Planning Allocation (企画配置)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/Forecasts/CreateForecast">Planning Allocation (企画配置)</a>
+                                        </li>
+                                    }
+                                    if (url.ToLower().Contains("createforecast"))
+                                    {
+                                        <li><a href="/Forecasts/CreateForecast" class="active">Dev Allocation (開発配置)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Forecasts/CreateForecast">Dev Allocation (開発配置)</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>                        
                         <li>
-                            <a href="javascript:void(0);"><i class="la la-files-o"></i> <span>Data Export</span></a>
+                            <a href="javascript:void(0);"><i class="la la-files-o"></i> <span>Data Export (輸出)</span></a>
                         </li>
 
                         <li class="submenu">
                             <a href="javascript:void(0);">
                                 <i class="la la-files-o"></i>
-                                <span> Master Setting</span>
+                                <span>
+                                    Master Setting (マスター設定)
+                                </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul style="display: none;">
                                 @{
                                     if (url.ToLower().Contains("createsection"))
                                     {
-                                        <li><a href="/Sections/CreateSection" class="active">Section Master</a></li>
+                                        <li><a href="/Sections/CreateSection" class="active">Section Master (区分マスター)</a></li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="/Sections/CreateSection">Section Master</a>
+                                            <a href="/Sections/CreateSection">Section Master (区分マスター)</a>
                                         </li>
-                                    }
-                                    if (url.ToLower().Contains("createdepartment"))
-                                    {
-                                        <li><a href="/Departments/CreateDepartment" class="active">Department Master</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/Departments/CreateDepartment">Department Master</a></li>
-                                    }
-                                    if (url.ToLower().Contains("createincharge"))
-                                    {
-                                        <li><a href="/InCharges/CreateInCharge" class="active">In-Charge Master</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/InCharges/CreateInCharge">In-Charge Master</a></li>
-                                    }
-
-                                    if (url.ToLower().Contains("createroles"))
-                                    {
-                                        <li><a href="/Roles/CreateRoles" class="active">Role Master</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/Roles/CreateRoles">Role Master</a></li>
-                                    }
-                                    if (url.ToLower().Contains("createexplanation"))
-                                    {
-                                        <li><a href="/Explanations/CreateExplanation" class="active">Explanation Master</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/Explanations/CreateExplanation">Explanation Master</a></li>
                                     }
                                     if (url.ToLower().Contains("createcompany"))
                                     {
-                                        <li><a href="/Companies/CreateCompany" class="active">Company Master</a></li>
+                                        <li><a href="/Companies/CreateCompany" class="active">Company Master (会社マスター)</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Companies/CreateCompany">Company Master</a></li>
+                                        <li><a href="/Companies/CreateCompany">Company Master (会社マスター)</a></li>
+                                    }
+                                    if (url.ToLower().Contains("createdepartment"))
+                                    {
+                                        <li><a href="/Departments/CreateDepartment" class="active">Dept.  Master （部署バスター）</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Departments/CreateDepartment">Dept.  Master （部署バスター）</a></li>
                                     }
                                     if (url.ToLower().Contains("createsalary"))
                                     {
-                                        <li><a href="/Salaries/CreateSalary" class="active">Salary Master</a></li>
+                                        <li><a href="/Salaries/CreateSalary" class="active">Grade.  Master （グレードマスター）</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Salaries/CreateSalary">Salary Master</a></li>
+                                        <li><a href="/Salaries/CreateSalary">Grade.  Master （グレードマスター）</a></li>
+                                    }
+                                    if (url.ToLower().Contains("createallocation"))
+                                    {
+                                        <li><a href="/Allocation/CreateAllocation" class="active">Allocation  Master （配置マスター）</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Allocation/CreateAllocation">Allocation  Master （配置マスター）</a></li>
                                     }
                                 }
                             </ul>
                         </li>
-                        @*<li>
-                                <a href="/Home/Login"><i class="la la-user"></i> <span>Logout</span></a>
-                            </li>*@
                     }
                 }
-                @*<li class="submenu">
-                        <a href="javascript:void(0);" class="noti-dot"><i class="la la-files-o"></i> <span> Department</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/Department/CreateDepartment">Add Department</a></li>
-                            <li><a href="/Department/DepartmentList">Department List</a></li>
-                        </ul>
-                    </li>*@
-                @*<li>
-                        <a href="/Gender/CreateGender"><i class="la la-user"></i> <span>Gender</span></a>
-                    </li>*@
-                @*<li class="submenu">
-                        <a href="javascript:void(0);"><i class="la la-user"></i> <span> Employee</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/Employee/AddEmployee">Add Employee</a></li>
-                            <li><a href="/Employee/EmployeeList">Employee List</a></li>
-                        </ul>
-                    </li>*@
-                @*<li class="submenu">
-                        <a href="javascript:void(0);"><i class="la la-graduation-cap"></i> <span> Roles</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/Roles/CreateRole">Add Roles</a></li>
-                            <li><a href="/Roles/RolesList">Roles List</a></li>
-                        </ul>
-                    </li>*@
-                @*<li class="submenu">
-                        <a href="javascript:void(0);"><i class="la la-users"></i> <span> Company</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/Company/CreateCompany">Add Company</a></li>
-                            <li><a href="/Company/CompanyList">Company List</a></li>
-                        </ul>
-                    </li>*@
-                @*<li class="submenu">
-                        <a href="javascript:void(0);"><i class="la la-money"></i> <span> Employee Assignments</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/EmployeeAssignments/CreateEmployeeAssignments">Add Employee Assignments</a></li>
-                            <li><a href="/EmployeeAssignments/EmployeeAssignmentsList">Employee Assignments List</a></li>
-                        </ul>
-                    </li>*@
-                @*<li class="submenu">
-                        <a href="javascript:void(0);"><i class="la la-bullhorn"></i> <span> Grade</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/Grade/AddGrade">Add Grade</a></li>
-                            <li><a href="/Grade/GradeList">Grade List</a></li>
-                        </ul>
-                    </li>*@
-                @*<li class="submenu">
-                        <a href="javascript:void(0);"><i class="la la-money"></i> <span> Costs</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="/Costs/AddCosts">Add Costs</a></li>
-                            <li><a href="/Costs/CostsList">Costs List</a></li>
-                        </ul>
-                    </li>*@
             </ul>
         </div>
     </div>

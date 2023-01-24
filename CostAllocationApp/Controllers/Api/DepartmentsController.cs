@@ -25,10 +25,10 @@ namespace CostAllocationApp.Controllers.Api
             {
                 return BadRequest("Department Name Required");
             }
-            else if (String.IsNullOrEmpty(department.SectionId.ToString()))
-            {
-                return BadRequest("Please select section");
-            }
+            //else if (String.IsNullOrEmpty(department.SectionId.ToString()))
+            //{
+            //    return BadRequest("Please select section");
+            //}
             else
             {
                 department.CreatedBy = "";

@@ -7,7 +7,7 @@
     //    }  
     //    count = count +1;      
     //} );
-    $('#namelist thead tr:eq(1) th').each(function () {
+    $('#namelist thead tr:eq(1) th').each( function () {
         if(count == 1){
             var title = $(this).text();
             $(this).html( '<input type="text" placeholder="Search '+title+'" class="" Id="name_search"/>' );
@@ -38,39 +38,38 @@
     $('#section_multi_search').multiselect({
         includeSelectAllOption: true,
         enableFiltering: true,
-        nonSelectedText: 'select 区分(section)',
-    });
-    //company multi search
-    $('#company_multi_search').multiselect({
-        includeSelectAllOption: true,
-        enableFiltering: true,
-        nonSelectedText: 'select 会社(company)',
+        nonSelectedText: 'select section',
     });
     //department multi search
     $('#dept_multi_search').multiselect({
         includeSelectAllOption: true,
         enableFiltering: true,
-        nonSelectedText: 'select 企画/開発(dept.)<',
+        nonSelectedText: 'select dept',
     });
     //incharge multi search
-    //$('#incharge_multi_search').multiselect({
-    //    includeSelectAllOption: true,
-    //    enableFiltering: true,
-    //    nonSelectedText: 'select incharge',
-    //});
-    ////role multi search
-    //$('#role_multi_search').multiselect({
-    //    includeSelectAllOption: true,
-    //    enableFiltering: true,
-    //    nonSelectedText: 'select role',
-    //});
-    ////explanation multi search
-    //$('#explanation_multi_search').multiselect({
-    //    includeSelectAllOption: true,
-    //    enableFiltering: true,
-    //    nonSelectedText: 'select explanation',
-    //});
-    
+    $('#incharge_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select incharge',
+    });
+    //role multi search
+    $('#role_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select role',
+    });
+    //explanation multi search
+    $('#explanation_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select explanation',
+    });
+    //company multi search
+    $('#company_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select company',
+    });
     
     LoadNameListTableOnLoad();
 
@@ -874,7 +873,9 @@ function GetMultiSearch_AjaxData() {
 }
 function NameList_DatatableLoad(data) {
     var tempCompanyName = "";
-    var tempCount = 1;
+    var tempSubCode = "";
+    var redMark = "";
+
     $('#namelist').DataTable({
         destroy: true,
         data: data,
@@ -883,18 +884,11 @@ function NameList_DatatableLoad(data) {
         pageLength: 100,
         searching: false,
         bLengthChange: false,
-        columns: [     
-            // {
-            // "title": "Serial",
-            //     render: function (data, type, row, meta) {
-            //     return meta.row + meta.settings._iDisplayStart + 1;
-            //     }
-            // },    
+        columns: [            
             {
                 data: 'EmployeeNameWithCodeRemarks',
                 render: function(employeeNameWithCodeRemarks) {
-                    console.log();
-                    var splittedString = employeeNameWithCodeRemarks.split('$');                    
+                    var splittedString = employeeNameWithCodeRemarks.split('$');
                     if (splittedString[2] == 'true') {
                         return `<span style='color:red;' class='namelist_addname' onClick="loadSingleAssignmentDataForExistingEmployee('${splittedString[0]}')" data-toggle="modal" data-target="#modal_add_name">${splittedString[1]}</span>`;
                     } else {
@@ -907,24 +901,24 @@ function NameList_DatatableLoad(data) {
                 data: 'SectionName'
             },
             {
+                data: 'DepartmentName'
+            },
+            {
+                data: 'InchargeName'
+            },
+            {
+                data: 'RoleName'
+            },
+            {
+                data: 'ExplanationName'
+            },
+            {
                 data: 'CompanyName',
-                render: function (companyName) {
+                render: function(companyName) {
                     tempCompanyName = companyName;
                     return companyName;
                 }
             },
-            {
-                data: 'DepartmentName'
-            },
-            //{
-            //    data: 'InchargeName'
-            //},
-            //{
-            //    data: 'RoleName'
-            //},
-            //{
-            //    data: 'ExplanationName'
-            //},            
             {
                 data: 'GradePoint',
                 render: function(grade) {

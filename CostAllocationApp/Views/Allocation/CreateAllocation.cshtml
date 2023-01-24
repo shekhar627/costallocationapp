@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Allocation Registration";
+}
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/allocation.css" />
+}
+
+<div class="content container-fluid">
+    <h4 style="text-align:left;">List</h4>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="table-responsive">
+                <table class="" id="allocation_table">
+                    <thead>
+                        <tr>
+                            <th>Check</th>
+                            <th>Allocation Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allocation_list_tbody"></tbody>
+                </table>
+                <label id="allocation_delete_btn">
+                    <a id="allocation_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_allocation" onClick="onAlllocationInactiveClick()">Delete</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="modal-content" id="allocation_body">
+        <style>
+        </style>
+        <div class="modal-body">
+            <form>
+                <div id="main-div">
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="allocation-name" id="section_name_lbl">Section Name <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <input class="form-control" id="allocation-name" type="text" placeholder="allocation name..">
+                                <div class="allocation_name_err">
+                                    Please provide a allocation name.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cutom_button_group_allocation">
+                        <a href="javascript:void(0);" id="allocation_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="allocation_registration" onclick="InsertAllocation();">Registration</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br><br>
+</div>
+
+<input type="hidden" id="allocation_warning_text" />
+<!-- Inactive Allocation modal -->
+<div class="modal custom-modal fade" id="delete_allocation" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Allocation</h3>
+                    <p id="allocation_warning" style="display:none;"></p>
+                    <ol class="allocation_count" style="text-align:left;"></ol>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="allocation_inactive_confirm_btn">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/allocation.js"></script>
+}

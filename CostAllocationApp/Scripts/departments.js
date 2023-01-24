@@ -18,7 +18,7 @@
 
 $(document).ready(function () {    
     GetDepartments();
-    LoadSectionDropdown();
+    // LoadSectionDropdown();
     
     $('#department_inactive_confirm_btn').on('click', function (event) {
         event.preventDefault();
@@ -56,7 +56,7 @@ $(document).ready(function () {
 function InsertDepartment() {
     var apiurl = "/api/Departments/";
     let departmentName = $("#department_name").val().trim();
-    let sectionId = $("#section_list").val().trim();
+    // let sectionId = $("#section_list").val().trim();
 
     let isValidRequest = true;
 
@@ -66,17 +66,18 @@ function InsertDepartment() {
     } else {
         $(".department_name_err").hide();
     }
-    if (sectionId == "" || sectionId < 0) {
-        $("#section_ist_error").show();
-        isValidRequest = false;
-    } else {
-        $("#section_ist_error").hide();
-    }
+    // if (sectionId == "" || sectionId < 0) {
+    //     $("#section_ist_error").show();
+    //     isValidRequest = false;
+    // } else {
+    //     $("#section_ist_error").hide();
+    // }
 
     if (isValidRequest) {
         var data = {
-            DepartmentName: departmentName,
-            SectionId: sectionId
+            DepartmentName: departmentName
+            // ,
+            // SectionId: sectionId
         };
 
         $.ajax({
@@ -90,7 +91,7 @@ function InsertDepartment() {
                 $("#section_list").val('');
 
                 ToastMessageSuccess(data);
-                $('#section-name').val('');
+                $('#allocation-name').val('');
                 GetDepartments();
             },
             error: function (data) {
@@ -117,7 +118,7 @@ function GetDepartments(){
     .done(function (data) {
         $('#department_list_tbody').empty();
         $.each(data, function (key, item) {
-            $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td><td>${item.SectionName}</td></tr>`);
+            $('#department_list_tbody').append(`<tr><td><input type="checkbox" class="department_list_chk" data-id='${item.Id}' /></td><td>${item.DepartmentName}</td></tr>`);
         });
     });
 }

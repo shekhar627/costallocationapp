@@ -56,7 +56,7 @@ $('#department_modal_href').click(function() {
 function InsertDepartment() {
     var apiurl = "/api/Departments/";
     let departmentName = $("#department_name").val().trim();
-    let sectionId = $("#section_list").val().trim();
+    //let sectionId = $("#section_list").val().trim();
 
     let isValidRequest = true;
 
@@ -66,17 +66,18 @@ function InsertDepartment() {
     } else {
         $(".dept_name_err").hide();
     }
-    if (sectionId == "" || sectionId < 0) {
-        $("#section_list_error").show();
-        isValidRequest = false;
-    } else {
-        $("#section_list_error").hide();
-    }
+    //if (sectionId == "" || sectionId < 0) {
+    //    $("#section_list_error").show();
+    //    isValidRequest = false;
+    //} else {
+    //    $("#section_list_error").hide();
+    //}
 
     if (isValidRequest) {
         var data = {
-            DepartmentName: departmentName,
-            SectionId: sectionId
+            DepartmentName: departmentName
+            //,
+            //SectionId: sectionId
         };
 
         $.ajax({
@@ -87,11 +88,11 @@ function InsertDepartment() {
             success: function(data) {
                 $("#page_load_after_modal_close").val("yes");
                 $("#department_name").val('');
-                $("#section_list").val('');
+                //$("#section_list").val('');
 
                 ToastMessageSuccess(data);
-                $('#section-name').val('');
-                GetDepartments();
+                //$('#section-name').val('');
+                //GetDepartments();
             },
             error: function(data) {
                 alert(data.responseJSON.Message);
