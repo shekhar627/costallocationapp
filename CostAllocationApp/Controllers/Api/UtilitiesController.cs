@@ -622,9 +622,7 @@ namespace CostAllocationApp.Controllers.Api
                 {
                     return BadRequest("Invalid Data");
                 }
-
-
-            }
+            } 
             else
             {
                 return BadRequest("Invalid Data");
