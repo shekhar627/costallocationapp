@@ -98,7 +98,7 @@
             })
             .done(function(data) {
                 $('#employee_list_search_results').empty();
-
+                
                 //Name list with datatable
                 NameList_DatatableLoad(data);
 

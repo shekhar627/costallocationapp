@@ -1,6 +1,6 @@
 ﻿function onAlllocationInactiveClick() {
     let allocationIds = GetCheckedIds("allocation_list_tbody");
-    var apiurl = '/api/utilities/AllocationCount?allocationIds=' + allocationIds;
+    var apiurl = '/api/utilities/ExplanationCount?roleIds=' + allocationIds;
     $.ajax({
         url: apiurl,
         type: 'Get',
@@ -34,7 +34,7 @@ $(document).ready(function () {
 
         id = id.slice(0, -1);
         $.ajax({
-            url: '/api/allocation?allocationIds=' + id,
+            url: '/api/Explanations?explanationIds=' + id,
             type: 'DELETE',
             success: function (data) {
                 ToastMessageSuccess(data);
@@ -59,7 +59,7 @@ $('#allocation_inactive_btn').on('click', function (event) {
 //Get Assgined Section Count
 function IsSectionAssigned(allocationIds) {
     var returnVal = "";
-    var apiurl = '/api/utilities/AllocationCount?allocationIds=' + allocationIds;
+    var apiurl = '/api/utilities/ExplanationCount?allocationIds=' + allocationIds;
     $.ajax({
         url: apiurl,
         type: 'Get',
@@ -82,7 +82,7 @@ function IsSectionAssigned(allocationIds) {
 
 //Allocation insert
 function InsertAllocation() {
-    var apiurl = "/api/allocation/";
+    var apiurl = "/api/Explanations/";
     let allocationName = $("#allocation-name").val().trim();
     if (allocationName == "") {
         $(".allocation_name_err").show();
@@ -114,11 +114,11 @@ function InsertAllocation() {
 
 //Get section list
 function GetAllocationList() {
-    $.getJSON('/api/allocation/')
+    $.getJSON('/api/Explanations/')
         .done(function (data) {
             $('#allocation_list_tbody').empty();
             $.each(data, function (key, item) {
-                $('#allocation_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.AllocationName}</td></tr>`);
+                $('#allocation_list_tbody').append(`<tr><td><input type="checkbox" class="section_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.ExplanationName}</td></tr>`);
             });
         });
 }

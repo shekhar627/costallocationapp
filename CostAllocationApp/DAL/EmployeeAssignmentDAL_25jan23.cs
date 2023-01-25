@@ -56,14 +56,6 @@ namespace CostAllocationApp.DAL
                 {
                     cmd.Parameters.AddWithValue("@companyId", employeeAssignment.CompanyId);
                 }
-                if (employeeAssignment.UnitPrice == null)
-                {
-                    cmd.Parameters.AddWithValue("@unitPrice", DBNull.Value);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
-                }
                 if (employeeAssignment.GradeId == null)
                 {
                     cmd.Parameters.AddWithValue("@gradeId", DBNull.Value);
@@ -73,7 +65,8 @@ namespace CostAllocationApp.DAL
                     cmd.Parameters.AddWithValue("@gradeId", employeeAssignment.GradeId);
                 }
 
-                //cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
+
+                cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
                 cmd.Parameters.AddWithValue("@createdBy", employeeAssignment.CreatedBy);
                 cmd.Parameters.AddWithValue("@createdDate", employeeAssignment.CreatedDate);
                 cmd.Parameters.AddWithValue("@isActive", employeeAssignment.IsActive);
@@ -160,16 +153,6 @@ namespace CostAllocationApp.DAL
                 {
                     cmd.Parameters.AddWithValue("@companyId", employeeAssignment.CompanyId);
                 }
-
-                if (employeeAssignment.UnitPrice == null)
-                {
-                    cmd.Parameters.AddWithValue("@unitPrice", DBNull.Value);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
-                }
-
                 if (employeeAssignment.GradeId == null)
                 {
                     cmd.Parameters.AddWithValue("@gradeId", DBNull.Value);
@@ -179,7 +162,7 @@ namespace CostAllocationApp.DAL
                     cmd.Parameters.AddWithValue("@gradeId", employeeAssignment.GradeId);
                 }
 
-                //cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
+                cmd.Parameters.AddWithValue("@unitPrice", employeeAssignment.UnitPrice);
                 cmd.Parameters.AddWithValue("@updatedBy", employeeAssignment.UpdatedBy);
                 cmd.Parameters.AddWithValue("@updatedDate", employeeAssignment.UpdatedDate);
                 cmd.Parameters.AddWithValue("@id", employeeAssignment.Id);
@@ -231,11 +214,11 @@ namespace CostAllocationApp.DAL
             string query = $@"select ea.id as AssignmentId,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode, ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             from EmployeesAssignments ea 
-                            left join Sections sec on ea.SectionId = sec.Id
-                            left join Departments dep on ea.DepartmentId = dep.Id
-                            left join Companies com on ea.CompanyId = com.Id
-                            left join Explanations ep on ea.ExplanationId = ep.Id
-                            where {where}";
+                            join Sections sec on ea.SectionId = sec.Id
+                            join Departments dep on ea.DepartmentId = dep.Id
+                            join Companies com on ea.CompanyId = com.Id
+                            join Roles rl on ea.RoleId = rl.Id
+                            join InCharges inc on ea.InChargeId = inc.Id where {where}";
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
 
@@ -357,14 +340,14 @@ namespace CostAllocationApp.DAL
             {
                 where += $" ea.DepartmentId={employeeAssignment.DepartmentId} and ";
             }
-            //if (employeeAssignment.InchargeId >0)
-            //{
-            //    where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
-            //}
-            //if (employeeAssignment.RoleId >0)
-            //{
-            //    where += $" ea.RoleId={employeeAssignment.RoleId} and ";
-            //}
+            if (employeeAssignment.InchargeId >0)
+            {
+                where += $" ea.InChargeId={employeeAssignment.InchargeId} and ";
+            }
+            if (employeeAssignment.RoleId >0)
+            {
+                where += $" ea.RoleId={employeeAssignment.RoleId} and ";
+            }
             //if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
             //{
             //    where += $" ea.ExplanationId={employeeAssignment.ExplanationId} and ";
@@ -386,14 +369,14 @@ namespace CostAllocationApp.DAL
             where += " 1=1 ";
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode, ea.ExplanationId,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.RoleId,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
-                            from EmployeesAssignments ea 
-                            left join Sections sec on ea.SectionId = sec.Id
-                            left join Departments dep on ea.DepartmentId = dep.Id
-                            left join Companies com on ea.CompanyId = com.Id
+                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
+                            join Departments dep on ea.DepartmentId = dep.Id
+                            join Companies com on ea.CompanyId = com.Id
+                            left join Roles rl on ea.RoleId = rl.Id
+                            join InCharges inc on ea.InChargeId = inc.Id 
                             left join Grades gd on ea.GradeId = gd.Id
-                            left join Explanations ep on ea.ExplanationId = ep.Id
                             where {where}
                             order by ea.EmployeeName asc, ea.Id";
                             //ORDER BY ea.EmployeeName asc, ea.Id";
@@ -410,18 +393,10 @@ namespace CostAllocationApp.DAL
                 try
                 {
                     SqlDataReader rdr = cmd.ExecuteReader();
-
-                    int count = 1;
                     if (rdr.HasRows)
                     {
                         while (rdr.Read())
                         {
-                            //int tempRowCount = rdr.FieldCount;
-                            if (count == 12)
-                            {
-
-                            }
-                            count = count + 1;
                             EmployeeAssignmentViewModel employeeAssignmentViewModel = new EmployeeAssignmentViewModel();
                             employeeAssignmentViewModel.Id = Convert.ToInt32(rdr["AssignmentId"]);
                             employeeAssignmentViewModel.EmployeeName = rdr["EmployeeName"].ToString();
@@ -429,16 +404,15 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.SectionName = rdr["SectionName"].ToString();
                             employeeAssignmentViewModel.DepartmentId = rdr["DepartmentId"].ToString();
                             employeeAssignmentViewModel.DepartmentName = rdr["DepartmentName"].ToString();
-                            //employeeAssignmentViewModel.InchargeId = rdr["InchargeId"].ToString();
-                            //employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
-                            //employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
-                            //employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
+                            employeeAssignmentViewModel.InchargeId = rdr["InchargeId"].ToString();
+                            employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
+                            employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
+                            employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
                             employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
-                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
 
@@ -802,36 +776,36 @@ namespace CostAllocationApp.DAL
 
             }
 
-            //if (employeeAssignment.Incharges != null && employeeAssignment.Incharges.ToString() != "all")
-            //{
-            //    if (employeeAssignment.Incharges.Length > 0)
-            //    {
-            //        string ids = "";
-            //        foreach (var item in employeeAssignment.Incharges)
-            //        {
-            //            ids += $"{item},";
-            //        }
-            //        ids = ids.TrimEnd(',');
+            if (employeeAssignment.Incharges != null && employeeAssignment.Incharges.ToString() != "all")
+            {
+                if (employeeAssignment.Incharges.Length > 0)
+                {
+                    string ids = "";
+                    foreach (var item in employeeAssignment.Incharges)
+                    {
+                        ids += $"{item},";
+                    }
+                    ids = ids.TrimEnd(',');
 
-            //        where += $" ea.InChargeId in ({ids}) and ";
-            //    }
+                    where += $" ea.InChargeId in ({ids}) and ";
+                }
 
-            //}
-            //if (employeeAssignment.Roles != null && employeeAssignment.Roles.ToString() != "all")
-            //{
-            //    if (employeeAssignment.Roles.Length > 0)
-            //    {
-            //        string ids = "";
-            //        foreach (var item in employeeAssignment.Roles)
-            //        {
-            //            ids += $"{item},";
-            //        }
-            //        ids = ids.TrimEnd(',');
+            }
+            if (employeeAssignment.Roles != null && employeeAssignment.Roles.ToString() != "all")
+            {
+                if (employeeAssignment.Roles.Length > 0)
+                {
+                    string ids = "";
+                    foreach (var item in employeeAssignment.Roles)
+                    {
+                        ids += $"{item},";
+                    }
+                    ids = ids.TrimEnd(',');
 
-            //        where += $" ea.RoleId in ({ids}) and ";
-            //    }
+                    where += $" ea.RoleId in ({ids}) and ";
+                }
 
-            //}
+            }
 
             //if (employeeAssignment.Explanations != null)
             //{
@@ -870,14 +844,15 @@ namespace CostAllocationApp.DAL
 
             where += " 1=1 ";
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,ea.ExplanationId,
-                            ea.DepartmentId, dep.Name as DepartmentName,ea.RoleId,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
+                            ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
-                            from EmployeesAssignments ea 
-                            left join Sections sec on ea.SectionId = sec.Id
-                            left join Departments dep on ea.DepartmentId = dep.Id
-                            left join Companies com on ea.CompanyId = com.Id                            
-                            left join Grades gd on ea.GradeId = gd.Id
-                            left join Explanations ep on ea.ExplanationId = ep.Id
+                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
+                            join Departments dep on ea.DepartmentId = dep.Id
+                            join Companies com on ea.CompanyId = com.Id
+                            
+                            join Roles rl on ea.RoleId = rl.Id
+                            join InCharges inc on ea.InChargeId = inc.Id 
+                            join Grades gd on ea.GradeId = gd.Id
                             where {where}";
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
@@ -901,6 +876,10 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.SectionName = rdr["SectionName"].ToString();
                             employeeAssignmentViewModel.DepartmentId = rdr["DepartmentId"].ToString();
                             employeeAssignmentViewModel.DepartmentName = rdr["DepartmentName"].ToString();
+                            employeeAssignmentViewModel.InchargeId = rdr["InchargeId"].ToString();
+                            employeeAssignmentViewModel.InchargeName = rdr["InchargeName"].ToString();
+                            employeeAssignmentViewModel.RoleId = rdr["RoleId"].ToString();
+                            employeeAssignmentViewModel.RoleName = rdr["RoleName"].ToString();
                             employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();

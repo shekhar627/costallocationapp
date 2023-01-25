@@ -15,7 +15,7 @@ namespace CostAllocationApp.Models
         public int RoleId { get; set; }
         public string ExplanationId { get; set; }
         public int? CompanyId { get; set; }
-        public decimal UnitPrice { get; set; }
+        public decimal? UnitPrice { get; set; }
         public int? GradeId { get; set; }
         public string IsActive { get; set; }
         public string Remarks { get; set; }
