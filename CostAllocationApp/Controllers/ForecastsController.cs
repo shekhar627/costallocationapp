@@ -24,8 +24,20 @@ namespace CostAllocationApp.Controllers
         char[] trimElements = { '\r', '\n', ' ' };
         SectionBLL sectionBLL = new SectionBLL();
         // GET: Forecasts
-        public ActionResult CreateForecast()
-        {            
+        public ActionResult CreateForecast(string sectionId="")
+        {
+            int tempSectionId = 0;
+            Int32.TryParse(sectionId, out tempSectionId);
+            if(tempSectionId==0)
+            {
+                return RedirectToAction("Index","Dashboard");
+            }
+            var singleSection = sectionBLL.GetSectionBySectionId(tempSectionId);
+            if (singleSection == null)
+            {
+                return RedirectToAction("Index", "Dashboard");  
+            }
+            
             if (TempData["seccess"]!=null)
             {
                 ViewBag.Success = TempData["seccess"];
@@ -33,16 +45,18 @@ namespace CostAllocationApp.Controllers
             else
             {
                 ViewBag.Success = null;
-                
             }
             ForecastViewModal forecastViewModal = new ForecastViewModal
             {
-                _sections = sectionBLL.GetAllSections()
+                _sections = new List<Section> { singleSection },
+                Sections = sectionBLL.GetAllSections(),
+                SectionId = singleSection.Id
             };            
             ViewBag.ErrorCount = 0;
             return View(forecastViewModal);
         }
 
+        //[NonAction]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(HttpPostedFileBase uploaded_file, int upload_year)
@@ -99,79 +113,89 @@ namespace CostAllocationApp.Controllers
                             {
 
                             }
-                            if (string.IsNullOrEmpty(dt_.Rows[i][0].ToString()))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                _uploadExcel.SectionId = _uploadExcelBll.GetSectionIdByName(dt_.Rows[i][0].ToString().Trim(trimElements));
-                                if (_uploadExcel.SectionId == 0)
-                                {
-                                    continue;
-                                }
-                            }
 
-                            if (string.IsNullOrEmpty(dt_.Rows[i][1].ToString()))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                _uploadExcel.DepartmentId = _uploadExcelBll.GetDepartmentIdByName(dt_.Rows[i][1].ToString().Trim(trimElements));
-                                if (_uploadExcel.DepartmentId == 0)
-                                {
-                                    continue;
-                                }
-                            }
+                            int? sectionId = _uploadExcelBll.GetSectionIdByName(dt_.Rows[i][0].ToString().Trim(trimElements));
+                            _uploadExcel.SectionId = sectionId == 0 ? null : sectionId;
+                            int? departmentId = _uploadExcelBll.GetDepartmentIdByName(dt_.Rows[i][1].ToString().Trim(trimElements));
+                            _uploadExcel.DepartmentId = departmentId == 0 ? null : departmentId;
+                            int? explanationId = _uploadExcelBll.GetExplanationIdByName(dt_.Rows[i][4].ToString().Trim(trimElements));
+                            _uploadExcel.ExplanationId = explanationId == 0 ? null : explanationId;
+                            int? companyId = _uploadExcelBll.GetCompanyIdByName(dt_.Rows[i][6].ToString().Trim(trimElements));
+                            _uploadExcel.CompanyId = companyId == 0 ? null : companyId;
 
-                            if (string.IsNullOrEmpty(dt_.Rows[i][2].ToString()))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                _uploadExcel.InchargeId = _uploadExcelBll.GetInchargeIdByName(dt_.Rows[i][2].ToString().Trim(trimElements));
-                                if (_uploadExcel.InchargeId == 0)
-                                {
-                                    continue;
-                                }
-                            }
+                            //if (string.IsNullOrEmpty(dt_.Rows[i][0].ToString()))
+                            //{
+                            //    continue;
+                            //}
+                            //else
+                            //{
+                            //    _uploadExcel.SectionId = _uploadExcelBll.GetSectionIdByName(dt_.Rows[i][0].ToString().Trim(trimElements));
+                            //    if (_uploadExcel.SectionId == 0)
+                            //    {
+                            //        continue;
+                            //    }
+                            //}
 
-                            if (string.IsNullOrEmpty(dt_.Rows[i][3].ToString()))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                _uploadExcel.RoleId = _uploadExcelBll.GetRoleIdByName(dt_.Rows[i][3].ToString().Trim(trimElements));
-                                if (_uploadExcel.RoleId == 0)
-                                {
-                                    continue;
-                                }
-                            }
+                            //if (string.IsNullOrEmpty(dt_.Rows[i][1].ToString()))
+                            //{
+                            //    continue;
+                            //}
+                            //else
+                            //{
+                            //    _uploadExcel.DepartmentId = _uploadExcelBll.GetDepartmentIdByName(dt_.Rows[i][1].ToString().Trim(trimElements));
+                            //    if (_uploadExcel.DepartmentId == 0)
+                            //    {
+                            //        continue;
+                            //    }
+                            //}
 
-                            if (!string.IsNullOrEmpty(dt_.Rows[i][4].ToString()))
-                            {
-                                _uploadExcel.ExplanationId = _uploadExcelBll.GetExplanationIdByName(dt_.Rows[i][4].ToString().Trim(trimElements));
-                            }
-                            else
-                            {
-                                _uploadExcel.ExplanationId = null;
-                            }
+                            //if (string.IsNullOrEmpty(dt_.Rows[i][2].ToString()))
+                            //{
+                            //    continue;
+                            //}
+                            //else
+                            //{
+                            //    _uploadExcel.InchargeId = _uploadExcelBll.GetInchargeIdByName(dt_.Rows[i][2].ToString().Trim(trimElements));
+                            //    if (_uploadExcel.InchargeId == 0)
+                            //    {
+                            //        continue;
+                            //    }
+                            //}
 
-                            if (string.IsNullOrEmpty(dt_.Rows[i][6].ToString()))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                _uploadExcel.CompanyId = _uploadExcelBll.GetCompanyIdByName(dt_.Rows[i][6].ToString().Trim(trimElements));
-                                if (_uploadExcel.CompanyId == 0)
-                                {
-                                    continue;
-                                }
-                            }
+                            //if (string.IsNullOrEmpty(dt_.Rows[i][3].ToString()))
+                            //{
+                            //    continue;
+                            //}
+                            //else
+                            //{
+                            //    _uploadExcel.RoleId = _uploadExcelBll.GetRoleIdByName(dt_.Rows[i][3].ToString().Trim(trimElements));
+                            //    if (_uploadExcel.RoleId == 0)
+                            //    {
+                            //        continue;
+                            //    }
+                            //}
+
+                            //if (!string.IsNullOrEmpty(dt_.Rows[i][4].ToString()))
+                            //{
+                            //    _uploadExcel.ExplanationId = _uploadExcelBll.GetExplanationIdByName(dt_.Rows[i][4].ToString().Trim(trimElements));
+                            //}
+                            //else
+                            //{
+                            //    _uploadExcel.ExplanationId = null;
+                            //}
+
+                            //if (string.IsNullOrEmpty(dt_.Rows[i][6].ToString()))
+                            //{
+                            //    continue;
+                            //}
+                            //else
+                            //{
+                            //    _uploadExcel.CompanyId = _uploadExcelBll.GetCompanyIdByName(dt_.Rows[i][6].ToString().Trim(trimElements));
+                            //    if (_uploadExcel.CompanyId == 0)
+                            //    {
+                            //        continue;
+                            //    }
+                            //}
 
 
                             if (string.IsNullOrEmpty(dt_.Rows[i][8].ToString()))
@@ -183,23 +207,11 @@ namespace CostAllocationApp.Controllers
 
                                 decimal tempUnitPrice = 0;
                                 decimal.TryParse(dt_.Rows[i][8].ToString(), out tempUnitPrice);
-                                if (tempUnitPrice == 0)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    _uploadExcel.GradeId = _uploadExcelBll.GetGradeIdByUnitPrice(dt_.Rows[i][8].ToString().Trim(trimElements));
-                                    if (_uploadExcel.GradeId == 0)
-                                    {
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        _uploadExcel.UnitPrice = Convert.ToInt32(dt_.Rows[i][8].ToString().Trim(trimElements));
-                                    }
+                                int? gradeId = _uploadExcelBll.GetGradeIdByUnitPrice(dt_.Rows[i][8].ToString().Trim(trimElements));
+                                _uploadExcel.GradeId = gradeId == 0 ? null : gradeId;
+                                _uploadExcel.UnitPrice = Convert.ToDecimal(dt_.Rows[i][8].ToString().Trim(trimElements));
 
-                                }
+                                
                             }
 
 
@@ -294,6 +306,7 @@ namespace CostAllocationApp.Controllers
             return View("CreateForecast", forecastViewModal);
         }
 
+        //[NonAction]
         public void SendToApi(int assignmentId, string row, int year)
         {
 
@@ -321,6 +334,7 @@ namespace CostAllocationApp.Controllers
         }
 
         //public int CreateAssignmentForExcelUpload(DataTable dt_, int i, int subCodeCount = 0)
+        //[NonAction]
         public int CreateAssignmentForExcelUpload(UploadExcel dt_, int i, int subCodeCount = 0)
         {
             EmployeeAssignmentDTO employeeAssignmentDTO = new EmployeeAssignmentDTO();
@@ -328,14 +342,14 @@ namespace CostAllocationApp.Controllers
 
             employeeAssignmentDTO = new EmployeeAssignmentDTO();
             employeeAssignment.EmployeeName = dt_.EmployeeName;
-            employeeAssignment.SectionId = Convert.ToInt32(dt_.SectionId.ToString().Trim(trimElements));
-            employeeAssignment.InchargeId = Convert.ToInt32(dt_.InchargeId.ToString().Trim(trimElements));
-            employeeAssignment.DepartmentId = Convert.ToInt32(dt_.DepartmentId.ToString().Trim(trimElements));
-            employeeAssignment.RoleId = Convert.ToInt32(dt_.RoleId.ToString().Trim(trimElements));
-            employeeAssignment.CompanyId = Convert.ToInt32(dt_.CompanyId.ToString().Trim(trimElements));
-            employeeAssignment.ExplanationId = String.IsNullOrEmpty(dt_.ExplanationId.ToString()) ? null : dt_.ExplanationId.ToString().Trim(trimElements);
-            employeeAssignment.UnitPrice = Convert.ToInt32(dt_.UnitPrice.ToString().Trim(trimElements));
-            employeeAssignment.GradeId = Convert.ToInt32(dt_.GradeId.ToString().Trim(trimElements));
+            employeeAssignment.SectionId = dt_.SectionId;
+            //employeeAssignment.InchargeId = Convert.ToInt32(dt_.InchargeId.ToString().Trim(trimElements));
+            employeeAssignment.DepartmentId = dt_.DepartmentId;
+            //employeeAssignment.RoleId = Convert.ToInt32(dt_.RoleId.ToString().Trim(trimElements));
+            employeeAssignment.CompanyId = dt_.CompanyId;
+            employeeAssignment.ExplanationId = dt_.ExplanationId==null ? null : dt_.ExplanationId.ToString();
+            employeeAssignment.UnitPrice = dt_.UnitPrice;
+            employeeAssignment.GradeId = dt_.GradeId;
             employeeAssignment.SubCode = subCodeCount + 1;
 
             employeeAssignment.CreatedBy = "";

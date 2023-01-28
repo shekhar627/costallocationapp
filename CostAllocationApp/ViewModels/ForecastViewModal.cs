@@ -6,8 +6,9 @@ using CostAllocationApp.Models;
 
 namespace CostAllocationApp.ViewModels
 {
-    public class ForecastViewModal
+    public class ForecastViewModal:BaseViewModel
     {
         public List<Section> _sections { get; set; }
+        public int SectionId { get; set; }
     }
 }

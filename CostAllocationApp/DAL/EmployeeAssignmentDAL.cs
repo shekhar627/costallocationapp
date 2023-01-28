@@ -289,12 +289,12 @@ namespace CostAllocationApp.DAL
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks,gd.GradePoints,ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice, ea.GradeId 
-                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
-                            join Departments dep on ea.DepartmentId = dep.Id
-                            join Companies com on ea.CompanyId = com.Id
-                            join Roles rl on ea.RoleId = rl.Id
-                            join Grades gd on ea.GradeId = gd.Id 
-                            join InCharges inc on ea.InChargeId = inc.Id where ea.Id={assignmentId}";
+                            from EmployeesAssignments ea left join Sections sec on ea.SectionId = sec.Id
+                            left join Departments dep on ea.DepartmentId = dep.Id
+                            left join Companies com on ea.CompanyId = com.Id
+                            left join Roles rl on ea.RoleId = rl.Id
+                            left join Grades gd on ea.GradeId = gd.Id 
+                            left join InCharges inc on ea.InChargeId = inc.Id where ea.Id={assignmentId}";
 
             EmployeeAssignmentViewModel employeeAssignmentViewModel = new EmployeeAssignmentViewModel();
 
@@ -661,12 +661,12 @@ namespace CostAllocationApp.DAL
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode, ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
-                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
-                            join Departments dep on ea.DepartmentId = dep.Id
-                            join Companies com on ea.CompanyId = com.Id
-                            join Roles rl on ea.RoleId = rl.Id
-                            join InCharges inc on ea.InChargeId = inc.Id 
-                            join Grades gd on ea.GradeId = gd.Id
+                            from EmployeesAssignments ea left join Sections sec on ea.SectionId = sec.Id
+                            left join Departments dep on ea.DepartmentId = dep.Id
+                            left join Companies com on ea.CompanyId = com.Id
+                            left join Roles rl on ea.RoleId = rl.Id
+                            left join InCharges inc on ea.InChargeId = inc.Id 
+                            left join Grades gd on ea.GradeId = gd.Id
                             where {where}
                             order by ea.EmployeeName asc";
 
@@ -956,12 +956,12 @@ namespace CostAllocationApp.DAL
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive
-                            from EmployeesAssignments ea join Sections sec on ea.SectionId = sec.Id
-                            join Departments dep on ea.DepartmentId = dep.Id
-                            join Companies com on ea.CompanyId = com.Id
-                            join Roles rl on ea.RoleId = rl.Id
-                            join InCharges inc on ea.InChargeId = inc.Id 
-                            join Grades gd on ea.GradeId = gd.Id
+                            from EmployeesAssignments ea left join Sections sec on ea.SectionId = sec.Id
+                            left join Departments dep on ea.DepartmentId = dep.Id
+                            left join Companies com on ea.CompanyId = com.Id
+                            left join Roles rl on ea.RoleId = rl.Id
+                            left join InCharges inc on ea.InChargeId = inc.Id 
+                            left join Grades gd on ea.GradeId = gd.Id
                             where {where} order by ea.SubCode asc";
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();

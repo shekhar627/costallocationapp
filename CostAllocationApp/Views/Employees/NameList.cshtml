@@ -1,4 +1,5 @@
-﻿@{ ViewBag.Title = "Name List / 名簿"; }
+﻿@model CostAllocationApp.ViewModels.EmployeeViewModel
+@{ ViewBag.Title = "Name List / 名簿"; }
 
 @section Styles {
 
@@ -12,100 +13,100 @@
     <link href="/Content/namelist-responsive.css" rel="stylesheet" type="text/css" />
 }
 @* <div class="container"> *@
-    <div class="container content container-fluid">
-        <!--Registration buttons-->
-        <div>
-            <table>
-                <thead>
-                    <tr class="master_setting_popup">
-                        <th class="name_list_th name"><a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a></th>
-                        <th class="name_list_th section">
-                            <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
-                        </th>
-                        <th class="name_list_th company">
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal">Company Reg.</a>
-                        </th>
-                        <th class="name_list_th department">
-                            <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
-                        </th>
-                        @*<th class="name_list_th company">
+<div class="container content container-fluid">
+    <!--Registration buttons-->
+    <div>
+        <table>
+            <thead>
+                <tr class="master_setting_popup">
+                    <th class="name_list_th name"><a class="" href="/Employees/Nameregistration" target="_blank">Name Reg.</a></th>
+                    <th class="name_list_th section">
+                        <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
+                    </th>
+                    <th class="name_list_th company">
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal">Company Reg.</a>
+                    </th>
+                    <th class="name_list_th department">
+                        <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                    </th>
+                    @*<th class="name_list_th company">
                             <a class="" href="javascript:void(0);" data-toggle="modal" data-target="#company_reg_modal" style="margin-left:185px;">Com. Reg.</a>
                         </th>
                         <th class="name_list_th department">
                             <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
                         </th>*@
-                    </tr>
-                </thead>
-            </table>
-        </div>
-
-        <table id="namelist" class="cell-border" style="width:100%;display:none;">
-            <thead>
-                <tr id="namelist_table_header">
-                    <th style="text-align: center !important;">氏名(Name)</th>
-                    <th style="text-align: center !important;">区分(Section)</th>
-                    <th style="text-align: center !important;">会社(Company)</th>
-                    <th style="text-align: center !important;">企画/開発(Dept.)</th>
-                    <th style="text-align: center !important;">グレード (Grade)</th>
-                    <th style="text-align: center !important;">金額( Unit Price)</th>
-                    <th style="text-align: center !important;">Action</th>
-                </tr>
-                <tr>
-                    <th class="namelist_td name">氏名(Name)</th>
-                    <th class="namelist_td section">
-                        <div class="form-group mb-0">
-                            <div class="col-sm-10">
-                                <select id="section_multi_search" name="multiselect[]" multiple="multiple"></select>
-                            </div>
-                        </div>
-                    </th>
-                    <th class="namelist_td company">
-                        <div class="form-group mb-0">
-                            <div class="col-sm-10">
-                                <select id="company_multi_search" name="multiselect[]" multiple="multiple"></select>
-                            </div>
-                        </div>
-                    </th>
-                    <th class="namelist_td department">
-                        <div class="form-group mb-0">
-                            <div class="col-sm-10">
-                                <select id="dept_multi_search" name="multiselect[]" multiple="multiple"></select>
-                            </div>
-                        </div>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
-
-            <tbody class="namelist_listbody" id="employee_list_search_results"></tbody>
         </table>
+    </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="forecast">
-                    <div id="loading" style="position:absolute;left:0;top:-147px;  width:100%;height:100%;">
-                        <center>
-                            <img src="~/img/forecast_loader.gif" height="250" width="250" style="margin-top:200px;">
-                            <br>
-                            <strong>Please wait a moment...</strong>
-                            <br>
-                            <br>
-                        </center>
+    <table id="namelist" class="cell-border" style="width:100%;display:none;">
+        <thead>
+            <tr id="namelist_table_header">
+                <th style="text-align: center !important;">氏名(Name)</th>
+                <th style="text-align: center !important;">区分(Section)</th>
+                <th style="text-align: center !important;">会社(Company)</th>
+                <th style="text-align: center !important;">企画/開発(Dept.)</th>
+                <th style="text-align: center !important;">グレード (Grade)</th>
+                <th style="text-align: center !important;">金額( Unit Price)</th>
+                <th style="text-align: center !important;">Action</th>
+            </tr>
+            <tr>
+                <th class="namelist_td name">氏名(Name)</th>
+                <th class="namelist_td section">
+                    <div class="form-group mb-0">
+                        <div class="col-sm-10">
+                            <select id="section_multi_search" name="multiselect[]" multiple="multiple"></select>
+                        </div>
                     </div>
-                    <table class="" id="forecast_table">
-                        <thead></thead>
-                        <tbody></tbody>
-                    </table>
-                    <div class="add_name_tbl_2_btn">
-                        <a href="javascript:void(0);" class="" id="cancel_forecast" onclick="onCancel()" style="display:none;">Cancel</a>
-                        <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave(event)" style="display:none;">Save</a>
+                </th>
+                <th class="namelist_td company">
+                    <div class="form-group mb-0">
+                        <div class="col-sm-10">
+                            <select id="company_multi_search" name="multiselect[]" multiple="multiple"></select>
+                        </div>
                     </div>
+                </th>
+                <th class="namelist_td department">
+                    <div class="form-group mb-0">
+                        <div class="col-sm-10">
+                            <select id="dept_multi_search" name="multiselect[]" multiple="multiple"></select>
+                        </div>
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody class="namelist_listbody" id="employee_list_search_results"></tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="forecast">
+                <div id="loading" style="position:absolute;left:0;top:-147px;  width:100%;height:100%;">
+                    <center>
+                        <img src="~/img/forecast_loader.gif" height="250" width="250" style="margin-top:200px;">
+                        <br>
+                        <strong>Please wait a moment...</strong>
+                        <br>
+                        <br>
+                    </center>
+                </div>
+                <table class="" id="forecast_table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+                <div class="add_name_tbl_2_btn">
+                    <a href="javascript:void(0);" class="" id="cancel_forecast" onclick="onCancel()" style="display:none;">Cancel</a>
+                    <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave(event)" style="display:none;">Save</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <!-- NameList: Add Employee Assignment Modal -->
 <div class="modal fade" id="modal_add_name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -173,8 +174,8 @@
                         <th>Company</th>
                         <th>Department</th>
                         @*<th>In-Charge</th>
-                        <th>Role</th>
-                        <th>Explanation</th>*@
+                            <th>Role</th>
+                            <th>Explanation</th>*@
                         <th>Grade</th>
                         <th>Unit Price</th>
                     </tr>
@@ -196,7 +197,7 @@
                         </td>
                         <td>
                             <select id="department_edit" class=" col-12"></select>
-                        </td>                        
+                        </td>
 
                         <td>
                             <input type="text" class=" col-12" id="grade_edit" placeholder="" readonly style="background-color: aliceblue;">

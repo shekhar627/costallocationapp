@@ -18,7 +18,7 @@ namespace CostAllocationApp.Controllers.Api
             forecastBLL = new ForecastBLL();
         }
         [HttpGet]
-        public IHttpActionResult CreateForecast(string data,string year,string assignmentId)
+        public IHttpActionResult CreateForecast(string data,string year,string assignmentId, string allocationId)
         {
             string[] monthData = data.Split(',');
             int tempYear = 0;
@@ -65,6 +65,10 @@ namespace CostAllocationApp.Controllers.Api
                 forecast.UpdatedBy = "";
                 forecast.UpdatedDate = DateTime.Now;
 
+
+                forecastBLL.UpdateEmployeesAssignmentFromForecst(allocationId,assignmentId);
+
+
                 var result = forecastBLL.CheckAssignmentId(int.Parse(assignmentId),int.Parse(year), Convert.ToInt32(temp[0]));
                 if (result==true)
                 {
@@ -82,7 +86,7 @@ namespace CostAllocationApp.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult CreateForecastRecord(string data, string year, string assignmentId)
+        public IHttpActionResult CreateForecastRecord(string data, string year, string assignmentId,string allocationId)
         {
             string[] monthData = data.Split(',');
             int tempYear = 0;

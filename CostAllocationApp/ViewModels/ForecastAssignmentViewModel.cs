@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CostAllocationApp.Dtos;
+using CostAllocationApp.Models;
 
 namespace CostAllocationApp.ViewModels
 {
-    public class ForecastAssignmentViewModel
+    public class ForecastAssignmentViewModel:BaseViewModel
     {
         // for assignment
         public int SerialNumber { get; set; }

@@ -1,4 +1,4 @@
-﻿
+﻿@model CostAllocationApp.ViewModels.SalaryViewModel
 @{
     ViewBag.Title = "Salary Unit Price Registration";
 }
@@ -23,7 +23,7 @@
                     <tbody id="salary_list_tbody"></tbody>
                 </table>
                 <label id="salary_delete_btn">
-                    <a id="salary_inactive_btn" href="javascript:void();" data-toggle="modal" onclick="onSalaryInactiveClick();"  data-target="#inactive_salary_modal">Delete</a>
+                    <a id="salary_inactive_btn" href="javascript:void();" data-toggle="modal" onclick="onSalaryInactiveClick();" data-target="#inactive_salary_modal">Delete</a>
                 </label>
             </div>
         </div>
@@ -116,6 +116,6 @@
 </div>
 
 @section Scripts{
-    <script src="/Scripts/common.js"></script> 
-    <script src="/Scripts/salaries.js"></script>     
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/salaries.js"></script>
 }

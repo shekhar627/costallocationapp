@@ -340,15 +340,24 @@ $('#department_modal_href').click(function () {
 });
 
 function ForecastSearchDropdownInLoad() {
-    $.getJSON('/api/sections/')
-        .done(function (data) {
-            $('#sectionChks').empty();
-            $('#sectionChks').append(`<label for='chk_sec_all'><input id="chk_sec_all" type="checkbox" checked data-checkwhat="chkSelect" value='sec_all'/>All</label>`)
-            $.each(data, function (key, item) {
-                $('#sectionChks').append(`<label for='section_checkbox_${item.Id}'><input class='section_checkbox' id="section_checkbox_${item.Id}"  type="checkbox" checked value='${item.Id}'/>${item.SectionName}</label>`)
-            });
-        });
-    $.getJSON('/api/Departments/')
+    //$.getJSON('/api/sections/')
+    //    .done(function (data) {
+    //        $('#sectionChks').empty();
+    //        $('#sectionChks').append(`<label for='chk_sec_all'><input id="chk_sec_all" type="checkbox" checked data-checkwhat="chkSelect" value='sec_all'/>All</label>`)
+    //        $.each(data, function (key, item) {
+    //            $('#sectionChks').append(`<label for='section_checkbox_${item.Id}'><input class='section_checkbox' id="section_checkbox_${item.Id}"  type="checkbox" checked value='${item.Id}'/>${item.SectionName}</label>`)
+    //        });
+    //    });
+    //$.getJSON('/api/Departments/')
+    //    .done(function (data) {
+    //        $('#departmentChks').empty();
+    //        $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
+    //        $.each(data, function (key, item) {
+    //            $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
+    //        });
+    //    });
+
+    $.getJSON('/api/utilities/DepartmentsBySection/' + $('#pre_selected_section_id').val())
         .done(function (data) {
             $('#departmentChks').empty();
             $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
@@ -1047,6 +1056,9 @@ function ForecastDataSave() {
         var sep_point = $('#sep_' + rowId).val().replace(/,/g, '');
         var sep_output = $('#sep_output_' + rowId).val().replace(/,/g, '');
 
+        var allocationValue = $('#allocation_dropdown_' + rowId).val();
+        console.log(allocationValue);
+
         var data = `10_${oct_point}_${oct_output},11_${nov_point}_${nov_output},12_${dec_point}_${dec_output},1_${jan_point}_${jan_output},2_${feb_point}_${feb_output},3_${mar_point}_${mar_output},4_${apr_point}_${apr_output},5_${may_point}_${may_output},6_${jun_point}_${jun_output},7_${jul_point}_${jul_output},8_${aug_point}_${aug_output},9_${sep_point}_${sep_output}`;
 
         $.ajax({
@@ -1057,7 +1069,8 @@ function ForecastDataSave() {
             data: {
                 data: data,
                 year: year,
-                assignmentId: assignmentId
+                assignmentId: assignmentId,
+                allocationId: allocationValue,
             },
             success: function (data) {
                 saveFlag = data;
@@ -1788,7 +1801,8 @@ $(document).ready(function () {
 
 
     $('#forecast_search_button').on('click', function () {
-        var sectionId = $('#section_search').find(":selected").val();
+       // var sectionId = $('#section_search').find(":selected").val();
+        var sectionId = $('#pre_selected_section_id').val()
         var inchargeId = $('#incharge_search').find(":selected").val();
         var departmentId = $('#department_search').find(":selected").val();
         var roleId = $('#role_search').find(":selected").val();
@@ -1825,25 +1839,26 @@ $(document).ready(function () {
         var roleCheck = [];
         var explanationCheck = [];
         var companyCheck = [];
+        var allocations = [];
 
-        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+       // var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
         var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
         var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
         var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
         var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
         var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-        sectionId = "";
-        if (!isSectionAllChk) {
-            $.each(sectionCheckedBoxes, function (index, item) {
-                //sectionCheck.push(item.value);
-                if (sectionId == "") {
-                    sectionId = item.value;
-                } else {
-                    sectionId = sectionId + "##" + item.value;
-                }
-            });
-        }
+        //sectionId = "";
+        //if (!isSectionAllChk) {
+        //    $.each(sectionCheckedBoxes, function (index, item) {
+        //        //sectionCheck.push(item.value);
+        //        if (sectionId == "") {
+        //            sectionId = item.value;
+        //        } else {
+        //            sectionId = sectionId + "##" + item.value;
+        //        }
+        //    });
+        //}
 
         departmentId = "";
         if (!isDepartmentAllCheck) {
@@ -1902,6 +1917,14 @@ $(document).ready(function () {
             });
         }
 
+
+        $.getJSON('/api/Explanations/')
+            .done(function (data) {
+                allocations = data;
+            });
+
+
+
         var data_info = {
             employeeName: employeeName,
             sectionId: sectionId,
@@ -1913,7 +1936,11 @@ $(document).ready(function () {
             status: '', year: ''
         };
 
+        console.log(data_info);
         globalSearchObject = data_info;
+
+
+
 
         $.ajax({
             //url: `/api/utilities/SearchForecastEmployee`,
@@ -1936,9 +1963,7 @@ $(document).ready(function () {
                                                     <th id="forecast_name">Name </th>
                                                     <th id="forecast_section">Section </th>
                                                     <th id="forecast_department">Department </th>
-                                                    <th id="forecast_incharge">In-Charge </th>
-                                                    <th id="forecast_role">Role </th>
-                                                    <th id="forecast_explanation">Explanation </th>
+                                                    <th id="forecast_explanation">Allocation</th>
                                                     <th id="forecast_company">Company Name </i></th>
                                                     <th id="forecast_grade">Grade </th>
                                                     <th id="forecast_unitprice"><span>Unit Price</span> </th>
@@ -2016,21 +2041,23 @@ $(document).ready(function () {
                             }
                         },
                         {
-                            data: 'InchargeName',
-                            render: function (inchargeName) {
-                                return `<td title='initial'>${inchargeName}</td>`;
-                            }
-                        },
-                        {
-                            data: 'RoleName',
-                            render: function (roleName) {
-                                return `<td title='initial'>${roleName}</td>`;
-                            }
-                        },
-                        {
-                            data: 'ExplanationName',
-                            render: function (explanationName) {
-                                return `<span title='initial' class='forecast_explanation'>${explanationName}</span>`;
+                            data: 'ExplanationId',
+                            render: function (explanationId) {
+                                var selectElement = '';
+                                selectElement += `<select id='allocation_dropdown_${_id}'>`;
+
+                                selectElement += `<option value=''>Select One</option>`;
+                                $.each(allocations, function (key, item) {
+                                    if (explanationId == item.Id) {
+                                        selectElement += `<option value='${item.Id}' selected>${item.ExplanationName}</option>`;
+                                    }
+                                    else {
+                                        selectElement += `<option value='${item.Id}'>${item.ExplanationName}</option>`;
+                                    }
+                                });
+                                selectElement += `</select>`;
+
+                                return selectElement;
                             }
                         },
                         {

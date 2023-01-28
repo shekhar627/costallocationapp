@@ -94,5 +94,37 @@ namespace CostAllocationApp.DAL
                 return result;
             }
         }
+
+        public int UpdateEmployeesAssignmentFromForecst(string allocationId,string assignmentId)
+        {
+            int result = 0;
+            string query = $@"update EmployeesAssignments set ExplanationId = @allocationId where Id = @assignmentId";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+
+                if (String.IsNullOrEmpty(allocationId))
+                {
+                    cmd.Parameters.AddWithValue("@allocationId", DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@allocationId", allocationId);
+                }
+                
+                cmd.Parameters.AddWithValue("@assignmentId", assignmentId);
+                try
+                {
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+        }
     }
 }

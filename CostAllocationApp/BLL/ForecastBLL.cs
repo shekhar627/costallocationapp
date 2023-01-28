@@ -26,5 +26,10 @@ namespace CostAllocationApp.BLL
         {
             return forecastDAL.UpdateForecast(forecast);
         }
+
+        public int UpdateEmployeesAssignmentFromForecst(string allocationId, string assignmentId)
+        {
+            return forecastDAL.UpdateEmployeesAssignmentFromForecst(allocationId, assignmentId);
+        }
     }
 }

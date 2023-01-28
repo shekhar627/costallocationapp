@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CostAllocationApp.ViewModels
 {
-    public class EmployeeAssignmentViewModel
+    public class EmployeeAssignmentViewModel:BaseViewModel
     {
         public int SerialNumber { get; set; }
         public int Id { get; set; }
