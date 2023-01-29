@@ -14,15 +14,13 @@ namespace CostAllocationApp.BLL
         {
             sectionDAL = new SectionDAL();
         }
-
-        public int CreateSection(Section section)
-        {
-            return sectionDAL.CreateSection(section);
-        }
-
         public List<Section> GetAllSections()
         {
             return sectionDAL.GetAllSections();
+        }
+        public int CreateSection(Section section)
+        {
+            return sectionDAL.CreateSection(section);
         }
         public int RemoveSection(int sectionId)
         {

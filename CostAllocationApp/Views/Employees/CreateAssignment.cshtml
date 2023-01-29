@@ -531,7 +531,7 @@
                     console.log(data);
                     text += '<td>';
                     text += `
-                                           <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onChange="changeVal(${previousAssignmentRow},this)">
+                                           <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row">
                                                 <option value=''>Select Section</option>
                                         `;
                     $.each(data, function (key, item) {
@@ -545,33 +545,33 @@
             });
 
 
-            text += `
-                            <td>
-                                <select id="department_row_${previousAssignmentRow}" class=" col-12 department_row"></select>
-                             </td>
-                            `;
+            //text += `
+            //                <td>
+            //                    <select id="department_row_${previousAssignmentRow}" class=" col-12 department_row"></select>
+            //                 </td>
+            //                `;
 
-            //$.ajax({
-            //    url: '/api/incharges/',
-            //    type: 'GET',
-            //    async: false,
-            //    dataType: 'json',
-            //    success: function (data) {
-            //        console.log(data);
-            //        text += '<td>';
-            //        text += `
-            //                           <select id="incharge_row_${previousAssignmentRow}" class=" col-12">
-            //                                <option value=''>Select In-Charge</option>
-            //                        `;
-            //        $.each(data, function (key, item) {
-            //            text += `<option value = '${item.Id}'> ${item.InChargeName}</option>`;
-            //        });
-            //        text += '</select></td>';
-            //    },
-            //    error: function () {
+            $.ajax({
+                url: '/api/departments/',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    text += '<td>';
+                    text += `
+                                       <select id="department_row_${previousAssignmentRow}" class=" col-12">
+                                            <option value=''>Select Department</option>
+                                    `;
+                    $.each(data, function (key, item) {
+                        text += `<option value = '${item.Id}'> ${item.DepartmentName}</option>`;
+                    });
+                    text += '</select></td>';
+                },
+                error: function () {
 
-            //    }
-            //});
+                }
+            });
 
             //$.ajax({
             //    url: '/api/roles/',
@@ -687,29 +687,29 @@
 
         }
 
-        function changeVal(rowId, element) {
+        //function changeVal(rowId, element) {
 
-            var sectionId = $(element).val();
+        //    var sectionId = $(element).val();
 
-            $.ajax({
-                url: `/api/utilities/DepartmentsBySection/${sectionId}`,
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    $('#department_row_' + rowId).empty();
-                    $('#department_row_' + rowId).append(`<option value=''>Select Department</option>`);
-                    $.each(data, function (key, item) {
-                        $('#department_row_' + rowId).append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                    });
-                },
-                error: function () {
+        //    $.ajax({
+        //        url: `/api/utilities/DepartmentsBySection/${sectionId}`,
+        //        type: 'GET',
+        //        async: false,
+        //        dataType: 'json',
+        //        success: function (data) {
+        //            $('#department_row_' + rowId).empty();
+        //            $('#department_row_' + rowId).append(`<option value=''>Select Department</option>`);
+        //            $.each(data, function (key, item) {
+        //                $('#department_row_' + rowId).append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+        //            });
+        //        },
+        //        error: function () {
 
-                }
-            });
+        //        }
+        //    });
 
 
-        }
+        //}
 
 
         function unitPriceChange(rowId, element) {
@@ -988,37 +988,57 @@
                     });
                 });
 
-
-            $(document).on('change', '#section_edit', function () {
-
-                var sectionId = $(this).val();
-                console.log(sectionId);
-
-                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
-                        $('#department_edit').empty();
-                        $('#department_edit').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
-                            $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                        });
+            // for new
+            $.getJSON('/api/Departments/')
+                .done(function (data) {
+                    $('#department_new').empty();
+                    $('#department_new').append(`<option value=''>Select Departments</option>`);
+                    $.each(data, function (key, item) {
+                        $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                     });
-            });
+                });
 
-
-            $(document).on('change', '#section_new', function () {
-
-                var sectionId = $(this).val();
-                console.log(sectionId);
-
-                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
-                        $('#department_new').empty();
-                        $('#department_new').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
-                            $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                        });
+            // for edit
+            $.getJSON('/api/Departments/')
+                .done(function (data) {
+                    $('#department_edit').empty();
+                    $('#department_edit').append(`<option value=''>Select Departments</option>`);
+                    $.each(data, function (key, item) {
+                        $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                     });
-            });
+                });
+
+
+            //$(document).on('change', '#section_edit', function () {
+
+            //    var sectionId = $(this).val();
+            //    console.log(sectionId);
+
+            //    $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+            //        .done(function (data) {
+            //            $('#department_edit').empty();
+            //            $('#department_edit').append(`<option value=''>Select Department</option>`);
+            //            $.each(data, function (key, item) {
+            //                $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            //            });
+            //        });
+            //});
+
+
+            //$(document).on('change', '#section_new', function () {
+
+            //    var sectionId = $(this).val();
+            //    console.log(sectionId);
+
+            //    $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+            //        .done(function (data) {
+            //            $('#department_new').empty();
+            //            $('#department_new').append(`<option value=''>Select Department</option>`);
+            //            $.each(data, function (key, item) {
+            //                $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            //            });
+            //        });
+            //});
 
             //$(document).on('change', '#section_search', function () {
 

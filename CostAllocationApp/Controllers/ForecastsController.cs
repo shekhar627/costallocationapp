@@ -23,17 +23,18 @@ namespace CostAllocationApp.Controllers
         UploadExcel _uploadExcel;
         char[] trimElements = { '\r', '\n', ' ' };
         SectionBLL sectionBLL = new SectionBLL();
+        private DepartmentBLL _departmentBLL = new DepartmentBLL();
         // GET: Forecasts
-        public ActionResult CreateForecast(string sectionId = "")
+        public ActionResult CreateForecast(string departmentId = "")
         {
-            int tempSectionId = 0;
-            Int32.TryParse(sectionId, out tempSectionId);
-            if (tempSectionId == 0)
+            int tempDepartmentId = 0;
+            Int32.TryParse(departmentId, out tempDepartmentId);
+            if (tempDepartmentId == 0)
             {
                 return RedirectToAction("Index", "Dashboard");
             }
-            var singleSection = sectionBLL.GetSectionBySectionId(tempSectionId);
-            if (singleSection == null)
+            var singleDepartment = _departmentBLL.GetDepartmentByDepartemntId(tempDepartmentId);
+            if (singleDepartment == null)
             {
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -48,9 +49,10 @@ namespace CostAllocationApp.Controllers
             }
             ForecastViewModal forecastViewModal = new ForecastViewModal
             {
-                _sections = new List<Section> { singleSection },
-                Sections = sectionBLL.GetAllSections(),
-                SectionId = singleSection.Id
+                // have to fix later.
+                _sections = new List<Section>(),
+                Departments = _departmentBLL.GetAllDepartments(),
+                Department = singleDepartment,
             };
             ViewBag.ErrorCount = 0;
             return View(forecastViewModal);

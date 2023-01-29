@@ -18,8 +18,8 @@
                     //string url = HttpContext.Current.Request.Url.AbsoluteUri;
                     string fullPath = HttpContext.Current.Request.Url.AbsolutePath;
                     string url = System.IO.Path.GetFileName(fullPath);
-                    var sectionId = Request.QueryString["sectionId"];
-                    Response.Write("sectionId: " + sectionId);
+                    var departmentId = Request.QueryString["departmentId"];
+                    
 
                     if (url.ToLower().Contains("login") || string.IsNullOrEmpty(url))
                     {
@@ -61,15 +61,15 @@
                             </a>
                             <ul style="display: none;">
 
-                                @foreach (var item in Model.Sections)
+                                @foreach (var item in Model.Departments)
                                 {
-                                    if (url.ToLower().Contains("createforecast") && item.Id.ToString() == sectionId)
+                                    if (url.ToLower().Contains("createforecast") && item.Id.ToString() == departmentId)
                                     {
-                                        <li><a href="/Forecasts/CreateForecast?sectionId=@item.Id" class="active">@item.SectionName</a></li>
+                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id" class="active">@item.DepartmentName</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Forecasts/CreateForecast?sectionId=@item.Id">@item.SectionName</a></li>
+                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id">@item.DepartmentName</a></li>
                                     }
 
                                 }

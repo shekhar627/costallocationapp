@@ -10,15 +10,15 @@ namespace CostAllocationApp.Controllers
 {
     public class CompaniesController : Controller
     {
-        private SectionBLL _sectionBLL = null;
+        private DepartmentBLL _departmentBLL = null;
         public CompaniesController()
         {
-            _sectionBLL = new SectionBLL();
+            _departmentBLL = new DepartmentBLL();
         }
         // GET: Companies
         public ActionResult CreateCompany()
         {
-            return View(new CompanyViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new CompanyViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
     }
 }

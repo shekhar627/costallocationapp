@@ -9,6 +9,6 @@ namespace CostAllocationApp.ViewModels
 {
     public abstract class BaseViewModel
     {
-        public List<Section> Sections { get; set; }
+        public List<Department> Departments { get; set; }
     }
 }

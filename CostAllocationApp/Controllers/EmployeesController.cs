@@ -10,29 +10,29 @@ namespace CostAllocationApp.Controllers
 {
     public class EmployeesController : Controller
     {
-        private SectionBLL _sectionBLL = null;
+        private DepartmentBLL _departmentBLL = null;
         public EmployeesController()
         {
-            _sectionBLL = new SectionBLL();
+            _departmentBLL = new DepartmentBLL();
         }
 
         public ActionResult CreateEmployee()
         {
-            return View(new EmployeeViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new EmployeeViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
         // GET: Employees
         public ActionResult NameList()
         {
-            return View(new EmployeeViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new EmployeeViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
 
         public ActionResult CreateAssignment()
         {
-            return View(new EmployeeViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new EmployeeViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
         public ActionResult NameRegistration()
         {
-            return View(new EmployeeViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new EmployeeViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
     }
 }

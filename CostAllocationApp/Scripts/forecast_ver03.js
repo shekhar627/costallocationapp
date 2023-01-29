@@ -340,22 +340,22 @@ $('#department_modal_href').click(function () {
 });
 
 function ForecastSearchDropdownInLoad() {
-    //$.getJSON('/api/sections/')
-    //    .done(function (data) {
-    //        $('#sectionChks').empty();
-    //        $('#sectionChks').append(`<label for='chk_sec_all'><input id="chk_sec_all" type="checkbox" checked data-checkwhat="chkSelect" value='sec_all'/>All</label>`)
-    //        $.each(data, function (key, item) {
-    //            $('#sectionChks').append(`<label for='section_checkbox_${item.Id}'><input class='section_checkbox' id="section_checkbox_${item.Id}"  type="checkbox" checked value='${item.Id}'/>${item.SectionName}</label>`)
-    //        });
-    //    });
-    $.getJSON('/api/Departments/')
+    $.getJSON('/api/sections/')
         .done(function (data) {
-            $('#departmentChks').empty();
-            $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
+            $('#sectionChks').empty();
+            $('#sectionChks').append(`<label for='chk_sec_all'><input id="chk_sec_all" type="checkbox" checked data-checkwhat="chkSelect" value='sec_all'/>All</label>`)
             $.each(data, function (key, item) {
-                $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
+                $('#sectionChks').append(`<label for='section_checkbox_${item.Id}'><input class='section_checkbox' id="section_checkbox_${item.Id}"  type="checkbox" checked value='${item.Id}'/>${item.SectionName}</label>`)
             });
         });
+    //$.getJSON('/api/Departments/')
+    //    .done(function (data) {
+    //        $('#departmentChks').empty();
+    //        $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
+    //        $.each(data, function (key, item) {
+    //            $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
+    //        });
+    //    });
 
     //$.getJSON('/api/utilities/DepartmentsBySection/' + $('#pre_selected_section_id').val())
     //    .done(function (data) {
@@ -552,9 +552,7 @@ function LoadForecastData() {
                     <tr>
                         <th id="forecast_name">Name </th>
                         <th id="forecast_section">Section </th>
-                        <th id="forecast_department">Department </th>
-                        <th id="forecast_incharge">In-Charge </th>
-                        <th id="forecast_role">Role </th>
+                        <th id="forecast_department">Department </th>                       
                         <th id="forecast_explanation">Allocation</th>
                         <th id="forecast_company">Company Name </i></th>
                         <th id="forecast_grade">Grade </th>
@@ -624,18 +622,18 @@ function LoadForecastData() {
                                 return `<td title='initial'>${departmentName}</td>`;
                             }
                         },
-                        {
-                            data: 'InchargeName',
-                            render: function (inchargeName) {
-                                return `<td title='initial'>${inchargeName}</td>`;
-                            }
-                        },
-                        {
-                            data: 'RoleName',
-                            render: function (roleName) {
-                                return `<td title='initial'>${roleName}</td>`;
-                            }
-                        },
+                        //{
+                        //    data: 'InchargeName',
+                        //    render: function (inchargeName) {
+                        //        return `<td title='initial'>${inchargeName}</td>`;
+                        //    }
+                        //},
+                        //{
+                        //    data: 'RoleName',
+                        //    render: function (roleName) {
+                        //        return `<td title='initial'>${roleName}</td>`;
+                        //    }
+                        //},
                         {
                             data: 'ExplanationId',
                             render: function (explanationId) {
@@ -1822,10 +1820,10 @@ $(document).ready(function () {
 
 
     $('#forecast_search_button').on('click', function () {
-       // var sectionId = $('#section_search').find(":selected").val();
-        var sectionId = $('#pre_selected_section_id').val()
+        var sectionId = $('#section_search').find(":selected").val();
+        //var sectionId = $('#pre_selected_section_id').val()
         var inchargeId = $('#incharge_search').find(":selected").val();
-        var departmentId = $('#department_search').find(":selected").val();
+        var departmentId = $('#pre_selected_department_id').val();
         var roleId = $('#role_search').find(":selected").val();
         var companyId = $('#company_search').find(":selected").val();
         var explanationId = $('#explanation_search').find(":selected").val();
@@ -1862,36 +1860,36 @@ $(document).ready(function () {
         var companyCheck = [];
         var allocations = [];
 
-       // var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-        var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
+        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
+        //var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
         var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
         var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
         var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
         var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
 
-        //sectionId = "";
-        //if (!isSectionAllChk) {
-        //    $.each(sectionCheckedBoxes, function (index, item) {
-        //        //sectionCheck.push(item.value);
-        //        if (sectionId == "") {
-        //            sectionId = item.value;
-        //        } else {
-        //            sectionId = sectionId + "##" + item.value;
-        //        }
-        //    });
-        //}
-
-        departmentId = "";
-        if (!isDepartmentAllCheck) {
-            $.each(departmentCheckedBoxes, function (index, item) {
-                //departmentCheck.push(item.value);
-                if (departmentId == "") {
-                    departmentId = item.value;
+        sectionId = "";
+        if (!isSectionAllChk) {
+            $.each(sectionCheckedBoxes, function (index, item) {
+                //sectionCheck.push(item.value);
+                if (sectionId == "") {
+                    sectionId = item.value;
                 } else {
-                    departmentId = departmentId + "##" + item.value;
+                    sectionId = sectionId + "##" + item.value;
                 }
             });
         }
+
+        //departmentId = "";
+        //if (!isDepartmentAllCheck) {
+        //    $.each(departmentCheckedBoxes, function (index, item) {
+        //        //departmentCheck.push(item.value);
+        //        if (departmentId == "") {
+        //            departmentId = item.value;
+        //        } else {
+        //            departmentId = departmentId + "##" + item.value;
+        //        }
+        //    });
+        //}
 
         inchargeId = "";
         if (!isInChargeAllCheck) {

@@ -10,16 +10,16 @@ namespace CostAllocationApp.Controllers
 {
     public class ExplanationsController : Controller
     {
-        private SectionBLL _sectionBLL = null;
+        private DepartmentBLL _departmentBLL = null;
         public ExplanationsController()
         {
-            _sectionBLL = new SectionBLL();
+            _departmentBLL = new DepartmentBLL();
         }
 
         // GET: Explanations
         public ActionResult CreateExplanation()
         {
-            return View(new ExplanationViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new ExplanationViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
     }
 }

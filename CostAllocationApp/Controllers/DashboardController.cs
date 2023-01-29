@@ -10,15 +10,15 @@ namespace CostAllocationApp.Controllers
 {
     public class DashboardController : Controller
     {
-        private SectionBLL _sectionBLL = null;
+        private DepartmentBLL _departmentBLL = null;
         public DashboardController()
         {
-            _sectionBLL = new SectionBLL();
+            _departmentBLL = new DepartmentBLL();
         }
         // GET: Dashboard
         public ActionResult Index()
         {
-            return View(new DashboardViewModel { Sections = _sectionBLL.GetAllSections() });
+            return View(new DashboardViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
     }
 }
