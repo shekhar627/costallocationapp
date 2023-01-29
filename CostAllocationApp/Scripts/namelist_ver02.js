@@ -50,7 +50,7 @@
     $('#dept_multi_search').multiselect({
         includeSelectAllOption: true,
         enableFiltering: true,
-        nonSelectedText: 'select 企画/開発(dept.)<',
+        nonSelectedText: 'select 企画/開発(dept.)',
     });
     //incharge multi search
     //$('#incharge_multi_search').multiselect({
