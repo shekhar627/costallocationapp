@@ -348,16 +348,7 @@ function ForecastSearchDropdownInLoad() {
     //            $('#sectionChks').append(`<label for='section_checkbox_${item.Id}'><input class='section_checkbox' id="section_checkbox_${item.Id}"  type="checkbox" checked value='${item.Id}'/>${item.SectionName}</label>`)
     //        });
     //    });
-    //$.getJSON('/api/Departments/')
-    //    .done(function (data) {
-    //        $('#departmentChks').empty();
-    //        $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
-    //        $.each(data, function (key, item) {
-    //            $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
-    //        });
-    //    });
-
-    $.getJSON('/api/utilities/DepartmentsBySection/' + $('#pre_selected_section_id').val())
+    $.getJSON('/api/Departments/')
         .done(function (data) {
             $('#departmentChks').empty();
             $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
@@ -365,6 +356,15 @@ function ForecastSearchDropdownInLoad() {
                 $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
             });
         });
+
+    //$.getJSON('/api/utilities/DepartmentsBySection/' + $('#pre_selected_section_id').val())
+    //    .done(function (data) {
+    //        $('#departmentChks').empty();
+    //        $('#departmentChks').append(`<label for='chk_dept_all'><input id="chk_dept_all" type="checkbox" checked value='dept_all'/>All</label>`)
+    //        $.each(data, function (key, item) {
+    //            $('#departmentChks').append(`<label for='department_checkbox_${item.Id}'><input class='department_checkbox' id="department_checkbox_${item.Id}" type="checkbox" checked value='${item.Id}'/>${item.DepartmentName}</label>`)
+    //        });
+    //    });
     $.getJSON('/api/InCharges/')
         .done(function (data) {
             $('#inchargeChks').empty();
@@ -525,6 +525,13 @@ function LoaderHide() {
 }
 
 function LoadForecastData() {
+    var allocations = [];
+
+    $.getJSON('/api/Explanations/')
+        .done(function (data) {
+            allocations = data;
+        });
+
     console.log("saved-3");
     if (globalSearchObject == '') {
         return;
@@ -548,7 +555,7 @@ function LoadForecastData() {
                         <th id="forecast_department">Department </th>
                         <th id="forecast_incharge">In-Charge </th>
                         <th id="forecast_role">Role </th>
-                        <th id="forecast_explanation">Explanation </th>
+                        <th id="forecast_explanation">Allocation</th>
                         <th id="forecast_company">Company Name </i></th>
                         <th id="forecast_grade">Grade </th>
                         <th id="forecast_unitprice"><span>Unit Price</span> </th>
@@ -630,9 +637,23 @@ function LoadForecastData() {
                             }
                         },
                         {
-                            data: 'ExplanationName',
-                            render: function (explanationName) {
-                                return `<span title='initial' class='forecast_explanation'>${explanationName}</span>`;
+                            data: 'ExplanationId',
+                            render: function (explanationId) {
+                                var selectElement = '';
+                                selectElement += `<select id='allocation_dropdown_${_id}'>`;
+
+                                selectElement += `<option value=''>Select One</option>`;
+                                $.each(allocations, function (key, item) {
+                                    if (explanationId == item.Id) {
+                                        selectElement += `<option value='${item.Id}' selected>${item.ExplanationName}</option>`;
+                                    }
+                                    else {
+                                        selectElement += `<option value='${item.Id}'>${item.ExplanationName}</option>`;
+                                    }
+                                });
+                                selectElement += `</select>`;
+
+                                return selectElement;
                             }
                         },
                         {

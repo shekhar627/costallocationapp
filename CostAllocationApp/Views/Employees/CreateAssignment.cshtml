@@ -17,9 +17,9 @@
                         <th>Name</th>
                         <th>Section</th>
                         <th>Department</th>
-                        <th>In-Charge</th>
-                        <th>Role</th>
-                        <th>Explanation</th>
+                        @*<th>In-Charge</th>
+                        <th>Role</th>*@
+                        <th>Allocation</th>
                         <th>Company</th>
                     </tr>
                 </thead>
@@ -34,12 +34,12 @@
                         <td>
                             <select id="department_search" class="add_name_department_filter"></select>
                         </td>
-                        <td>
+                        @*<td>
                             <select id="incharge_search" class="add_name_incharge_filter"></select>
                         </td>
                         <td>
                             <select id="role_search" class="add_name_role_filter"></select>
-                        </td>
+                        </td>*@
                         <td>
                             <select id="explanation_search" class="add_name_explanation_filter"></select>
                         </td>
@@ -888,23 +888,23 @@
                 NameListSort("unit_asc", "unit_desc");
             });
             // for add new
-            $.getJSON('/api/Roles/')
-                .done(function (data) {
-                    $('#role_new').empty();
-                    $('#role_new').append(`<option value=''>Select Role</option>`);
-                    $.each(data, function (key, item) {
-                        $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
-                    });
-                });
+            //$.getJSON('/api/Roles/')
+            //    .done(function (data) {
+            //        $('#role_new').empty();
+            //        $('#role_new').append(`<option value=''>Select Role</option>`);
+            //        $.each(data, function (key, item) {
+            //            $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+            //        });
+            //    });
             // for search
-            $.getJSON('/api/Roles/')
-                .done(function (data) {
-                    $('#role_search').empty();
-                    $('#role_search').append(`<option value=''>Select Role</option>`);
-                    $.each(data, function (key, item) {
-                        $('#role_search').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
-                    });
-                });
+            //$.getJSON('/api/Roles/')
+            //    .done(function (data) {
+            //        $('#role_search').empty();
+            //        $('#role_search').append(`<option value=''>Select Role</option>`);
+            //        $.each(data, function (key, item) {
+            //            $('#role_search').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+            //        });
+            //    });
             // for add new
             $.getJSON('/api/Explanations/')
                 .done(function (data) {
@@ -918,7 +918,7 @@
             $.getJSON('/api/Explanations/')
                 .done(function (data) {
                     $('#explanation_search').empty();
-                    $('#explanation_search').append(`<option value=''>Select Explanation</option>`);
+                    $('#explanation_search').append(`<option value=''>Select Allocation</option>`);
                     $.each(data, function (key, item) {
                         $('#explanation_search').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                     });
@@ -943,23 +943,23 @@
                 });
 
             // for add new
-            $.getJSON('/api/incharges/')
-                .done(function (data) {
-                    $('#incharge_new').empty();
-                    $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
-                    $.each(data, function (key, item) {
-                        $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
-                    });
-                });
+            //$.getJSON('/api/incharges/')
+            //    .done(function (data) {
+            //        $('#incharge_new').empty();
+            //        $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
+            //        $.each(data, function (key, item) {
+            //            $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+            //        });
+            //    });
             // for search
-            $.getJSON('/api/incharges/')
-                .done(function (data) {
-                    $('#incharge_search').empty();
-                    $('#incharge_search').append(`<option value=''>Select In-Charge</option>`);
-                    $.each(data, function (key, item) {
-                        $('#incharge_search').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
-                    });
-                });
+            //$.getJSON('/api/incharges/')
+            //    .done(function (data) {
+            //        $('#incharge_search').empty();
+            //        $('#incharge_search').append(`<option value=''>Select In-Charge</option>`);
+            //        $.each(data, function (key, item) {
+            //            $('#incharge_search').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+            //        });
+            //    });
             // for add new
             $.getJSON('/api/sections/')
                 .done(function (data) {
@@ -976,6 +976,15 @@
                     $('#section_search').append(`<option value=''>Select Section</option>`);
                     $.each(data, function (key, item) {
                         $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                    });
+                });
+            // for search
+            $.getJSON('/api/Departments/')
+                .done(function (data) {
+                    $('#department_search').empty();
+                    $('#department_search').append(`<option value=''>Select Departments</option>`);
+                    $.each(data, function (key, item) {
+                        $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
                     });
                 });
 
@@ -1011,20 +1020,20 @@
                     });
             });
 
-            $(document).on('change', '#section_search', function () {
+            //$(document).on('change', '#section_search', function () {
 
-                var sectionId = $(this).val();
-                console.log(sectionId);
+            //    var sectionId = $(this).val();
+            //    console.log(sectionId);
 
-                $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
-                    .done(function (data) {
-                        $('#department_search').empty();
-                        $('#department_search').append(`<option value=''>Select Department</option>`);
-                        $.each(data, function (key, item) {
-                            $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                        });
-                    });
-            });
+            //    $.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+            //        .done(function (data) {
+            //            $('#department_search').empty();
+            //            $('#department_search').append(`<option value=''>Select Department</option>`);
+            //            $.each(data, function (key, item) {
+            //                $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            //            });
+            //        });
+            //});
 
             $('#unitprice_new').on('change', function () {
                 var _unitPrice = $(this).val();
@@ -1134,7 +1143,8 @@
                 if (departmentId == undefined) {
                     departmentId = '';
                 }
-                var data_info = { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: inchargeId, roleId: roleId, explanationId: explanationId, companyId: companyId, status: '' };
+                var data_info = { employeeName: employeeName, sectionId: sectionId, departmentId: departmentId, inchargeId: '', roleId: '', explanationId: explanationId, companyId: companyId, status: '' };
+                console.log(data_info);
                 $.ajax({
                     url: `/api/utilities/SearchEmployee`,
                     type: 'GET',
