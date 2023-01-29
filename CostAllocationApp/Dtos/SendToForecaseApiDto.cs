@@ -10,5 +10,6 @@ namespace CostAllocationApp.Dtos
         public string Data { get; set; }
         public int Year { get; set; }
         public int AssignmentId { get; set; }
+        public int? AllocationId { get; set; }
     }
 }

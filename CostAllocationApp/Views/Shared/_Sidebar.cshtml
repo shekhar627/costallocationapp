@@ -1,5 +1,5 @@
-﻿@model CostAllocationApp.ViewModels.BaseViewModel  
-      <!-- Sidebar -->
+﻿@model CostAllocationApp.ViewModels.BaseViewModel
+<!-- Sidebar -->
 <style>
     .sidebar-menu ul a.active {
         background-color: #ffebda;
@@ -18,6 +18,9 @@
                     //string url = HttpContext.Current.Request.Url.AbsoluteUri;
                     string fullPath = HttpContext.Current.Request.Url.AbsolutePath;
                     string url = System.IO.Path.GetFileName(fullPath);
+                    var sectionId = Request.QueryString["sectionId"];
+                    Response.Write("sectionId: " + sectionId);
+
                     if (url.ToLower().Contains("login") || string.IsNullOrEmpty(url))
                     {
                         <li>
@@ -60,30 +63,38 @@
 
                                 @foreach (var item in Model.Sections)
                                 {
-                                     <li><a href="/Forecasts/CreateForecast?sectionId=@item.Id">@item.SectionName</a></li>
+                                    if (url.ToLower().Contains("createforecast") && item.Id.ToString() == sectionId)
+                                    {
+                                        <li><a href="/Forecasts/CreateForecast?sectionId=@item.Id" class="active">@item.SectionName</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Forecasts/CreateForecast?sectionId=@item.Id">@item.SectionName</a></li>
+                                    }
+
                                 }
                                 @*@{
-                                    if (url.ToLower().Contains("createforecast"))
-                                    {
-                                        <li><a href="/Forecasts/CreateForecast" class="active">Planning Allocation (企画配置)</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <a href="/Forecasts/CreateForecast">Planning Allocation (企画配置)</a>
-                                        </li>
-                                    }
-                                    if (url.ToLower().Contains("createforecast"))
-                                    {
-                                        <li><a href="/Forecasts/CreateForecast" class="active">Dev Allocation (開発配置)</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/Forecasts/CreateForecast">Dev Allocation (開発配置)</a></li>
-                                    }
-                                }*@
+                                        if (url.ToLower().Contains("createforecast"))
+                                        {
+                                            <li><a href="/Forecasts/CreateForecast" class="active">Planning Allocation (企画配置)</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="/Forecasts/CreateForecast">Planning Allocation (企画配置)</a>
+                                            </li>
+                                        }
+                                        if (url.ToLower().Contains("createforecast"))
+                                        {
+                                            <li><a href="/Forecasts/CreateForecast" class="active">Dev Allocation (開発配置)</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="/Forecasts/CreateForecast">Dev Allocation (開発配置)</a></li>
+                                        }
+                                    }*@
                             </ul>
-                        </li>                        
+                        </li>
                         <li>
                             <a href="javascript:void(0);"><i class="la la-files-o"></i> <span>Data Export (輸出)</span></a>
                         </li>
