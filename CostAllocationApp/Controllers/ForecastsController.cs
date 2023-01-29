@@ -65,8 +65,10 @@ namespace CostAllocationApp.Controllers
         {
             ForecastViewModal forecastViewModal = new ForecastViewModal
             {
-                _sections = sectionBLL.GetAllSections()
+                _sections = new List<Section>(),
+                Departments = _departmentBLL.GetAllDepartments(),
             };
+
             TempData["seccess"] = null;
             Dictionary<int, int> check = new Dictionary<int, int>();
             if (ModelState.IsValid)
@@ -237,8 +239,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId);
-                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
+                client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId + "&allocationId=" + allocationId);
+                //client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
 
                 //HTTP POST
                 var postTask = client.GetAsync("");
