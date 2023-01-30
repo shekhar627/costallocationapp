@@ -269,7 +269,7 @@ function loadSingleAssignmentData(id) {
                 });
             $('#unitprice_edit').val(assignmentData.UnitPrice);
             if (assignmentData.CompanyName != '' && assignmentData.CompanyName != null) {
-                if (assignmentData.CompanyName.toLowerCase() == "mw") {
+                if (assignmentData.CompanyName.toLowerCase() == "mti") {
                     $('#grade_edit').val(assignmentData.GradePoint);
                 } else {
                     $('#grade_edit').val("");
@@ -346,7 +346,7 @@ $('#company_edit').on('change', function() {
         dataType: 'json',
         success: function(data) {
             $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase() == "mw") {
+            if (_companyName.toLowerCase() == "mti") {
                 $('#grade_edit').val(data.SalaryGrade);
             } else {
                 $('#grade_edit').val('');
@@ -369,7 +369,7 @@ $('#unitprice_edit').on('change', function() {
         dataType: 'json',
         success: function(data) {
             $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase() == "mw") {
+            if (_companyName.toLowerCase() == "mti") {
                 $('#grade_edit').val(data.SalaryGrade);
             } else {
                 $('#grade_edit').val('');
@@ -439,7 +439,7 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
                 tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.RoleName}' readonly /></td>`;
                 tr += `<td><input type='text' class=" col-12" style='width: 190px;' value='${item.ExplanationName}' readonly /></td>`;
                 tr += `<td><input type='text' class=" col-12" style='width:81px;'   value='${item.CompanyName}' readonly /></td>`;
-                if (item.CompanyName.toLowerCase() == "mw") {
+                if (item.CompanyName.toLowerCase() == "mti") {
                     tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly style='width: 55px;' /></td>`;
                 } else {
                     tr += `<td><input type='text' class=" col-12" value='' readonly style='width: 55px;' /></td>`;
@@ -752,8 +752,8 @@ function unitPriceChange(rowId, element) {
             console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
             console.log("_companyName.toLowerCase(): " + typeof(_companyName));
             console.log("_rowId: " + _rowId);
-            //if (_companyName.toLowerCase == 'mw') {
-            if (_companyName.toLowerCase().indexOf("mw") > 0) {
+            //if (_companyName.toLowerCase == 'mti') {
+            if (_companyName.toLowerCase().indexOf("mti") > 0) {
                 $('#grade_row_' + rowId).attr('data-id', data.Id);
                 $('#grade_row_new_' + rowId).val(data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
@@ -819,8 +819,8 @@ function LoadGradeValue(sel) {
             console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
             console.log("_companyName.toLowerCase(): " + typeof(_companyName));
             console.log("_rowId: " + _rowId);
-            //if (_companyName.toLowerCase == 'mw') {
-            if (_companyName.toLowerCase().indexOf("mw") > 0) {
+            //if (_companyName.toLowerCase == 'mti') {
+            if (_companyName.toLowerCase().indexOf("mti") > 0) {
                 //$('#grade_new_hidden').val(data.Id);
                 $('#grade_row_' + _rowId).attr('data-id', data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
@@ -928,7 +928,7 @@ function NameList_DatatableLoad(data) {
             {
                 data: 'GradePoint',
                 render: function(grade) {
-                    if (tempCompanyName.toLowerCase() == "mw") {
+                    if (tempCompanyName.toLowerCase() == "mti") {
                         return grade;
                     } else {
                         return "<span style='display:none;'>" + grade + "</span>";
@@ -941,7 +941,7 @@ function NameList_DatatableLoad(data) {
             {
                 data: 'Id',
                 render: function(Id) {
-                    if (tempCompanyName.toLowerCase() == 'mw') {
+                    if (tempCompanyName.toLowerCase() == 'mti') {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle ="modal"  data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
                     } else {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle ="modal"  data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;

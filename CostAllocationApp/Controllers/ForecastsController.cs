@@ -111,11 +111,7 @@ namespace CostAllocationApp.Controllers
                         int rowcount = dt_.Rows.Count;
 
                         for (int i = 2; i < rowcount; i++)
-                        {
-                            if(dt_.Rows[i][0].ToString().Trim(trimElements) == "寺石 和義")
-                             {
-
-                            }
+                        {                            
                             _uploadExcel = new UploadExcel();
                             if (string.IsNullOrEmpty(dt_.Rows[i][0].ToString().Trim(trimElements)))
                             {
@@ -129,21 +125,38 @@ namespace CostAllocationApp.Controllers
                             int? sectionId = _uploadExcelBll.GetSectionIdByName(dt_.Rows[i][1].ToString().Trim(trimElements));
                             _uploadExcel.SectionId = sectionId == 0 ? null : sectionId;
 
+                            int? companyId = _uploadExcelBll.GetCompanyIdByName(dt_.Rows[i][2].ToString().Trim(trimElements));
+                            _uploadExcel.CompanyId = companyId == 0 ? null : companyId;
+
                             int? departmentId = _uploadExcelBll.GetDepartmentIdByName(dt_.Rows[i][3].ToString().Trim(trimElements));
                             _uploadExcel.DepartmentId = departmentId == 0 ? null : departmentId;
 
                             //allocation
                             int? explanationId = _uploadExcelBll.GetExplanationIdByName(dt_.Rows[i][6].ToString().Trim(trimElements));
                             _uploadExcel.ExplanationId = explanationId == 0 ? null : explanationId;
-
-                            int? companyId = _uploadExcelBll.GetCompanyIdByName(dt_.Rows[i][2].ToString().Trim(trimElements));
-                            _uploadExcel.CompanyId = companyId == 0 ? null : companyId;
-
+                            
                             decimal tempUnitPrice = 0;
                             decimal.TryParse(dt_.Rows[i][5].ToString(), out tempUnitPrice);
-                            int? gradeId = _uploadExcelBll.GetGradeIdByUnitPrice(tempUnitPrice.ToString());
-                            _uploadExcel.GradeId = gradeId == 0 ? null : gradeId;
-                            _uploadExcel.UnitPrice = tempUnitPrice;
+
+                            string tempUnitPrice2 = dt_.Rows[i][5].ToString();
+                            string tempGradePoint = dt_.Rows[i][4].ToString();
+
+                            if (tempUnitPrice > 0)
+                            {
+                                int? gradeId = _uploadExcelBll.GetGradeIdByUnitPrice(tempUnitPrice.ToString());
+                                _uploadExcel.GradeId = gradeId == 0 ? null : gradeId;
+                                _uploadExcel.UnitPrice = tempUnitPrice;
+                            }
+                            else if (!string.IsNullOrEmpty(dt_.Rows[i][4].ToString()))
+                            {
+                                _uploadExcel.GradeId = _uploadExcelBll.GetGradeIdByGradePoints(dt_.Rows[i][4].ToString());                                
+                                _uploadExcel.UnitPrice = 0;
+                            }
+                            else
+                            {
+                                _uploadExcel.GradeId = 0;
+                                _uploadExcel.UnitPrice = 0;
+                            }                           
                             
                             var assignmentViewModels = employeeAssignmentBLL.GetEmployeesByName(_uploadExcel.EmployeeName);
                             if (assignmentViewModels.Count > 0)
@@ -239,8 +252,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId + "&allocationId=" + allocationId);
-                //client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
+                //client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId + "&allocationId=" + allocationId);
+                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
 
                 //HTTP POST
                 var postTask = client.GetAsync("");

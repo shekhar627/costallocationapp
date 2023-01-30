@@ -47,7 +47,7 @@ $(document).ready(function () {
         var data = google.visualization.arrayToDataTable([
             ['Task', 'Grades'],
             ['Number Of Grades', 55],
-            ['Number of MW companies', 10],
+            ['Number of mti companies', 10],
             ['Other Companies', 45]
         ]);
 

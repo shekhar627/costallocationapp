@@ -154,8 +154,8 @@ function LoadGradeValue(sel) {
         //},
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
-            //if (_companyName.toLowerCase == 'mw') {
-            if (_companyName.toLowerCase().indexOf("mw") > 0) {
+            //if (_companyName.toLowerCase == 'mti') {
+            if (_companyName.toLowerCase().indexOf("mti") > 0) {
                 //$('#grade_new_hidden').val(data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
             } else {
@@ -267,7 +267,7 @@ function NameList_DatatableLoad(data) {
             {
                 data: 'GradePoint',
                 render: function (grade) {
-                    if (tempCompanyName.toLowerCase() == "mw") {
+                    if (tempCompanyName.toLowerCase() == "mti") {
                         return grade;
                     } else {
                         return "<span style='display:none;'>" + grade + "</span>";
@@ -280,7 +280,7 @@ function NameList_DatatableLoad(data) {
             {
                 data: 'Id',
                 render: function (Id) {
-                    if (tempCompanyName.toLowerCase() == 'mw') {
+                    if (tempCompanyName.toLowerCase() == 'mti') {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
                     } else {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
@@ -317,7 +317,7 @@ function RetainRegistrationValue() {
     // $('#role_new').find(":selected").val();
     // $('#explanation_new').find(":selected").val();
     // $('#company_new').find(":selected").val();
-    if (companyName.toLowerCase() == 'mw') {
+    if (companyName.toLowerCase() == 'mti') {
         $("#grade_new").val(grade);
     } else {
         $("#grade_new").val('');
@@ -637,7 +637,7 @@ function LoadForecastData(){
                             data: 'GradePoint',
                             render: function (gradePoint) {
 
-                                if (_companyName.toLowerCase() == 'mw') {
+                                if (_companyName.toLowerCase() == 'mti') {
                                     return `<td title='initial'>${gradePoint}</td>`;
                                 }
                                 else {
@@ -2034,7 +2034,7 @@ var expanded = false;
                                     data: 'GradePoint',
                                     render: function (gradePoint) {
 
-                                        if (_companyName.toLowerCase() == 'mw') {
+                                        if (_companyName.toLowerCase() == 'mti') {
                                             return `<td title='initial'>${gradePoint}</td>`;
                                         }
                                         else {

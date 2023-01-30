@@ -64,19 +64,19 @@ function InsertSalaries() {
     let gradePoints = $("#gradePoints").val().trim();
 
     let isValidRequest = true;
-    if (lowUnitPrice == "") {
-        $("#lowPrice").show();
-        isValidRequest = false;
-    }
-    else {
-        $("#lowPrice").hide();
-    }
-    if (highUnitPrice == "") {
-        $("#highPrice").show();
-        isValidRequest = false;
-    } else {
-        $("#highPrice").hide();
-    }
+    //if (lowUnitPrice == "") {
+    //    $("#lowPrice").show();
+    //    isValidRequest = false;
+    //}
+    //else {
+    //    $("#lowPrice").hide();
+    //}
+    //if (highUnitPrice == "") {
+    //    $("#highPrice").show();
+    //    isValidRequest = false;
+    //} else {
+    //    $("#highPrice").hide();
+    //}
     if (gradePoints == "") {
         $("#salaryGradePoints").show();
         isValidRequest = false;

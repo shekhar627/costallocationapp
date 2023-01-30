@@ -299,6 +299,43 @@ namespace CostAllocationApp.DAL
 
             return gradeId;
         }
+        public int GetGradeIdByGradePoints(string gradePoints)
+        {
+            int gradeId = 0;
+            string where = "";
+            string query = "";
+            if (!string.IsNullOrEmpty(gradePoints.ToString()))
+            {
+                where += $"GradePoints = N'{gradePoints}' ";
+                where += " AND IsActive=1 ";
 
+                query = $@"SELECt Id,GradePoints FROM Grades 
+                        where {where}";
+
+                using (SqlConnection sqlConnection = this.GetConnection())
+                {
+                    sqlConnection.Open();
+                    SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                    try
+                    {
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                gradeId = Convert.ToInt32(rdr["Id"]);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HttpContext.Current.Response.Write(ex);
+                        HttpContext.Current.Response.End();
+                    }
+                }
+
+            }
+            return gradeId;
+        }
     }
 }
