@@ -289,21 +289,24 @@ namespace CostAllocationApp.Controllers.Api
             decimal tempVal = 0;
             if (decimal.TryParse(unitPrice, out tempVal))
             {
+                Salary salary = salaryBLL.CompareSalary(tempVal);
                 if (tempVal > 0)
                 {
-                    Salary salary = salaryBLL.CompareSalary(tempVal);
+                    
                     if (salary != null)
                     {
                         return Ok(salary);
                     }
                     else
                     {
-                        return BadRequest("Invalid Unit Price");
+                        return Ok(salary);
+                        //return BadRequest("Invalid Unit Price");
                     }
                 }
                 else
                 {
-                    return BadRequest("Invalid Unit Price");
+                    return Ok(salary);
+                    //return BadRequest("Invalid Unit Price");
                 }
             }
             else

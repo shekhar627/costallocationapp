@@ -264,7 +264,8 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");                            
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
                             employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
@@ -322,8 +323,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.ExplanationId = rdr["ExplanationId"] is DBNull ? "" : rdr["ExplanationId"].ToString();
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
-                            employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();                            
+                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");                            
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.GradeId = rdr["GradeId"].ToString();
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
@@ -701,7 +702,8 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.ExplanationName = rdr["ExplanationName"] is DBNull ? "" : rdr["ExplanationName"].ToString();
                             forecastEmployeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             forecastEmployeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
-                            forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            forecastEmployeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");                            
                             //forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(forecastEmployeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
 
                             forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
@@ -906,7 +908,8 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyId = rdr["CompanyId"].ToString();
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
@@ -994,8 +997,12 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.CompanyName = rdr["CompanyName"].ToString();
                             //employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"].ToString();
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
-                            employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
-                            employeeAssignmentViewModel.UnitPriceWithoutComma = Convert.ToInt32(rdr["UnitPrice"].ToString());
+                            employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
+                            if (!string.IsNullOrEmpty(employeeAssignmentViewModel.UnitPrice))
+                            {
+                                employeeAssignmentViewModel.UnitPriceWithoutComma = Convert.ToInt32(rdr["UnitPrice"].ToString());
+                            }                            
                             employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))

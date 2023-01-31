@@ -221,6 +221,7 @@ function NameList_DatatableLoad(data) {
         pageLength: 100,
         searching: false,
         bLengthChange: false,
+        dom: 'lifrtip',
         columns: [
             //{
             //    data: 'MarkedAsRed',
@@ -596,6 +597,7 @@ function LoadForecastData() {
                     bLengthChange: false,
                     autoWidth: false,
                     pageLength: 100,
+                    dom: 'lifrtip',
                     columns: [
                         {
                             data: 'EmployeeNameWithCodeRemarks',
@@ -2024,6 +2026,7 @@ $(document).ready(function () {
                     bLengthChange: false,
                     autoWidth: false,
                     pageLength: 100,
+                    dom: 'lifrtip',
                     columns: [
                         //{
                         //    data: 'Id',

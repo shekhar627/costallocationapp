@@ -56,27 +56,27 @@ namespace CostAllocationApp.DAL
                             Salary salary = new Salary();
                             salary.Id = Convert.ToInt32(rdr["Id"]);
                             salary.SalaryGrade = rdr["GradePoints"].ToString();
-                            if (string.IsNullOrEmpty(rdr["GradeLowPoints"].ToString())
+                            if (string.IsNullOrEmpty(rdr["GradeLowPoints"].ToString()))
                             {
                                 salary.SalaryLowPoint = 0;
                             }
                             else
                             {
                                 salary.SalaryLowPoint = Convert.ToDecimal(rdr["GradeLowPoints"]);
-                            }
-                            if (string.IsNullOrEmpty(rdr["GradeLowPoints"].ToString())
-                            {
-                                salary.SalaryLowPoint = 0;
                                 salary.SalaryLowPointWithComma = Convert.ToInt32(rdr["GradeLowPoints"]).ToString("N0");
+                            }
+
+
+                            if (string.IsNullOrEmpty(rdr["GradeHighPoints"].ToString()))
+                            {
+                                salary.SalaryHighPoint = 0;
                             }
                             else
                             {
-                                salary.SalaryLowPoint = Convert.ToDecimal(rdr["GradeLowPoints"]);
-                                salary.SalaryLowPointWithComma = Convert.ToInt32(rdr["GradeLowPoints"]).ToString("N0");
+                                salary.SalaryHighPoint = Convert.ToDecimal(rdr["GradeHighPoints"]);
+                                salary.SalaryHighPointWithComma = Convert.ToInt32(rdr["GradeHighPoints"]).ToString("N0");
                             }
-                            
-                            salary.SalaryHighPoint = Convert.ToDecimal(rdr["GradeHighPoints"]);
-                            salary.SalaryHighPointWithComma = Convert.ToInt32(rdr["GradeHighPoints"]).ToString("N0");
+                                                        
                             salary.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             salary.CreatedBy = rdr["CreatedBy"].ToString();
 
