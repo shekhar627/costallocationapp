@@ -738,10 +738,7 @@ function LoadGradeValue(sel) {
             console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
             console.log("_companyName.toLowerCase(): " + typeof (_companyName));
             console.log("_rowId: " + _rowId);
-            //if (_companyName.toLowerCase == 'mti') {
-            if (_companyName.toLowerCase().indexOf("mti") > 0) {
-                console.log("test- equal");
-                //$('#grade_new_hidden').val(data.Id);
+            if (_companyName.toLowerCase().indexOf("mw") > 0) {
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
             } else {
                 console.log("test- not equal");
@@ -853,7 +850,7 @@ function NameList_DatatableLoad(data) {
             {
                 data: 'GradePoint',
                 render: function (grade) {
-                    if (tempCompanyName.toLowerCase() == "mti") {
+                    if (tempCompanyName.toLowerCase() == "mw") {
                         return grade;
                     } else {
                         return "<span style='display:none;'>" + grade + "</span>";
@@ -866,7 +863,7 @@ function NameList_DatatableLoad(data) {
             {
                 data: 'Id',
                 render: function (Id) {
-                    if (tempCompanyName.toLowerCase() == 'mti') {
+                    if (tempCompanyName.toLowerCase() == 'mw') {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
                     } else {
                         return `<td class='namelist_td Action'><a href="javascript:void(0);" id='edit_button' onClick="loadSingleAssignmentData(${Id})" data-toggle="modal" data-target="#modal_edit_name">Edit</a><a id='delete_button' href='javascript:void();' data-toggle='modal' data-target='#namelist_delete' onClick="loadAssignmentRowData(${Id})" assignment_id='${Id}'>Inactive</a></td>`;
@@ -903,7 +900,7 @@ function RetainRegistrationValue() {
     // $('#role_new').find(":selected").val();
     // $('#explanation_new').find(":selected").val();
     // $('#company_new').find(":selected").val();
-    if (companyName.toLowerCase() == 'mti') {
+    if (companyName.toLowerCase() == 'mw') {
         $("#grade_new").val(grade);
     } else {
         $("#grade_new").val('');

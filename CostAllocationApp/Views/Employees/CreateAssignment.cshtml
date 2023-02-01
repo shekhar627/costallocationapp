@@ -422,7 +422,7 @@
                             });
                         });
                     $('#unitprice_edit').val(assignmentData.UnitPrice);
-                    if (assignmentData.CompanyName.toLowerCase() == "mti") {
+                    if (assignmentData.CompanyName.toLowerCase() == "mw") {
                         $('#grade_edit').val(assignmentData.GradePoint);
                     } else {
                         $('#grade_edit').val("");
@@ -483,7 +483,7 @@
                         //tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.RoleName}' readonly /></td>`;
                         tr += `<td><input type='text' class=" col-12" style='width: 190px;' value='${item.ExplanationName}' readonly /></td>`;
                         tr += `<td><input type='text' class=" col-12" style='width:81px;'   value='${item.CompanyName}' readonly /></td>`;
-                        if (item.CompanyName.toLowerCase() == "mti") {
+                        if (item.CompanyName.toLowerCase() == "mw") {
                             tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly style='width: 55px;' /></td>`;
                         }
                         else {
@@ -666,7 +666,7 @@
             //    //},
             //    success: function (data) {
             //        $('#grade_edit_hidden').val(data.Id);
-            //        if (_companyName.toLowerCase() == "mti") {
+            //        if (_companyName.toLowerCase() == "mw") {
             //            $('#grade_edit').val(data.SalaryGrade);
             //        } else {
             //            $('#grade_edit').val('');
@@ -750,8 +750,8 @@
                     console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
                     console.log("_companyName.toLowerCase(): " + typeof (_companyName));
                     console.log("_rowId: " + _rowId);
-                    //if (_companyName.toLowerCase == 'mti') {
-                    if (_companyName.toLowerCase().indexOf("mti") > 0) {
+                    //if (_companyName.toLowerCase == 'mw') {
+                    if (_companyName.toLowerCase().indexOf("mw") > 0) {
                         console.log("test- equal");
                         $('#grade_row_' + rowId).attr('data-id', data.Id);
                         $('#grade_row_new_' + rowId).val(data.Id);
@@ -1109,7 +1109,7 @@
                     //},
                     success: function (data) {
                         $('#grade_edit_hidden').val(data.Id);
-                        if (_companyName.toLowerCase() == "mti") {
+                        if (_companyName.toLowerCase() == "mw") {
                             $('#grade_edit').val(data.SalaryGrade);
                         } else {
                             $('#grade_edit').val('');
@@ -1136,7 +1136,7 @@
                     //},
                     success: function (data) {
                         $('#grade_edit_hidden').val(data.Id);
-                        if (_companyName.toLowerCase() == "mti") {
+                        if (_companyName.toLowerCase() == "mw") {
                             $('#grade_edit').val(data.SalaryGrade);
                         } else {
                             $('#grade_edit').val('');
@@ -1277,7 +1277,7 @@
                                 {
                                     data: 'GradePoint',
                                     render: function (gradePoint) {
-                                        if (companyNameTemp.toLowerCase() == 'mti') {
+                                        if (companyNameTemp.toLowerCase() == 'mw') {
                                             return gradePoint;
                                         }
                                         else {
