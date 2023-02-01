@@ -231,6 +231,7 @@
     <Compile Include="ViewModels\EmployeeAssignmentViewModel.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\ExplanationViewModel.cs" />
+    <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModal.cs" />
     <Compile Include="ViewModels\ForecastAssignmentViewModel.cs" />
     <Compile Include="ViewModels\SalaryViewModel.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\companies.css" />
     <Content Include="Content\Custom.css" />
+    <Content Include="Content\data_export_by_department.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
     <Content Include="Content\departments.css" />
     <Content Include="Content\explanations.css" />
@@ -694,11 +696,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Allocation\Index.cshtml" />
     <Content Include="Views\Allocation\CreateAllocation.cshtml" />
+    <Content Include="Views\Exports\DataExportByDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Explanation\" />
-    <Folder Include="Views\Exports\" />
     <Folder Include="Views\InCharge\" />
   </ItemGroup>
   <ItemGroup>
