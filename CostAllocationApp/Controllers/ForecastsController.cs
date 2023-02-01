@@ -25,8 +25,10 @@ namespace CostAllocationApp.Controllers
         SectionBLL sectionBLL = new SectionBLL();
         private DepartmentBLL _departmentBLL = new DepartmentBLL();
         // GET: Forecasts
-        public ActionResult CreateForecast(string departmentId = "")
+        public ActionResult CreateForecast(string departmentId33 = "")
         {
+            string departmentId = Request.QueryString["departmentId"];
+
             int tempDepartmentId = 0;
             Int32.TryParse(departmentId, out tempDepartmentId);
             if (tempDepartmentId == 0)
