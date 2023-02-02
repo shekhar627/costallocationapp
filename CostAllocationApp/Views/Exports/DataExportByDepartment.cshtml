@@ -1,0 +1,34 @@
+﻿@model CostAllocationApp.ViewModels.ExportViewModel
+@{
+    ViewBag.Title = "Data Export By Department";
+}
+<link rel="stylesheet" type="text/css" href="/Content/common.css" />
+<link rel="stylesheet" type="text/css" href="/Content/data_export_by_department.css" />
+
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <div class="data_export_by_department">
+                @using (Html.BeginForm("DataExportByDepartment", "Exports", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label for="department">Select Department</label>
+                        <select class="form-control" id="department" name="departmentId">
+                            @foreach (var item in Model.Departments)
+                            {
+                                <option value="@item.Id">@item.DepartmentName</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info">Export as Excel</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts{
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/companies.js"></script>
+}*@
+
