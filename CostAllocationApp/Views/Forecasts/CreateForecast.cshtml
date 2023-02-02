@@ -25,9 +25,11 @@
             <div class="col">
                 @using (Html.BeginForm("Index", "Forecasts", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
                 {
-                    <div class="form-group mb-2">
-                        <input type="file" class="form-control-file" name="uploaded_file">
-                    </div>
+                <div class="form-group mb-2">
+                    <input type="file" class="form-control-file" name="uploaded_file">
+                    <input type="hidden" value="@Model.Department.Id" name="department_id" />
+                </div>
+                    
                     <div class="form-group mx-sm-3 mb-2">
                         <select id="inputState" class="form-control" name="upload_year">
                             <option value="0">Select Year</option>
@@ -56,21 +58,6 @@
     </div>
     <!-- /Page Header -->
     <div class="row">
-        <div class="col-md-12">
-            <div class="export_links">
-                <ul>
-                    @if (Model._sections.Count>0)
-                    {
-                        foreach (var item in Model._sections)
-                        {
-                            <li><a href="/Exports/ExportBySection?sectionId=@item.Id&sectionName=@item.SectionName"><i class="fa fa-file-excel-o" aria-hidden="true"></i> @item.SectionName</a></li>
-                            @*<li><a href="/Exports/DevPlacement"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Dev Placement</a></li>*@
-                        }
-                    }
-
-                </ul>
-            </div>
-        </div>
         <div class="col-md-12">
             <section class="container" tabIndex="1">
                 <div>
