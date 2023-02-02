@@ -602,6 +602,7 @@
     <Content Include="img\user.jpg" />
     <Content Include="img\video-call.jpg" />
     <Content Include="Scripts\addname.js" />
+    <Content Include="Scripts\addname_ver02.js" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

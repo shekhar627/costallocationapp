@@ -803,53 +803,6 @@ namespace CostAllocationApp.DAL
                 }
 
             }
-
-            //if (employeeAssignment.Incharges != null && employeeAssignment.Incharges.ToString() != "all")
-            //{
-            //    if (employeeAssignment.Incharges.Length > 0)
-            //    {
-            //        string ids = "";
-            //        foreach (var item in employeeAssignment.Incharges)
-            //        {
-            //            ids += $"{item},";
-            //        }
-            //        ids = ids.TrimEnd(',');
-
-            //        where += $" ea.InChargeId in ({ids}) and ";
-            //    }
-
-            //}
-            //if (employeeAssignment.Roles != null && employeeAssignment.Roles.ToString() != "all")
-            //{
-            //    if (employeeAssignment.Roles.Length > 0)
-            //    {
-            //        string ids = "";
-            //        foreach (var item in employeeAssignment.Roles)
-            //        {
-            //            ids += $"{item},";
-            //        }
-            //        ids = ids.TrimEnd(',');
-
-            //        where += $" ea.RoleId in ({ids}) and ";
-            //    }
-
-            //}
-
-            //if (employeeAssignment.Explanations != null)
-            //{
-            //    if (employeeAssignment.Explanations.Length > 0)
-            //    {
-            //        string ids = "";
-            //        foreach (var item in employeeAssignment.Explanations)
-            //        {
-            //            ids += $"{item},";
-            //        }
-            //        ids = ids.TrimEnd(',');
-
-            //        where += $" ea.ExplanationId in ({ids}) and ";
-            //    }
-
-            //}
             if (employeeAssignment.Companies != null && employeeAssignment.Companies.ToString() != "all")
             {
                 if (employeeAssignment.Companies.Length > 0)
@@ -865,12 +818,7 @@ namespace CostAllocationApp.DAL
                 }
 
             }
-            else
-            {
-                where += $" ea.IsActive=1 and ";
-            }
-
-            where += " 1=1 ";
+            where += " ea.IsActive=1 and 1=1 ";
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.RoleId,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
                             ,gd.GradePoints,ea.IsActive

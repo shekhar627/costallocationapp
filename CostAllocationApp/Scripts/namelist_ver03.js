@@ -325,14 +325,15 @@ $('#add_name_edit').on('click', function () {
         success: function (data) {
             //ToastMessageSuccess(data);
             alert("success");
-            location.reload();
+            $('#modal_edit_name').modal('hide');
+            GetMultiSearch_AjaxData();
+            //SetFilterValueOnHiddenField();
+            //location.reload();
         },
         error: function (data) {
             alert(data.responseJSON.Message);
         }
     });
-
-
 
 });
 //edit employee assignment: compare grade with company name
@@ -356,7 +357,6 @@ $('#company_edit').on('change', function () {
         dataType: 'json',
         success: function (data) {
             if (data != null) {
-                console.log("testing-100")
                 $('#grade_edit_hidden').val(data.Id);
                 if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == 'mw') {
                     $('#grade_edit').val(data.SalaryGrade);
@@ -378,10 +378,56 @@ $('#company_edit').on('change', function () {
         }
     });
 });
+//change section and compare with grade and unit price
+$('#section_edit').on('change', function () {
+    
+
+    var _companyName = $("#company_edit option:selected").text();
+    var _sectionName = $("#section_edit option:selected").text();
+    var _unitPrice = $("#unitprice_edit").val();    
+    var _gradePoint = $("#grade_edit").val();
+    if ($("#hidGradePoints").val() == '') {
+        $("#hidGradePoints").val(_gradePoint);
+    }
+    var _tempGradePoint = $("#hidGradePoints").val();
+
+    console.log(_gradePoint);
+
+    //var _tempGradeI
+    $.ajax({
+        url: `/api/utilities/CompareGrade/${_unitPrice}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if (data != null) {
+                $('#grade_edit_hidden').val(data.Id);
+                if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == 'mw') {
+                    $('#grade_edit').val(data.SalaryGrade);
+                } else {
+                    $('#grade_edit').val('');
+                }
+            } else {
+                if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == 'mw') {
+                    $('#grade_edit').val(_tempGradePoint);
+                } else {
+                    $('#grade_edit').val('');
+                }
+            }            
+        },
+        error: function () {
+            console.log("testing-200")
+            $('#grade_edit').val('');
+            //$('#grade_edit_hidden').val('');
+        }
+    });
+});
+
+
 //edit employee assignment: compare grade with unit price
 $('#unitprice_edit').on('change', function () {
     var _unitPrice = $(this).val();
     var _companyName = $("#company_edit option:selected").text();
+    var _sectionName = $("#section_edit option:selected").text();
 
     $.ajax({
         url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -389,7 +435,7 @@ $('#unitprice_edit').on('change', function () {
         dataType: 'json',
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase() == "mw") {
+            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
                 $('#grade_edit').val(data.SalaryGrade);
             } else {
                 $('#grade_edit').val('');
@@ -411,7 +457,9 @@ $('#namelist_inactive').on('click', function () {
         dataType: 'json',
         success: function (data) {
             ToastMessageSuccess(data);
-            location.reload();
+            //location.reload();
+            $('#namelist_delete').modal('hide');
+            GetMultiSearch_AjaxData();
         },
         error: function () {
             alert("Error please try again");
@@ -497,7 +545,7 @@ function addNew() {
                     success: function (data) {
                         console.log(data);
                         text += '<td>';
-                        text += `<select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row"><option value=''>Select Section</option>`;
+                        text += `<select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onchange="LoadGradeValue(this);"><option value=''>Select Section</option>`;
                         $.each(data, function (key, item) {
                             text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
                         });
@@ -640,7 +688,7 @@ function onSave() {
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 }
-                alert('Success');
+                alert('Success');                
                 location.reload();
                 //$('#modal_add_name_new').modal('toggle');
             },
@@ -684,13 +732,8 @@ function unitPriceChange(rowId, element) {
 
     var _rowId = $("#add_name_row_no_hidden").val();
     var _companyName = $('#company_row_' + _rowId).find(":selected").text();
-    console.log("_companyName: " + _companyName);
-    //var _unitPrice = $("#add_name_unit_price_hidden").val();
+    var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
 
-    console.log("_unitPrice: " + _unitPrice);
-
-
-    //if (!unitPrices.includes(_unitPrice)) {
     if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
         $('#identity_row_' + rowId).css('color', 'red');
         $('#sub_code_row_' + rowId).css('color', 'red');
@@ -698,10 +741,6 @@ function unitPriceChange(rowId, element) {
         $('#identity_row_' + rowId).css('color', '');
         $('#sub_code_row_' + rowId).css('color', '');
     }
-    //else {
-    //    $('#identity_row_' + rowId).css('color', 'red');
-    //    $('#sub_code_row_' + rowId).css('color', 'red');
-    //}
 
     $.ajax({
         url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -710,11 +749,7 @@ function unitPriceChange(rowId, element) {
         success: function (data) {
             console.log(data);
             $('#grade_edit_hidden').val(data.Id);
-            console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
-            console.log("_companyName.toLowerCase(): " + typeof (_companyName));
-            console.log("_rowId: " + _rowId);
-            //if (_companyName.toLowerCase == 'mw') {
-            if (_companyName.toLowerCase().indexOf("mw") > 0) {
+            if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw") > 0) {
                 $('#grade_row_' + rowId).attr('data-id', data.Id);
                 $('#grade_row_new_' + rowId).val(data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
@@ -723,9 +758,6 @@ function unitPriceChange(rowId, element) {
                 $('#grade_row_new_' + rowId).val(data.Id);
                 $('#grade_row_' + _rowId).val('');
             }
-
-
-            //$('#grade_row_' + rowId).val(data.SalaryGrade);
         },
         error: function () {
             $('#grade_row_' + rowId).attr('data-id', '');
@@ -763,10 +795,8 @@ function changeVal(rowId, element) {
 function LoadGradeValue(sel) {
     var _rowId = $("#add_name_row_no_hidden").val();
     var _companyName = $('#company_row_' + _rowId).find(":selected").text();
-    console.log("_companyName: " + _companyName);
+    var _seactionName = $('#section_row_' + _rowId).find(":selected").text();    
     var _unitPrice = $("#add_name_unit_price_hidden").val();
-
-    console.log("_unitPrice: " + _unitPrice);
 
     $.ajax({
         url: `/api/utilities/CompareGrade/${_unitPrice}`,
@@ -777,12 +807,7 @@ function LoadGradeValue(sel) {
         //},
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
-            console.log("_companyName.toLowerCase(): " + _companyName.toLowerCase());
-            console.log("_companyName.toLowerCase(): " + typeof (_companyName));
-            console.log("_rowId: " + _rowId);
-            //if (_companyName.toLowerCase == 'mw') {
-            if (_companyName.toLowerCase().indexOf("mw") > 0) {
-                //$('#grade_new_hidden').val(data.Id);
+            if (_companyName.toLowerCase().indexOf("mw") > 0 | _seactionName.toLowerCase().indexOf("mw") > 0) {
                 $('#grade_row_' + _rowId).attr('data-id', data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
                 $('#grade_row_new_' + _rowId).val(data.Id);
@@ -961,4 +986,34 @@ function LoaderShow() {
 function LoaderHide() {
     $("#namelist").css("display", "block");
     $("#loading").css("display", "none");
+}
+function SetFilterValueOnHiddenField(){
+    var name_filter = $("#name_search").val();
+    var section_filter = $('#section_multi_search').val();
+    var company_filter = $('#company_multi_search').val();
+    var department_filter = $('#dept_multi_search').val();    
+         
+    $("#hid_filter_name").val(name_filter);
+    $("#hid_filter_section").val(section_filter);
+    $("#hid_filter_company").val(company_filter);
+    $("#hid_filter_department").val(department_filter);
+    //location.reload();
+
+    var name_filter = $("#hid_filter_name").val();
+    var section_filter = $('#hid_filter_section').val();
+    var company_filter = $('#hid_filter_company').val();
+    var department_filter = $('#hid_filter_department').val();        
+
+    //alert("name_filter: "+name_filter);
+    $("#name_search").val(name_filter);
+    //$("#section_multi_search option[id='"+section_filter+"']").attr("selected", "selected");
+
+    // $("#company_multi_search").val(company_filter);
+    // $("#dept_multi_search").val(department_filter);
+
+    // alert("section_filter: "+section_filter);
+    // alert("company_filter: "+company_filter);
+    // alert("department_filter: "+department_filter);
+
+    GetMultiSearch_AjaxData();
 }
