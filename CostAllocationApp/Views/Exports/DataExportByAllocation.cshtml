@@ -1,0 +1,53 @@
+﻿@model CostAllocationApp.ViewModels.ExportViewModel
+@{
+    ViewBag.Title = "DataExportByAllocation";
+}
+
+<link rel="stylesheet" type="text/css" href="/Content/common.css" />
+<link rel="stylesheet" type="text/css" href="/Content/data_export_by_allocation.css" />
+
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <div class="data_export_by_allocation">
+                @using (Html.BeginForm("DataExportByAllocation", "Exports", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label for="department">Departments</label>
+                        <select class="form-control" id="department" name="departmentId">
+                            <option value="">Select Department</option>
+                            @foreach (var item in Model.Departments)
+                            {
+                                <option value="@item.Id">@item.DepartmentName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="explanation">Allocations</label>
+                        <select class="form-control" id="explanation" name="explanationId"></select>
+                    </div>
+                    <button type="submit" class="btn btn-info">Export as Excel</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $('#department').on('change', function () {
+            var departmentId = $(this).val();
+            $.getJSON('/api/Utilities/GetAllExplanationsByDepartmentId?departmentId=' + departmentId)
+                .done(function (data) {
+                    $('#explanation').empty();
+                    $('#explanation').append(`<option value=''>Select Allocation</option>`)
+                    $.each(data, function (key, item) {
+                        $('#explanation').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`)
+                    });
+                });
+        });
+    </script>
+    
+}
+

@@ -182,5 +182,41 @@ namespace CostAllocationApp.DAL
                 return explanation;
             }
         }
+
+        public List<Explanation> GetAllExplanationsByDepartmentId(int departmentId)
+        {
+            List<Explanation> explanations = new List<Explanation>();
+            string query = "";
+            query = "select distinct Explanations.* from EmployeesAssignments join Explanations on Explanations.Id = EmployeesAssignments.ExplanationId WHERE EmployeesAssignments.DepartmentId=@departmentId and Explanations.IsActive=1";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@departmentId",departmentId);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            Explanation explanation = new Explanation();
+                            explanation.Id = Convert.ToInt32(rdr["Id"]);
+                            explanation.ExplanationName = rdr["Name"].ToString();
+                            explanation.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
+                            explanation.CreatedBy = rdr["CreatedBy"].ToString();
+
+                            explanations.Add(explanation);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return explanations;
+            }
+        }
     }
 }
