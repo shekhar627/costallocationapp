@@ -73,7 +73,7 @@ namespace CostAllocationApp.BLL
             }
             return returnValue;
         }
-        public int GetGradeIdByGradePoints(string gradePoints)
+        public UploadExcel GetGradeIdByGradePoints(string gradePoints)
         {
             return _uploadExcelDAL.GetGradeIdByGradePoints(gradePoints);
         }

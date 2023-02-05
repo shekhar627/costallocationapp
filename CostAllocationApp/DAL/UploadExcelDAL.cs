@@ -299,9 +299,10 @@ namespace CostAllocationApp.DAL
 
             return gradeId;
         }
-        public int GetGradeIdByGradePoints(string gradePoints)
+        public UploadExcel GetGradeIdByGradePoints(string gradePoints)
         {
-            int gradeId = 0;
+            UploadExcel _salary = new UploadExcel();
+
             string where = "";
             string query = "";
             if (!string.IsNullOrEmpty(gradePoints.ToString()))
@@ -309,7 +310,7 @@ namespace CostAllocationApp.DAL
                 where += $"GradePoints = N'{gradePoints}' ";
                 where += " AND IsActive=1 ";
 
-                query = $@"SELECt Id,GradePoints FROM Grades 
+                query = $@"SELECt Id,GradePoints,GradeLowPoints,GradeHighPoints FROM Grades 
                         where {where}";
 
                 using (SqlConnection sqlConnection = this.GetConnection())
@@ -323,7 +324,10 @@ namespace CostAllocationApp.DAL
                         {
                             while (rdr.Read())
                             {
-                                gradeId = Convert.ToInt32(rdr["Id"]);
+                                _salary.GradeId = Convert.ToInt32(rdr["Id"]);
+                                _salary.GradePoints = rdr["GradePoints"].ToString();                                
+                                _salary.GradeLowPoints = rdr["GradeLowPoints"] is DBNull ? "" : rdr["GradeLowPoints"].ToString();                                
+                                _salary.GradeHighPoints = rdr["GradeHighPoints"] is DBNull ? "" : rdr["GradeHighPoints"].ToString();
                             }
                         }
                     }
@@ -335,7 +339,7 @@ namespace CostAllocationApp.DAL
                 }
 
             }
-            return gradeId;
+            return _salary;
         }
     }
 }

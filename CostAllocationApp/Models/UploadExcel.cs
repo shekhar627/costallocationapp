@@ -16,5 +16,8 @@ namespace CostAllocationApp.Models
         public int? CompanyId { get; set; }
         public int? GradeId { get; set; }
         public decimal UnitPrice { get; set; }
+        public string GradePoints { get; set; }
+        public string GradeLowPoints { get; set; }
+        public string GradeHighPoints { get; set; }
     }
 }

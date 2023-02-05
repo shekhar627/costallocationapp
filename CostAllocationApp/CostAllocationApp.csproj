@@ -242,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\addname.css" />
+    <Content Include="Content\addname_ver02.css" />
     <Content Include="Content\bootstrap-combined.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -265,6 +266,7 @@
     <Content Include="Content\namelist-responsive.css" />
     <Content Include="Content\namelist.css" />
     <Content Include="Content\namelist_ver02.css" />
+    <Content Include="Content\namelist_ver03.css" />
     <Content Include="Content\nameregistration.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\roles.css" />
@@ -656,6 +658,7 @@
     <Content Include="Scripts\namelist.js" />
     <Content Include="Scripts\namelist_modal_registrations.js" />
     <Content Include="Scripts\namelist_ver02.js" />
+    <Content Include="Scripts\namelist_ver03.js" />
     <Content Include="Scripts\nameregistration.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\registrations.js" />

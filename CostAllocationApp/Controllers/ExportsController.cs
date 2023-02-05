@@ -291,6 +291,8 @@ namespace CostAllocationApp.Controllers
         public ActionResult DataExportByDepartment(int departmentId=0)
         {
             List<ForecastAssignmentViewModel> forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
+            var _department = _departmentBLL.GetDepartmentByDepartemntId(departmentId);
+
             using (var client = new HttpClient())
             {
                 //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
@@ -533,7 +535,7 @@ namespace CostAllocationApp.Controllers
 
                 var excelData = package.GetAsByteArray();
                 var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                var fileName = "MyWorkbook.xlsx";
+                var fileName = _department.DepartmentName+ ".xlsx";
                 return File(excelData, contentType, fileName);
             }
         }
