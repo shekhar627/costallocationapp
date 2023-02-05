@@ -12,10 +12,12 @@ namespace CostAllocationApp.BLL
     {
         private ExportDAL _exportDal = null;
         private EmployeeAssignmentDAL _employeeAssignmentDAL = null;
+        private CompanyBLL _companyBLL = null;
         public ExportBLL()
         {
             _exportDal = new ExportDAL();
             _employeeAssignmentDAL = new EmployeeAssignmentDAL();
+            _companyBLL = new CompanyBLL();
         }
 
         public List<ForecastAssignmentViewModel> AssignmentsByAllocation(int departnmentId, int explanationId)

@@ -26,7 +26,7 @@
                         <label for="explanation">Allocations</label>
                         <select class="form-control" id="explanation" name="explanationId"></select>
                     </div>
-                    <button type="submit" class="btn btn-info">Export as Excel</button>
+                    <button type="submit" class="btn btn-info" id="export">Export as Excel</button>
                 }
             </div>
         </div>
@@ -36,6 +36,18 @@
 @section Scripts{
 
     <script type="text/javascript">
+        $('#export').on('click', function (e) {
+            var departmentValue = $('#department').val();
+            var explanationValue = $('#explanation').val();
+            if (departmentValue == undefined || departmentValue == null || departmentValue == "") {
+                alert("Select Department");
+                e.preventDefault();
+            }
+            if (explanationValue == undefined || explanationValue == null || explanationValue == "") {
+                alert("Select Explanation");
+                e.preventDefault();
+            }
+        });
         $('#department').on('change', function () {
             var departmentId = $(this).val();
             $.getJSON('/api/Utilities/GetAllExplanationsByDepartmentId?departmentId=' + departmentId)
