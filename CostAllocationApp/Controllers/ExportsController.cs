@@ -644,7 +644,7 @@ namespace CostAllocationApp.Controllers
                 decimal aug = 0;
                 decimal sep = 0;
 
-
+                //man month point
                 foreach (var item in salaryAssignmentDtos)
                 {
                     sheet.Cells[rowCount, 1].Value = item.Salary.SalaryGrade;
@@ -682,7 +682,50 @@ namespace CostAllocationApp.Controllers
                     oct = 0; nov = 0; dec = 0; jan = 0;feb = 0;mar = 0;apr = 0;may = 0;jun = 0;jul = 0;aug = 0;sep = 0;
                     rowCount++;
                 }
-               
+
+                rowCount = rowCount + 2;
+                sheet.Cells[rowCount, 1].Value = "Costing";
+                rowCount = rowCount + 3;
+
+                // costing
+                foreach (var item in salaryAssignmentDtos)
+                {
+                    sheet.Cells[rowCount, 1].Value = item.Salary.SalaryGrade;
+
+
+
+                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    {
+                        oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+                        nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+                        dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+                        jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+                        feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+                        mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+                        apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+                        may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+                        jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+                        jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+                        aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+                        sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+                    }
+                    sheet.Cells[rowCount, 2].Value = oct;
+                    sheet.Cells[rowCount, 3].Value = nov;
+                    sheet.Cells[rowCount, 4].Value = dec;
+                    sheet.Cells[rowCount, 5].Value = jan;
+                    sheet.Cells[rowCount, 6].Value = feb;
+                    sheet.Cells[rowCount, 7].Value = mar;
+                    sheet.Cells[rowCount, 8].Value = apr;
+                    sheet.Cells[rowCount, 9].Value = may;
+                    sheet.Cells[rowCount, 10].Value = jun;
+                    sheet.Cells[rowCount, 11].Value = jul;
+                    sheet.Cells[rowCount, 12].Value = aug;
+                    sheet.Cells[rowCount, 13].Value = sep;
+
+                    oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                    rowCount++;
+                }
+
 
 
                 var excelData = package.GetAsByteArray();
