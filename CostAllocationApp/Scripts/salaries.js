@@ -53,7 +53,19 @@ function GetSalaries(){
     .done(function (data) {
         $('#salary_list_tbody').empty();
         $.each(data, function (key, item) {
-            $('#salary_list_tbody').append(`<tr><td><input type="checkbox" class="salary_list_chk" data-id='${item.Id}' /></td><td>${item.SalaryLowPointWithComma} ～ ${item.SalaryHighPointWithComma}</td><td>${item.SalaryGrade}</td></tr>`);
+            let tempHighVal = "";
+            let tempLowVal = "";
+            if (item.SalaryLowPointWithComma == '' || item.SalaryLowPointWithComma == null) {
+                tempLowVal = "-"
+            } else {
+                tempLowVal = item.SalaryLowPointWithComma
+            }
+            if (item.SalaryHighPointWithComma == '' || item.SalaryHighPointWithComma == null) {
+                tempHighVal = "-"
+            } else {
+                tempHighVal = item.SalaryHighPointWithComma
+            }
+            $('#salary_list_tbody').append(`<tr><td><input type="checkbox" class="salary_list_chk" data-id='${item.Id}' /></td><td>${tempLowVal} ～ ${tempHighVal}</td><td>${item.SalaryGrade}</td></tr>`);
         });
     });
 }    
