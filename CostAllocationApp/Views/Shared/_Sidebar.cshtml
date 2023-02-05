@@ -19,7 +19,7 @@
                     string fullPath = HttpContext.Current.Request.Url.AbsolutePath;
                     string url = System.IO.Path.GetFileName(fullPath);
                     var departmentId = Request.QueryString["departmentId"];
-                    
+
 
                     if (url.ToLower().Contains("login") || string.IsNullOrEmpty(url))
                     {
@@ -63,36 +63,24 @@
 
                                 @foreach (var item in Model.Departments)
                                 {
+                                    string forecastMenuName = "";
+                                    if(item.DepartmentName.ToLower() == "企画")
+                                    {
+                                        forecastMenuName = "企画配置 (Planning Allocation)";
+                                    }
+                                    else if(item.DepartmentName.ToLower() == "開発")
+                                    {
+                                        forecastMenuName = "開発配置 (Dev Allocation)";
+                                    }
                                     if (url.ToLower().Contains("createforecast") && item.Id.ToString() == departmentId)
                                     {
-                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id" class="active">@item.DepartmentName</a></li>
+                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id" class="active">@forecastMenuName</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id">@item.DepartmentName</a></li>
+                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id">@forecastMenuName</a></li>
                                     }
-
                                 }
-                                @*@{
-                                        if (url.ToLower().Contains("createforecast"))
-                                        {
-                                            <li><a href="/Forecasts/CreateForecast" class="active">Planning Allocation (企画配置)</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="/Forecasts/CreateForecast">Planning Allocation (企画配置)</a>
-                                            </li>
-                                        }
-                                        if (url.ToLower().Contains("createforecast"))
-                                        {
-                                            <li><a href="/Forecasts/CreateForecast" class="active">Dev Allocation (開発配置)</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li><a href="/Forecasts/CreateForecast">Dev Allocation (開発配置)</a></li>
-                                        }
-                                    }*@
                             </ul>
                         </li>
                         <li>
