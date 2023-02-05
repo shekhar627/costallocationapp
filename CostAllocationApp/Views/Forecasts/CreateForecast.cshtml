@@ -57,22 +57,7 @@
         </div>        
     </div>
     <!-- /Page Header -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="export_links">
-                <ul>
-                    @if (Model._sections.Count>0)
-                    {
-                        foreach (var item in Model._sections)
-                        {
-                            <li><a href="/Exports/ExportBySection?sectionId=@item.Id&sectionName=@item.SectionName"><i class="fa fa-file-excel-o" aria-hidden="true"></i> @item.SectionName</a></li>
-                            @*<li><a href="/Exports/DevPlacement"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Dev Placement</a></li>*@
-                        }
-                    }
-
-                </ul>
-            </div>
-        </div>
+    <div class="row">       
         <div class="col-md-12">
             <section class="container" tabIndex="1">
                 <div>

@@ -1,46 +1,46 @@
 ﻿/*-----------------Add Name-----------------------*/
-#add_name_table_1 > thead > tr > th:before, #add_name_table_1 > thead > tr > th:after{
-    content:none !important;
+#add_name_table_1 > thead > tr > th:before, #add_name_table_1 > thead > tr > th:after {
+    content: none !important;
 }
 
 #add_name_table_1 > tbody > tr > td:nth-of-type(3) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(4) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(4) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(5) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(5) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(6) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(6) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(7) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(7) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(8) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(8) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(10) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(10) {
     text-align: center !important;
 }
 
-#add_name_table_1>tbody>tr>td:nth-of-type(11) {
+#add_name_table_1 > tbody > tr > td:nth-of-type(11) {
     text-align: center !important;
 }
 
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
     background-color: #3c4b5d !important;
     border-color: #3c4b5d !important;
     color: white !important;
@@ -71,10 +71,10 @@ th {
     font-family: Yu Gothic !important;
 }
 
-#name-list>tbody>tr>td {
-    width: 1px !important;
-    white-space: nowrap !important;
-}
+    #name-list > tbody > tr > td {
+        width: 1px !important;
+        white-space: nowrap !important;
+    }
 
 .name_list_th {
     border: none;
@@ -275,11 +275,11 @@ th {
     border: 1px solid;
 }
 
-#incharge_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #incharge_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
 .cutom_button_group_incharge {
     float: right;
@@ -314,11 +314,11 @@ th {
     border: 1px solid;
 }
 
-#department_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #department_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
 .cutom_button_group_department {
     float: right;
@@ -341,18 +341,18 @@ th {
     text-align: center;
 }
 
-#section_table td,
-th:nth-of-type(9) {
-    text-align: center;
-    width: 20px;
-}
+    #section_table td,
+    th:nth-of-type(9) {
+        text-align: center;
+        width: 20px;
+    }
 
-#section_table td:nth-of-type(2) {
-    border: 1px solid;
-    padding: 2px !important;
-    text-align: left;
-    text-indent: 1em;
-}
+        #section_table td:nth-of-type(2) {
+            border: 1px solid;
+            padding: 2px !important;
+            text-align: left;
+            text-indent: 1em;
+        }
 
 #department_table td:nth-of-type(2) {
     border: 1px solid;
@@ -375,23 +375,23 @@ th:nth-of-type(9) {
     border: 1px solid;
 }
 
-#section_table thead tr:nth-of-type(1) {
-    background-color: #3c4b5d;
-    color: white;
-    text-align: center;
-}
+    #section_table thead tr:nth-of-type(1) {
+        background-color: #3c4b5d;
+        color: white;
+        text-align: center;
+    }
 
-#section_table thead th:nth-of-type(2) {
-    width: 200px
-}
+    #section_table thead th:nth-of-type(2) {
+        width: 200px
+    }
 
-#section_table thead th:nth-of-type(3) {
-    width: 100px
-}
+    #section_table thead th:nth-of-type(3) {
+        width: 100px
+    }
 
-#section_table thead th:nth-of-type(1) {
-    width: 45px;
-}
+    #section_table thead th:nth-of-type(1) {
+        width: 45px;
+    }
 
 #section_delete_btn {
     padding-left: 386px;
@@ -431,13 +431,13 @@ th:nth-of-type(9) {
     text-align: center;
 }
 
-.forecast_th:nth-of-type(2) {
-    background-color: #f18973;
-}
+    .forecast_th:nth-of-type(2) {
+        background-color: #f18973;
+    }
 
-.forecast_th:nth-of-type(3) {
-    background-color: #80ced6;
-}
+    .forecast_th:nth-of-type(3) {
+        background-color: #80ced6;
+    }
 
 #forecast_table input[type='text'] {
     height: 25px;
@@ -467,7 +467,7 @@ th:nth-of-type(9) {
     display: none;
 }
 
-#forecast_table>tbody>tr>td {
+#forecast_table > tbody > tr > td {
     width: 1px !important;
     white-space: nowrap !important;
 }
@@ -492,10 +492,10 @@ th:nth-of-type(9) {
     font-size: 14px;
 }
 
-#forecast_search tbody tr:nth-of-type(1) td input,
-select {
-    border: 1px solid black !important;
-}
+    #forecast_search tbody tr:nth-of-type(1) td input,
+    select {
+        border: 1px solid black !important;
+    }
 
 
 /*#forecast_search {
@@ -532,10 +532,10 @@ select {
     border: 1px solid black !important;
 }
 
-#add_name_search tbody tr:nth-of-type(1) td input,
-select {
-    border: 1px solid black !important;
-}
+    #add_name_search tbody tr:nth-of-type(1) td input,
+    select {
+        border: 1px solid black !important;
+    }
 
 #add_name_search_button {
     background-color: #3c4b5d;
@@ -558,32 +558,44 @@ td {
     width: 138% !important;
 }
 
-#add_name_table_1>tbody>tr>td {
-    width: 1px !important;
-    white-space: nowrap !important;
-}
+    #add_name_table_1 > tbody > tr > td {
+        width: 1px !important;
+        white-space: nowrap !important;
+    }
 
-#add_name_table_1 thead tr:nth-of-type(1) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_1 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_1 thead tr:nth-of-type(2) select,
-input {
-    /*height:40px !important;*/
-}
+    #add_name_table_1 thead tr:nth-of-type(6) {
+        text-align: left;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_1 th,
-td:nth-of-type(3) {
-    text-align: center;
-}
+    #add_name_table_1 thead tr:nth-of-type(7) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_1 th,
-td:nth-of-type(12) {
-    /*text-align: right;*/
-    /* padding: 1rem; */
-}
+    #add_name_table_1 thead tr:nth-of-type(2) select,
+    input {
+        /*height:40px !important;*/
+    }
+
+    #add_name_table_1 th,
+    td:nth-of-type(3) {
+        text-align: center;
+    }
+
+    #add_name_table_1 th,
+    td:nth-of-type(12) {
+        /*text-align: right;*/
+        /* padding: 1rem; */
+    }
 
 .link_add {
     display: inline-block;
@@ -596,9 +608,9 @@ td:nth-of-type(12) {
     margin: 5px;
 }
 
-.link_add:hover {
-    color: white;
-}
+    .link_add:hover {
+        color: white;
+    }
 
 .link_edit {
     display: inline-block;
@@ -611,9 +623,9 @@ td:nth-of-type(12) {
     margin: 5px;
 }
 
-.link_edit:hover {
-    color: white;
-}
+    .link_edit:hover {
+        color: white;
+    }
 
 .add_name_btn_group a {
     display: inline-block;
@@ -637,35 +649,35 @@ td {
     font-family: Yu Gothic;
 }
 
-#add_name_table_2 thead tr:nth-of-type(1) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_2 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_2 tbody tr:nth-of-type(1) {
-    background-color: #F2F2F2;
-}
+    #add_name_table_2 tbody tr:nth-of-type(1) {
+        background-color: #F2F2F2;
+    }
 
-#add_name_table_2 th,
-td {
-    border: 1px solid black !important;
-}
+    #add_name_table_2 th,
+    td {
+        border: 1px solid black !important;
+    }
 
 #add_name_table_new {
     border: 1px solid black !important;
     /*display: none;*/
 }
 
-#add_name_table_new thead tr:nth-of-type(2) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_new thead tr:nth-of-type(2) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
-#add_name_table_new tbody tr:nth-of-type(1) {
-    background-color: #F2F2F2;
-}
+    #add_name_table_new tbody tr:nth-of-type(1) {
+        background-color: #F2F2F2;
+    }
 
 #add_name_table_3 th,
 td {
@@ -677,11 +689,11 @@ td {
     width: 100%;
 }
 
-#add_name_table_3 thead tr:nth-of-type(1) {
-    text-align: center;
-    background-color: #3c4b5d;
-    color: white;
-}
+    #add_name_table_3 thead tr:nth-of-type(1) {
+        text-align: center;
+        background-color: #3c4b5d;
+        color: white;
+    }
 
 .custom_add_name {
     margin-bottom: 50px;
@@ -1023,13 +1035,13 @@ td {
     border: 1px #dadada solid;
 }
 
-#sectionChks label {
-    display: block;
-}
+    #sectionChks label {
+        display: block;
+    }
 
-#sectionChks label:hover {
-    background-color: #1e90ff;
-}
+        #sectionChks label:hover {
+            background-color: #1e90ff;
+        }
 
 
 /*------Department -------*/
@@ -1039,13 +1051,13 @@ td {
     border: 1px #dadada solid;
 }
 
-#departmentChks label {
-    display: block;
-}
+    #departmentChks label {
+        display: block;
+    }
 
-#departmentChks label:hover {
-    background-color: #1e90ff;
-}
+        #departmentChks label:hover {
+            background-color: #1e90ff;
+        }
 
 
 /*------Incharge -------*/
@@ -1055,13 +1067,13 @@ td {
     border: 1px #dadada solid;
 }
 
-#inchargeChks label {
-    display: block;
-}
+    #inchargeChks label {
+        display: block;
+    }
 
-#inchargeChks label:hover {
-    background-color: #1e90ff;
-}
+        #inchargeChks label:hover {
+            background-color: #1e90ff;
+        }
 
 
 /*------Role -------*/
@@ -1071,13 +1083,13 @@ td {
     border: 1px #dadada solid;
 }
 
-#RoleChks label {
-    display: block;
-}
+    #RoleChks label {
+        display: block;
+    }
 
-#RoleChks label:hover {
-    background-color: #1e90ff;
-}
+        #RoleChks label:hover {
+            background-color: #1e90ff;
+        }
 
 #ExplanationChks {
     display: none;
@@ -1092,13 +1104,13 @@ td {
     border: 1px #dadada solid;
 }
 
-#CompanyChks label {
-    display: block;
-}
+    #CompanyChks label {
+        display: block;
+    }
 
-#CompanyChks label:hover {
-    background-color: #1e90ff;
-}
+        #CompanyChks label:hover {
+            background-color: #1e90ff;
+        }
 
 .commonselect {
     font-weight: normal !important;
@@ -1113,9 +1125,9 @@ td {
     width: 100% !important;
 }
 
-#name_list_edit_modal thead tr {
-    text-align: center;
-}
+    #name_list_edit_modal thead tr {
+        text-align: center;
+    }
 
 
 /*-----------------------------------------------Module Label text align ----------------------------*/

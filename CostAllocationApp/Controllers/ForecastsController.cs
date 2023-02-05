@@ -139,7 +139,7 @@ namespace CostAllocationApp.Controllers
 
                             string tempUnitPrice2 = dt_.Rows[i][5].ToString();
                             string tempGradePoint = dt_.Rows[i][4].ToString();
-
+                            UploadExcel _salary = new UploadExcel();
                             if (tempUnitPrice > 0)
                             {
                                 int? gradeId = _uploadExcelBll.GetGradeIdByUnitPrice(tempUnitPrice.ToString());
@@ -148,8 +148,13 @@ namespace CostAllocationApp.Controllers
                             }
                             else if (!string.IsNullOrEmpty(dt_.Rows[i][4].ToString()))
                             {
-                                _uploadExcel.GradeId = _uploadExcelBll.GetGradeIdByGradePoints(dt_.Rows[i][4].ToString());                                
-                                _uploadExcel.UnitPrice = 0;
+                                _salary = _uploadExcelBll.GetGradeIdByGradePoints(dt_.Rows[i][4].ToString());
+                                _uploadExcel.GradeId = _salary.GradeId;
+                                if(!string.IsNullOrEmpty(_salary.GradeHighPoints)){
+                                    _uploadExcel.UnitPrice = Convert.ToDecimal(_salary.GradeHighPoints);
+                                }else{
+                                    _uploadExcel.UnitPrice = 0;
+                                }                                
                             }
                             else
                             {

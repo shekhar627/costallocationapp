@@ -721,6 +721,7 @@ function AddSalary() {
 function LoadGradeValue(sel) {
     var _rowId = $("#add_name_row_no_hidden").val();
     var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
     var _unitPrice = $("#add_name_unit_price_hidden").val();
 
     $.ajax({
@@ -732,7 +733,7 @@ function LoadGradeValue(sel) {
         //},
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase().indexOf("mw") > 0) {
+            if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw")>0) {
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
             } else {
                 $('#grade_row_' + _rowId).val('');
@@ -1156,7 +1157,7 @@ let previousAssignmentRow = 0;
                 success: function (data) {
                     text += '<td>';
                     text += `
-                                           <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row">
+                                           <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onchange="LoadGradeValue(this);">
                                                 <option value=''>Select Section</option>
                                         `;
                     $.each(data, function (key, item) {
@@ -1265,6 +1266,9 @@ let previousAssignmentRow = 0;
 
             var _rowId = $("#add_name_row_no_hidden").val();
             var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+            var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
+            console.log("_sectionName: "+_sectionName);
+
             if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
                 $('#identity_row_' + rowId).css('color', 'red');
                 $('#sub_code_row_' + rowId).css('color', 'red');
@@ -1280,7 +1284,7 @@ let previousAssignmentRow = 0;
                 success: function (data) {
                     $('#grade_edit_hidden').val(data.Id);
                     
-                    if (_companyName.toLowerCase().indexOf("mw") > 0) {
+                    if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw")> 0) {
                         $('#grade_row_' + rowId).attr('data-id', data.Id);
                         $('#grade_row_new_' + rowId).val(data.Id);
                         $('#grade_row_' + _rowId).val(data.SalaryGrade);
@@ -1442,6 +1446,8 @@ let previousAssignmentRow = 0;
                 var _unitPrice = $(this).val();
                 var _companyName = $("#company_edit option:selected").text();
                 var _sectionName = $("#section_edit option:selected").text();
+                console.log("_companyName: "+_companyName);
+                console.log("_sectionName: "+_sectionName);
 
                 $.ajax({
                     url: `/api/utilities/CompareGrade/${_unitPrice}`,
