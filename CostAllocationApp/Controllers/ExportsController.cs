@@ -697,6 +697,11 @@ namespace CostAllocationApp.Controllers
                 }
 
                 rowCount = rowCount + 2;
+
+                sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
+                sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
                 sheet.Cells[rowCount, 1].Value = "Costing";
                 rowCount = rowCount + 3;
 
@@ -747,6 +752,13 @@ namespace CostAllocationApp.Controllers
 
                 if (assignmentsWithSectionAndCompany.Count > 0)
                 {
+
+                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
+                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                    sheet.Cells[rowCount, 2].Value = "工数";
+                    rowCount++;
                     foreach (var item in assignmentsWithSectionAndCompany)
                     {
                         sheet.Cells[rowCount, 1].Value = item.SectionName;
@@ -786,6 +798,12 @@ namespace CostAllocationApp.Controllers
                     }
 
                     rowCount = rowCount + 2;
+
+                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
+                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                    sheet.Cells[rowCount, 2].Value = "金額";
+                    rowCount++;
 
                     foreach (var item in assignmentsWithSectionAndCompany)
                     {
