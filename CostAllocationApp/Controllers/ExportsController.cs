@@ -33,8 +33,8 @@ namespace CostAllocationApp.Controllers
             List<ForecastAssignmentViewModel> forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -295,8 +295,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -319,6 +319,16 @@ namespace CostAllocationApp.Controllers
                     // ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
+
+            foreach (var forecastItem in forecastAssignmentViewModels)
+            {
+                if (forecastItem.CompanyName.ToLower()!="mw" || forecastItem.SectionName.ToLower()!="mw")
+                {
+                    forecastItem.GradePoint = "";
+                }
+                
+            }
+
 
             using (var package = new ExcelPackage())
             {
@@ -558,8 +568,6 @@ namespace CostAllocationApp.Controllers
             List<ForecastAssignmentViewModel> assignmentsWithGrade = assignmentsWithForecast.Where(a=>a.GradeId!=null).ToList();
             //filtered by section and company
             List<ForecastAssignmentViewModel> assignmentsWithSectionAndCompany = assignmentsWithForecast.Where(a=>a.SectionId!=null && a.CompanyId!=null).ToList();
-            //var aa = (from a in assignmentsWithSectionAndCompany
-            //          group a by a.SectionId).ToList();  
 
             foreach (var item in salaries)
             {
@@ -664,7 +672,7 @@ namespace CostAllocationApp.Controllers
                 {
                     sheet.Cells[rowCount, 2].Value = item.Salary.SalaryGrade;
 
-                    
+
 
                     foreach (var singleAssignment in item.ForecastAssignmentViewModels)
                     {
@@ -694,7 +702,7 @@ namespace CostAllocationApp.Controllers
                     sheet.Cells[rowCount, 13].Value = aug;
                     sheet.Cells[rowCount, 14].Value = sep;
 
-                    oct = 0; nov = 0; dec = 0; jan = 0;feb = 0;mar = 0;apr = 0;may = 0;jun = 0;jul = 0;aug = 0;sep = 0;
+                    oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                     rowCount++;
                 }
 
@@ -705,7 +713,7 @@ namespace CostAllocationApp.Controllers
                 sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
                 sheet.Cells[rowCount, 1].Value = "Costing";
-                rowCount = rowCount + 3;
+                rowCount++;
 
                 // costing
                 foreach (var item in salaryAssignmentDtos)
@@ -749,110 +757,138 @@ namespace CostAllocationApp.Controllers
 
                 rowCount = rowCount + 2;
 
+                sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
+                sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
-
+                sheet.Cells[rowCount, 2].Value = "工数";
+                rowCount++;
 
                 if (assignmentsWithSectionAndCompany.Count > 0)
                 {
+                    List<ForecastAssignmentViewModel> customizedList = assignmentsWithSectionAndCompany.ToList();
+                    List<ForecastAssignmentViewModel> tempList = null;
 
-                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
-                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-
-                    sheet.Cells[rowCount, 2].Value = "工数";
-                    rowCount++;
                     foreach (var item in assignmentsWithSectionAndCompany)
                     {
-                        sheet.Cells[rowCount, 1].Value = item.SectionName;
-                        sheet.Cells[rowCount, 2].Value = item.CompanyName;
+                        
+                        tempList = customizedList.Where(l=>l.SectionId==item.SectionId && l.CompanyId==item.CompanyId).ToList();
+                        if (tempList.Count > 0)
+                        {
+                            foreach (var removableItem in tempList)
+                            {
+                                customizedList.Remove(removableItem);
+                            }
 
 
-                        //foreach (var singleAssignment in item.ForecastAssignmentViewModels)
-                        //{
-                            oct += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 10).Points);
-                            nov += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 11).Points);
-                            dec += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 12).Points);
-                            jan += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 1).Points);
-                            feb += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 2).Points);
-                            mar += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 3).Points);
-                            apr += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 4).Points);
-                            may += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 5).Points);
-                            jun += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 6).Points);
-                            jul += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 7).Points);
-                            aug += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 8).Points);
-                            sep += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 9).Points);
-                        //}
-                        sheet.Cells[rowCount, 3].Value = oct;
-                        sheet.Cells[rowCount, 4].Value = nov;
-                        sheet.Cells[rowCount, 5].Value = dec;
-                        sheet.Cells[rowCount, 6].Value = jan;
-                        sheet.Cells[rowCount, 7].Value = feb;
-                        sheet.Cells[rowCount, 8].Value = mar;
-                        sheet.Cells[rowCount, 9].Value = apr;
-                        sheet.Cells[rowCount, 10].Value = may;
-                        sheet.Cells[rowCount, 11].Value = jun;
-                        sheet.Cells[rowCount, 12].Value = jul;
-                        sheet.Cells[rowCount, 13].Value = aug;
-                        sheet.Cells[rowCount, 14].Value = sep;
 
-                        oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
-                        rowCount++;
+                            sheet.Cells[rowCount, 1].Value = tempList[0].SectionName;
+                            sheet.Cells[rowCount, 2].Value = tempList[0].CompanyName;
+
+                            foreach (var tempItem in tempList)
+                            {
+
+                                oct += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 10).Points);
+                                nov += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 11).Points);
+                                dec += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 12).Points);
+                                jan += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 1).Points);
+                                feb += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 2).Points);
+                                mar += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 3).Points);
+                                apr += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 4).Points);
+                                may += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 5).Points);
+                                jun += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 6).Points);
+                                jul += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 7).Points);
+                                aug += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 8).Points);
+                                sep += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 9).Points);
+                            }
+
+                            sheet.Cells[rowCount, 3].Value = oct;
+                            sheet.Cells[rowCount, 4].Value = nov;
+                            sheet.Cells[rowCount, 5].Value = dec;
+                            sheet.Cells[rowCount, 6].Value = jan;
+                            sheet.Cells[rowCount, 7].Value = feb;
+                            sheet.Cells[rowCount, 8].Value = mar;
+                            sheet.Cells[rowCount, 9].Value = apr;
+                            sheet.Cells[rowCount, 10].Value = may;
+                            sheet.Cells[rowCount, 11].Value = jun;
+                            sheet.Cells[rowCount, 12].Value = jul;
+                            sheet.Cells[rowCount, 13].Value = aug;
+                            sheet.Cells[rowCount, 14].Value = sep;
+
+                            oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                            rowCount++;
+                        }
                     }
 
                     rowCount = rowCount + 2;
-
                     sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
                     sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
                     sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                    
                     sheet.Cells[rowCount, 2].Value = "金額";
                     rowCount++;
 
+                    customizedList = assignmentsWithSectionAndCompany.ToList();
+
                     foreach (var item in assignmentsWithSectionAndCompany)
                     {
-                        sheet.Cells[rowCount, 1].Value = item.SectionName;
-                        sheet.Cells[rowCount, 2].Value = item.CompanyName;
+                        
+                        tempList = customizedList.Where(l => l.SectionId == item.SectionId && l.CompanyId == item.CompanyId).ToList();
+                        if (tempList.Count > 0)
+                        {
+                            foreach (var removableItem in tempList)
+                            {
+                                customizedList.Remove(removableItem);
+                            }
 
 
-                        //foreach (var singleAssignment in item.ForecastAssignmentViewModels)
-                        //{
-                        oct += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 10).Total);
-                        nov += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 11).Total);
-                        dec += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 12).Total);
-                        jan += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 1).Total);
-                        feb += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 2).Total);
-                        mar += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 3).Total);
-                        apr += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 4).Total);
-                        may += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 5).Total);
-                        jun += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 6).Total);
-                        jul += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 7).Total);
-                        aug += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 8).Total);
-                        sep += Convert.ToDecimal(item.forecasts.SingleOrDefault(f => f.Month == 9).Total);
-                        //}
-                        sheet.Cells[rowCount, 3].Value = oct;
-                        sheet.Cells[rowCount, 4].Value = nov;
-                        sheet.Cells[rowCount, 5].Value = dec;
-                        sheet.Cells[rowCount, 6].Value = jan;
-                        sheet.Cells[rowCount, 7].Value = feb;
-                        sheet.Cells[rowCount, 8].Value = mar;
-                        sheet.Cells[rowCount, 9].Value = apr;
-                        sheet.Cells[rowCount, 10].Value = may;
-                        sheet.Cells[rowCount, 11].Value = jun;
-                        sheet.Cells[rowCount, 12].Value = jul;
-                        sheet.Cells[rowCount, 13].Value = aug;
-                        sheet.Cells[rowCount, 14].Value = sep;
 
-                        oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
-                        rowCount++;
+                            sheet.Cells[rowCount, 1].Value = tempList[0].SectionName;
+                            sheet.Cells[rowCount, 2].Value = tempList[0].CompanyName;
+
+                            foreach (var tempItem in tempList)
+                            {
+
+                                oct += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+                                nov += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+                                dec += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+                                jan += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+                                feb += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+                                mar += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+                                apr += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+                                may += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+                                jun += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+                                jul += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+                                aug += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+                                sep += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+                            }
+
+                            sheet.Cells[rowCount, 3].Value = oct;
+                            sheet.Cells[rowCount, 4].Value = nov;
+                            sheet.Cells[rowCount, 5].Value = dec;
+                            sheet.Cells[rowCount, 6].Value = jan;
+                            sheet.Cells[rowCount, 7].Value = feb;
+                            sheet.Cells[rowCount, 8].Value = mar;
+                            sheet.Cells[rowCount, 9].Value = apr;
+                            sheet.Cells[rowCount, 10].Value = may;
+                            sheet.Cells[rowCount, 11].Value = jun;
+                            sheet.Cells[rowCount, 12].Value = jul;
+                            sheet.Cells[rowCount, 13].Value = aug;
+                            sheet.Cells[rowCount, 14].Value = sep;
+
+                            oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                            rowCount++;
+                        }
                     }
+
+
                 }
-
-
-
 
 
                 var excelData = package.GetAsByteArray();
                 var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                var fileName = explanation.ExplanationName+".xlsx";
+                var fileName = explanation.ExplanationName + ".xlsx";
                 return File(excelData, contentType, fileName);
 
             }
