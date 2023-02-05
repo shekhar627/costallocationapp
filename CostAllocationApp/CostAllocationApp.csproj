@@ -159,6 +159,7 @@
     <Compile Include="BLL\EmployeeBLL.cs" />
     <Compile Include="BLL\EmployeeAssignmentBLL.cs" />
     <Compile Include="BLL\ExplanationsBLL.cs" />
+    <Compile Include="BLL\ExportBLL.cs" />
     <Compile Include="BLL\ForecastBLL.cs" />
     <Compile Include="BLL\InChargeBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="DAL\EmployeeDAL.cs" />
     <Compile Include="DAL\EmployeeAssignmentDAL.cs" />
     <Compile Include="DAL\ExplanationDAL.cs" />
+    <Compile Include="DAL\ExportDAL.cs" />
     <Compile Include="DAL\ForecastDAL.cs" />
     <Compile Include="DAL\InChargeDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
@@ -204,6 +206,7 @@
     <Compile Include="DAL\SectionDAL.cs" />
     <Compile Include="DAL\UploadExcelDAL.cs" />
     <Compile Include="Dtos\EmployeeAssignmentDTO.cs" />
+    <Compile Include="Dtos\SalaryAssignmentDto.cs" />
     <Compile Include="Dtos\ForecastDto.cs" />
     <Compile Include="Dtos\SendToForecaseApiDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -246,6 +249,7 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\companies.css" />
     <Content Include="Content\Custom.css" />
+    <Content Include="Content\data_export_by_allocation.css" />
     <Content Include="Content\data_export_by_department.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
     <Content Include="Content\departments.css" />
@@ -698,6 +702,7 @@
     <Content Include="Views\Allocation\Index.cshtml" />
     <Content Include="Views\Allocation\CreateAllocation.cshtml" />
     <Content Include="Views\Exports\DataExportByDepartment.cshtml" />
+    <Content Include="Views\Exports\DataExportByAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

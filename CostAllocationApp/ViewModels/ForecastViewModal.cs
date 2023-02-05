@@ -8,7 +8,7 @@ namespace CostAllocationApp.ViewModels
 {
     public class ForecastViewModal:BaseViewModel
     {
-        public List<Section> _sections { get; set; }
+        //public List<Section> _sections { get; set; }
         public Department Department { get; set; }
     }
 }

@@ -51,8 +51,6 @@ namespace CostAllocationApp.Controllers
             }
             ForecastViewModal forecastViewModal = new ForecastViewModal
             {
-                // have to fix later.
-                _sections = new List<Section>(),
                 Departments = _departmentBLL.GetAllDepartments(),
                 Department = singleDepartment,
             };
@@ -63,13 +61,12 @@ namespace CostAllocationApp.Controllers
         //[NonAction]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(HttpPostedFileBase uploaded_file, int upload_year)
+        public ActionResult Index(HttpPostedFileBase uploaded_file, int upload_year,int department_id)
         {
-            ForecastViewModal forecastViewModal = new ForecastViewModal
-            {
-                _sections = new List<Section>(),
-                Departments = _departmentBLL.GetAllDepartments(),
-            };
+            //ForecastViewModal forecastViewModal = new ForecastViewModal
+            //{
+            //    Departments = _departmentBLL.GetAllDepartments(),
+            //};
 
             TempData["seccess"] = null;
             Dictionary<int, int> check = new Dictionary<int, int>();
@@ -97,7 +94,7 @@ namespace CostAllocationApp.Controllers
                     {
                         ModelState.AddModelError("File", "This file format is not supported");
                         ViewBag.ErrorCount = 1;
-                        return View("CreateForecast");
+                        return View("CreateForecast", new { departmentId = department_id });
                     }
                     //int fieldcount = reader.FieldCount;
                     //int rowcount = reader.RowCount;
@@ -220,7 +217,7 @@ namespace CostAllocationApp.Controllers
                     {
                         ModelState.AddModelError("File", ex);
                         ViewBag.ErrorCount = 1;
-                        return View("CreateForecast", forecastViewModal);
+                        return View("CreateForecast", new { departmentId = department_id });
                     }
 
                     //DataSet result = new DataSet();
@@ -230,7 +227,7 @@ namespace CostAllocationApp.Controllers
                     //DataTable tmp = result.Tables[0];
                     //Session["tmpdata"] = tmp;  //store datatable into session
                     TempData["seccess"] = "Data imported successfully";
-                    return RedirectToAction("CreateForecast");
+                    return RedirectToAction("CreateForecast",new { departmentId =department_id});
                 }
                 else
                 {
@@ -238,7 +235,7 @@ namespace CostAllocationApp.Controllers
                     ModelState.AddModelError("File", "invalid File or Year");
                 }
             }
-            return View("CreateForecast", forecastViewModal);
+            return View("CreateForecast", new { departmentId = department_id });
         }
 
         //[NonAction]

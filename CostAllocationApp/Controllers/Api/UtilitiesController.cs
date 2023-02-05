@@ -757,5 +757,12 @@ namespace CostAllocationApp.Controllers.Api
 
         //}
 
+        public IHttpActionResult GetAllExplanationsByDepartmentId(int departmentId)
+        {
+            return Ok(explanationsBLL.GetAllExplanationsByDepartmentId(departmentId));
+        }
+
+
+
     }
 }

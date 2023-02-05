@@ -38,5 +38,9 @@ namespace CostAllocationApp.BLL
         {
             return explanationDAL.GetExplanationByExplanationId(explanationId);
         }
+        public List<Explanation> GetAllExplanationsByDepartmentId(int departmentId)
+        {
+            return explanationDAL.GetAllExplanationsByDepartmentId(departmentId);
+        }
     }
 }

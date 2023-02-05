@@ -10,15 +10,22 @@ using CostAllocationApp.ViewModels;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
+using CostAllocationApp.Dtos;
 
 namespace CostAllocationApp.Controllers
 {
     public class ExportsController : Controller
     {
         private DepartmentBLL _departmentBLL = null;
+        private ExportBLL _exportBLL = null;
+        private SalaryBLL _salaryBLL = null;
+        private ExplanationsBLL _explanationsBLL = null;
         public ExportsController()
         {
             _departmentBLL = new DepartmentBLL();
+            _exportBLL = new ExportBLL();
+            _salaryBLL = new SalaryBLL();
+            _explanationsBLL = new ExplanationsBLL();
         }
         // GET: Exports
         public FileResult ExportBySection(int sectionId=0,string sectionName = "")
@@ -528,6 +535,161 @@ namespace CostAllocationApp.Controllers
                 var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 var fileName = "MyWorkbook.xlsx";
                 return File(excelData, contentType, fileName);
+            }
+        }
+
+        public ActionResult DataExportByAllocation()
+        {
+            return View(new ExportViewModel { Departments = _departmentBLL.GetAllDepartments() });
+        }
+
+        [HttpPost]
+        public ActionResult DataExportByAllocation(int departmentId = 0, int explanationId = 0)
+        {
+            List<SalaryAssignmentDto> salaryAssignmentDtos = new List<SalaryAssignmentDto>();
+            var explanation = _explanationsBLL.GetExplanationByExplanationId(explanationId);
+            List<ForecastAssignmentViewModel> assignmentsWithForecast = _exportBLL.AssignmentsByAllocation(departmentId, explanationId);
+            var salaries = _salaryBLL.GetAllSalaryPoints();
+            foreach (var item in salaries)
+            {
+                List<ForecastAssignmentViewModel> filteredAssignmentsBySalaryId = assignmentsWithForecast.Where(a=>a.GradeId==item.Id.ToString()).ToList();
+                salaryAssignmentDtos.Add(new SalaryAssignmentDto { Salary = item,ForecastAssignmentViewModels = filteredAssignmentsBySalaryId });
+            }
+
+            using (var package = new ExcelPackage())
+            {
+                var sheet = package.Workbook.Worksheets.Add("Sheet1");
+
+
+                sheet.Cells[1, 1].Value = "Grade";
+                sheet.Cells[1, 1].Style.Font.Bold = true;
+                sheet.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 2].Value = "10";
+                sheet.Cells[1, 2].Style.Font.Bold = true;
+                sheet.Cells[1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 2].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 3].Value = "11";
+                sheet.Cells[1, 3].Style.Font.Bold = true;
+                sheet.Cells[1, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 3].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 4].Value = "12";
+                sheet.Cells[1, 4].Style.Font.Bold = true;
+                sheet.Cells[1, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 4].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 5].Value = "1";
+                sheet.Cells[1, 5].Style.Font.Bold = true;
+                sheet.Cells[1, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 5].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 6].Value = "2";
+                sheet.Cells[1, 6].Style.Font.Bold = true;
+                sheet.Cells[1, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 6].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 7].Value = "3";
+                sheet.Cells[1, 7].Style.Font.Bold = true;
+                sheet.Cells[1, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 7].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 8].Value = "4";
+                sheet.Cells[1, 8].Style.Font.Bold = true;
+                sheet.Cells[1, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 8].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+
+                sheet.Cells[1, 9].Value = "5";
+                sheet.Cells[1, 9].Style.Font.Bold = true;
+                sheet.Cells[1, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 9].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                sheet.Cells[1, 10].Value = "6";
+                sheet.Cells[1, 10].Style.Font.Bold = true;
+                sheet.Cells[1, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 10].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+
+                sheet.Cells[1, 11].Value = "7";
+                sheet.Cells[1, 11].Style.Font.Bold = true;
+                sheet.Cells[1, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 11].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+
+                sheet.Cells[1, 12].Value = "8";
+                sheet.Cells[1, 12].Style.Font.Bold = true;
+                sheet.Cells[1, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 12].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+
+                sheet.Cells[1, 13].Value = "9";
+                sheet.Cells[1, 13].Style.Font.Bold = true;
+                sheet.Cells[1, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[1, 13].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+
+                int rowCount = 2;
+                decimal oct = 0;
+                decimal nov = 0;
+                decimal dec = 0;
+                decimal jan = 0;
+                decimal feb = 0;
+                decimal mar = 0;
+                decimal apr = 0;
+                decimal may = 0;
+                decimal jun = 0;
+                decimal jul = 0;
+                decimal aug = 0;
+                decimal sep = 0;
+
+
+                foreach (var item in salaryAssignmentDtos)
+                {
+                    sheet.Cells[rowCount, 1].Value = item.Salary.SalaryGrade;
+
+                    
+
+                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    {
+                        oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Points);
+                        nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Points);
+                        dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Points);
+                        jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Points);
+                        feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Points);
+                        mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Points);
+                        apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Points);
+                        may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Points);
+                        jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Points);
+                        jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Points);
+                        aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Points);
+                        sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Points);
+                    }
+                    sheet.Cells[rowCount, 2].Value = oct;
+                    sheet.Cells[rowCount, 3].Value = nov;
+                    sheet.Cells[rowCount, 4].Value = dec;
+                    sheet.Cells[rowCount, 5].Value = jan;
+                    sheet.Cells[rowCount, 6].Value = feb;
+                    sheet.Cells[rowCount, 7].Value = mar;
+                    sheet.Cells[rowCount, 8].Value = apr;
+                    sheet.Cells[rowCount, 9].Value = may;
+                    sheet.Cells[rowCount, 10].Value = jun;
+                    sheet.Cells[rowCount, 11].Value = jul;
+                    sheet.Cells[rowCount, 12].Value = aug;
+                    sheet.Cells[rowCount, 13].Value = sep;
+
+                    oct = 0; nov = 0; dec = 0; jan = 0;feb = 0;mar = 0;apr = 0;may = 0;jun = 0;jul = 0;aug = 0;sep = 0;
+                    rowCount++;
+                }
+               
+
+
+                var excelData = package.GetAsByteArray();
+                var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                var fileName = explanation.ExplanationName+".xlsx";
+                return File(excelData, contentType, fileName);
+
             }
         }
     }
