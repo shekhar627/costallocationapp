@@ -531,8 +531,6 @@ namespace CostAllocationApp.Controllers
                         count++;
                     } 
                 }
-
-
                 var excelData = package.GetAsByteArray();
                 var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 var fileName = _department.DepartmentName+ ".xlsx";
