@@ -113,7 +113,7 @@ namespace CostAllocationApp.Controllers.Api
                         forecast.Total = 0;
 
                     }
-                    else
+                    else 
                     {
                         forecast.Points = tempPoint;
                         forecast.Total = Convert.ToDecimal(temp[2]);
