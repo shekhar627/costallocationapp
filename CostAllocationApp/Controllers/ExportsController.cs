@@ -142,7 +142,6 @@ namespace CostAllocationApp.Controllers
                                 //tdPoints += $@"<td style='padding-right:20px;text-align: right;'>{forecastItem.Total}</td>";
                                 tdPoints += $@"<td style='text-align: right;'>{forecastItem.Total}</td>";
                             }
-
                         }
                     }
                     htmlTable += $@"

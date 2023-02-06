@@ -315,6 +315,7 @@ function loadAssignmentRowData(id) {
     //$("#namelist_delete").modal('show');
     $('#namelist_inactive_rowid').val(id);
 }
+
 //save edit information
 $('#add_name_edit').on('click', function () {
     var sectionId = $('#section_edit').find(":selected").val();
@@ -323,8 +324,11 @@ $('#add_name_edit').on('click', function () {
     var roleId = $('#role_edit').find(":selected").val();
     var companyId = $('#company_edit').find(":selected").val();
     var explanationId = $('#explanation_edit').find(":selected").val();
-    var unitPrice = $('#unitprice_edit').val();
-    var gradeId = $('#grade_edit_hidden').val();
+    var unitPrice = $('#unitprice_edit').val();    
+    var gradeId = $('#grade_edit').find(":selected").val();
+    if(gradeId =='' && gradeId == null){
+        var gradeId = $('#grade_edit_hidden').val();
+    }    
     var rowId = $('#row_id_hidden_edit').val();
     var remarks = $('#memo_edit').val();
 
