@@ -295,8 +295,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -500,7 +500,8 @@ namespace CostAllocationApp.Controllers
                         sheet.Cells["C" + count].Value = item.CompanyName;
                         sheet.Cells["D" + count].Value = item.DepartmentName;
                         sheet.Cells["E" + count].Value = item.GradePoint;
-                        sheet.Cells["F" + count].Value = Convert.ToDecimal(item.UnitPrice);
+                        sheet.Cells["F" + count].Value = Convert.ToDecimal(item.UnitPrice).ToString("N0");
+                        sheet.Cells["F" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
                         //string[] cellNumber = new string[12]{"G","H","I","J","K","L","M","N","O","P","Q","R"};
 
@@ -524,18 +525,30 @@ namespace CostAllocationApp.Controllers
 
                             for (int i = 0; i < item.forecasts.Count; i++)
                             {
-                                sheet.Cells["S" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["T" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["U" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["V" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["W" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["X" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["Y" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["Z" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["AA" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["AB" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["AC" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
-                                sheet.Cells["AD" + count].Value = Convert.ToDecimal(item.forecasts[i].Total);
+                                sheet.Cells["S" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["S" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["T" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["T" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["U" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["U" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["V" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["V" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["W" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["W" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["X" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["X" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["Y" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["Y" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["Z" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["Z" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["AA" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["AA" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["AB" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["AB" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["AC" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["AC" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                sheet.Cells["AD" + count].Value = Convert.ToDecimal(item.forecasts[i].Total).ToString("N0");
+                                sheet.Cells["AD" + count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             }
                         }
                         count++;
@@ -737,18 +750,30 @@ namespace CostAllocationApp.Controllers
                         aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
                         sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
                     }
-                    sheet.Cells[rowCount, 3].Value = oct;
-                    sheet.Cells[rowCount, 4].Value = nov;
-                    sheet.Cells[rowCount, 5].Value = dec;
-                    sheet.Cells[rowCount, 6].Value = jan;
-                    sheet.Cells[rowCount, 7].Value = feb;
-                    sheet.Cells[rowCount, 8].Value = mar;
-                    sheet.Cells[rowCount, 9].Value = apr;
-                    sheet.Cells[rowCount, 10].Value = may;
-                    sheet.Cells[rowCount, 11].Value = jun;
-                    sheet.Cells[rowCount, 12].Value = jul;
-                    sheet.Cells[rowCount, 13].Value = aug;
-                    sheet.Cells[rowCount, 14].Value = sep;
+                    sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
+                    sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
+                    sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
+                    sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
+                    sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
+                    sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
+                    sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
+                    sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 10].Value = may.ToString("N0");
+                    sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
+                    sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
+                    sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
+                    sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
+                    sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
                     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                     rowCount++;
@@ -864,18 +889,30 @@ namespace CostAllocationApp.Controllers
                                 sep += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 9).Total);
                             }
 
-                            sheet.Cells[rowCount, 3].Value = oct;
-                            sheet.Cells[rowCount, 4].Value = nov;
-                            sheet.Cells[rowCount, 5].Value = dec;
-                            sheet.Cells[rowCount, 6].Value = jan;
-                            sheet.Cells[rowCount, 7].Value = feb;
-                            sheet.Cells[rowCount, 8].Value = mar;
-                            sheet.Cells[rowCount, 9].Value = apr;
-                            sheet.Cells[rowCount, 10].Value = may;
-                            sheet.Cells[rowCount, 11].Value = jun;
-                            sheet.Cells[rowCount, 12].Value = jul;
-                            sheet.Cells[rowCount, 13].Value = aug;
-                            sheet.Cells[rowCount, 14].Value = sep;
+                            sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
+                            sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
+                            sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
+                            sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
+                            sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
+                            sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
+                            sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
+                            sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 10].Value = may.ToString("N0");
+                            sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
+                            sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
+                            sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
+                            sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
+                            sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
                             oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                             rowCount++;
