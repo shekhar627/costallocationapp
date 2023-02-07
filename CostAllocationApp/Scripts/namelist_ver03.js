@@ -315,6 +315,7 @@ function loadAssignmentRowData(id) {
     //$("#namelist_delete").modal('show');
     $('#namelist_inactive_rowid').val(id);
 }
+
 //save edit information
 $('#add_name_edit').on('click', function () {
     var sectionId = $('#section_edit').find(":selected").val();
@@ -323,8 +324,11 @@ $('#add_name_edit').on('click', function () {
     var roleId = $('#role_edit').find(":selected").val();
     var companyId = $('#company_edit').find(":selected").val();
     var explanationId = $('#explanation_edit').find(":selected").val();
-    var unitPrice = $('#unitprice_edit').val();
-    var gradeId = $('#grade_edit_hidden').val();
+    var unitPrice = $('#unitprice_edit').val();    
+    var gradeId = $('#grade_edit').find(":selected").val();
+    if(gradeId =='' && gradeId == null){
+        var gradeId = $('#grade_edit_hidden').val();
+    }    
     var rowId = $('#row_id_hidden_edit').val();
     var remarks = $('#memo_edit').val();
 
@@ -574,7 +578,6 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
 
             var count = 1;
             $.each(assignmentData, function (index, item) {
-                // console.log(item);
                 unitPrices.push(item.UnitPrice);
                 previousAssignmentRow = item.SubCode;
                 if (count == 1) {
@@ -699,28 +702,35 @@ function addNew() {
 
         }
     });
+    
+    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
+    $.getJSON('/api/Salaries/')
+        .done(function (data) {
+            
+            $('#grade_edit').empty();
+            $('#grade_edit').append(`<option value='-1'>Select Grade</option>`);
+            $.each(data, function (key, item) {
+                $('#grade_edit').append(`<option value='${item.Id}'>${item.SalaryGrade}</option>`);
+            });
 
-    //salaries
-    //$.ajax({
-    //    url: '/api/Salaries/',
-    //    type: 'GET',
-    //    async: false,
-    //    dataType: 'json',
-    //    success: function (data) {
-    //        text += '<td>';
-    //        text += `<select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onchange="LoadGradeValue(this);"><option value=''>Select Section</option>`;
-    //        $.each(data, function (key, item) {
-    //            text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
-    //        });
-    //        text += '</select></td>';
-    //    },
-    //    error: function () {
-    //    }
-    //});
+            if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {
+                if (assignmentData.CompanyName.toLowerCase() == "mw" || assignmentData.SectionName.toLowerCase() == 'mw') {
+                    $("#grade_edit option[value=" + assignmentData.GradeId + "]").attr("selected", "selected");
+                } else {
+                    $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
+                    $("#grade_edit").attr('onclick', 'return false;');
+                    $("#grade_edit").attr('onkeydown', 'return false;');
+                }
+            } else {
+                $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
+                $("#grade_edit").attr('onclick', 'return false;');
+                $("#grade_edit").attr('onkeydown', 'return false;');
+            }
+        });
+    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
 
-
-    text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>
-                <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
+    text += `<td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
                 <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
             </tr>`;
     $(`#remove_row_${previousAssignmentRow - 1}`).css('display', 'none');
