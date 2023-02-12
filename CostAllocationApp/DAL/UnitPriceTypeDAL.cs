@@ -63,7 +63,7 @@ namespace CostAllocationApp.DAL
         public List<SalaryType> GetAllUnitPriceTypes()
         {
             List<SalaryType> unitPriceTypes = new List<SalaryType>();
-            string query = "select * from UnitPriceTypes where isactive=1";
+            string query = "select * from SalaryTypes";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -80,7 +80,7 @@ namespace CostAllocationApp.DAL
                             unitPriceType.SalaryTypeName = rdr["SalaryTypeName"].ToString();
                             unitPriceType.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             unitPriceType.CreatedBy = rdr["CreatedBy"].ToString();
-                            unitPriceType.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+                            //unitPriceType.IsActive = Convert.ToBoolean(rdr["IsActive"]);
 
                             unitPriceTypes.Add(unitPriceType);
                         }

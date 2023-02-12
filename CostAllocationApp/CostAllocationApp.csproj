@@ -177,6 +177,7 @@
     <Compile Include="Controllers\Api\EmployeesController.cs" />
     <Compile Include="Controllers\Api\ExplanationsController.cs" />
     <Compile Include="Controllers\Api\ForecastsController.cs" />
+    <Compile Include="Controllers\Api\GradeSalaryTypesController.cs" />
     <Compile Include="Controllers\Api\GradesController.cs" />
     <Compile Include="Controllers\Api\InChargesController.cs" />
     <Compile Include="Controllers\Api\RolesController.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Models\EmployeeAssignment.cs" />
     <Compile Include="Models\Explanation.cs" />
     <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\GradeSalaryType.cs" />
     <Compile Include="Models\InCharge.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Salary.cs" />
