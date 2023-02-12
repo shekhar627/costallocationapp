@@ -66,5 +66,10 @@ namespace CostAllocationApp.BLL
         {
             return (a <= number && number <= b);
         }
+
+        public int CreateGradeSalaryType(GradeSalaryType gradeSalaryType)
+        {
+            return salaryDAL.CreateGradeSalaryType(gradeSalaryType);
+        }
     }
 }

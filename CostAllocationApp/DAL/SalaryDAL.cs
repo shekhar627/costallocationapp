@@ -37,6 +37,7 @@ namespace CostAllocationApp.DAL
             }
 
         }
+
         public List<Salary> GetAllSalaryPoints()
         {
             List<Salary> salaries = new List<Salary>();
@@ -196,6 +197,37 @@ namespace CostAllocationApp.DAL
 
                 return salary;
             }
+        }
+
+        public int CreateGradeSalaryType(GradeSalaryType gradeSalaryType)
+        {
+            int result = 0;
+            string query = $@"insert into GradeSalarlyTypes(GradeId,GradeLowPoints,GradeHighPoints,DepartmentId,Year,SalaryTypeId,CreatedBy,CreatedDate) values(@gradeId,@gradeLowPoints,@gradeHighPoints,@departmentId,@year,@salaryTypeId,@createdBy,@createdDate)";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@gradeId", gradeSalaryType.GradeId);
+                cmd.Parameters.AddWithValue("@gradeLowPoints", gradeSalaryType.GradeLowPoints);
+                cmd.Parameters.AddWithValue("@gradeHighPoints", gradeSalaryType.GradeHighPoints);
+                cmd.Parameters.AddWithValue("@departmentId", gradeSalaryType.DepartmentId);
+                cmd.Parameters.AddWithValue("@year", gradeSalaryType.Year);
+                cmd.Parameters.AddWithValue("@salaryTypeId", gradeSalaryType.SalaryTypeId);
+                cmd.Parameters.AddWithValue("@createdBy", gradeSalaryType.CreatedBy);
+                cmd.Parameters.AddWithValue("@createdDate", gradeSalaryType.CreatedDate);
+                //cmd.Parameters.AddWithValue("@isActive", salary.IsActive);
+                try
+                {
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return result;
+            }
+
         }
     }
 }

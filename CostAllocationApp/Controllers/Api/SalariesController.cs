@@ -15,50 +15,74 @@ namespace CostAllocationApp.Controllers.Api
             salaryBLL = new SalaryBLL();
         }
 
+        //[HttpPost]
+        //public IHttpActionResult CreateSalary(Salary salary)
+        //{
+
+        //    if (String.IsNullOrEmpty(salary.SalaryGrade))
+        //    {
+        //        return BadRequest("Grade Required");
+        //    }
+        //    else
+        //    {
+        //        salary.CreatedBy = "";
+        //        salary.CreatedDate = DateTime.Now;
+        //        salary.IsActive = true;
+
+
+        //        //if (salaryBLL.CheckGrade(salary))
+        //        //{
+        //        //    return BadRequest("Data Already Exists!!!");
+        //        //}
+        //        //else
+        //        //{
+        //        //    int result = salaryBLL.CreateSalary(salary);
+        //        //    if (result > 0)
+        //        //    {
+        //        //        return Ok("Data Saved Successfully!");
+        //        //    }
+        //        //    else
+        //        //    {
+        //        //        return BadRequest("Something Went Wrong!!!");
+        //        //    }
+        //        //}
+        //        int result = salaryBLL.CreateSalary(salary);
+        //        if (result > 0)
+        //        {
+        //            return Ok("Data Saved Successfully!");
+        //        }
+        //        else
+        //        {
+        //            return BadRequest("Something Went Wrong!!!");
+        //        }
+
+
+        //    }
+        //}
+
         [HttpPost]
-        public IHttpActionResult CreateSalary(Salary salary)
+        public IHttpActionResult CreateGradeSalaryType(GradeSalaryType gradeSalaryType)
         {
 
-            if (String.IsNullOrEmpty(salary.SalaryGrade))
+            gradeSalaryType.CreatedBy = "";
+            gradeSalaryType.CreatedDate = DateTime.Now;
+                //salary.IsActive = true;
+
+
+
+            int result = salaryBLL.CreateGradeSalaryType(gradeSalaryType);
+            if (result > 0)
             {
-                return BadRequest("Grade Required");
+                return Ok("Data Saved Successfully!");
             }
             else
             {
-                salary.CreatedBy = "";
-                salary.CreatedDate = DateTime.Now;
-                salary.IsActive = true;
-
-
-                //if (salaryBLL.CheckGrade(salary))
-                //{
-                //    return BadRequest("Data Already Exists!!!");
-                //}
-                //else
-                //{
-                //    int result = salaryBLL.CreateSalary(salary);
-                //    if (result > 0)
-                //    {
-                //        return Ok("Data Saved Successfully!");
-                //    }
-                //    else
-                //    {
-                //        return BadRequest("Something Went Wrong!!!");
-                //    }
-                //}
-                int result = salaryBLL.CreateSalary(salary);
-                if (result > 0)
-                {
-                    return Ok("Data Saved Successfully!");
-                }
-                else
-                {
-                    return BadRequest("Something Went Wrong!!!");
-                }
-
-
+                return BadRequest("Something Went Wrong!!!");
             }
+
+
         }
+        
         [HttpGet]
         public IHttpActionResult Salaries()
         {

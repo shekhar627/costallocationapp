@@ -15,7 +15,7 @@
     margin-top: 10px;
     display: inline-block;
 }
-#salary_inactive_btn {
+/*#salary_inactive_btn {
     background: indianred;
     color: white;
     border-radius: 5px;
@@ -26,8 +26,8 @@
 #salary_table td, th {
     border: 1px solid;
     padding: 0px !important;
-}
-#salary_table {
+}*/
+/*#salary_table {
     width: 47%;
     border-collapse: collapse;
     font-size: 14px;
@@ -37,28 +37,28 @@
     background-color: #3c4b5d;
     color: white;
     text-align: center;
-}
-.cutom_button_group_salary {
+}*/
+.custom_button_group_salary {
     float: right;
     margin-left: 69%;
 }
-#salary_table tbody tr td:last-child {
+/*#salary_table tbody tr td:last-child {
     border: 1px solid;
     padding: 2px !important;
     text-align: left;
     text-indent: 1em;
-}
-#salary_delete_btn {
+}*/
+/*#salary_delete_btn {
     padding-left: 429px;
-}
-.salary_error_msg {
+}*/
+.salary_year_err, .salary_department_name_err, .salary_salaryType_err, .salary_gradeId_name_err, .salary_beginning_name_err, .salary_revision_name_err {
     display: none;
     width: 100%;
     margin-top: 0.25rem;
     font-size: 100%;
     color: #dc3545;
 }
-#salary_list_tbody {
+/*#salary_list_tbody {
     text-align: center;
 }
 #salary_table thead th:nth-of-type(1) {
@@ -66,7 +66,8 @@
 }
 #salary_table thead th:nth-of-type(2) {
     width: 200px
-}
+}*/
+
 #salary_body {
     width: 59% !important;
 }
