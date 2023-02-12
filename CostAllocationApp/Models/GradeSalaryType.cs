@@ -9,8 +9,8 @@ namespace CostAllocationApp.Models
     {
         public int Id { get; set; }
         public int GradeId { get; set; }
-        public float GradeLowPoints { get; set; }
-        public float GradeHighPoints { get; set; }
+        public double GradeLowPoints { get; set; }
+        public double GradeHighPoints { get; set; }
         public int DepartmentId { get; set; }
         public int Year { get; set; }
         public int SalaryTypeId { get; set; }

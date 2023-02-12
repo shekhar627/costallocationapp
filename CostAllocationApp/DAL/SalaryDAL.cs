@@ -229,5 +229,41 @@ namespace CostAllocationApp.DAL
             }
 
         }
+
+        public GradeSalaryType GetGradeSalaryType(int departmentId,int salaryTypeId,int year,int gradeId)
+        {
+            GradeSalaryType gradeSalaryType = new GradeSalaryType(); ;
+            string query = $@"select * from GradeSalarlyTypes where GradeId = {gradeId} and DepartmentId={departmentId} and year={year} and SalaryTypeId = {salaryTypeId    }";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            gradeSalaryType.Id = Convert.ToInt32(rdr["Id"]);
+                            gradeSalaryType.GradeId = Convert.ToInt32(rdr["GradeId"]);
+                            gradeSalaryType.GradeLowPoints = Convert.ToDouble(rdr["GradeLowPoints"]);
+                            gradeSalaryType.GradeHighPoints = Convert.ToDouble(rdr["GradeHighPoints"]);
+                            gradeSalaryType.DepartmentId = Convert.ToInt32(rdr["DepartmentId"]);
+                            gradeSalaryType.Year = Convert.ToInt32(rdr["Year"]);
+                            gradeSalaryType.SalaryTypeId = Convert.ToInt32(rdr["SalaryTypeId"]);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    
+                }
+
+                return gradeSalaryType;
+            }
+        }
     }
 }

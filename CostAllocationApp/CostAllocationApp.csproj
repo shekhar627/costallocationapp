@@ -218,6 +218,7 @@
     <Compile Include="DAL\UnitPriceTypeDAL.cs" />
     <Compile Include="DAL\UploadExcelDAL.cs" />
     <Compile Include="Dtos\EmployeeAssignmentDTO.cs" />
+    <Compile Include="Dtos\GradeCommonMasterDto.cs" />
     <Compile Include="Dtos\SalaryAssignmentDto.cs" />
     <Compile Include="Dtos\ForecastDto.cs" />
     <Compile Include="Dtos\SendToForecaseApiDto.cs" />

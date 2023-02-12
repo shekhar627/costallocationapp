@@ -5,6 +5,7 @@ using System.Web;
 using CostAllocationApp.DAL;
 using CostAllocationApp.ViewModels;
 using CostAllocationApp.BLL;
+using CostAllocationApp.Models;
 
 namespace CostAllocationApp.BLL
 {
@@ -33,6 +34,11 @@ namespace CostAllocationApp.BLL
             }
 
             return _assignments;
+        }
+
+        public List<GradeSalaryType> GetGradeSalaryTypes(int gradeId, int departmentId, int year,int salaryTypeId)
+        {
+            return _exportDal.GetGradeSalaryTypes(gradeId, departmentId,year, salaryTypeId);
         }
     }
 }

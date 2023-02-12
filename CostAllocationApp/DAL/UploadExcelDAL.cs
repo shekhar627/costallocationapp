@@ -339,7 +339,7 @@ namespace CostAllocationApp.DAL
             }
             return _salary;
         }
-        public GradeSalaryType GetGradeSalaryTypeIdByGradeId(int? gradeId,int? departmentId)
+        public GradeSalaryType GetGradeSalaryTypeIdByGradeId(int? gradeId,int? departmentId,int year,int salaryTypeId)
         {
             GradeSalaryType _salaryType = new GradeSalaryType();
 
@@ -347,7 +347,7 @@ namespace CostAllocationApp.DAL
             string query = "";
             if (!string.IsNullOrEmpty(gradeId.ToString()) && !string.IsNullOrEmpty(departmentId.ToString()))
             {
-                where += $"GradeId = {gradeId} and DepartmentId = {departmentId}";
+                where += $"GradeId = {gradeId} and DepartmentId = {departmentId} and Year={year} and SalaryTypeId={salaryTypeId}";
 
                 query = $@"SELECt Id,GradeId,GradeLowPoints FROM GradeSalarlyTypes 
                         where {where}";

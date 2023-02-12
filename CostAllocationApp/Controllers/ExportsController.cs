@@ -11,6 +11,8 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
 using CostAllocationApp.Dtos;
+using System.Data;
+using CostAllocationApp.Models;
 
 namespace CostAllocationApp.Controllers
 {
@@ -20,12 +22,19 @@ namespace CostAllocationApp.Controllers
         private ExportBLL _exportBLL = null;
         private SalaryBLL _salaryBLL = null;
         private ExplanationsBLL _explanationsBLL = null;
+        private GradeBLL _gradeBll = null;
+        private CommonMasterBLL _commonMasterBLL = null;
+        private UnitPriceTypeBLL _unitPriceTypeBLL = null;
+
         public ExportsController()
         {
             _departmentBLL = new DepartmentBLL();
             _exportBLL = new ExportBLL();
             _salaryBLL = new SalaryBLL();
             _explanationsBLL = new ExplanationsBLL();
+            _gradeBll = new GradeBLL();
+            _commonMasterBLL = new CommonMasterBLL();
+            _unitPriceTypeBLL = new UnitPriceTypeBLL();
         }
         // GET: Exports
         public FileResult ExportBySection(int sectionId=0,string sectionName = "")
@@ -568,13 +577,28 @@ namespace CostAllocationApp.Controllers
             return View(new ExportViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
 
+        class ValuesWithGrade
+        {
+            public string GradeName { get; set; }
+            public int GradeId { get; set; }
+            public float Point { get; set; }
+            public int MonthId { get; set; }
+        }
+
         [HttpPost]
         public ActionResult DataExportByAllocation(int departmentId = 0, int explanationId = 0)
         {
+
+            List<Grade> grades = _gradeBll.GetAllGrade();
+
+
+
             List<SalaryAssignmentDto> salaryAssignmentDtos = new List<SalaryAssignmentDto>();
             var department = _departmentBLL.GetDepartmentByDepartemntId(departmentId);
             var explanation = _explanationsBLL.GetExplanationByExplanationId(explanationId);
             var salaries = _salaryBLL.GetAllSalaryPoints();
+            List<ValuesWithGrade> valuesWithGrades = new List<ValuesWithGrade>();
+           
 
             // get all data with department and allocation
             List<ForecastAssignmentViewModel> assignmentsWithForecast = _exportBLL.AssignmentsByAllocation(departmentId, explanationId);
@@ -583,16 +607,31 @@ namespace CostAllocationApp.Controllers
             //filtered by section and company
             List<ForecastAssignmentViewModel> assignmentsWithSectionAndCompany = assignmentsWithForecast.Where(a=>a.SectionId!=null && a.CompanyId!=null).ToList();
 
-            foreach (var item in salaries)
+            foreach (var item in grades)
             {
-                List<ForecastAssignmentViewModel> filteredAssignmentsBySalaryId = assignmentsWithGrade.Where(a=>a.GradeId==item.Id.ToString()).ToList();
-                salaryAssignmentDtos.Add(new SalaryAssignmentDto { Salary = item,ForecastAssignmentViewModels = filteredAssignmentsBySalaryId });
+                List<ForecastAssignmentViewModel> forecastAssignmentViews = new List<ForecastAssignmentViewModel>();
+
+                SalaryAssignmentDto salaryAssignmentDto = new SalaryAssignmentDto();
+                salaryAssignmentDto.Grade = item;
+
+                var gradeSalaryTypes = _exportBLL.GetGradeSalaryTypes(item.Id,departmentId,2022,2);
+
+                foreach (var gradeSalary in gradeSalaryTypes)
+                {
+                    List<ForecastAssignmentViewModel> filteredAssignmentsByGradeSalaryTypeId = assignmentsWithGrade.Where(a => a.GradeId == gradeSalary.GradeId.ToString()).ToList();
+                    forecastAssignmentViews.AddRange(filteredAssignmentsByGradeSalaryTypeId);
+                }
+
+                salaryAssignmentDto.ForecastAssignmentViewModels = forecastAssignmentViews;
+                salaryAssignmentDtos.Add(salaryAssignmentDto);
+
             }
 
             using (var package = new ExcelPackage())
             {
                 var sheet = package.Workbook.Worksheets.Add("Sheet1");
 
+                #region header column
                 //row-1
                 sheet.Cells[1, 1].Value = "導入";
                 sheet.Cells[1, 1].Style.Font.Color.SetColor(Color.Red);
@@ -746,6 +785,7 @@ namespace CostAllocationApp.Controllers
                 sheet.Cells[4, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 sheet.Cells[4, 14].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
+                #endregion
 
                 int rowCount = 5;
 
@@ -780,7 +820,7 @@ namespace CostAllocationApp.Controllers
                 //man month point
                 foreach (var item in salaryAssignmentDtos)
                 {
-                    sheet.Cells[rowCount, 2].Value = item.Salary.SalaryGrade;
+                    sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
 
 
@@ -824,6 +864,8 @@ namespace CostAllocationApp.Controllers
                     sheet.Cells[rowCount, 14].Value = sep;
                     sepTotal += sep;
 
+
+                    //valuesWithGrades.Add(new ValuesWithGrade { GradeId = item.Grade.Id,GradeName=item.Grade.GradeName,Point= octTotal,MonthId=10 });
                     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                     rowCount++;
                 }
@@ -844,87 +886,87 @@ namespace CostAllocationApp.Controllers
 
                 #region common master
                 sheet.Cells[rowCount, 1].Value = "1人あたりの時間外勤務見込 \n (みなし時間（固定時間）\n を含む残業時間 \n を入力してください";
-                foreach (var item in GetCommonMaster())
+                foreach (var item in _commonMasterBLL.GetCommonMasters())
                 {
-                    sheet.Cells[rowCount, 2].Value = item.Key;
-                    sheet.Cells[rowCount, 3].Value = item.Value;
+                    sheet.Cells[rowCount, 2].Value = item.GradeName;
+                    sheet.Cells[rowCount, 3].Value = item.OverWorkFixedTime;
                  
-                    sheet.Cells[rowCount, 4].Value = item.Value;
+                    sheet.Cells[rowCount, 4].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 5].Value = item.Value;
+                    sheet.Cells[rowCount, 5].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 6].Value = item.Value;
+                    sheet.Cells[rowCount, 6].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 7].Value = item.Value;
+                    sheet.Cells[rowCount, 7].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 8].Value = item.Value;
+                    sheet.Cells[rowCount, 8].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 9].Value = item.Value;
+                    sheet.Cells[rowCount, 9].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 10].Value = item.Value;
+                    sheet.Cells[rowCount, 10].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 11].Value = item.Value;
+                    sheet.Cells[rowCount, 11].Value = item.OverWorkFixedTime;
                     
-                    sheet.Cells[rowCount, 12].Value = item.Value;
+                    sheet.Cells[rowCount, 12].Value = item.OverWorkFixedTime;
 
-                    sheet.Cells[rowCount, 13].Value = item.Value;
+                    sheet.Cells[rowCount, 13].Value = item.OverWorkFixedTime;
 
-                    sheet.Cells[rowCount, 14].Value = item.Value;
+                    sheet.Cells[rowCount, 14].Value = item.OverWorkFixedTime;
 
                     rowCount++;
                 }
                 #endregion
                 rowCount++;
                 #region grade entities
-                foreach (var item in GetAllGradeEntities())
-                {
-                    sheet.Cells[rowCount, 1].Value = item;
-                    sheet.Cells[rowCount, 3].Value = 0;
-                    sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 4].Value = 0;
-                    sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 5].Value = 0;
-                    sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 6].Value = 0;
-                    sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 7].Value = 0;
-                    sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 8].Value = 0;
-                    sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 9].Value = 0;
-                    sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 10].Value = 0;
-                    sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 11].Value = 0;
-                    sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 12].Value = 0;
-                    sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 13].Value = 0;
-                    sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    sheet.Cells[rowCount, 14].Value = 0;
-                    sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                    rowCount++;
-                }
+                //foreach (var item in GetAllGradeEntities())
+                //{
+                //    sheet.Cells[rowCount, 1].Value = item;
+                //    sheet.Cells[rowCount, 3].Value = 0;
+                //    sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 4].Value = 0;
+                //    sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 5].Value = 0;
+                //    sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 6].Value = 0;
+                //    sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 7].Value = 0;
+                //    sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 8].Value = 0;
+                //    sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 9].Value = 0;
+                //    sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 10].Value = 0;
+                //    sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 11].Value = 0;
+                //    sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 12].Value = 0;
+                //    sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 13].Value = 0;
+                //    sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    sheet.Cells[rowCount, 14].Value = 0;
+                //    sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //    sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                //    rowCount++;
+                //}
                 #endregion
 
                 #region other grade with entities
                 rowCount++;
                 int count = 1;
-                foreach (var item in GetOtherGrades())
+                foreach (var item in salaryAssignmentDtos)
                 {
-                    sheet.Cells[rowCount, 1].Value = item.Key;
+                    sheet.Cells[rowCount, 1].Value = item.Grade.GradeName;
                     
                     if (count%2==0)
                     {
@@ -939,8 +981,32 @@ namespace CostAllocationApp.Controllers
                         sheet.Cells[rowCount, 1].Style.Fill.BackgroundColor.SetColor(1, 252,213,180);
                     }
 
+                    //salary allow regular
+                    double totalRegularOct = 0, totalRegularNov = 0, totalRegularDec = 0, totalRegularJan = 0, totalRegularFeb = 0, totalRegularMar = 0, totalRegularApr = 0, totalRegularMay = 0, totalRegularJun = 0, totalRegularJul = 0, totalRegularAug = 0, totalRegularSep = 0;
+                    // salary allow fixed
+                    double totalFixedOct = 0, totalFixedNov = 0, totalFixedDec = 0, totalFixedJan = 0, totalFixedFeb = 0, totalFixedMar = 0, totalFixedApr = 0, totalFixedMay = 0, totalFixedJun = 0, totalFixedJul = 0, totalFixedAug = 0, totalFixedSep = 0;
+                    // salary allow oertime
+                    double totalOverOct = 0, totalOverNov = 0, totalOverDec = 0, totalOverJan = 0, totalOverFeb = 0, totalOverMar = 0, totalOverApr = 0, totalOverMay = 0, totalOverJun = 0, totalOverJul = 0, totalOverAug = 0, totalOverSep = 0;
+                    // total salary
+                    double totalSalaryOct = 0, totalSalaryNov = 0, totalSalaryDec = 0, totalSalaryJan = 0, totalSalaryFeb = 0, totalSalaryMar = 0, totalSalaryApr = 0, totalSalaryMay = 0, totalSalaryJun = 0, totalSalaryJul = 0, totalSalaryAug = 0, totalSalarySep = 0;
+                    // Miscellaneous Wages
+                    double mWagesOct = 0, mWagesNov = 0, mWagesDec = 0, mWagesJan = 0, mWagesFeb = 0, mWagesMar = 0, mWagesApr = 0, mWagesMay = 0, mWagesJun = 0, mWagesJul = 0, mWagesAug = 0, mWagesSep = 0;
+                    //dispatch fee
+                    double dispatchFeeOct = 0, dispatchFeeNov = 0, dispatchFeeDec = 0, dispatchFeeJan = 0, dispatchFeeFeb = 0, dispatchFeeMar = 0, dispatchFeeApr = 0, dispatchFeeMay = 0, dispatchFeeJun = 0, dispatchFeeJul = 0, dispatchFeeAug = 0, dispatchFeeSep = 0;
+                    // employee bonus
+                    double employeeBonusOct = 0, employeeBonusNov = 0, employeeBonusDec = 0, employeeBonusJan = 0, employeeBonusFeb = 0, employeeBonusMar = 0, employeeBonusApr = 0, employeeBonusMay = 0, employeeBonusJun = 0, employeeBonusJul = 0, employeeBonusAug = 0, employeeBonusSep = 0;
+                    //commuting expenses
+                    double commutingExpensesOct = 0, commutingExpensesNov = 0, commutingExpensesDec = 0, commutingExpensesJan = 0, commutingExpensesFeb = 0, commutingExpensesMar = 0, commutingExpensesApr = 0, commutingExpensesMay = 0, commutingExpensesJun = 0, commutingExpensesJul = 0, commutingExpensesAug = 0, commutingExpensesSep = 0;
+                    // welfare expenses
+                    double wExpensesOct = 0, wExpensesNov = 0, wExpensesDec = 0, wExpensesJan = 0, wExpensesFeb = 0, wExpensesMar = 0, wExpensesApr = 0, wExpensesMay = 0, wExpensesJun = 0, wExpensesJul = 0, wExpensesAug = 0, wExpensesSep = 0;
+                    // welfare expenses bonuses
+                    double wExpBonusOct = 0, wExpBonusNov = 0, wExpBonusDec = 0, wExpBonusJan = 0, wExpBonusFeb = 0, wExpBonusMar = 0, wExpBonusApr = 0, wExpBonusMay = 0, wExpBonusJun = 0, wExpBonusJul = 0, wExpBonusAug = 0, wExpBonusSep = 0;
+                    // total statutory
+                    double totalStatutoryOct = 0, totalStatutoryNov = 0, totalStatutoryDec = 0, totalStatutoryJan = 0, totalStatutoryFeb = 0, totalStatutoryMar = 0, totalStatutoryApr = 0, totalStatutoryMay = 0, totalStatutoryJun = 0, totalStatutoryJul = 0, totalStatutoryAug = 0, totalStatutorySep = 0;
+
                     int innerCount = 1;
-                    foreach (var item1 in item.Value)
+                    int salaryTypeCount = 1;
+                    foreach (var salaryType in _unitPriceTypeBLL.GetAllUnitPriceTypes())
                     {
                         if (innerCount > 1)
                         {
@@ -960,7 +1026,7 @@ namespace CostAllocationApp.Controllers
                             }
                         }
 
-                        sheet.Cells[rowCount, 2].Value = item1;
+                        sheet.Cells[rowCount, 2].Value = salaryType.SalaryTypeName;
                         if (count % 2 == 0)
                         {
                             // even
@@ -974,187 +1040,2535 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 2].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 3].Value = 0;
 
-                        if (count % 2 == 0)
+
+
+                        // alligned with the serial of salary type
+
+                        // executives
+                        if (salaryTypeCount == 1)
                         {
-                            // even
-                            sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            sheet.Cells[rowCount, 3].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value =0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value =0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value =0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
                         }
-                        else
+                        // salary allowance (regular)
+                        if (salaryTypeCount == 2)
                         {
-                            // odd
-                            sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+
+
+                            double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
+
+                            sheet.Cells[rowCount, 3].Value = manpointOct * beginningValue * commonValue;
+                            totalRegularOct += manpointOct * beginningValue * commonValue;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+                            sheet.Cells[rowCount, 4].Value = manpointNov * beginningValue * commonValue;
+                            totalRegularNov += manpointNov * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+                            sheet.Cells[rowCount, 5].Value = manpointDec* beginningValue* commonValue;
+                            totalRegularDec+= manpointDec * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                            sheet.Cells[rowCount, 6].Value = manpointJan* beginningValue* commonValue;
+                            totalRegularJan+= manpointJan * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+                            sheet.Cells[rowCount, 7].Value = manpointFeb* beginningValue* commonValue;
+                            totalRegularFeb+= manpointFeb * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+                            sheet.Cells[rowCount, 8].Value = manpointMar* beginningValue* commonValue;
+                            totalRegularMar+= manpointMar * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+                            sheet.Cells[rowCount, 9].Value = manpointApr* beginningValue* commonValue;
+                            totalRegularApr+= manpointApr * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+                            sheet.Cells[rowCount, 10].Value = manpointMay*beginningValue*commonValue;
+                            totalRegularMay+= manpointMay * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+                            sheet.Cells[rowCount, 11].Value = manpointJun*beginningValue*commonValue;
+                            totalRegularJun+= manpointJun * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+
+                            double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                            sheet.Cells[rowCount, 12].Value = manpointJul* beginningValue* commonValue;
+                            totalRegularJul += manpointJul * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+                            sheet.Cells[rowCount, 13].Value = manpointAug* beginningValue*commonValue;
+                            totalRegularAug+= manpointAug * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+                            sheet.Cells[rowCount, 14].Value = manpointSep*beginningValue*commonValue;
+                            totalRegularSep+= manpointSep * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // salary allowance (fixed)
+                        if (salaryTypeCount == 3)
+                        {
+
+
+                            double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
+
+                            sheet.Cells[rowCount, 3].Value = manpointOct * beginningValue * commonValue;
+                            totalFixedOct+= manpointOct * beginningValue * commonValue;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+                            sheet.Cells[rowCount, 4].Value = manpointNov * beginningValue * commonValue;
+                            totalFixedNov+= manpointNov * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+                            sheet.Cells[rowCount, 5].Value = manpointDec * beginningValue * commonValue;
+                            totalFixedDec+= manpointDec * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                            sheet.Cells[rowCount, 6].Value = manpointJan * beginningValue * commonValue;
+                            totalFixedJan+= manpointJan * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+                            sheet.Cells[rowCount, 7].Value = manpointFeb * beginningValue * commonValue;
+                            totalFixedFeb+= manpointFeb * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+                            sheet.Cells[rowCount, 8].Value = manpointMar * beginningValue * commonValue;
+                            totalFixedMar+= manpointMar * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+                            sheet.Cells[rowCount, 9].Value = manpointApr * beginningValue * commonValue;
+                            totalFixedApr += manpointApr * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+                            sheet.Cells[rowCount, 10].Value = manpointMay * beginningValue * commonValue;
+                            totalFixedMay += manpointMay * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+                            sheet.Cells[rowCount, 11].Value = manpointJun * beginningValue * commonValue;
+                            totalFixedJun+= manpointJun * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+
+                            double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                            sheet.Cells[rowCount, 12].Value = manpointJul * beginningValue * commonValue;
+                            totalFixedJul+= manpointJul * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+                            sheet.Cells[rowCount, 13].Value = manpointAug * beginningValue * commonValue;
+                            totalFixedAug+= manpointAug * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+                            sheet.Cells[rowCount, 14].Value = manpointSep * beginningValue * commonValue;
+                            totalFixedSep+= manpointSep * beginningValue * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // salary allowance (overtime)
+                        if (salaryTypeCount == 4)
+                        {
+                            sheet.Cells[rowCount, 3].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // salary allowance (total)
+                        if (salaryTypeCount == 5)
+                        {
+                            sheet.Cells[rowCount, 3].Value = totalRegularOct+totalFixedOct+totalOverOct;
+                            totalSalaryOct += totalRegularOct + totalFixedOct + totalOverOct;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = totalRegularNov + totalFixedNov + totalOverNov;
+                            totalSalaryNov+= totalRegularNov + totalFixedNov + totalOverNov;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = totalRegularDec + totalFixedDec + totalOverDec;
+                            totalSalaryDec+= totalRegularDec + totalFixedDec + totalOverDec;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = totalRegularJan + totalFixedJan + totalOverJan;
+                            totalSalaryJan+= totalRegularJan + totalFixedJan + totalOverJan;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = totalRegularFeb + totalFixedFeb + totalOverFeb;
+                            totalSalaryFeb+= totalRegularFeb + totalFixedFeb + totalOverFeb;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = totalRegularMar + totalFixedMar + totalOverMar;
+                            totalSalaryMar+= totalRegularMar + totalFixedMar + totalOverMar;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = totalRegularApr + totalFixedApr + totalOverApr;
+                            totalSalaryApr+= totalRegularApr + totalFixedApr + totalOverApr;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = totalRegularMay + totalFixedMay + totalOverMay;
+                            totalSalaryMay+= totalRegularMay + totalFixedMay + totalOverMay;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = totalRegularJun + totalFixedJun + totalOverJun;
+                            totalSalaryJun+= totalRegularJun + totalFixedJun + totalOverJun;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = totalRegularJul + totalFixedJul + totalOverJul;
+                            totalSalaryJul += totalRegularJul + totalFixedJul + totalOverJul;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = totalRegularAug + totalFixedAug + totalOverAug;
+                            totalSalaryAug+= totalRegularAug + totalFixedAug + totalOverAug;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = totalRegularSep + totalFixedSep + totalOverSep;
+                            totalSalarySep+= totalRegularSep + totalFixedSep + totalOverSep;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // Miscellneous Wages
+                        if (salaryTypeCount == 6)
+                        {
+
+
+                            double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
+
+                            sheet.Cells[rowCount, 3].Value = manpointOct * beginningValue;
+                            mWagesOct += manpointOct * beginningValue;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+                            sheet.Cells[rowCount, 4].Value = manpointNov * beginningValue;
+                            mWagesNov += manpointNov * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+                            sheet.Cells[rowCount, 5].Value = manpointDec * beginningValue;
+                            mWagesDec += manpointDec * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                            sheet.Cells[rowCount, 6].Value = manpointJan * beginningValue;
+                            mWagesJan += manpointJan * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+                            sheet.Cells[rowCount, 7].Value = manpointFeb * beginningValue;
+                            mWagesFeb += manpointFeb * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+                            sheet.Cells[rowCount, 8].Value = manpointMar * beginningValue;
+                            mWagesMar += manpointMar * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+                            sheet.Cells[rowCount, 9].Value = manpointApr * beginningValue;
+                            mWagesApr += manpointApr * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+                            sheet.Cells[rowCount, 10].Value = manpointMay * beginningValue;
+                            mWagesMay += manpointMay * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+                            sheet.Cells[rowCount, 11].Value = manpointJun * beginningValue;
+                            mWagesJun += manpointJun * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+
+                            double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                            sheet.Cells[rowCount, 12].Value = manpointJul * beginningValue;
+                            mWagesJul += manpointJul * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+                            sheet.Cells[rowCount, 13].Value = manpointAug * beginningValue;
+                            mWagesAug += manpointAug * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+                            sheet.Cells[rowCount, 14].Value = manpointSep * beginningValue;
+                            mWagesSep += manpointSep * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // Dispatch Fee
+                        if (salaryTypeCount == 7)
+                        {
+
+
+                            double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
+
+                            sheet.Cells[rowCount, 3].Value = manpointOct * beginningValue;
+                            dispatchFeeOct += manpointOct * beginningValue;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+                            sheet.Cells[rowCount, 4].Value = manpointNov * beginningValue;
+                            dispatchFeeNov += manpointNov * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+                            sheet.Cells[rowCount, 5].Value = manpointDec * beginningValue;
+                            dispatchFeeDec += manpointDec * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                            sheet.Cells[rowCount, 6].Value = manpointJan * beginningValue;
+                            dispatchFeeJan += manpointJan * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+                            sheet.Cells[rowCount, 7].Value = manpointFeb * beginningValue;
+                            dispatchFeeFeb += manpointFeb * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+                            sheet.Cells[rowCount, 8].Value = manpointMar * beginningValue;
+                            dispatchFeeMar += manpointMar * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+                            sheet.Cells[rowCount, 9].Value = manpointApr * beginningValue;
+                            dispatchFeeApr += manpointApr * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+                            sheet.Cells[rowCount, 10].Value = manpointMay * beginningValue;
+                            dispatchFeeMay += manpointMay * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+                            sheet.Cells[rowCount, 11].Value = manpointJun * beginningValue;
+                            dispatchFeeJun += manpointJun * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+
+                            double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                            sheet.Cells[rowCount, 12].Value = manpointJul * beginningValue;
+                            dispatchFeeJul += manpointJul * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+                            sheet.Cells[rowCount, 13].Value = manpointAug * beginningValue;
+                            dispatchFeeAug += manpointAug * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+                            sheet.Cells[rowCount, 14].Value = manpointSep * beginningValue;
+                            dispatchFeeSep += manpointSep * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // Provision for Employee Bonus
+                        if (salaryTypeCount == 8)
+                        {
+                            sheet.Cells[rowCount, 3].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        //commuting expenses
+                        if (salaryTypeCount == 9)
+                        {
+
+
+                            double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
+
+                            sheet.Cells[rowCount, 3].Value = manpointOct * beginningValue;
+                            commutingExpensesOct += manpointOct * beginningValue;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+                            sheet.Cells[rowCount, 4].Value = manpointNov * beginningValue;
+                            commutingExpensesNov += manpointNov * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+                            sheet.Cells[rowCount, 5].Value = manpointDec * beginningValue;
+                            commutingExpensesDec += manpointDec * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                            sheet.Cells[rowCount, 6].Value = manpointJan * beginningValue;
+                            commutingExpensesJan += manpointJan * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+                            sheet.Cells[rowCount, 7].Value = manpointFeb * beginningValue;
+                            commutingExpensesFeb += manpointFeb * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+                            sheet.Cells[rowCount, 8].Value = manpointMar * beginningValue;
+                            commutingExpensesMar += manpointMar * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+                            sheet.Cells[rowCount, 9].Value = manpointApr * beginningValue;
+                            commutingExpensesApr += manpointApr * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+                            sheet.Cells[rowCount, 10].Value = manpointMay * beginningValue;
+                            commutingExpensesMay += manpointMay * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+                            sheet.Cells[rowCount, 11].Value = manpointJun * beginningValue;
+                            commutingExpensesJun += manpointJun * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+
+                            double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                            sheet.Cells[rowCount, 12].Value = manpointJul * beginningValue;
+                            commutingExpensesJul += manpointJul * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+                            sheet.Cells[rowCount, 13].Value = manpointAug * beginningValue;
+                            commutingExpensesAug += manpointAug * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+                            sheet.Cells[rowCount, 14].Value = manpointSep * beginningValue;
+                            commutingExpensesSep += manpointSep * beginningValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // welfare expenses
+                        if (salaryTypeCount == 10)
+                        {
+                            double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).WelfareCostRatio);
+                            sheet.Cells[rowCount, 3].Value = (totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue;
+                            wExpensesOct+= (totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = (totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue;
+                            wExpensesNov+= (totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = (totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue;
+                            wExpensesDec+= (totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = (totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue;
+                            wExpensesJan+= (totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = (totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue;
+                            wExpensesFeb += (totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = (totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue;
+                            wExpensesMar+= (totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = (totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue;
+                            wExpensesApr+= (totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = (totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue;
+                            wExpensesMay+= (totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = (totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue;
+                            wExpensesJun+= (totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = (totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue;
+                            wExpensesJul+= (totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = (totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue;
+                            wExpensesAug+= (totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = (totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue;
+                            wExpensesSep+= (totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // welfare expenses bonus
+                        if (salaryTypeCount == 11)
+                        {
+                            sheet.Cells[rowCount, 3].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = 0;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // total statutory
+                        if (salaryTypeCount == 12)
+                        {
+                            sheet.Cells[rowCount, 3].Value = wExpensesOct+wExpBonusOct;
+                            totalStatutoryOct+= wExpensesOct + wExpBonusOct;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = wExpensesNov + wExpBonusNov;
+                            totalStatutoryNov+= wExpensesNov + wExpBonusNov;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = wExpensesDec + wExpBonusDec;
+                            totalStatutoryDec+= wExpensesDec + wExpBonusDec;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = wExpensesJan + wExpBonusJan;
+                            totalStatutoryJan+= wExpensesJan + wExpBonusJan;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = wExpensesFeb + wExpBonusFeb;
+                            totalStatutoryFeb+= wExpensesFeb + wExpBonusFeb;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = wExpensesMar + wExpBonusMar;
+                            totalStatutoryMar+= wExpensesMar + wExpBonusMar;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = wExpensesApr + wExpBonusApr;
+                            totalStatutoryApr+= wExpensesApr + wExpBonusApr;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = wExpensesMay + wExpBonusMay;
+                            totalStatutoryMay+= wExpensesMay + wExpBonusMay;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = wExpensesJun + wExpBonusJun;
+                            totalStatutoryJun+= wExpensesJun + wExpBonusJun;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = wExpensesJul + wExpBonusJul;
+                            totalStatutoryJul+= wExpensesJul + wExpBonusJul;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = wExpensesAug + wExpBonusAug;
+                            totalStatutoryAug+= wExpensesAug + wExpBonusAug;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = wExpensesSep + wExpBonusSep;
+                            totalStatutorySep+= wExpensesSep + wExpBonusSep;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                        }
+                        // total expenses
+                        if (salaryTypeCount == 13)
+                        {
+                            sheet.Cells[rowCount, 3].Value = totalSalaryOct + mWagesOct + dispatchFeeOct + employeeBonusOct + commutingExpensesOct + totalSalaryOct;
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 4].Value = totalSalaryNov + mWagesNov + dispatchFeeNov + employeeBonusNov + commutingExpensesNov + totalSalaryNov;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 5].Value = totalSalaryDec + mWagesDec + dispatchFeeDec + employeeBonusDec + commutingExpensesDec + totalSalaryDec;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 6].Value = totalSalaryJan + mWagesJan + dispatchFeeJan + employeeBonusJan + commutingExpensesJan + totalSalaryJan;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 7].Value = totalSalaryFeb + mWagesFeb + dispatchFeeFeb + employeeBonusFeb + commutingExpensesFeb + totalSalaryFeb;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 8].Value = totalSalaryMar + mWagesMar + dispatchFeeMar + employeeBonusMar + commutingExpensesMar + totalSalaryMar;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 9].Value = totalSalaryApr + mWagesApr + dispatchFeeApr + employeeBonusApr + commutingExpensesApr + totalSalaryApr;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 10].Value = totalSalaryMay + mWagesMay + dispatchFeeMay + employeeBonusMay + commutingExpensesMay + totalSalaryMay;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 11].Value = totalSalaryJun + mWagesJun + dispatchFeeJun + employeeBonusJun + commutingExpensesJun + totalSalaryJun;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 12].Value = totalSalaryJul + mWagesJul + dispatchFeeJul + employeeBonusJul + commutingExpensesJul + totalSalaryJul;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+                            sheet.Cells[rowCount, 13].Value = totalSalaryAug + mWagesAug + dispatchFeeAug + employeeBonusAug + commutingExpensesAug + totalSalaryAug;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
+
+                            sheet.Cells[rowCount, 14].Value = totalSalarySep + mWagesSep + dispatchFeeSep + employeeBonusSep + commutingExpensesSep + totalSalarySep;
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+
                         }
 
-                        sheet.Cells[rowCount, 4].Value = 0;
 
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 5].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 6].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 7].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 8].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 9].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 10].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 11].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 12].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 13].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
-
-                        sheet.Cells[rowCount, 14].Value = 0;
-
-                        if (count % 2 == 0)
-                        {
-                            // even
-                            sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
-                        }
-                        else
-                        {
-                            // odd
-                            sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
-                        }
                         rowCount++;
                         innerCount++;
+                        salaryTypeCount++;
                     }
 
                     count++;
@@ -1176,7 +3590,7 @@ namespace CostAllocationApp.Controllers
                 // costing
                 foreach (var item in salaryAssignmentDtos)
                 {
-                    sheet.Cells[rowCount, 2].Value = item.Salary.SalaryGrade;
+                    sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
 
 
@@ -1481,6 +3895,23 @@ namespace CostAllocationApp.Controllers
             }
         }
 
+        public double GetTotalManPoints(List<SalaryAssignmentDto> salaryAssignmentDtos,int monthId,int gradeId)
+        {
+            double points = 0;
+
+            foreach (var item in salaryAssignmentDtos)
+            {
+                if (item.Grade.Id==gradeId)
+                {
+                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    {
+                        points += Convert.ToDouble(singleAssignment.forecasts.SingleOrDefault(f => f.Month == monthId).Points);
+                    }
+                }
+            }
+
+            return points;
+        }
         IDictionary<string,string> GetCommonMaster()
         {
             Dictionary<string, string> values = new Dictionary<string, string>();

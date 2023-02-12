@@ -71,5 +71,9 @@ namespace CostAllocationApp.BLL
         {
             return salaryDAL.CreateGradeSalaryType(gradeSalaryType);
         }
+        public GradeSalaryType GetGradeSalaryType(int departmentId, int salaryTypeId, int year, int gradeId)
+        {
+            return salaryDAL.GetGradeSalaryType(departmentId, salaryTypeId, year, gradeId);
+        }
     }
 }

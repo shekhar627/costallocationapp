@@ -144,5 +144,42 @@ namespace CostAllocationApp.DAL
             return employeeAssignments;
         }
 
+        public List<GradeSalaryType> GetGradeSalaryTypes(int gradeId,int departmentId,int year,int salaryTypeId)
+        {
+            string query = $@"select * from GradeSalarlyTypes where DepartmentId=@departmentId and GradeId=@gradeId and year=@year and SalaryTypeId=@salaryTypeId";
+            List<GradeSalaryType> gradeSalaryTypes = new List<GradeSalaryType>();
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@departmentId", departmentId);
+                cmd.Parameters.AddWithValue("@gradeId", gradeId);
+                cmd.Parameters.AddWithValue("@year", year);
+                cmd.Parameters.AddWithValue("@salaryTypeId", salaryTypeId);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            GradeSalaryType gradeSalaryType = new GradeSalaryType();
+                            gradeSalaryType.Id = Convert.ToInt32(rdr["Id"]);
+                            gradeSalaryType.GradeId = Convert.ToInt32(rdr["GradeId"]);
+
+                            gradeSalaryTypes.Add(gradeSalaryType);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return gradeSalaryTypes;
+        }
+
     }
 }

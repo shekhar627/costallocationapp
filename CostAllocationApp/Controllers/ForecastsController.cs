@@ -157,7 +157,7 @@ namespace CostAllocationApp.Controllers
                                 GradeSalaryType _salaryType = new GradeSalaryType();
                                 if (!string.IsNullOrEmpty(_uploadExcel.GradeId.ToString()) && !string.IsNullOrEmpty(_uploadExcel.DepartmentId.ToString()))
                                 {
-                                    _salaryType = _uploadExcelBll.GetGradeSalaryTypeIdByGradeId(_uploadExcel.GradeId, _uploadExcel.DepartmentId);
+                                    _salaryType = _uploadExcelBll.GetGradeSalaryTypeIdByGradeId(_uploadExcel.GradeId, _uploadExcel.DepartmentId,2022,2);
                                     _uploadExcel.GradeId = _salaryType.Id;
                                     _uploadExcel.UnitPrice = Convert.ToDecimal(_salaryType.GradeLowPoints) ;
                                 }

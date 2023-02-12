@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using CostAllocationApp.ViewModels;
 using CostAllocationApp.Models;
-
 
 namespace CostAllocationApp.Dtos
 {
-    public class SalaryAssignmentDto
+    public class GradeCommonMasterDto
     {
-        public Salary Salary { get; set; }
         public Grade Grade { get; set; }
-        public List<ForecastAssignmentViewModel> ForecastAssignmentViewModels { get; set; }
+        public CommonMaster CommonMaster { get; set; }
     }
 }
