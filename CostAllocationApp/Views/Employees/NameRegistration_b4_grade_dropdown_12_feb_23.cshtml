@@ -1,0 +1,460 @@
+﻿@model CostAllocationApp.ViewModels.EmployeeViewModel
+@{
+    ViewBag.Title = "Name Registration";
+}
+
+@section Styles {
+    <link href="/Content/common.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/nameregistration.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/modal_registrations.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mt-4" id="name_registration_div">
+                        <table id="name_registration">
+                            <thead>
+                                <tr>
+                                    <th class="name_registration_th"></th>
+                                    <th class="name_registration_th"></th>
+                                    <th class="name_registration_th">
+                                        <a class="" href="/Division/CreateDivision" target="_blank" data-toggle="modal" data-target="#section_registration">Section Reg.</a>
+                                    </th>
+                                    <th class="name_list_th"><a class="" href="/Company/CreateCompany" target="_blank" data-toggle="modal" data-target="#company_reg_modal">Com. Reg.</a></th>
+                                    <th class="name_registration_th">
+                                        <a class="" id="department_modal_href" href="javascript:void(0);" data-toggle="modal" data-target="#department_registration">Dept Reg.</a>
+                                    </th>
+                                    <th class="name_list_th"><a class="" href="/Home/Explanation" target="_blank" data-toggle="modal" data-target="#explanation_modal">Allocation Reg.</a></th>
+                                </tr>
+                                <tr>
+                                    <th><label>Name</label></th>
+                                    <th><label>Memo</label></th>
+                                    <th>Section</th>
+                                    <th>Company</th>
+                                    <th>Department</th>
+                                    <th>Allocation</th>
+                                    <th style="width: 50px !important;">Grade</th>
+                                    <th>Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" id="identity_new" value="" placeholder="name">
+                                    </td>
+                                    <td>
+                                        <input type="text" id="memo_new" value="" placeholder="memo">
+                                    </td>
+                                    <td>
+                                        <select id="section_new" class="select_section"></select>
+                                    </td>
+                                    <td>
+                                        <select id="company_new" class="select_company"></select>
+                                    </td>
+                                    <td>
+                                        <select id="department_new" class="select_department"></select>
+                                    </td>
+                                    <td>
+                                        <select id="explanation_new" class="select_explanation"></select>
+                                    </td>
+
+                                    <td>
+                                        @*<input type="text" class="col-12" id="grade_new" placeholder="grade" readonly="">*@
+                                        <select id="grade_new" class=" col-12"></select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="col-12" id="unitprice_new" placeholder="unit price">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="add_name_tbl_2_btn">
+                            <a href="javascript:void(0);" class="" id="add_name_cancel" data-dismiss="modal">Cancel</a>
+                            <a href="javascript:void(0);" class="" id="add_name_add_new">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="grade_edit_hidden" />
+<input type="hidden" id="grade_new_hidden" />
+
+<input type="hidden" id="page_load_after_modal_close" />
+
+<input type="hidden" id="hid_name" />
+<input type="hidden" id="hid_memo" />
+<input type="hidden" id="hid_sectionId" />
+<input type="hidden" id="hid_departmentId" />
+<input type="hidden" id="hid_inchargeId" />
+<input type="hidden" id="hid_roleId" />
+<input type="hidden" id="hid_explanationId" />
+<input type="hidden" id="hid_companyId" />
+<input type="hidden" id="hid_companyName" />
+<input type="hidden" id="hid_grade" />
+<input type="hidden" id="hid_gradeId" />
+<input type="hidden" id="hid_unitPrice" />
+
+@Html.Partial("_Modals")
+
+@section Scripts{
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/nameregistration.js"></script>
+    <script src="/Scripts/modal_registrations.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            function FillDropdownOfNameRegistration() {
+                SetRegistrationValueInHiddenField();
+
+                //SectionDropdown fill
+                $.getJSON('/api/sections/')
+                    .done(function (data) {
+                        $('#section_new').empty();
+                        $('#section_new').append(`<option value=''>Select Section</option>`);
+                        var sectionId = $("#hid_sectionId").val();
+                        $.each(data, function (key, item) {
+                            if (sectionId == item.Id) {
+                                $('#section_new').append(`<option selected value='${item.Id}'>${item.SectionName}</option>`);
+                            } else {
+                                $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+                            }
+                        });
+                    });
+
+                $.getJSON('/api/Departments/')
+                    .done(function (data) {
+                        $('#department_new').empty();
+                        $('#department_new').append(`<option value=''>Select Department</option>`);
+                        var departmentId = $("#hid_departmentId").val();
+                        $.each(data, function (key, item) {
+                            if (departmentId == item.Id) {
+                                $('#department_new').append(`<option selected value='${item.Id}'>${item.DepartmentName}</option>`);
+                            } else {
+                                $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                            }
+                        });
+                    });
+
+                //var sectionId = "";
+                //$.getJSON(`/api/utilities/DepartmentsBySection/${sectionId}`)
+                //    .done(function (data) {
+                //        $('#department_new').empty();
+                //        $('#department_new').append(`<option value=''>Select Department</option>`);
+                //        var departmentId = $("#hid_departmentId").val();
+                //        $.each(data, function (key, item) {
+                //            if (departmentId == item.Id) {
+                //                $('#department_new').append(`<option selected value='${item.Id}'>${item.DepartmentName}</option>`);
+                //            } else {
+                //                $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                //            }
+                //        });
+                //    });
+                //var tempSectionId = $('#section_new').find(":selected").val();
+
+                //if (tempSectionId > 0) {
+                //    $.getJSON(`/api/utilities/DepartmentsBySection/${tempSectionId}`)
+                //        .done(function (data) {
+                //            $('#department_new').empty();
+                //            $('#department_new').append(`<option value=''>Select Department</option>`);
+                //            var departmentId = $("#hid_departmentId").val();
+                //            $.each(data, function (key, item) {
+                //                if (departmentId == item.Id) {
+                //                    $('#department_new').append(`<option selected value='${item.Id}'>${item.DepartmentName}</option>`);
+                //                } else {
+                //                    $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                //                }
+                //            });
+                //        });
+
+                //}
+
+                //InCharge dropdown fill
+                $.getJSON('/api/incharges/')
+                    .done(function (data) {
+                        $('#incharge_new').empty();
+                        $('#incharge_new').append(`<option value=''>Select In-Charge</option>`);
+                        var inchargeId = $("#hid_inchargeId").val();
+                        $.each(data, function (key, item) {
+                            if (inchargeId == item.Id) {
+                                $('#incharge_new').append(`<option selected value='${item.Id}'>${item.InChargeName}</option>`);
+                            } else {
+                                $('#incharge_new').append(`<option value='${item.Id}'>${item.InChargeName}</option>`);
+                            }
+                        });
+                    });
+                //Role dropdown fill
+                $.getJSON('/api/Roles/')
+                    .done(function (data) {
+                        $('#role_new').empty();
+                        $('#role_new').append(`<option value=''>Select Role</option>`);
+                        var roleId = $("#hid_roleId").val();
+                        $.each(data, function (key, item) {
+                            if (roleId == item.Id) {
+                                $('#role_new').append(`<option selected value='${item.Id}'>${item.RoleName}</option>`);
+                            } else {
+                                $('#role_new').append(`<option value='${item.Id}'>${item.RoleName}</option>`);
+                            }
+                        });
+                    });
+
+                //Explanation dropdown fill
+                $.getJSON('/api/Explanations/')
+                    .done(function (data) {
+                        $('#explanation_new').empty();
+                        $('#explanation_new').append(`<option value=''>Select Allocation</option>`);
+                        var explantionId = $("#hid_explanationId").val();
+                        $.each(data, function (key, item) {
+                            if (explantionId == item.Id) {
+                                $('#explanation_new').append(`<option selected value='${item.Id}'>${item.ExplanationName}</option>`);
+                            } else {
+                                $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                            }
+                        });
+                    });
+                //Company dropdown fill
+                $.getJSON('/api/Companies/')
+                    .done(function (data) {
+                        $('#company_new').empty();
+                        $('#company_new').append(`<option value=''>Select Company</option>`);
+                        var companyid = $("#hid_companyId").val();
+                        $.each(data, function (key, item) {
+                            if (companyid == item.Id) {
+                                $('#company_new').append(`<option selected value='${item.Id}'>${item.CompanyName}</option>`);
+                            } else {
+                                $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+                            }
+                        });
+                    });
+            }
+            FillDropdownOfNameRegistration();
+
+            $('#section_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#department_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#in-charge_registration').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue();
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#role_registration_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue();
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#explanation_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //SetRegistrationValueInHiddenField();
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+            $('#company_reg_modal').on('hidden.bs.modal', function () {
+                var isPageLoad = $("#page_load_after_modal_close").val();
+                if (isPageLoad == "yes") {
+                    //window.location.reload(true);
+                    //RetainRegistrationValue()
+                    FillDropdownOfNameRegistration();
+                }
+            })
+
+            function SetRegistrationValueInHiddenField() {
+                let name = $("#identity_new").val();
+                let memo = $("#memo_new").val();
+                let sectionId = $('#section_new').find(":selected").val();
+                console.log("set: sectionId: " + sectionId);
+                let departmentId = $('#department_new').find(":selected").val();
+                let inchargeId = $('#incharge_new').find(":selected").val();
+                let roleId = $('#role_new').find(":selected").val();
+                let explantionId = $('#explanation_new').find(":selected").val();
+                let companyid = $('#company_new').find(":selected").val();
+                let companyName = $('#company_new').find(":selected").text();
+                let grade = $("#grade_new").val();
+                let unitPrice = $("#unitprice_new").val();
+
+                $("#hid_name").val(name);
+                $("#hid_memo").val(memo);
+                $("#hid_sectionId").val(sectionId);
+                //console.log("set 2: sectionId: "+$("#hid_sectionId").val());
+
+                $("#hid_departmentId").val(departmentId);
+                $("#hid_inchargeId").val(inchargeId);
+                $("#hid_roleId").val(roleId);
+                $("#hid_explanationId").val(explantionId);
+                $("#hid_companyId").val(companyid);
+                $("#hid_companyName").val(companyName);
+                $("#hid_grade").val(grade);
+                //$("#hid_gradeId").val(unitPrice);
+                $("#hid_unitPrice").val(unitPrice);
+            }
+        });
+
+
+        //Grade point with unit price value change
+        $('#unitprice_new').on('change', function () {
+            var _unitPrice = $(this).val();
+            var _companyName = $("#company_new option:selected").text();
+
+            $.ajax({
+                url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                type: 'GET',
+                dataType: 'json',
+                //data: {
+                //    unitPrice: _unitPrice
+                //},
+                success: function (data) {
+                    if (_companyName.toLowerCase() == "mti") {
+                        $('#grade_new_hidden').val(data.Id);
+                        $('#grade_new').val(data.SalaryGrade);
+                    } else {
+                        $('#grade_new_hidden').val(data.Id);
+                        $('#grade_new').val('');
+                    }
+                },
+                error: function () {
+                    $('#grade_new_hidden').val('');
+                    $('#grade_new').val('');
+                }
+            });
+        });
+
+        //fill grade point with company change
+        $('#company_new').on('change', function () {
+            var _companyName = $("#company_new option:selected").text();
+            var _unitPrice = $("#unitprice_new").val();
+            console.log("_unitPrice: " + _unitPrice);
+
+            $.ajax({
+                url: `/api/utilities/CompareGrade/${_unitPrice}`,
+                type: 'GET',
+                dataType: 'json',
+                //data: {
+                //    unitPrice: _unitPrice
+                //},
+                success: function (data) {
+                    $('#grade_edit_hidden').val(data.Id);
+                    if (_companyName.toLowerCase() == "mti") {
+                        $('#grade_new_hidden').val(data.Id);
+                        $('#grade_new').val(data.SalaryGrade);
+                    } else {
+                        $('#grade_new').val('');
+                    }
+                },
+                error: function () {
+                    $('#grade_new_hidden').val('');
+                    $('#grade_new').val('');
+                    $('#grade_edit_hidden').val('');
+                }
+            });
+        });
+
+        //cancel button click: close tab
+        $('#add_name_cancel').click(function () {
+            window.top.close();
+        });
+
+        //save name registration data
+        $('#add_name_add_new').on('click', function () {
+
+            var employeeName = $('#identity_new').val();
+            var sectionId = $('#section_new').find(":selected").val();
+            var inchargeId = $('#incharge_new').find(":selected").val();
+            var departmentId = $('#department_new').find(":selected").val();
+            var roleId = $('#role_new').find(":selected").val();
+            var companyId = $('#company_new').find(":selected").val();
+            var explanationId = $('#explanation_new').find(":selected").val();
+            var unitPrice = $('#unitprice_new').val();
+            var gradeId = $('#grade_new_hidden').val();
+            var remarks = $('#memo_new').val();
+
+
+
+            var data = {
+                EmployeeName: employeeName,
+                SectionId: sectionId,
+                DepartmentId: departmentId,
+                InchargeId: inchargeId,
+                RoleId: roleId,
+                ExplanationId: explanationId,
+                CompanyId: companyId,
+                UnitPrice: unitPrice,
+                GradeId: gradeId,
+                Remarks: remarks,
+                SubCode: 1
+
+
+            };
+
+            console.log(data);
+
+            $.ajax({
+                url: '/api/Employees',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (data) {
+
+                    Command: toastr["success"](data, "Success")
+
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    alert('Success');
+                    location.reload();
+                },
+                error: function (data) {
+                    alert(data.responseJSON.Message);
+                    //$('#modal_add_name_new').modal('toggle');
+                }
+            });
+
+
+
+        });
+    </script>
+}

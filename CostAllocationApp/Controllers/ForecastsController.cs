@@ -107,6 +107,7 @@ namespace CostAllocationApp.Controllers
                         int tempAssignmentId = 0;
                         string tempRow = "";
                         int tempYear = upload_year;
+                        tempYear = 2022;
                         dt_ = reader.AsDataSet().Tables[0];
                         int rowcount = dt_.Rows.Count;
 
@@ -143,23 +144,37 @@ namespace CostAllocationApp.Controllers
                             UploadExcel _salary = new UploadExcel();
                             if (tempUnitPrice > 0)
                             {
-                                int? gradeId = _uploadExcelBll.GetGradeIdByUnitPrice(tempUnitPrice.ToString());
-                                _uploadExcel.GradeId = gradeId == 0 ? null : gradeId;
+                                //int? gradeId = _uploadExcelBll.GetGradeIdByUnitPrice(tempUnitPrice.ToString());
+                                //_uploadExcel.GradeId = gradeId == 0 ? null : gradeId;
+                                _uploadExcel.GradeId = null;
                                 _uploadExcel.UnitPrice = tempUnitPrice;
                             }
                             else if (!string.IsNullOrEmpty(dt_.Rows[i][4].ToString()))
                             {
                                 _salary = _uploadExcelBll.GetGradeIdByGradePoints(dt_.Rows[i][4].ToString());
                                 _uploadExcel.GradeId = _salary.GradeId;
-                                if(!string.IsNullOrEmpty(_salary.GradeHighPoints)){
-                                    _uploadExcel.UnitPrice = Convert.ToDecimal(_salary.GradeHighPoints);
-                                }else{
+
+                                GradeSalaryType _salaryType = new GradeSalaryType();
+                                if (!string.IsNullOrEmpty(_uploadExcel.GradeId.ToString()) && !string.IsNullOrEmpty(_uploadExcel.DepartmentId.ToString()))
+                                {
+                                    _salaryType = _uploadExcelBll.GetGradeSalaryTypeIdByGradeId(_uploadExcel.GradeId, _uploadExcel.DepartmentId);
+                                    _uploadExcel.GradeId = _salaryType.Id;
+                                    _uploadExcel.UnitPrice = Convert.ToDecimal(_salaryType.GradeLowPoints) ;
+                                }
+                                else
+                                {
+                                    _uploadExcel.GradeId = null;
                                     _uploadExcel.UnitPrice = 0;
-                                }                                
+                                }
+                                //if(!string.IsNullOrEmpty(_salary.GradeHighPoints)){
+                                //    _uploadExcel.UnitPrice = Convert.ToDecimal(_salary.GradeHighPoints);
+                                //}else{
+                                //    _uploadExcel.UnitPrice = 0;
+                                //}                                
                             }
                             else
                             {
-                                _uploadExcel.GradeId = 0;
+                                _uploadExcel.GradeId = null;
                                 _uploadExcel.UnitPrice = 0;
                             }                           
                             
@@ -257,8 +272,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId + "&allocationId=" + allocationId);
-                //client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
+                //client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId + "&allocationId=" + allocationId);
+                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
 
                 //HTTP POST
                 var postTask = client.GetAsync("");

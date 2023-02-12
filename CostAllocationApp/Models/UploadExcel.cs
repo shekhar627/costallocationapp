@@ -19,5 +19,7 @@ namespace CostAllocationApp.Models
         public string GradePoints { get; set; }
         public string GradeLowPoints { get; set; }
         public string GradeHighPoints { get; set; }
+
+        public string GradeName { get; set; }
     }
 }
