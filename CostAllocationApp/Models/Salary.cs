@@ -12,6 +12,10 @@ namespace CostAllocationApp.Models
         public decimal SalaryLowPoint { get; set; }
         public decimal SalaryHighPoint { get; set; }
         public bool IsActive { get; set; }
+        public int? DepartmentId{ get; set; }
+        public int? Year { get; set; }
+        public int? SalaryTypeId { get; set; }
+
         public string SalaryLowPointWithComma { get; set; }
         public string SalaryHighPointWithComma { get; set; }
     }

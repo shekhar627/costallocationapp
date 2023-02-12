@@ -15,7 +15,7 @@ namespace CostAllocationApp.BLL
             _unitPriceTypeDAL = new UnitPriceTypeDAL();
         }
 
-        public int CreateUnitPriceType(UnitPriceType unitPriceType)
+        public int CreateUnitPriceType(SalaryType unitPriceType)
         {
             return _unitPriceTypeDAL.CreateUnitPriceType(unitPriceType);
         }
@@ -25,7 +25,7 @@ namespace CostAllocationApp.BLL
             return _unitPriceTypeDAL.CheckUnitPriceType(unitPriceTypeName);
         }
 
-        public List<UnitPriceType> GetAllUnitPriceTypes()
+        public List<SalaryType> GetAllUnitPriceTypes()
         {
             return _unitPriceTypeDAL.GetAllUnitPriceTypes();
         }

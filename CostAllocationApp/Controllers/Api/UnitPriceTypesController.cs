@@ -17,9 +17,9 @@ namespace CostAllocationApp.Controllers.Api
         }
         // GET: UnitPriceTypes
         [HttpPost]
-        public IHttpActionResult CreateUnitPriceType(UnitPriceType unitPriceType)
+        public IHttpActionResult CreateUnitPriceType(SalaryType unitPriceType)
         {
-            if (String.IsNullOrEmpty(unitPriceType.UnitPriceTypeName))
+            if (String.IsNullOrEmpty(unitPriceType.SalaryTypeName))
             {
                 return BadRequest("Unit Price Type Name Required");
             }
@@ -29,7 +29,7 @@ namespace CostAllocationApp.Controllers.Api
                 unitPriceType.CreatedDate = DateTime.Now;
                 unitPriceType.IsActive = true;
 
-                if (_unitPriceTypeBLL.CheckUnitPriceType(unitPriceType.UnitPriceTypeName))
+                if (_unitPriceTypeBLL.CheckUnitPriceType(unitPriceType.SalaryTypeName))
                 {
                     return BadRequest("Unit Price Type Name Already Exists!!!");
                 }
@@ -52,7 +52,7 @@ namespace CostAllocationApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult UnitPriceTypes()
         {
-            List<UnitPriceType> unitPriceTypes = _unitPriceTypeBLL.GetAllUnitPriceTypes();
+            List<SalaryType> unitPriceTypes = _unitPriceTypeBLL.GetAllUnitPriceTypes();
             return Ok(unitPriceTypes);
         }
     }

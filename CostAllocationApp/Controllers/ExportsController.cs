@@ -295,8 +295,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -572,6 +572,7 @@ namespace CostAllocationApp.Controllers
         public ActionResult DataExportByAllocation(int departmentId = 0, int explanationId = 0)
         {
             List<SalaryAssignmentDto> salaryAssignmentDtos = new List<SalaryAssignmentDto>();
+            var department = _departmentBLL.GetDepartmentByDepartemntId(departmentId);
             var explanation = _explanationsBLL.GetExplanationByExplanationId(explanationId);
             var salaries = _salaryBLL.GetAllSalaryPoints();
 
@@ -592,81 +593,164 @@ namespace CostAllocationApp.Controllers
             {
                 var sheet = package.Workbook.Worksheets.Add("Sheet1");
 
-                sheet.Cells[1, 1].Value = "Number of People";
-                sheet.Cells[1, 1].Style.Font.Bold = true;
+                //row-1
+                sheet.Cells[1, 1].Value = "導入";
+                sheet.Cells[1, 1].Style.Font.Color.SetColor(Color.Red);
                 sheet.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(Color.Yellow);
 
-                sheet.Cells[1, 2].Value = "Grade";
-                sheet.Cells[1, 2].Style.Font.Bold = true;
+                sheet.Cells[1, 2].Value = department.DepartmentName;
+                sheet.Cells[1, 2].Style.Font.Color.SetColor(Color.Red);
                 sheet.Cells[1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 2].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[1, 2].Style.Fill.BackgroundColor.SetColor(Color.Yellow);
 
-                sheet.Cells[1, 3].Value = "10";
-                sheet.Cells[1, 3].Style.Font.Bold = true;
-                sheet.Cells[1, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 3].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                //row-2
+                sheet.Cells[2, 1].Value = "FY2023";
 
-                sheet.Cells[1, 4].Value = "11";
-                sheet.Cells[1, 4].Style.Font.Bold = true;
-                sheet.Cells[1, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 4].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                //row-3
+                sheet.Cells[3, 1].Value = "";
+                sheet.Cells[3, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 1].Style.Fill.BackgroundColor.SetColor(1,36,64,98);
 
-                sheet.Cells[1, 5].Value = "12";
-                sheet.Cells[1, 5].Style.Font.Bold = true;
-                sheet.Cells[1, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 5].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[3, 2].Value = "";
+                sheet.Cells[3, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 2].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
-                sheet.Cells[1, 6].Value = "1";
-                sheet.Cells[1, 6].Style.Font.Bold = true;
-                sheet.Cells[1, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 6].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[3, 3].Value = "FY2023";
+                sheet.Cells[3, 3].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 3].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
-                sheet.Cells[1, 7].Value = "2";
-                sheet.Cells[1, 7].Style.Font.Bold = true;
-                sheet.Cells[1, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 7].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[3, 4].Value = "FY2023";
+                sheet.Cells[3, 4].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 4].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
-                sheet.Cells[1, 8].Value = "3";
-                sheet.Cells[1, 8].Style.Font.Bold = true;
-                sheet.Cells[1, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 8].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[3, 5].Value = "FY2023";
+                sheet.Cells[3, 5].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 5].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
-                sheet.Cells[1, 9].Value = "4";
-                sheet.Cells[1, 9].Style.Font.Bold = true;
-                sheet.Cells[1, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 9].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[3, 6].Value = "FY2023";
+                sheet.Cells[3, 6].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 6].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 7].Value = "FY2023";
+                sheet.Cells[3, 7].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 7].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 8].Value = "FY2023";
+                sheet.Cells[3, 8].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 8].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 9].Value = "FY2023";
+                sheet.Cells[3, 9].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 9].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 10].Value = "FY2023";
+                sheet.Cells[3, 10].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 10].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 11].Value = "FY2023";
+                sheet.Cells[3, 11].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 11].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 12].Value = "FY2023";
+                sheet.Cells[3, 12].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 12].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 13].Value = "FY2023";
+                sheet.Cells[3, 13].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 13].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[3, 14].Value = "FY2023";
+                sheet.Cells[3, 14].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[3, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[3, 14].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                // row -4
+
+                sheet.Cells[4, 1].Value = "";
+                sheet.Cells[4, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 1].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 2].Value = "";
+                sheet.Cells[4, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 2].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 3].Value = "10月";
+                sheet.Cells[4, 3].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 3].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 4].Value = "11月";
+                sheet.Cells[4, 4].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 4].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 5].Value = "12月";
+                sheet.Cells[4, 5].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 5].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 6].Value = "1月";
+                sheet.Cells[4, 6].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 6].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 7].Value = "2月";
+                sheet.Cells[4, 7].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 7].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 8].Value = "3月";
+                sheet.Cells[4, 8].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 8].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 9].Value = "4月";
+                sheet.Cells[4, 9].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 9].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 10].Value = "5月";
+                sheet.Cells[4, 10].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 10].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 11].Value = "6月";
+                sheet.Cells[4, 11].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 11].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 12].Value = "7月";
+                sheet.Cells[4, 12].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 12].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 13].Value = "8月";
+                sheet.Cells[4, 13].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 13].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheet.Cells[4, 14].Value = "9月";
+                sheet.Cells[4, 14].Style.Font.Color.SetColor(Color.White);
+                sheet.Cells[4, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[4, 14].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
 
-                sheet.Cells[1, 10].Value = "5";
-                sheet.Cells[1, 10].Style.Font.Bold = true;
-                sheet.Cells[1, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 10].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                int rowCount = 5;
 
-                sheet.Cells[1, 11].Value = "6";
-                sheet.Cells[1, 11].Style.Font.Bold = true;
-                sheet.Cells[1, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 11].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
+                sheet.Cells[rowCount, 1].Value = "人数";
 
-
-                sheet.Cells[1, 12].Value = "7";
-                sheet.Cells[1, 12].Style.Font.Bold = true;
-                sheet.Cells[1, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 12].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
-
-
-                sheet.Cells[1, 13].Value = "8";
-                sheet.Cells[1, 13].Style.Font.Bold = true;
-                sheet.Cells[1, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 13].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
-
-
-                sheet.Cells[1, 14].Value = "9";
-                sheet.Cells[1, 14].Style.Font.Bold = true;
-                sheet.Cells[1, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[1, 14].Style.Fill.BackgroundColor.SetColor(Color.SkyBlue);
-
-                int rowCount = 2;
                 decimal oct = 0;
                 decimal nov = 0;
                 decimal dec = 0;
@@ -679,6 +763,19 @@ namespace CostAllocationApp.Controllers
                 decimal jul = 0;
                 decimal aug = 0;
                 decimal sep = 0;
+
+                decimal octTotal = 0;
+                decimal novTotal = 0;
+                decimal decTotal = 0;
+                decimal janTotal = 0;
+                decimal febTotal = 0;
+                decimal marTotal = 0;
+                decimal aprTotal = 0;
+                decimal mayTotal = 0;
+                decimal junTotal = 0;
+                decimal julTotal = 0;
+                decimal augTotal = 0;
+                decimal sepTotal = 0;
 
                 //man month point
                 foreach (var item in salaryAssignmentDtos)
@@ -703,21 +800,368 @@ namespace CostAllocationApp.Controllers
                         sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Points);
                     }
                     sheet.Cells[rowCount, 3].Value = oct;
+                    octTotal += oct;
                     sheet.Cells[rowCount, 4].Value = nov;
+                    novTotal += nov;
                     sheet.Cells[rowCount, 5].Value = dec;
+                    decTotal += dec;
                     sheet.Cells[rowCount, 6].Value = jan;
+                    janTotal += jan;
                     sheet.Cells[rowCount, 7].Value = feb;
+                    febTotal += feb;
                     sheet.Cells[rowCount, 8].Value = mar;
+                    marTotal += mar;
                     sheet.Cells[rowCount, 9].Value = apr;
+                    aprTotal += apr;
                     sheet.Cells[rowCount, 10].Value = may;
+                    mayTotal += may;
                     sheet.Cells[rowCount, 11].Value = jun;
+                    junTotal += jun;
                     sheet.Cells[rowCount, 12].Value = jul;
+                    julTotal += jul;
                     sheet.Cells[rowCount, 13].Value = aug;
+                    augTotal += aug;
                     sheet.Cells[rowCount, 14].Value = sep;
+                    sepTotal += sep;
 
                     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                     rowCount++;
                 }
+                sheet.Cells[rowCount, 2].Value = "合計";
+                sheet.Cells[rowCount, 3].Value = octTotal;
+                sheet.Cells[rowCount, 4].Value = novTotal;
+                sheet.Cells[rowCount, 5].Value = decTotal;
+                sheet.Cells[rowCount, 6].Value = janTotal;
+                sheet.Cells[rowCount, 7].Value = febTotal;
+                sheet.Cells[rowCount, 8].Value = marTotal;
+                sheet.Cells[rowCount, 9].Value = aprTotal;
+                sheet.Cells[rowCount, 10].Value = mayTotal;
+                sheet.Cells[rowCount, 11].Value = junTotal;
+                sheet.Cells[rowCount, 12].Value = julTotal;
+                sheet.Cells[rowCount, 13].Value = augTotal;
+                sheet.Cells[rowCount, 14].Value = sepTotal;
+                rowCount++;
+
+                #region common master
+                sheet.Cells[rowCount, 1].Value = "1人あたりの時間外勤務見込 \n (みなし時間（固定時間）\n を含む残業時間 \n を入力してください";
+                foreach (var item in GetCommonMaster())
+                {
+                    sheet.Cells[rowCount, 2].Value = item.Key;
+                    sheet.Cells[rowCount, 3].Value = item.Value;
+                 
+                    sheet.Cells[rowCount, 4].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 5].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 6].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 7].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 8].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 9].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 10].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 11].Value = item.Value;
+                    
+                    sheet.Cells[rowCount, 12].Value = item.Value;
+
+                    sheet.Cells[rowCount, 13].Value = item.Value;
+
+                    sheet.Cells[rowCount, 14].Value = item.Value;
+
+                    rowCount++;
+                }
+                #endregion
+                rowCount++;
+                #region grade entities
+                foreach (var item in GetAllGradeEntities())
+                {
+                    sheet.Cells[rowCount, 1].Value = item;
+                    sheet.Cells[rowCount, 3].Value = 0;
+                    sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 4].Value = 0;
+                    sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 5].Value = 0;
+                    sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 6].Value = 0;
+                    sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 7].Value = 0;
+                    sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 8].Value = 0;
+                    sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 9].Value = 0;
+                    sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 10].Value = 0;
+                    sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 11].Value = 0;
+                    sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 12].Value = 0;
+                    sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 13].Value = 0;
+                    sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    sheet.Cells[rowCount, 14].Value = 0;
+                    sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    rowCount++;
+                }
+                #endregion
+
+                #region other grade with entities
+                rowCount++;
+                int count = 1;
+                foreach (var item in GetOtherGrades())
+                {
+                    sheet.Cells[rowCount, 1].Value = item.Key;
+                    
+                    if (count%2==0)
+                    {
+                        // even
+                        sheet.Cells[rowCount, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCount, 1].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                    }
+                    else
+                    {
+                        // odd
+                        sheet.Cells[rowCount, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCount, 1].Style.Fill.BackgroundColor.SetColor(1, 252,213,180);
+                    }
+
+                    int innerCount = 1;
+                    foreach (var item1 in item.Value)
+                    {
+                        if (innerCount > 1)
+                        {
+                            sheet.Cells[rowCount, 1].Value = "";
+
+                            if (count % 2 == 0)
+                            {
+                                // even
+                                sheet.Cells[rowCount, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 1].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                            }
+                            else
+                            {
+                                // odd
+                                sheet.Cells[rowCount, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                sheet.Cells[rowCount, 1].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                            }
+                        }
+
+                        sheet.Cells[rowCount, 2].Value = item1;
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 2].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 2].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 3].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 4].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 5].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 6].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 7].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 8].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 9].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 10].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 11].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 12].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 13].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+
+                        sheet.Cells[rowCount, 14].Value = 0;
+
+                        if (count % 2 == 0)
+                        {
+                            // even
+                            sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 218, 238, 243);
+                        }
+                        else
+                        {
+                            // odd
+                            sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
+                        }
+                        rowCount++;
+                        innerCount++;
+                    }
+
+                    count++;
+
+                }
+                #endregion
+
 
                 rowCount = rowCount + 2;
 
@@ -728,6 +1172,7 @@ namespace CostAllocationApp.Controllers
                 sheet.Cells[rowCount, 1].Value = "Costing";
                 rowCount++;
 
+                octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
                 // costing
                 foreach (var item in salaryAssignmentDtos)
                 {
@@ -751,34 +1196,73 @@ namespace CostAllocationApp.Controllers
                         sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
                     }
                     sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
+                    octTotal += oct;
                     sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
+                    novTotal += nov;
                     sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
+                    decTotal += dec;
                     sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
+                    janTotal += jan;
                     sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
+                    febTotal += feb;
                     sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
+                    marTotal += mar;
                     sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
+                    aprTotal += apr;
                     sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 10].Value = may.ToString("N0");
+                    mayTotal += may;
                     sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
+                    junTotal += jun;
                     sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
+                    julTotal += jul;
                     sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
+                    augTotal += aug;
                     sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
+                    sepTotal += sep;
                     sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
                     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                     rowCount++;
                 }
 
+
+                sheet.Cells[rowCount, 2].Value = "合計";
+                sheet.Cells[rowCount, 3].Value = octTotal.ToString("N0");
+                sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 4].Value = novTotal.ToString("N0");
+                sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 5].Value = decTotal.ToString("N0");
+                sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 6].Value = janTotal.ToString("N0");
+                sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 7].Value = febTotal.ToString("N0");
+                sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 8].Value = marTotal.ToString("N0");
+                sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 9].Value = aprTotal.ToString("N0");
+                sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 10].Value = mayTotal.ToString("N0");
+                sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 11].Value = junTotal.ToString("N0");
+                sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 12].Value = julTotal.ToString("N0");
+                sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 13].Value = augTotal.ToString("N0");
+                sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                sheet.Cells[rowCount, 14].Value = sepTotal.ToString("N0");
+                sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                rowCount++;
 
                 rowCount = rowCount + 2;
 
@@ -793,6 +1277,7 @@ namespace CostAllocationApp.Controllers
                 {
                     List<ForecastAssignmentViewModel> customizedList = assignmentsWithSectionAndCompany.ToList();
                     List<ForecastAssignmentViewModel> tempList = null;
+                    octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
 
                     foreach (var item in assignmentsWithSectionAndCompany)
                     {
@@ -828,22 +1313,49 @@ namespace CostAllocationApp.Controllers
                             }
 
                             sheet.Cells[rowCount, 3].Value = oct;
+                            octTotal += oct;
                             sheet.Cells[rowCount, 4].Value = nov;
+                            novTotal += nov;
                             sheet.Cells[rowCount, 5].Value = dec;
+                            decTotal += dec;
                             sheet.Cells[rowCount, 6].Value = jan;
+                            janTotal += jan;
                             sheet.Cells[rowCount, 7].Value = feb;
+                            febTotal += feb;
                             sheet.Cells[rowCount, 8].Value = mar;
+                            marTotal += mar;
                             sheet.Cells[rowCount, 9].Value = apr;
+                            aprTotal += apr;
                             sheet.Cells[rowCount, 10].Value = may;
+                            mayTotal += may;
                             sheet.Cells[rowCount, 11].Value = jun;
+                            junTotal += jun;
                             sheet.Cells[rowCount, 12].Value = jul;
+                            julTotal += jul;
                             sheet.Cells[rowCount, 13].Value = aug;
+                            augTotal += aug;
                             sheet.Cells[rowCount, 14].Value = sep;
+                            sepTotal += sep;
 
                             oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                             rowCount++;
                         }
                     }
+
+                    sheet.Cells[rowCount, 2].Value = "合計";
+                    sheet.Cells[rowCount, 3].Value = octTotal;
+                    sheet.Cells[rowCount, 4].Value = novTotal;
+                    sheet.Cells[rowCount, 5].Value = decTotal;
+                    sheet.Cells[rowCount, 6].Value = janTotal;
+                    sheet.Cells[rowCount, 7].Value = febTotal;
+                    sheet.Cells[rowCount, 8].Value = marTotal;
+                    sheet.Cells[rowCount, 9].Value = aprTotal;
+                    sheet.Cells[rowCount, 10].Value = mayTotal;
+                    sheet.Cells[rowCount, 11].Value = junTotal;
+                    sheet.Cells[rowCount, 12].Value = julTotal;
+                    sheet.Cells[rowCount, 13].Value = augTotal;
+                    sheet.Cells[rowCount, 14].Value = sepTotal;
+                    rowCount++;
 
                     rowCount = rowCount + 2;
                     sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
@@ -855,7 +1367,7 @@ namespace CostAllocationApp.Controllers
                     rowCount++;
 
                     customizedList = assignmentsWithSectionAndCompany.ToList();
-
+                    octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
                     foreach (var item in assignmentsWithSectionAndCompany)
                     {
                         
@@ -890,34 +1402,72 @@ namespace CostAllocationApp.Controllers
                             }
 
                             sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
+                            octTotal += oct;
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
+                            novTotal += nov;
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
+                            decTotal += dec;
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
+                            janTotal += jan;
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
+                            febTotal += feb;
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
+                            marTotal += mar;
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
+                            aprTotal += apr;
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 10].Value = may.ToString("N0");
+                            mayTotal += may;
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
+                            junTotal += jun;
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
+                            julTotal += jul;
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
+                            augTotal += aug;
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
+                            sepTotal += sep;
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
                             oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
                             rowCount++;
                         }
                     }
+                    sheet.Cells[rowCount, 2].Value = "合計";
+                    sheet.Cells[rowCount, 3].Value = octTotal.ToString("N0");
+                    sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 4].Value = novTotal.ToString("N0");
+                    sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 5].Value = decTotal.ToString("N0");
+                    sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 6].Value = janTotal.ToString("N0");
+                    sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 7].Value = febTotal.ToString("N0");
+                    sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 8].Value = marTotal.ToString("N0");
+                    sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 9].Value = aprTotal.ToString("N0");
+                    sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 10].Value = mayTotal.ToString("N0");
+                    sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 11].Value = junTotal.ToString("N0");
+                    sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 12].Value = julTotal.ToString("N0");
+                    sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 13].Value = augTotal.ToString("N0");
+                    sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    sheet.Cells[rowCount, 14].Value = sepTotal.ToString("N0");
+                    sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    rowCount++;
 
 
                 }
@@ -929,6 +1479,65 @@ namespace CostAllocationApp.Controllers
                 return File(excelData, contentType, fileName);
 
             }
+        }
+
+        IDictionary<string,string> GetCommonMaster()
+        {
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("取締役/監査役","");
+            values.Add("G10", "");
+            values.Add("G9", "");
+            values.Add("G8", "");
+            values.Add("G7", "");
+            values.Add("G6", "");
+            values.Add("G5", "45");
+            values.Add("G4", "45");
+            values.Add("G3", "45");
+            values.Add("G2", "45");
+            values.Add("G1", "45");
+            values.Add("ハンディキャップ", "");
+
+            return values;
+
+        }
+
+        List<string> GetAllGradeEntities()
+        {
+            return new List<string>() {
+                "役員報酬",
+                "給与手当（定例給与分",
+                "給与手当（固定時間分",
+                "給与手当(残業手当分",
+                "給与手当合計",
+                "雑給",
+                "派遣費",
+                "従業員賞与引当金",
+                "給与法定福利費",
+                "賞与法定福利費引当",
+                "法定福利費合計",
+                "通勤費",
+                "経費合計"
+            };
+        }
+
+        Dictionary<string,List<string>> GetOtherGrades()
+        {
+            Dictionary<string, List<string>> getOtherGradeWithEntities = new Dictionary<string, List<string>>();
+            getOtherGradeWithEntities.Add("G10（役員)", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G9", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G8", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G7", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G6", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G5",new List<string>() { "役員報酬" });
+            getOtherGradeWithEntities.Add("G4", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G3", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G2", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("G1", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("ハンディキャップ", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("クルー", GetAllGradeEntities());
+            getOtherGradeWithEntities.Add("派遣社員（管理)", GetAllGradeEntities());
+
+            return getOtherGradeWithEntities;
         }
     }
 }

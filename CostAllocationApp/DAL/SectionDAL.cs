@@ -35,6 +35,7 @@ namespace CostAllocationApp.DAL
             }
 
         }
+
         public List<Section> GetAllSections()
         {
             List<Section> sections = new List<Section>();

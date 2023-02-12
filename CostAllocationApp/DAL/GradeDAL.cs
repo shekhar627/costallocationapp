@@ -7,20 +7,19 @@ using CostAllocationApp.Models;
 
 namespace CostAllocationApp.DAL
 {
-    public class UnitPriceTypeDAL : DbContext
+    public class GradeDAL: DbContext
     {
-        public int CreateUnitPriceType(SalaryType unitPriceType)
+        public int CreateGrade(Grade grade)
         {
             int result = 0;
-            string query = $@"insert into UnitPriceTypes(SalaryTypeName,CreatedBy,CreatedDate,IsActive) values(@salaryTypeName,@createdBy,@createdDate,@isActive)";
+            string query = $@"insert into Grades(GradeName,CreatedBy,CreatedDate) values(@gradeName,@createdBy,@createdDate)";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlConnection);
-                cmd.Parameters.AddWithValue("@salaryTypeName", unitPriceType.SalaryTypeName);
-                cmd.Parameters.AddWithValue("@createdBy", unitPriceType.CreatedBy);
-                cmd.Parameters.AddWithValue("@createdDate", unitPriceType.CreatedDate);
-                cmd.Parameters.AddWithValue("@isActive", unitPriceType.IsActive);
+                cmd.Parameters.AddWithValue("@gradeName", grade.GradeName);
+                cmd.Parameters.AddWithValue("@createdBy", grade.CreatedBy);
+                cmd.Parameters.AddWithValue("@createdDate", grade.CreatedDate);
                 try
                 {
                     result = cmd.ExecuteNonQuery();
@@ -35,9 +34,9 @@ namespace CostAllocationApp.DAL
 
         }
 
-        public bool CheckUnitPriceType(string unitPriceTypeName)
+        public bool CheckGrade(string gradeName)
         {
-            string query = "select * from UnitPriceTypes where UnitPriceTypeName=N'" + unitPriceTypeName + "'";
+            string query = "select * from Grades where GradeName=N'" + gradeName + "'";
             bool result = false;
             using (SqlConnection sqlConnection = this.GetConnection())
             {
@@ -60,10 +59,10 @@ namespace CostAllocationApp.DAL
             }
         }
 
-        public List<SalaryType> GetAllUnitPriceTypes()
+        public List<Grade> GetAllGrade()
         {
-            List<SalaryType> unitPriceTypes = new List<SalaryType>();
-            string query = "select * from UnitPriceTypes where isactive=1";
+            List<Grade> grades = new List<Grade>();
+            string query = "select * from Grades;";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -75,14 +74,13 @@ namespace CostAllocationApp.DAL
                     {
                         while (rdr.Read())
                         {
-                            SalaryType unitPriceType = new SalaryType();
-                            unitPriceType.Id = Convert.ToInt32(rdr["Id"]);
-                            unitPriceType.SalaryTypeName = rdr["SalaryTypeName"].ToString();
-                            unitPriceType.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
-                            unitPriceType.CreatedBy = rdr["CreatedBy"].ToString();
-                            unitPriceType.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+                            Grade grade = new Grade();
+                            grade.Id = Convert.ToInt32(rdr["Id"]);
+                            grade.GradeName= rdr["GradeName"].ToString();
+                            grade.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
+                            //section.CreatedBy = rdr["CreatedBy"].ToString();
 
-                            unitPriceTypes.Add(unitPriceType);
+                            grades.Add(grade);
                         }
                     }
                 }
@@ -91,7 +89,7 @@ namespace CostAllocationApp.DAL
 
                 }
 
-                return unitPriceTypes;
+                return grades;
             }
         }
     }

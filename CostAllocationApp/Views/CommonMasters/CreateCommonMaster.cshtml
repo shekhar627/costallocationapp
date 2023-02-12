@@ -1,0 +1,121 @@
+﻿@model CostAllocationApp.ViewModels.CommonMasterViewModel
+@{
+    ViewBag.Title = "Create Common Master";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/common-master.css" />
+}
+
+<div class="content container-fluid">
+    <div class="modal-content" id="cm_body">
+        <div class="modal-body">
+            <form>
+                <div id="main-div">
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="cm_grade" id="cm_name_lbl">Grades <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <select class="form-control" id="cm_grade">
+                                    <option value="">select one</option>
+                                    <option value="2023">2023</option>
+                                </select>
+                                <div class="cm_grade_name_err">
+                                    Select Grade
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="salary_increase_rate" id="cm_name_lbl">Salary Increase Rate <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input class="form-control" id="salary_increase_rate" type="number">
+                                <div class="cm_sir_name_err">
+                                    Input Salary Increase Rate
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="over_work_fixed_time" id="cm_name_lbl">Over Work Fixed Time <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input class="form-control" id="over_work_fixed_time" type="number">
+                                <div class="cm_owft_name_err">
+                                    Input Over Work Fixed Time
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="bonus_reserve_ratio" id="cm_name_lbl">Bonus Reserve Ratio <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input class="form-control" id="bonus_reserve_ratio" type="number">
+                                <div class="cm_brr_name_err">
+                                    Input Bonus Reserve Ratio
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="bonus_reserve_constant" id="cm_name_lbl">Bonus Reserve Constant <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input class="form-control" id="bonus_reserve_constant" type="number">
+                                <div class="cm_brc_name_err">
+                                    Input Bonus Reserve Constant
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="welfare_cost_ratio" id="cm_name_lbl">Welfare Cost Ratio <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input class="form-control" id="welfare_cost_ratio" type="number">
+                                <div class="cm_wcr_name_err">
+                                    Input Welfare Cost Ratio
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="custom_button_group_cm">
+                        <a href="javascript:void(0);" id="cm_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="cm_registration" onclick="InsertCommonMaster();">Create</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br><br>
+</div>
+
+@section Scripts{
+
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/common-master.js"></script>
+}
+

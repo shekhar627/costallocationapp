@@ -1,0 +1,99 @@
+﻿@model CostAllocationApp.ViewModels.GradeViewModel
+@{
+    ViewBag.Title = "Create Grade";
+}
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/grade.css" />
+}
+
+<div class="content container-fluid">
+    <h4 style="text-align:left;">List</h4>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="table-responsive">
+                <table class="" id="grade_table">
+                    <thead>
+                        <tr>
+                            <th>Check</th>
+                            <th>Grade Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grade_list_tbody"></tbody>
+                </table>
+                <label id="grade_delete_btn">
+                    <a id="grade_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_grade" onClick="ongradeInactiveClick()">Delete</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="modal-content" id="grade_body">
+        <style>
+        </style>
+        <div class="modal-body">
+            <form>
+                <div id="main-div">
+                    <div class="row">
+                        <div class="col-4 module-label-txt">
+                            <label for="grade-name" id="grade_name_lbl">Grade Name <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <input class="form-control" id="grade-name" type="text" placeholder="grade name..">
+                                <div class="grade_name_err">
+                                    Please provide a grade name.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cutom_button_group_grade">
+                        <a href="javascript:void(0);" id="grade_cancel">Cancel</a>
+                        <a href="javascript:void(0);" id="grade_registration" onclick="InsertGrade();">Create</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br><br>
+</div>
+<input type="hidden" id="grade_warning_text" />
+<input type="hidden" id="grade_chk_ids" />
+
+
+<div class="modal custom-modal fade" id="delete_grade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Grade</h3>
+                    <p id="grade_warning" style="display:none;"></p>
+                    <ol class="grade_count" style="text-align:left;"></ol>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn" id="grade_inactive_confirm_btn">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/grade.js"></script>
+}
+
+

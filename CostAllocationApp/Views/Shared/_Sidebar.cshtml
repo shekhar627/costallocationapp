@@ -115,6 +115,16 @@
                                             <a href="/Sections/CreateSection">Section Master (区分マスター)</a>
                                         </li>
                                     }
+                                    if (url.ToLower().Contains("creategrade"))
+                                    {
+                                        <li><a href="/Grades/CreateGrade" class="active">Grade Master</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/Grades/CreateGrade">Grade Master</a>
+                                        </li>
+                                    }
                                     if (url.ToLower().Contains("createcompany"))
                                     {
                                         <li><a href="/Companies/CreateCompany" class="active">Company Master (会社マスター)</a></li>

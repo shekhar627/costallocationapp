@@ -154,6 +154,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\AllocationBLL.cs" />
+    <Compile Include="BLL\CommonMasterBLL.cs" />
     <Compile Include="BLL\CompanyBLL.cs" />
     <Compile Include="BLL\DepartmentBLL.cs" />
     <Compile Include="BLL\EmployeeBLL.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="BLL\ExplanationsBLL.cs" />
     <Compile Include="BLL\ExportBLL.cs" />
     <Compile Include="BLL\ForecastBLL.cs" />
+    <Compile Include="BLL\GradeBLL.cs" />
     <Compile Include="BLL\InChargeBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
     <Compile Include="BLL\SalaryBLL.cs" />
@@ -169,17 +171,20 @@
     <Compile Include="BLL\UploadExcelBLL.cs" />
     <Compile Include="Controllers\AllocationController.cs" />
     <Compile Include="Controllers\Api\AllocationController.cs" />
+    <Compile Include="Controllers\Api\CommonMastersController.cs" />
     <Compile Include="Controllers\Api\CompaniesController.cs" />
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\EmployeesController.cs" />
     <Compile Include="Controllers\Api\ExplanationsController.cs" />
     <Compile Include="Controllers\Api\ForecastsController.cs" />
+    <Compile Include="Controllers\Api\GradesController.cs" />
     <Compile Include="Controllers\Api\InChargesController.cs" />
     <Compile Include="Controllers\Api\RolesController.cs" />
     <Compile Include="Controllers\Api\SalariesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
     <Compile Include="Controllers\Api\UnitPriceTypesController.cs" />
     <Compile Include="Controllers\Api\UtilitiesController.cs" />
+    <Compile Include="Controllers\CommonMastersController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
@@ -187,6 +192,7 @@
     <Compile Include="Controllers\ExplanationsController.cs" />
     <Compile Include="Controllers\ExportsController.cs" />
     <Compile Include="Controllers\ForecastsController.cs" />
+    <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InChargesController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
@@ -194,6 +200,7 @@
     <Compile Include="Controllers\SalariesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="DAL\AllocationDAL.cs" />
+    <Compile Include="DAL\CommonMasterDAL.cs" />
     <Compile Include="DAL\CompanyDAL.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
@@ -202,6 +209,7 @@
     <Compile Include="DAL\ExplanationDAL.cs" />
     <Compile Include="DAL\ExportDAL.cs" />
     <Compile Include="DAL\ForecastDAL.cs" />
+    <Compile Include="DAL\GradeDAL.cs" />
     <Compile Include="DAL\InChargeDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\SalaryDAL.cs" />
@@ -217,6 +225,7 @@
     </Compile>
     <Compile Include="Models\Allocation.cs" />
     <Compile Include="Models\Common.cs" />
+    <Compile Include="Models\CommonMaster.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\EmployeeAssignmentForecast.cs" />
     <Compile Include="Models\Forecast.cs" />
@@ -224,14 +233,16 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeAssignment.cs" />
     <Compile Include="Models\Explanation.cs" />
+    <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\InCharge.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Salary.cs" />
     <Compile Include="Models\Section.cs" />
-    <Compile Include="Models\UnitPriceType.cs" />
+    <Compile Include="Models\SalaryType.cs" />
     <Compile Include="Models\UploadExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CommonMasterViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
@@ -241,6 +252,7 @@
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModal.cs" />
     <Compile Include="ViewModels\ForecastAssignmentViewModel.cs" />
+    <Compile Include="ViewModels\GradeViewModel.cs" />
     <Compile Include="ViewModels\SalaryViewModel.cs" />
     <Compile Include="ViewModels\SectionViewModel.cs" />
   </ItemGroup>
@@ -251,6 +263,7 @@
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\common-master.css" />
     <Content Include="Content\common.css" />
     <Content Include="Content\companies.css" />
     <Content Include="Content\Custom.css" />
@@ -263,6 +276,7 @@
     <Content Include="Content\forecast.css" />
     <Content Include="Content\forecast_ver02.css" />
     <Content Include="Content\fullcalendar.min.css" />
+    <Content Include="Content\grade.css" />
     <Content Include="Content\incharge.css" />
     <Content Include="Content\line-awesome.min.css" />
     <Content Include="Content\master_setting.css" />
@@ -623,6 +637,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\common-master.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\companies.js" />
     <Content Include="Scripts\Custome-Reporting.js" />
@@ -638,6 +653,7 @@
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\glimpse.js" />
     <Content Include="Scripts\glimpse.toastr.js" />
+    <Content Include="Scripts\grade.js" />
     <Content Include="Scripts\html5shiv.min.js" />
     <Content Include="Scripts\incharge.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -710,6 +726,8 @@
     <Content Include="Views\Allocation\CreateAllocation.cshtml" />
     <Content Include="Views\Exports\DataExportByDepartment.cshtml" />
     <Content Include="Views\Exports\DataExportByAllocation.cshtml" />
+    <Content Include="Views\Grades\CreateGrade.cshtml" />
+    <Content Include="Views\CommonMasters\CreateCommonMaster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

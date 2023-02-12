@@ -1,0 +1,36 @@
+﻿#cm_registration {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+#cm_cancel {
+    background-color: #FC4136;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.custom_button_group_cm {
+    float: right;
+    margin-left: 50%;
+}
+
+.cm_grade_name_err, .cm_sir_name_err, .cm_owft_name_err, .cm_brr_name_err, .cm_brc_name_err, .cm_wcr_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+#cm_body {
+    width: 80% !important;
+}
+#cm_name_lbl {
+    padding-top: 10px;
+}
