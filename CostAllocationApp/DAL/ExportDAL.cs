@@ -13,12 +13,13 @@ namespace CostAllocationApp.DAL
     {
         public List<ForecastAssignmentViewModel> AssignmentsByAllocation(int departnmentId,int explanationId)
         {
-            string query = $@"select EmployeesAssignments.Id as AssignmentId, EmployeesAssignments.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
+            string query = $@"select EmployeesAssignments.Id as AssignmentId, GradeSalarlyTypes.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
                             EmployeesAssignments.CompanyId,Companies.Name as CompanyName
                             from EmployeesAssignments
+                            left join GradeSalarlyTypes on GradeSalarlyTypes.Id = EmployeesAssignments.GradeId
                             join Companies on Companies.Id = EmployeesAssignments.CompanyId
                             join Sections on Sections.Id = EmployeesAssignments.SectionId
-                            where DepartmentId=@departmentId and ExplanationId=@allocationId order by SectionId";
+                            where EmployeesAssignments.DepartmentId=@departmentId and ExplanationId=@allocationId order by SectionId";
 
             List<ForecastAssignmentViewModel> employeeAssignments = new List<ForecastAssignmentViewModel>();
 
@@ -84,9 +85,10 @@ namespace CostAllocationApp.DAL
 
         public List<ForecastAssignmentViewModel> AssignmentsByAllocationForSection(int departnmentId, int explanationId)
         {
-            string query = $@"select EmployeesAssignments.Id as AssignmentId, EmployeesAssignments.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
+            string query = $@"select EmployeesAssignments.Id as AssignmentId, GradeSalarlyTypes.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
                             EmployeesAssignments.CompanyId,Companies.Name as CompanyName
                             from EmployeesAssignments
+                            left join GradeSalarlyTypes on GradeSalarlyTypes.Id = EmployeesAssignments.GradeId
                             join Companies on Companies.Id = EmployeesAssignments.CompanyId
                             join Sections on Sections.Id = EmployeesAssignments.SectionId
                             where DepartmentId=@departmentId and ExplanationId=@allocationId and GradeId is not null and SectionId is not null and CompanyId is not null";
