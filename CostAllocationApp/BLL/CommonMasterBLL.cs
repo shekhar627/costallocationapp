@@ -19,5 +19,9 @@ namespace CostAllocationApp.BLL
         {
             return _commonMasterDal.CreateCommonMaster(commonMaster);
         }
+        public List<CommonMaster> GetCommonMasters()
+        {
+            return _commonMasterDal.GetCommonMasters();
+        }
     }
 }

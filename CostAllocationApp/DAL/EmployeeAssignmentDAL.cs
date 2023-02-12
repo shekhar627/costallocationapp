@@ -388,12 +388,13 @@ namespace CostAllocationApp.DAL
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode, ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.RoleId,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
-                            ,gd.GradePoints,ea.IsActive
+                            ,g.GradeName,ea.IsActive
                             from EmployeesAssignments ea 
                             left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id
-                            left join Grades gd on ea.GradeId = gd.Id
+                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join Grades g on gd.GradeId = g.Id
                             left join Explanations ep on ea.ExplanationId = ep.Id
                             where {where}
                             order by ea.EmployeeName asc, ea.Id";
@@ -442,8 +443,14 @@ namespace CostAllocationApp.DAL
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
-
-                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            if (!string.IsNullOrEmpty(rdr["GradeName"].ToString()))
+                            {
+                                employeeAssignmentViewModel.GradePoint = rdr["GradeName"].ToString();
+                            }
+                            else
+                            {
+                                employeeAssignmentViewModel.GradePoint = null;
+                            }                            
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             //employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
                             employeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
@@ -661,13 +668,14 @@ namespace CostAllocationApp.DAL
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode, ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
-                            ,gd.GradePoints,ea.IsActive
+                            ,g.GradeName,ea.IsActive
                             from EmployeesAssignments ea left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id
                             left join Roles rl on ea.RoleId = rl.Id
                             left join InCharges inc on ea.InChargeId = inc.Id 
-                            left join Grades gd on ea.GradeId = gd.Id
+                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join Grades g on gd.GradeId = g.Id
                             where {where}
                             order by ea.EmployeeName asc";
 
@@ -706,7 +714,7 @@ namespace CostAllocationApp.DAL
                             forecastEmployeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");                            
                             //forecastEmployeeAssignmentViewModel.UnitPrice = Convert.ToInt32(forecastEmployeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
 
-                            forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            forecastEmployeeAssignmentViewModel.GradePoint = rdr["GradeName"].ToString();
                             forecastEmployeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             forecastEmployeeAssignmentViewModel.SubCode = Convert.ToInt32(rdr["SubCode"]);
                             forecastEmployeeAssignmentViewModel.Remarks = rdr["Remarks"]  is DBNull ? "":  rdr["Remarks"].ToString() ;

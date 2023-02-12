@@ -307,10 +307,10 @@ namespace CostAllocationApp.DAL
             string query = "";
             if (!string.IsNullOrEmpty(gradePoints.ToString()))
             {
-                where += $"GradePoints = N'{gradePoints}' ";
-                where += " AND IsActive=1 ";
+                where += $"GradeName = N'{gradePoints}' ";
+                //where += " AND IsActive=1 ";
 
-                query = $@"SELECt Id,GradePoints,GradeLowPoints,GradeHighPoints FROM Grades 
+                query = $@"SELECt Id,GradeName FROM Grades 
                         where {where}";
 
                 using (SqlConnection sqlConnection = this.GetConnection())
@@ -325,9 +325,7 @@ namespace CostAllocationApp.DAL
                             while (rdr.Read())
                             {
                                 _salary.GradeId = Convert.ToInt32(rdr["Id"]);
-                                _salary.GradePoints = rdr["GradePoints"].ToString();                                
-                                _salary.GradeLowPoints = rdr["GradeLowPoints"] is DBNull ? "" : rdr["GradeLowPoints"].ToString();                                
-                                _salary.GradeHighPoints = rdr["GradeHighPoints"] is DBNull ? "" : rdr["GradeHighPoints"].ToString();
+                                _salary.GradeName = rdr["GradeName"].ToString();                                                                
                             }
                         }
                     }
@@ -341,5 +339,46 @@ namespace CostAllocationApp.DAL
             }
             return _salary;
         }
+        public GradeSalaryType GetGradeSalaryTypeIdByGradeId(int? gradeId,int? departmentId)
+        {
+            GradeSalaryType _salaryType = new GradeSalaryType();
+
+            string where = "";
+            string query = "";
+            if (!string.IsNullOrEmpty(gradeId.ToString()) && !string.IsNullOrEmpty(departmentId.ToString()))
+            {
+                where += $"GradeId = {gradeId} and DepartmentId = {departmentId}";
+
+                query = $@"SELECt Id,GradeId,GradeLowPoints FROM GradeSalarlyTypes 
+                        where {where}";
+
+                using (SqlConnection sqlConnection = this.GetConnection())
+                {
+                    sqlConnection.Open();
+                    SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                    try
+                    {
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                _salaryType.Id = Convert.ToInt32(rdr["Id"]);
+                                _salaryType.GradeId = Convert.ToInt32(rdr["GradeId"]);
+                                _salaryType.GradeLowPoints = Convert.ToSingle(rdr["GradeLowPoints"]);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HttpContext.Current.Response.Write(ex);
+                        HttpContext.Current.Response.End();
+                    }
+                }
+
+            }
+            return _salaryType;
+        }
+
     }
 }

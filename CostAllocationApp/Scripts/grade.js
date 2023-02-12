@@ -50,11 +50,16 @@ function InsertGrade() {
 
 //Get grade list
 function GetGradeList() {
-    $.getJSON('/api/grade/')
+    $.getJSON('/api/Grades/')
         .done(function (data) {
             $('#grade_list_tbody').empty();
-            $.each(data, function (key, item) {
-                $('#grade_list_tbody').append(`<tr><td><input type="checkbox" class="grade_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.GradeName}</td></tr>`);
+            $.each(data, function (key, item) {            
+                //$('#grade_list_tbody').append(`<tr><td><input type="checkbox" class="grade_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.GradeName}</td></tr>`);                
+                $('#grade_list_tbody').append(`<tr><td>${item.GradeName}</td></tr>`);                
             });
         });
 }
+
+$(document).ready(function () {
+    GetGradeList();
+});

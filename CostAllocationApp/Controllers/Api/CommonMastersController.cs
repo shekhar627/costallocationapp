@@ -21,25 +21,24 @@ namespace CostAllocationApp.Controllers.Api
         public IHttpActionResult CreateCommonMaster(CommonMaster commonMaster)
         {
 
-                commonMaster.CreatedBy = "";
-                commonMaster.CreatedDate = DateTime.Now;
-                //section.IsActive = true;
-                int result = _commonMasterBll.CreateCommonMaster(commonMaster);
-                if (result > 0)
-                {
-                    return Ok("Data Saved Successfully!");
-                }
-                else
-                {
-                    return BadRequest("Something Went Wrong!!!");
-                }
-
-
-
-
-
-
+            commonMaster.CreatedBy = "";
+            commonMaster.CreatedDate = DateTime.Now;
+            //section.IsActive = true;
+            int result = _commonMasterBll.CreateCommonMaster(commonMaster);
+            if (result > 0)
+            {
+                return Ok("Data Saved Successfully!");
+            }
+            else
+            {
+                return BadRequest("Something Went Wrong!!!");
+            }
         }
-
+        [HttpGet]
+        public IHttpActionResult CommonMasters()
+        {
+            List<CommonMaster> commonMasters = _commonMasterBll.GetCommonMasters();
+            return Ok(commonMasters);
+        }
     }
 }

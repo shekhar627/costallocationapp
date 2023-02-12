@@ -86,10 +86,25 @@ function InsertCommonMaster() {
                 $('#bonus_reserve_ratio').val('');
                 $('#bonus_reserve_constant').val('');
                 $('#welfare_cost_ratio').val('');
-                //GetGradeList();
+                GetCommonMasters();
             },
             error: function (data) {
-                alert(data.responseJSON.Message);
+                alert( data.responseJSON.Message);
             }
         });
 }
+//Get grade list
+function GetCommonMasters() {
+    $.getJSON('/api/CommonMasters/')
+        .done(function (data) {
+            $('#commonmaster_list_tbody').empty();
+            $.each(data, function (key, item) {            
+                //$('#grade_list_tbody').append(`<tr><td><input type="checkbox" class="grade_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.GradeName}</td></tr>`);                
+                $('#commonmaster_list_tbody').append(`<tr><td>${item.GradeName}</td><td>${item.SalaryIncreaseRate}</td><td>${item.OverWorkFixedTime}</td><td>${item.BonusReserveRatio}</td><td>${item.BonusReserveConstant}</td><td>${item.WelfareCostRatio}</td></tr>`);                
+            });
+        });
+}
+
+$(document).ready(function () {
+    GetCommonMasters();
+});
