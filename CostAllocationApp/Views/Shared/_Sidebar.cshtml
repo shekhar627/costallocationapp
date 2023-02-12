@@ -12,7 +12,7 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="menu-title">
-                    <span>Cost Management</span>
+                    <span title="人件費配賦システム (Cost Management)">人件費配賦システム (Cost Management)</span>
                 </li>
                 @{
                     //string url = HttpContext.Current.Request.Url.AbsoluteUri;
@@ -24,7 +24,7 @@
                     if (url.ToLower().Contains("login") || string.IsNullOrEmpty(url))
                     {
                         <li>
-                            <a href="/Registration/Login" class="active"><i class="la la-user"></i> <span>Login</span></a>
+                            <a href="/Registration/Login" class="active"><i class="la la-user"></i> <span title="ログイン (Login)">ログイン (Login)</span></a>
                         </li>
                     }
                     else
@@ -32,31 +32,31 @@
                         if (url.ToLower().Contains("namelist"))
                         {
                             <li>
-                                <a href="/Employees/NameList" class="active"><i class="la la-cube"></i> <span>Name List (名簿)</span></a>
+                                <a href="/Employees/NameList" class="active"><i class="la la-cube"></i> <span title="名簿 (Name List)">名簿 (Name List)</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Employees/NameList"><i class="la la-cube"></i> <span>Name List (名簿)</span></a>
+                                <a href="/Employees/NameList"><i class="la la-cube"></i> <span title="名簿 (Name List)">名簿 (Name List)</span></a>
                             </li>
                         }
                         if (url.ToLower().Contains("createassignment"))
                         {
                             <li>
-                                <a href="javascriopt:void(0);" class="active"><i class="la la-cube"></i> <span>Add Name（追加）</span></a>
+                                <a href="javascriopt:void(0);" class="active"><i class="la la-cube"></i> <span title="追加 (Add Name)">追加 (Add Name)</span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="/Employees/CreateAssignment"><i class="la la-cube"></i> <span>Add Name（追加）</span></a>
+                                <a href="/Employees/CreateAssignment"><i class="la la-cube"></i> <span title="追加 (Add Name)">追加 (Add Name)</span></a>
                             </li>
                         }
                         <li class="submenu">
                             <a href="javascript:void(0);">
                                 <i class="la la-bullhorn"></i>
-                                <span>Create Allocation (配置作成)</span>
+                                <span title="配置作成 (Create Allocation)">配置作成 (Allocation)</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul style="display: none;">
@@ -74,88 +74,114 @@
                                     }
                                     if (url.ToLower().Contains("createforecast") && item.Id.ToString() == departmentId)
                                     {
-                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id" class="active">@forecastMenuName</a></li>
+                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id" class="active" title="@forecastMenuName">@forecastMenuName</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id">@forecastMenuName</a></li>
+                                        <li><a href="/Forecasts/CreateForecast?departmentId=@item.Id" title="@forecastMenuName">@forecastMenuName</a></li>
                                     }
                                 }
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <i class="la la-files-o"></i>
-                                <span>Data Export</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul style="display:none;">
-                                <li><a href="/Exports/DataExportByDepartment">Export by Department</a></li>
-                                <li><a href="/Exports/DataExportByAllocation">Export by Allocation</a></li>
                             </ul>
                         </li>
 
                         <li class="submenu">
                             <a href="javascript:void(0);">
                                 <i class="la la-files-o"></i>
-                                <span>
-                                    Master Setting (マスター設定)
-                                </span>
+                                <span title="データエクスポート (Data Export)">データエクスポート (Export)</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: none;">
+
+                                @{
+                                    if (url.ToLower().Contains("dataexportbydepartment"))
+                                    {
+                                        <li><a href="/Exports/DataExportByDepartment" class="active" title="部門別エクスポート (Export by Department)">部門別エクスポート (Export by Department)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/DataExportByDepartment" title="部門別エクスポート (Export by Department)">部門別エクスポート (Export by Department)</a></li>
+                                    }
+                                    if (url.ToLower().Contains("dataexportbyallocation"))
+                                    {
+                                        <li><a href="/Exports/DataExportByAllocation" class="active" title="割り当てによるエクスポート (Export by Allocation)">割り当てによるエクスポート (Export by Allocation)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/DataExportByAllocation" title="割り当てによるエクスポート (Export by Allocation)">割り当てによるエクスポート (Export by Allocation)</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                        
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <i class="la la-files-o"></i>
+                                <span title="マスター設定 (Master Setting)">マスター設定 (Master)</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul style="display: none;">
                                 @{
                                     if (url.ToLower().Contains("createsection"))
                                     {
-                                        <li><a href="/Sections/CreateSection" class="active">Section Master (区分マスター)</a></li>
+                                        <li><a href="/Sections/CreateSection" class="active" title="区分マスター (Section Setting)">区分マスター (Section Setting)</a></li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="/Sections/CreateSection">Section Master (区分マスター)</a>
+                                            <a href="/Sections/CreateSection" title="区分マスター (Section Setting)">区分マスター (Section Setting)</a>
                                         </li>
                                     }
                                     if (url.ToLower().Contains("creategrade"))
                                     {
-                                        <li><a href="/Grades/CreateGrade" class="active">Grade Master</a></li>
+                                        <li><a href="/Grades/CreateGrade" class="active" title="グレードマスター (Grade Master)">グレードマスター (Grade Master)</a></li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="/Grades/CreateGrade">Grade Master</a>
+                                            <a href="/Grades/CreateGrade" title="グレードマスター (Grade Master)">グレードマスター (Grade Master)</a>
+                                        </li>
+                                    }
+                                    if (url.ToLower().Contains("createcommonmaster"))
+                                    {
+                                        <li><a href="/commonmasters/createcommonmaster" class="active" title="コモンマスター (Common Master)">コモンマスター (Common Master)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/commonmasters/createcommonmaster" title="コモンマスター (Common Master)">コモンマスター (Common Master)</a>
                                         </li>
                                     }
                                     if (url.ToLower().Contains("createcompany"))
                                     {
-                                        <li><a href="/Companies/CreateCompany" class="active">Company Master (会社マスター)</a></li>
+                                        <li><a href="/Companies/CreateCompany" class="active" title="会社マスター (Company Master)">会社マスター (Company Master)</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Companies/CreateCompany">Company Master (会社マスター)</a></li>
+                                        <li><a href="/Companies/CreateCompany" title="会社マスター (Company Master)">会社マスター (Company Master)</a></li>
                                     }
                                     if (url.ToLower().Contains("createdepartment"))
                                     {
-                                        <li><a href="/Departments/CreateDepartment" class="active">Dept.  Master （部署バスター）</a></li>
+                                        <li><a href="/Departments/CreateDepartment" class="active" title="部署バスター (Dept. Master)">部署バスター (Dept. Master)</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Departments/CreateDepartment">Dept.  Master （部署バスター）</a></li>
+                                        <li><a href="/Departments/CreateDepartment" title="部署バスター (Dept. Master)">部署バスター (Dept. Master)</a></li>
                                     }
                                     if (url.ToLower().Contains("createsalary"))
                                     {
-                                        <li><a href="/Salaries/CreateSalary" class="active">Grade.  Master （グレードマスター）</a></li>
+                                        <li><a href="/Salaries/CreateSalary" class="active" title="グレードマスター (Grade Master)">グレードマスター (Grade Master)</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Salaries/CreateSalary">Grade.  Master （グレードマスター）</a></li>
+                                        <li><a href="/Salaries/CreateSalary" title="グレードマスター (Grade Master)">グレードマスター (Grade Master)</a></li>
                                     }
                                     if (url.ToLower().Contains("createexplanation"))
                                     {
-                                        <li><a href="/Explanations/CreateExplanation" class="active">Allocation  Master （配置マスター）</a></li>
+                                        <li><a href="/Explanations/CreateExplanation" class="active" title="配置マスター (Allocation Master)">配置マスター (Allocation Master)</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/Explanations/CreateExplanation">Allocation  Master （配置マスター）</a></li>
+                                        <li><a href="/Explanations/CreateExplanation" title="配置マスター (Allocation Master)">配置マスター (Allocation Master)</a></li>
                                     }
                                 }
                             </ul>
