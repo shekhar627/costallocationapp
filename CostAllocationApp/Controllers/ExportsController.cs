@@ -3887,6 +3887,69 @@ namespace CostAllocationApp.Controllers
                 }
 
 
+
+
+
+
+
+
+
+
+
+                var sheetCommonMaster = package.Workbook.Worksheets.Add("CommonMaster");
+
+
+                List<CommonMaster> commonMasters = _commonMasterBLL.GetCommonMasters();
+
+                sheetCommonMaster.Cells[6, 4].Value = "";
+                sheetCommonMaster.Cells[6, 4].Style.Font.Color.SetColor(Color.White);
+                sheetCommonMaster.Cells[6, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetCommonMaster.Cells[6, 4].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheetCommonMaster.Cells[6, 5].Value = "昇給率";
+                sheetCommonMaster.Cells[6, 5].Style.Font.Color.SetColor(Color.White);
+                sheetCommonMaster.Cells[6, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetCommonMaster.Cells[6, 5].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheetCommonMaster.Cells[6, 6].Value = "残業固定時間";
+                sheetCommonMaster.Cells[6, 6].Style.Font.Color.SetColor(Color.White);
+                sheetCommonMaster.Cells[6, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetCommonMaster.Cells[6, 6].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+
+                sheetCommonMaster.Cells[6, 7].Value = "賞与引当金比率";
+                sheetCommonMaster.Cells[6, 7].Style.Font.Color.SetColor(Color.White);
+                sheetCommonMaster.Cells[6, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetCommonMaster.Cells[6, 7].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheetCommonMaster.Cells[6, 8].Value = "賞与引当金定数";
+                sheetCommonMaster.Cells[6, 8].Style.Font.Color.SetColor(Color.White);
+                sheetCommonMaster.Cells[6, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetCommonMaster.Cells[6, 8].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheetCommonMaster.Cells[6, 9].Value = "給与法定福利費比率";
+                sheetCommonMaster.Cells[6, 9].Style.Font.Color.SetColor(Color.White);
+                sheetCommonMaster.Cells[6, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetCommonMaster.Cells[6, 9].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                int rowCountCommonMaster = 7;
+
+
+                if (commonMasters.Count>0)
+                {
+                    foreach (var commonMaster in commonMasters)
+                    {
+                        sheetCommonMaster.Cells[rowCountCommonMaster, 4].Value = commonMaster.GradeName;
+                        sheetCommonMaster.Cells[rowCountCommonMaster, 5].Value = commonMaster.SalaryIncreaseRate;
+                        sheetCommonMaster.Cells[rowCountCommonMaster, 6].Value = commonMaster.OverWorkFixedTime;
+                        sheetCommonMaster.Cells[rowCountCommonMaster, 7].Value = commonMaster.BonusReserveRatio;
+                        sheetCommonMaster.Cells[rowCountCommonMaster, 8].Value = commonMaster.BonusReserveConstant;
+                        sheetCommonMaster.Cells[rowCountCommonMaster, 9].Value = commonMaster.WelfareCostRatio;
+
+                        rowCountCommonMaster++;
+                    }
+                }
+
                 var excelData = package.GetAsByteArray();
                 var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 var fileName = explanation.ExplanationName + ".xlsx";
