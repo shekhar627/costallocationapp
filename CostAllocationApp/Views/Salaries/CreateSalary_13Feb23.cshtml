@@ -105,110 +105,33 @@
             </div>
         </div>
         <br><br>
+        <h4 style="text-align:left;">List</h4>
         <div class="row">
-           
-            <div class="col-3">
-                <div class="form-group">
-                    <select class="form-control" id="salary_year_list">
-                        <option value="">select year</option>
-                        <option value="2022">2022</option>
-                    </select>
-                    <div class="salary_year_err">
-                        Select Year
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="form-group">
-                    <a href="javascript:void(0);" class="" id="add_name_search_button">Show List</a>
-                </div>
-            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="" id="grade_table">
+                        <thead>
+                            <tr>
+                                <th>Grade</th>
+                                <th>Salay Low Points</th>
+                                <th>Salay High Points</th>
+                                <th>Department</th>
+                                <th>Salary Type</th>
+                                <th>Year</th>
+                            </tr>
+                        </thead>
+                        <tbody id="GradeSalaryType_list_tbody">
+                        </tbody>
+                    </table>
 
-        </div>
-        <div id="salary_master_list" style="display: block;">
-            <h4 style="text-align:left;">List</h4>
-            <div class="row">            
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="" id="grade_table">
-                            <thead>
-                                <tr>
-                                    <th colspan="6">FY2022</th>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th>期初目標 (Low)</th>
-                                    <th>下修目標 (High)</th>
-                                    <th>期初目標 (Low)</th>
-                                    <th>下修目標 (High)</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="1"></th>
-                                    <th>グレード (Grade)</th>
-                                    <th colspan="2">企画 (Planing)</th>
-                                    <th colspan="2">開発 (Development)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="">
-                                <tr>
-                                    <td rowspan="3">'給与単価 (Unit Price)</td>
-                                    <td>G10</td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                </tr>
-                                <tr>
-                                    <td>G10</td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                </tr>
-                                <tr>
-                                    <td>G10</td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="3">固定時間外単価 (Overtime Fixed)</td>
-                                    <td>G10</td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                </tr>
-                                <tr>
-                                    <td>G10</td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                </tr>
-                                <tr>
-                                    <td>G10</td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                    <td>1,250,000 </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        @* <label id="grade_delete_btn">
-                            <a id="grade_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_grade" onClick="ongradeInactiveClick()">Delete</a>
-                        </label> *@
-                    </div>
+                    @* <label id="grade_delete_btn">
+                        <a id="grade_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_grade" onClick="ongradeInactiveClick()">Delete</a>
+                    </label> *@
                 </div>
             </div>
         </div>
         <br />
     </div>
-    <br><br>
-    <br><br>
 <input type="hidden" id="salary_warning_text" />
 
 @section Scripts{

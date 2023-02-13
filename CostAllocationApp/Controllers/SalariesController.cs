@@ -20,5 +20,9 @@ namespace CostAllocationApp.Controllers
         {
             return View(new SalaryViewModel { Departments = _departmentBLL.GetAllDepartments() });
         }
+        public ActionResult SalaryMaster()
+        {
+            return View();
+        }
     }
 }
