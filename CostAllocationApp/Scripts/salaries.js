@@ -196,6 +196,47 @@ $(document).ready(function () {
 $('#add_name_search_button').on('click', function (event) {
     var selectYear = $('#salary_year_list').val();
     if(selectYear >0){
+        $.getJSON('/api/utilities/GetSalaryMasterList/')
+        .done(function (data) {
+            $('#salary_master_list_tbl').empty();
+            // <tr>
+            //     <td rowspan="3">給与単価 (Salary Allowance Regular)</td>
+            //     <td>G10</td>
+            //     <td>1,250,000 </td>
+            //     <td>1,250,000 </td>
+            //     <td>1,250,000 </td>
+            //     <td>1,250,000 </td>
+            // </tr>
+            var prevSalaryTypeId = 0;
+            var tempCount = 0;
+            $.each(data, function(key, item) {
+                if(item.GradeSalaryTypes.length > 1){
+                    $('#salary_master_list_tbl').append(`<tr>`);                
+                    if (prevSalaryTypeId != item.SalaryType.Id){                        
+                        $('#salary_master_list_tbl').append(`<td>${item.SalaryType.SalaryTypeName}</td>`);  
+                        prevSalaryTypeId = item.SalaryType.Id;
+                    }else{
+                        $('#salary_master_list_tbl').append(`<td></td>`);  
+                    }
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeName}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeLowPoints}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeHighPoints}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeLowPoints}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeHighPoints}</td>`); 
+
+                    $('#salary_master_list_tbl').append(`</tr>`);                
+                }
+            });  
+
+
+
+            // $('#GradeSalaryType_list_tbody').empty();
+            // $.each(data, function (key, item) {            
+            //     //$('#grade_list_tbody').append(`<tr><td><input type="checkbox" class="grade_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.GradeName}</td></tr>`);                
+            //     $('#GradeSalaryType_list_tbody').append(`<tr><td>${item.GradeName}</td><td>${item.GradeLowPoints}</td><td>${item.GradeHighPoints}</td><td>${item.DepartmentName}</td><td>${item.SalaryTypeName}</td><td>${item.Year}</td></tr>`);                
+            // });
+        });
+        
         $("#salary_master_list").css("display", "block");
     }else{        
         $("#salary_master_list").css("display", "none");
