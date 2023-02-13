@@ -3888,6 +3888,7 @@ namespace CostAllocationApp.Controllers
 
 
                 var sheetSalaryMaster = package.Workbook.Worksheets.Add("SalaryMaster");
+                List<Department> departments = _departmentBLL.GetAllDepartments().OrderBy(dep=>dep.Id).ToList();
                 List<SalaryMasterExportDto> salaryMasterExportDtos = new List<SalaryMasterExportDto>();
                 var salaryTypeIds = _salaryBLL.GetSalaryTypeIdByYear(2022);
                 foreach (var salaryTypeId in salaryTypeIds)
@@ -3901,9 +3902,6 @@ namespace CostAllocationApp.Controllers
                 int rowCountSalaryMaster = 6;
                 // year
                 sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Value = "FY2022";
-                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Font.Color.SetColor(Color.White);
-                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
                 rowCountSalaryMaster++;
                 // heading 1
@@ -3930,8 +3928,29 @@ namespace CostAllocationApp.Controllers
                 sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
                 rowCountSalaryMaster++;
 
+                // heading 2
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = "";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 5].Value = "";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 5].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
 
+                int extendedRow = 5;
+                foreach (var item in departments)
+                {
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow+1, rowCountSalaryMaster, extendedRow+2].Value = item.DepartmentName;
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow + 1, rowCountSalaryMaster, extendedRow + 2].Merge = true;
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow + 1, rowCountSalaryMaster, extendedRow + 2].Style.Font.Bold = true;
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow + 1, rowCountSalaryMaster, extendedRow + 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow + 1, rowCountSalaryMaster, extendedRow + 2].Style.Font.Color.SetColor(Color.White);
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow + 1, rowCountSalaryMaster, extendedRow + 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    sheetSalaryMaster.Cells[rowCountSalaryMaster, extendedRow+1, rowCountSalaryMaster, extendedRow+2].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+                    extendedRow += 2;
+                }
+
+                rowCountSalaryMaster++;
                 int prevSalaryTypeId = 0;
 
                 foreach (var item in salaryMasterExportDtos)
