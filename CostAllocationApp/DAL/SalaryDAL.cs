@@ -313,5 +313,74 @@ namespace CostAllocationApp.DAL
                 return gradeSalaryType;
             }
         }
+
+        public List<GradeSalaryType> GetGradeSalaryTypeByYear_SalaryTypeId_GradeId(int salaryTypeId, int year,int gradeId)
+        {
+            List<GradeSalaryType> gradeSalaryTypes = new List<GradeSalaryType>();
+            string query = $@"select * from GradeSalarlyTypes join Grades on GradeSalarlyTypes.GradeId = Grades.Id where GradeSalarlyTypes.year={year} and GradeSalarlyTypes.SalaryTypeId = {salaryTypeId} and GradeSalarlyTypes.GradeId={gradeId} order by GradeSalarlyTypes.DepartmentId ASC";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            GradeSalaryType gradeSalaryType = new GradeSalaryType();
+                            gradeSalaryType.Id = Convert.ToInt32(rdr["Id"]);
+                            gradeSalaryType.GradeId = Convert.ToInt32(rdr["GradeId"]);
+                            gradeSalaryType.GradeName = rdr["GradeName"].ToString();
+                            gradeSalaryType.GradeLowPoints = Convert.ToDouble(rdr["GradeLowPoints"]);
+                            gradeSalaryType.GradeHighPoints = Convert.ToDouble(rdr["GradeHighPoints"]);
+                            gradeSalaryType.DepartmentId = Convert.ToInt32(rdr["DepartmentId"]);
+                            gradeSalaryType.Year = Convert.ToInt32(rdr["Year"]);
+                            gradeSalaryType.SalaryTypeId = Convert.ToInt32(rdr["SalaryTypeId"]);
+
+                            gradeSalaryTypes.Add(gradeSalaryType);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return gradeSalaryTypes;
+            }
+        }
+        public List<int> GetSalaryTypeIdByYear(int year)
+        {
+
+            List<int> salaryTypeIds = new List<int>();
+            string query = $@"select DISTINCT SalaryTypeId from GradeSalarlyTypes WHERE Year={year}";
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            salaryTypeIds.Add(Convert.ToInt32(rdr["SalaryTypeId"]));
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return salaryTypeIds;
+            }
+        }
     }
 }

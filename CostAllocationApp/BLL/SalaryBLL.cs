@@ -5,15 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CostAllocationApp.Dtos;
 
 namespace CostAllocationApp.BLL
 {
     public class SalaryBLL
     {
         SalaryDAL salaryDAL = null;
+        UnitPriceTypeBLL _unitPriceTypeBLL = null;
         public SalaryBLL()
         {
             salaryDAL = new SalaryDAL();
+            _unitPriceTypeBLL = new UnitPriceTypeBLL();
         }
         public int CreateSalary(Salary salary)
         {
@@ -79,6 +82,20 @@ namespace CostAllocationApp.BLL
         public GradeSalaryType GetGradeSalaryType(int departmentId, int salaryTypeId, int year, int gradeId)
         {
             return salaryDAL.GetGradeSalaryType(departmentId, salaryTypeId, year, gradeId);
+        }
+
+        public List<int> GetSalaryTypeIdByYear(int year)
+        {
+            return salaryDAL.GetSalaryTypeIdByYear(year);
+        }
+        public SalaryMasterExportDto GetSalaryTypeWithGradeSalaryByYear(int year,int gradeId,int salaryTypeId)
+        {
+
+             return   new SalaryMasterExportDto {
+                    SalaryType = _unitPriceTypeBLL.GetUnitPriceTypeById(salaryTypeId),
+                    GradeSalaryTypes = salaryDAL.GetGradeSalaryTypeByYear_SalaryTypeId_GradeId(salaryTypeId, year, gradeId)
+                };
+            
         }
     }
 }

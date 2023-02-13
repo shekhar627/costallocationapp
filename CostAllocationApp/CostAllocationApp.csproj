@@ -221,6 +221,7 @@
     <Compile Include="Dtos\GradeCommonMasterDto.cs" />
     <Compile Include="Dtos\SalaryAssignmentDto.cs" />
     <Compile Include="Dtos\ForecastDto.cs" />
+    <Compile Include="Dtos\SalaryMasterExportDto.cs" />
     <Compile Include="Dtos\SendToForecaseApiDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
