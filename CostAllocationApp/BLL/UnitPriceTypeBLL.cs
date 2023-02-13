@@ -29,5 +29,9 @@ namespace CostAllocationApp.BLL
         {
             return _unitPriceTypeDAL.GetAllUnitPriceTypes();
         }
+        public SalaryType GetUnitPriceTypeById(int salaryTypeId)
+        {
+            return _unitPriceTypeDAL.GetUnitPriceTypeById(salaryTypeId);
+        }
     }
 }

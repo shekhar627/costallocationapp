@@ -94,5 +94,36 @@ namespace CostAllocationApp.DAL
                 return unitPriceTypes;
             }
         }
+
+        public SalaryType GetUnitPriceTypeById(int salaryTypeId)
+        {
+            SalaryType unitPriceType = new SalaryType();
+            string query = "select * from SalaryTypes where id = "+salaryTypeId;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            unitPriceType.Id = Convert.ToInt32(rdr["Id"]);
+                            unitPriceType.SalaryTypeName = rdr["SalaryTypeName"].ToString();
+                            unitPriceType.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
+                            unitPriceType.CreatedBy = rdr["CreatedBy"].ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return unitPriceType;
+            }
+        }
     }
 }

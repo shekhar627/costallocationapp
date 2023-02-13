@@ -3887,9 +3887,81 @@ namespace CostAllocationApp.Controllers
                 }
 
 
+                var sheetSalaryMaster = package.Workbook.Worksheets.Add("SalaryMaster");
+                List<SalaryMasterExportDto> salaryMasterExportDtos = new List<SalaryMasterExportDto>();
+                var salaryTypeIds = _salaryBLL.GetSalaryTypeIdByYear(2022);
+                foreach (var salaryTypeId in salaryTypeIds)
+                {
+                    foreach (var grade in grades)
+                    {
+                         salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(2022, grade.Id, salaryTypeId));
+                    }
+                }
+
+                int rowCountSalaryMaster = 6;
+                // year
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Value = "FY2022";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Font.Color.SetColor(Color.White);
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                rowCountSalaryMaster++;
+                // heading 1
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Value = "期初目標";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Font.Color.SetColor(Color.White);
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 7].Value = "下修目標";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 7].Style.Font.Color.SetColor(Color.White);
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 7].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 8].Value = "期初目標";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 8].Style.Font.Color.SetColor(Color.White);
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 8].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+
+
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Value = "下修目標";
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Style.Font.Color.SetColor(Color.White);
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Style.Fill.BackgroundColor.SetColor(1, 36, 64, 98);
+                rowCountSalaryMaster++;
 
 
 
+                int prevSalaryTypeId = 0;
+
+                foreach (var item in salaryMasterExportDtos)
+                {
+                    if (item.GradeSalaryTypes.Count > 1)
+                    {
+                        if (prevSalaryTypeId != item.SalaryType.Id)
+                        {
+                            sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = item.SalaryType.SalaryTypeName;
+                            prevSalaryTypeId = item.SalaryType.Id;
+                        }
+
+                        // for grade name
+                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 5].Value = item.GradeSalaryTypes[0].GradeName;
+                        // for beginning target
+                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Value = item.GradeSalaryTypes[0].GradeLowPoints;
+                        // for beginning target
+                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 7].Value = item.GradeSalaryTypes[0].GradeHighPoints;
+
+                        // for downward revision target
+                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 8].Value = item.GradeSalaryTypes[1].GradeLowPoints;
+                        // for downward revision target
+                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Value = item.GradeSalaryTypes[1].GradeHighPoints;
+
+                        rowCountSalaryMaster++;
+                    }
+
+
+
+                }
 
 
 

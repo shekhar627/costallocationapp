@@ -14,5 +14,9 @@ namespace CostAllocationApp.Models
         public int DepartmentId { get; set; }
         public int Year { get; set; }
         public int SalaryTypeId { get; set; }
+
+
+        // for other usages
+        public string GradeName { get; set; }
     }
 }
