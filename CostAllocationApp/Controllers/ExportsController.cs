@@ -1039,9 +1039,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
                             sheet.Cells[rowCount, 2].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
-
-
-
+                        
 
                         // alligned with the serial of salary type
 
@@ -3717,7 +3715,6 @@ namespace CostAllocationApp.Controllers
                     sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
 
-
                     foreach (var singleAssignment in item.ForecastAssignmentViewModels)
                     {
                         oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
@@ -4110,9 +4107,10 @@ namespace CostAllocationApp.Controllers
 
                 }
 
-                #endregion
 
-                #region common master
+
+
+
 
                 var sheetCommonMaster = package.Workbook.Worksheets.Add("CommonMaster");
 
