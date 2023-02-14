@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using CostAllocationApp.Models;
 using System.Globalization;
+using CostAllocationApp.ViewModels;
 
 namespace CostAllocationApp.DAL
 {
@@ -93,6 +94,53 @@ namespace CostAllocationApp.DAL
                 return salaries;
             }
         }
+        public List<GradeSalaryTypeViewModel> GetAllSalaryTypes()
+        {
+            List<GradeSalaryTypeViewModel> salaries = new List<GradeSalaryTypeViewModel>();
+            string query = "";
+            query = query + "select gst.id,gst.GradeId,g.GradeName,gst.GradeLowPoints,gst.GradeHighPoints ";
+            query = query + "    ,gst.DepartmentId,d.Name,gst.Year,gst.SalaryTypeId,st.SalaryTypeName ";
+            query = query + "from GradeSalarlyTypes gst ";
+            query = query + "    join salarytypes st on gst.SalaryTypeId = st.Id ";
+            query = query + "    join departments d on gst.DepartmentId = d.Id ";
+            query = query + "    join grades g on gst.GradeId = g.Id ";
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            GradeSalaryTypeViewModel salary = new GradeSalaryTypeViewModel();
+                            salary.Id = Convert.ToInt32(rdr["Id"]);
+                            salary.GradeId = Convert.ToInt32(rdr["GradeId"]);
+                            salary.GradeName = rdr["GradeName"].ToString();
+                            salary.GradeLowPoints = Convert.ToDecimal(rdr["GradeLowPoints"]);
+                            salary.GradeHighPoints = Convert.ToDecimal(rdr["GradeHighPoints"]);
+                            salary.DepartmentId = Convert.ToInt32(rdr["DepartmentId"]);
+                            salary.DepartmentName = rdr["Name"].ToString();
+                            salary.SalaryTypeId = Convert.ToInt32(rdr["SalaryTypeId"]);
+                            salary.SalaryTypeName = rdr["SalaryTypeName"].ToString();
+                            salary.Year = Convert.ToInt32(rdr["Year"]);
+                            
+                            salaries.Add(salary);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return salaries;
+            }
+        }
+
         public int RemoveSalary(int salaryIds)
         {
             int result = 0;

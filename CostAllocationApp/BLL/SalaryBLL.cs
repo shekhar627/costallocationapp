@@ -1,5 +1,6 @@
 ﻿using CostAllocationApp.DAL;
 using CostAllocationApp.Models;
+using CostAllocationApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,10 @@ namespace CostAllocationApp.BLL
         public List<Salary> GetAllSalaryPoints()
         {
             return salaryDAL.GetAllSalaryPoints();
+        }
+        public List<GradeSalaryTypeViewModel> GetAllSalaryTypes()
+        {
+            return salaryDAL.GetAllSalaryTypes();
         }
         public int RemoveSalary(int salaryIds)
         {

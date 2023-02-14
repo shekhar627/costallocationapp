@@ -256,6 +256,7 @@
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModal.cs" />
     <Compile Include="ViewModels\ForecastAssignmentViewModel.cs" />
+    <Compile Include="ViewModels\GradeSalaryTypeViewModel.cs" />
     <Compile Include="ViewModels\GradeViewModel.cs" />
     <Compile Include="ViewModels\SalaryViewModel.cs" />
     <Compile Include="ViewModels\SectionViewModel.cs" />
@@ -732,6 +733,7 @@
     <Content Include="Views\Exports\DataExportByAllocation.cshtml" />
     <Content Include="Views\Grades\CreateGrade.cshtml" />
     <Content Include="Views\CommonMasters\CreateCommonMaster.cshtml" />
+    <Content Include="Views\Salaries\SalaryMaster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

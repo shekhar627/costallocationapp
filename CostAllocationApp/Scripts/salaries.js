@@ -168,7 +168,7 @@ function CreateGradeSalaryType() {
         success: function (data) {
 
             ToastMessageSuccess(data);
-            //GetSalaries();    
+            GetAllSalaryTypes();
         },
         error: function (data) {
             //ToastMessageFailed(data);
@@ -176,3 +176,30 @@ function CreateGradeSalaryType() {
     });
     
 }
+
+//Get grade list
+function GetAllSalaryTypes() {
+    $.getJSON('/api/Salaries/')
+        .done(function (data) {
+            $('#GradeSalaryType_list_tbody').empty();
+            $.each(data, function (key, item) {            
+                //$('#grade_list_tbody').append(`<tr><td><input type="checkbox" class="grade_list_chk" onclick="GetCheckedIds(${item.Id});" data-id='${item.Id}' /></td><td>${item.GradeName}</td></tr>`);                
+                $('#GradeSalaryType_list_tbody').append(`<tr><td>${item.GradeName}</td><td>${item.GradeLowPoints}</td><td>${item.GradeHighPoints}</td><td>${item.DepartmentName}</td><td>${item.SalaryTypeName}</td><td>${item.Year}</td></tr>`);                
+            });
+        });
+}
+
+$(document).ready(function () {
+    GetAllSalaryTypes();
+});
+
+$('#add_name_search_button').on('click', function (event) {
+    var selectYear = $('#salary_year_list').val();
+    if(selectYear >0){
+        $("#salary_master_list").css("display", "block");
+    }else{        
+        $("#salary_master_list").css("display", "none");
+        $( "#salary_year_list" ).focus();        
+        alert("please select year!");
+    }
+});

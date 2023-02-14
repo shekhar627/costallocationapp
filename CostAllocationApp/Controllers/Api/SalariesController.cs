@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using CostAllocationApp.Models;
 using CostAllocationApp.BLL;
-
+using CostAllocationApp.ViewModels;
 
 namespace CostAllocationApp.Controllers.Api
 {
@@ -86,7 +86,8 @@ namespace CostAllocationApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult Salaries()
         {
-            List<Salary> salaries = salaryBLL.GetAllSalaryPoints();
+            //List<Salary> salaries = salaryBLL.GetAllSalaryPoints();
+            List<GradeSalaryTypeViewModel> salaries = salaryBLL.GetAllSalaryTypes();
             return Ok(salaries);
         }
 
