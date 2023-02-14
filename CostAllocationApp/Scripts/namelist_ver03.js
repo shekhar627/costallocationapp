@@ -274,7 +274,7 @@ function loadSingleAssignmentData(id) {
                     $('#grade_edit').empty();
                     $('#grade_edit').append(`<option value='-1'>Select Grade</option>`);
                     $.each(data, function (key, item) {
-                        $('#grade_edit').append(`<option value='${item.Id}'>${item.SalaryGrade}</option>`);
+                        $('#grade_edit').append(`<option value='${item.Id}'>${item.GradeName}</option>`);
                     });
 
                     if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {
@@ -371,19 +371,27 @@ $('#company_edit').on('change', function () {
     var _sectionName = $("#section_edit option:selected").text();
     var _unitPrice = $("#unitprice_edit").val();
     var _gradePoint = $("#grade_edit").val();
+    var _gradeName = $("#grade_edit option:selected").text();
+    var _selectYear = $("#year_edit").val();
+    var _selectDepartment = $("#department_edit").val();
     if ($("#hidGradePoints").val() == '') {
         $("#hidGradePoints").val(_gradePoint);
     }
     var _tempGradePoint = $("#hidGradePoints").val();
 
-    console.log(_gradePoint);
-
+    console.log("_selectYear: "+_selectYear);
+    console.log("_gradePoint: "+_gradePoint);
+    console.log("_selectDepartment: "+_selectDepartment);
+    console.log("_gradeName: "+_gradeName);
     //var _tempGradeI
 
     $.ajax({
-        url: `/api/utilities/CompareGrade/${_unitPrice}`,
+        //url: `/api/utilities/CompareGrade/${_unitPrice}`,
+        url: `/api/utilities/GetUnitPrice`,
         type: 'GET',
         dataType: 'json',
+        //data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year"+_selectYear,
+        data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year="+_selectYear,
         success: function (data) {
             if (data != null) {
                 $('#grade_edit_hidden').val(data.Id);
@@ -710,7 +718,7 @@ function addNew() {
             $('#grade_edit').empty();
             $('#grade_edit').append(`<option value='-1'>Select Grade</option>`);
             $.each(data, function (key, item) {
-                $('#grade_edit').append(`<option value='${item.Id}'>${item.SalaryGrade}</option>`);
+                $('#grade_edit').append(`<option value='${item.Id}'>${item.GradeName}</option>`);
             });
 
             if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {

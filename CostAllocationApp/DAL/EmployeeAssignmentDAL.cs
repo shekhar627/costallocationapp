@@ -288,13 +288,14 @@ namespace CostAllocationApp.DAL
         public EmployeeAssignmentViewModel GetAssignmentById(int assignmentId)
         {
 
-            string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks,gd.GradePoints,ea.ExplanationId,
+            string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks,g.GradeName,ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice, ea.GradeId 
                             from EmployeesAssignments ea left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id
                             left join Roles rl on ea.RoleId = rl.Id
-                            left join Grades gd on ea.GradeId = gd.Id 
+                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join Grades g on gd.GradeId = g.Id
                             left join InCharges inc on ea.InChargeId = inc.Id where ea.Id={assignmentId}";
 
             EmployeeAssignmentViewModel employeeAssignmentViewModel = new EmployeeAssignmentViewModel();
@@ -328,7 +329,7 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(employeeAssignmentViewModel.UnitPrice).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));
                             employeeAssignmentViewModel.GradeId = rdr["GradeId"].ToString();
                             employeeAssignmentViewModel.Remarks = rdr["Remarks"].ToString();
-                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            employeeAssignmentViewModel.GradePoint = rdr["GradeName"].ToString();
 
                         }
                     }
@@ -829,12 +830,13 @@ namespace CostAllocationApp.DAL
             where += " ea.IsActive=1 and 1=1 ";
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.RoleId,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
-                            ,gd.GradePoints,ea.IsActive
+                            ,g.GradeName,ea.IsActive
                             from EmployeesAssignments ea 
                             left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
-                            left join Companies com on ea.CompanyId = com.Id                            
-                            left join Grades gd on ea.GradeId = gd.Id
+                            left join Companies com on ea.CompanyId = com.Id                                                        
+                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join Grades g on gd.GradeId = g.Id
                             left join Explanations ep on ea.ExplanationId = ep.Id
                             where {where}";
 
@@ -866,7 +868,7 @@ namespace CostAllocationApp.DAL
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]).ToString("N2");
                             //employeeAssignmentViewModel.UnitPrice = Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
                             employeeAssignmentViewModel.UnitPrice = rdr["UnitPrice"] is DBNull ? "" : Convert.ToInt32(rdr["UnitPrice"]).ToString("N0");
-                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            employeeAssignmentViewModel.GradePoint = rdr["GradeName"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             employeeAssignmentViewModel.EmployeeNameWithCodeRemarks = employeeAssignmentViewModel.EmployeeName;
 
@@ -914,13 +916,14 @@ namespace CostAllocationApp.DAL
 
             string query = $@"select ea.id as AssignmentId,ea.EmployeeName,ea.SectionId, sec.Name as SectionName, ea.Remarks, ea.SubCode,ea.ExplanationId,
                             ea.DepartmentId, dep.Name as DepartmentName,ea.InChargeId, inc.Name as InchargeName,ea.RoleId,rl.Name as RoleName,ea.CompanyId, com.Name as CompanyName, ea.UnitPrice
-                            ,gd.GradePoints,ea.IsActive
+                            ,g.GradeName,ea.IsActive
                             from EmployeesAssignments ea left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id
                             left join Roles rl on ea.RoleId = rl.Id
                             left join InCharges inc on ea.InChargeId = inc.Id 
-                            left join Grades gd on ea.GradeId = gd.Id
+                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join Grades g on gd.GradeId = g.Id	
                             where {where} order by ea.SubCode asc";
 
             List<EmployeeAssignmentViewModel> employeeAssignments = new List<EmployeeAssignmentViewModel>();
@@ -959,7 +962,7 @@ namespace CostAllocationApp.DAL
                             {
                                 employeeAssignmentViewModel.UnitPriceWithoutComma = Convert.ToInt32(rdr["UnitPrice"].ToString());
                             }                            
-                            employeeAssignmentViewModel.GradePoint = rdr["GradePoints"].ToString();
+                            employeeAssignmentViewModel.GradePoint = rdr["GradeName"].ToString();
                             employeeAssignmentViewModel.IsActive = Convert.ToBoolean(rdr["IsActive"]);
                             if (!string.IsNullOrEmpty(rdr["Remarks"].ToString()))
                             {

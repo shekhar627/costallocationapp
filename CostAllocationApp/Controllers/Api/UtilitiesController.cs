@@ -315,6 +315,40 @@ namespace CostAllocationApp.Controllers.Api
             }
         }
 
+        //[Route("api/utilities/GetUnitPrice/{unitPrice}")]
+        [HttpGet]
+        public IHttpActionResult GetUnitPrice(string gradeId,string departmentId,string year)
+        {
+            decimal tempVal = 0;
+            //if (decimal.TryParse(unitPrice, out tempVal))
+            //{
+            //    Salary salary = salaryBLL.CompareSalary(tempVal);
+            //    if (tempVal > 0)
+            //    {
+
+            //        if (salary != null)
+            //        {
+            //            return Ok(salary);
+            //        }
+            //        else
+            //        {
+            //            return Ok(salary);
+            //            //return BadRequest("Invalid Unit Price");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        return Ok(salary);
+            //        //return BadRequest("Invalid Unit Price");
+            //    }
+            //}
+            //else
+            //{
+            //    return BadRequest("Invalid Unit Price");
+            //}
+            return Ok();
+        }
+
         [Route("api/utilities/GetEmployeesByName/{employeeName}")]
         [HttpGet]
         public IHttpActionResult GetEmployeesByName(string employeeName)

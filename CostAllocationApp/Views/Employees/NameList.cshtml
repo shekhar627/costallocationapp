@@ -181,6 +181,7 @@
                             <th>Role</th>
                             <th>Explanation</th>*@
                         <th>Grade</th>
+                        <th>Year</th>
                         <th>Unit Price</th>
                     </tr>
                 </thead>
@@ -209,8 +210,14 @@
 
                         </td>
                         <td>
-                            <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
+                            <select id="year_edit" class=" col-12">
+                                <option value="-1">Select Year</option>
+                                <option value="2022">2022</option>
+                            </select>
                         </td>
+                        <td>
+                            <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
+                        </td>                        
                     </tr>
                 </tbody>
             </table>
