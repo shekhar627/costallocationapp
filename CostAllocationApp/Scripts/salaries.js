@@ -219,10 +219,10 @@ $('#add_name_search_button').on('click', function (event) {
                         $('#salary_master_list_tbl').append(`<td></td>`);  
                     }
                     $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeName}</td>`); 
-                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeLowPoints}</td>`); 
-                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeHighPoints}</td>`); 
-                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeLowPoints}</td>`); 
-                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeHighPoints}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
+                    $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
 
                     $('#salary_master_list_tbl').append(`</tr>`);                
                 }

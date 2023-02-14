@@ -812,35 +812,7 @@ namespace CostAllocationApp.Controllers.Api
                     salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(2022, grade.Id, salaryTypeId));
                 }
             }
-            //int prevSalaryTypeId = 0;
-            //foreach (var item in salaryMasterExportDtos)
-            //{
-            //    if (item.GradeSalaryTypes.Count > 1)
-            //    {
-            //        if (prevSalaryTypeId != item.SalaryType.Id)
-            //        {
-            //            sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = item.SalaryType.SalaryTypeName;
-            //            prevSalaryTypeId = item.SalaryType.Id;
-            //        }
-
-            //        // for grade name
-            //        sheetSalaryMaster.Cells[rowCountSalaryMaster, 5].Value = item.GradeSalaryTypes[0].GradeName;
-            //        // for beginning target
-            //        sheetSalaryMaster.Cells[rowCountSalaryMaster, 6].Value = item.GradeSalaryTypes[0].GradeLowPoints;
-            //        // for beginning target
-            //        sheetSalaryMaster.Cells[rowCountSalaryMaster, 7].Value = item.GradeSalaryTypes[0].GradeHighPoints;
-
-            //        // for downward revision target
-            //        sheetSalaryMaster.Cells[rowCountSalaryMaster, 8].Value = item.GradeSalaryTypes[1].GradeLowPoints;
-            //        // for downward revision target
-            //        sheetSalaryMaster.Cells[rowCountSalaryMaster, 9].Value = item.GradeSalaryTypes[1].GradeHighPoints;
-
-            //        rowCountSalaryMaster++;
-            //    }
-
-
-
-            //}
+            
             return Ok(salaryMasterExportDtos);
         }
 

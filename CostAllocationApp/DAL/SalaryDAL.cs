@@ -339,6 +339,8 @@ namespace CostAllocationApp.DAL
                             gradeSalaryType.DepartmentId = Convert.ToInt32(rdr["DepartmentId"]);
                             gradeSalaryType.Year = Convert.ToInt32(rdr["Year"]);
                             gradeSalaryType.SalaryTypeId = Convert.ToInt32(rdr["SalaryTypeId"]);
+                            gradeSalaryType.GradeLowWithCommaSeperate = gradeSalaryType.GradeLowPoints.ToString("N0");
+                            gradeSalaryType.GradeHighWithCommaSeperate = gradeSalaryType.GradeHighPoints.ToString("N0");
 
                             gradeSalaryTypes.Add(gradeSalaryType);
                         }
