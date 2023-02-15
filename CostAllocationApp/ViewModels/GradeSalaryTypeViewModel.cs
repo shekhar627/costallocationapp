@@ -18,5 +18,6 @@ namespace CostAllocationApp.ViewModels
         public int SalaryTypeId { get; set; }
         public string SalaryTypeName { get; set; }
         public int Year { get; set; }
+        public string AssignedGradeId { get; set; }
     }
 }

@@ -319,34 +319,10 @@ namespace CostAllocationApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetUnitPrice(string gradeId,string departmentId,string year)
         {
-            decimal tempVal = 0;
-            //if (decimal.TryParse(unitPrice, out tempVal))
-            //{
-            //    Salary salary = salaryBLL.CompareSalary(tempVal);
-            //    if (tempVal > 0)
-            //    {
+            GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
 
-            //        if (salary != null)
-            //        {
-            //            return Ok(salary);
-            //        }
-            //        else
-            //        {
-            //            return Ok(salary);
-            //            //return BadRequest("Invalid Unit Price");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return Ok(salary);
-            //        //return BadRequest("Invalid Unit Price");
-            //    }
-            //}
-            //else
-            //{
-            //    return BadRequest("Invalid Unit Price");
-            //}
-            return Ok();
+            _salaryTypeViewModel = salaryBLL.GetUnitPrice(gradeId, departmentId, year);            
+            return Ok(_salaryTypeViewModel);
         }
 
         [Route("api/utilities/GetEmployeesByName/{employeeName}")]
@@ -815,7 +791,22 @@ namespace CostAllocationApp.Controllers.Api
             
             return Ok(salaryMasterExportDtos);
         }
+        [Route("api/utilities/GetAllSalaries/")]
+        [HttpGet]
+        public IHttpActionResult GetAllSalaries()
+        {
+            List<GradeSalaryTypeViewModel> salaries = salaryBLL.GetAllSalaries();
+            return Ok(salaries);
 
+        }
+        [Route("api/utilities/GetGradeId/{salaryTypeId}")]
+        [HttpGet]
+        public int GetGradeId(string salaryTypeId)
+        {
+            int gradeId = salaryBLL.GetGradeId(salaryTypeId);
+            return gradeId;
+
+        }
 
     }
 }

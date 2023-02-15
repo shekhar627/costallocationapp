@@ -30,6 +30,14 @@ namespace CostAllocationApp.BLL
         {
             return salaryDAL.GetAllSalaryTypes();
         }
+        public List<GradeSalaryTypeViewModel> GetAllSalaries()
+        {
+            return salaryDAL.GetAllSalaries();
+        }
+        public int GetGradeId(string salaryTypeId)
+        {
+            return salaryDAL.GetGradeId(salaryTypeId);
+        }
         public int RemoveSalary(int salaryIds)
         {
             return salaryDAL.RemoveSalary(salaryIds);
@@ -96,6 +104,10 @@ namespace CostAllocationApp.BLL
                     GradeSalaryTypes = salaryDAL.GetGradeSalaryTypeByYear_SalaryTypeId_GradeId(salaryTypeId, year, gradeId)
                 };
             
+        }
+        public GradeSalaryTypeViewModel GetUnitPrice(string gradeId, string departmentId, string year)
+        {
+            return salaryDAL.GetUnitPrice(gradeId, departmentId, year);
         }
     }
 }
