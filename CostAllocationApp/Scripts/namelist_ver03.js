@@ -261,7 +261,6 @@ function loadSingleAssignmentData(id) {
                         $('#grade_edit').append(`<option value='${item.GradeId}'>${item.GradeName}</option>`);
                     });                                        
                     var tempGradeIdWithSalaryType = $("#hid_gradeIdWithSalaryType").val();
-                    console.log("tempGradeIdWithSalaryType: "+tempGradeIdWithSalaryType);
 
                     if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {
                         if (assignmentData.CompanyName.toLowerCase() == "mw" || assignmentData.SectionName.toLowerCase() == 'mw') {
@@ -302,7 +301,7 @@ function loadAssignmentRowData(id) {
     $('#namelist_inactive_rowid').val(id);
 }
 
-//save edit information
+//save edit information : new validation add.
 $('#add_name_edit').on('click', function () {
     var sectionId = $('#section_edit').find(":selected").val();
     var inchargeId = $('#incharge_edit').find(":selected").val();
@@ -317,6 +316,15 @@ $('#add_name_edit').on('click', function () {
     }    
     var rowId = $('#row_id_hidden_edit').val();
     var remarks = $('#memo_edit').val();
+    if(departmentId==''){
+        alert("please select department");
+        return false;        
+    }
+    if(departmentId==''){
+        alert("please select department");
+        return false;        
+    }
+
 
     var dataSingleAssignmentUpdate = {
         Id: rowId,
@@ -351,138 +359,17 @@ $('#add_name_edit').on('click', function () {
     });
 
 });
+
 //edit employee assignment: compare grade with company name
 $('#company_edit').on('change', function () {
-    var _companyName = $("#company_edit option:selected").text();
-    var _sectionName = $("#section_edit option:selected").text();
-    var _unitPrice = $("#unitprice_edit").val();
-    var _gradePoint = $("#grade_edit").val();
-    var _gradeName = $("#grade_edit option:selected").text();
-    var _selectYear = $("#year_edit").val();
-    var _selectDepartment = $("#department_edit").val();
-    if ($("#hidGradePoints").val() == '') {
-        $("#hidGradePoints").val(_gradePoint);
-    }
-    if (_gradePoint == '') {
-        _gradePoint = $("#hidGradePoints").val();
-    }
-    var _tempGradePoint = $("#hidGradePoints").val();
-    
-    var isGradeShow = IsGradeShow(_companyName,_sectionName);
-
-    $.ajax({
-        //url: `/api/utilities/CompareGrade/${_unitPrice}`,
-        url: `/api/utilities/GetUnitPrice`,
-        type: 'GET',
-        dataType: 'json',
-        //data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year"+_selectYear,
-        data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year="+_selectYear,
-        success: function (data) {
-            if (data != null) {
-                $('#grade_edit_hidden').val(data.GradeId);
-                
-                if (isGradeShow) {
-                    $('#unitprice_edit').attr("readonly",true);
-	                $('#unitprice_edit').css('opacity', '0.6');
-
-                    $("#grade_edit").attr('style', '');
-                    $("#grade_edit").attr('onclick', '');
-                    $("#grade_edit").attr('onkeydown', '');
-                    $("#grade_edit option[value=" + data.Id + "]").attr("selected", "selected");
-                } else {
-                    $('#unitprice_edit').attr("readonly",false) 
-	                $('#unitprice_edit').css('opacity', '');
-
-                    let tempHidGradeVal = $('#grade_edit_hidden').val();
-                    if (tempHidGradeVal != '') {
-                        $("#grade_edit option[value=" + tempHidGradeVal+"]").attr("selected", false);
-                    } else {
-                        $("#grade_edit option[value='-1']").attr("selected", 'selected');
-                    }                    
-                    $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                    $("#grade_edit").attr('onclick', 'return false;');
-                    $("#grade_edit").attr('onkeydown', 'return false;');
-                }
-            } else {
-                let tempHidGradeVal = $('#grade_edit_hidden').val();
-                if (tempHidGradeVal != '') {
-                    $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
-                } else {
-                    $("#grade_edit option[value='-1']").attr("selected", 'selected');
-                }                 
-                $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                $("#grade_edit").attr('onclick', 'return false;');
-                $("#grade_edit").attr('onkeydown', 'return false;');                
-            }
-        },
-        error: function () {
-            $('#grade_edit').val('');
-        }
-    });
+    EditCompanyOnChange();
 });
+
 //change section and compare with grade and unit price
 $('#section_edit').on('change', function () {
-    var _companyName = $("#company_edit option:selected").text();
-    var _sectionName = $("#section_edit option:selected").text();
-    var _unitPrice = $("#unitprice_edit").val();
-    var _gradePoint = $("#grade_edit").val();
-    if ($("#hidGradePoints").val() == '') {
-        $("#hidGradePoints").val(_gradePoint);
-    }
-    var _tempGradePoint = $("#hidGradePoints").val();
-
-    console.log(_gradePoint);
-
-    //var _tempGradeI
-    $.ajax({
-        url: `/api/utilities/CompareGrade/${_unitPrice}`,
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            if (data != null) {
-                $('#grade_edit_hidden').val(data.Id);
-                if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == 'mw') {
-                    $("#grade_edit").attr('style', '');
-                    $("#grade_edit").attr('onclick', '');
-                    $("#grade_edit").attr('onkeydown', '');
-
-                    $("#grade_edit option[value=" + data.Id + "]").attr("selected", "selected");
-                } else {
-                    let tempHidGradeVal = $('#grade_edit_hidden').val();
-                    if (tempHidGradeVal != '') {
-                        $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
-                    } else {
-                        $("#grade_edit option[value='-1']").attr("selected", 'selected');
-                    } 
-                    $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                    $("#grade_edit").attr('onclick', 'return false;');
-                    $("#grade_edit").attr('onkeydown', 'return false;');
-                }
-            } else {
-                let tempHidGradeVal = $('#grade_edit_hidden').val();
-                if (tempHidGradeVal != '') {
-                    $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
-                } else {
-                    $("#grade_edit option[value='-1']").attr("selected", 'selected');
-                } 
-                $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                $("#grade_edit").attr('onclick', 'return false;');
-                $("#grade_edit").attr('onkeydown', 'return false;');
-                //if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == 'mw') {                    
-                //    $("#grade_edit option[value=" + _tempGradePoint + "]").attr("selected", "selected");
-                //} else {
-                //    $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                //    $("#grade_edit").attr('onclick', 'return false;');
-                //    $("#grade_edit").attr('onkeydown', 'return false;');
-                //}
-            }
-        },
-        error: function () {
-            $('#grade_edit').val('');
-            //$('#grade_edit_hidden').val('');
-        }
-    });
+    EditCompanyOnChange();
 });
+
 function GetAssignedGradeId(salaryTypeId){
     var returnGradeId = "";
     $.ajax({
@@ -491,7 +378,6 @@ function GetAssignedGradeId(salaryTypeId){
         dataType: 'text',
         success: function (data) {
             if (data != null) {
-                console.log("data: "+data);
                 returnGradeId = data;
                 $("#hid_gradeIdWithSalaryType").val(returnGradeId);
             } 
@@ -929,10 +815,7 @@ function LoadGradeValue(sel) {
     $.ajax({
         url: `/api/utilities/CompareGrade/${_unitPrice}`,
         type: 'GET',
-        dataType: 'json',
-        //data: {
-        //    unitPrice: _unitPrice
-        //},
+        dataType: 'json',        
         success: function (data) {
             $('#grade_edit_hidden').val(data.Id);
             if (_companyName.toLowerCase().indexOf("mw") > 0 | _seactionName.toLowerCase().indexOf("mw") > 0) {
@@ -1035,16 +918,7 @@ function NameList_DatatableLoad(data) {
             },
             {
                 data: 'DepartmentName'
-            },
-            //{
-            //    data: 'InchargeName'
-            //},
-            //{
-            //    data: 'RoleName'
-            //},
-            //{
-            //    data: 'ExplanationName'
-            //},            
+            },            
             {
                 data: 'GradePoint',
                 render: function (grade) {
@@ -1153,4 +1027,110 @@ function IsGradeShow(ajax_companyName,ajax_sectionName){
     }
     return isGradeShow;
 }
+$('#grade_edit').on('change', function () {
+    EditCompanyOnChange();
+});
+function EditCompanyOnChange(){
+    var _companyName = $("#company_edit option:selected").text();
+    var _sectionName = $("#section_edit option:selected").text();
+    var _unitPrice = $("#unitprice_edit").val();
+    var _gradePoint = $("#grade_edit").val();
+    var _gradeName = $("#grade_edit option:selected").text();
+    var _selectYear = $("#year_edit").val();
+    var _selectDepartment = $("#department_edit").val();
+    if ($("#hidGradePoints").val() == '' || $("#hidGradePoints").val() <0) {
+        $("#hidGradePoints").val(_gradePoint);
+    }
+    if (_gradePoint == '') {
+        _gradePoint = $("#hidGradePoints").val();
+    }
+    var _tempGradePoint = $("#hidGradePoints").val();
+    
+    var isGradeShow = IsGradeShow(_companyName,_sectionName);
+    
+    var tempHidGradeVal = $('#grade_edit_hidden').val();
+    var selectGradeId = "";
+    
+    var tempGradeLowPoints = $('#hidGradeLowPoints').val(); 
+    var selectGradeLowPoints = "";
 
+    if(_gradePoint == '' && _gradePoint <=0){
+        _gradePoint = _tempGradePoint;        
+    }
+    
+
+    $.ajax({
+        //url: `/api/utilities/CompareGrade/${_unitPrice}`,
+        url: `/api/utilities/GetUnitPrice`,
+        type: 'GET',
+        dataType: 'json',
+        data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year="+_selectYear,
+        success: function (data) {
+            if (data != null) {        
+                               
+                
+
+                if(data.Id != '' && data.Id >0){
+                    selectGradeId = data.Id;
+                    selectGradeLowPoints = data.GradeLowPoints;                    
+                }else if(tempHidGradeVal !='' && tempHidGradeVal >0){                                        
+                    selectGradeId = tempHidGradeVal;
+                    selectGradeLowPoints = tempGradeLowPoints;
+                }else{
+                    selectGradeId = -1;
+                    selectGradeLowPoints = '';
+                }
+                
+                $('#grade_edit_hidden').val(selectGradeId);
+                $('#hidGradeLowPoints').val(selectGradeLowPoints);
+                $('#unitprice_edit').val(selectGradeLowPoints); 
+
+                if (isGradeShow) {
+                    $('#unitprice_edit').attr("readonly",true);
+	                $('#unitprice_edit').css('opacity', '0.6');
+
+                    $("#grade_edit").attr('style', '');
+                    $("#grade_edit").attr('onclick', '');
+                    $("#grade_edit").attr('onkeydown', '');
+                    //$("#grade_edit option:selected").prop("selected", false);
+                    //$('#grade_edit option').attr('selected', false);
+                    if(tempHidGradeVal >0){
+                        $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
+                    }
+                    $("#grade_edit option[value=" + selectGradeId + "]").attr("selected", "selected");
+                } else {
+                                    
+                    // if (tempHidGradeVal != '') {
+                    //     $("#grade_edit option[value=" + tempHidGradeVal+"]").attr("selected", false);
+                    // } else {
+                    //     $("#grade_edit option[value='-1']").attr("selected", 'selected');
+                    // }       
+                    $('#grade_edit option').attr('selected', false);
+
+                    //$("#grade_edit option:selected").prop("selected", false);
+
+                    $("#grade_edit option[value='-1']").attr("selected", 'selected');
+                    $('#unitprice_edit').attr("readonly",false) 
+	                $('#unitprice_edit').css('opacity', '');
+
+                    $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
+                    $("#grade_edit").attr('onclick', 'return false;');
+                    $("#grade_edit").attr('onkeydown', 'return false;');
+                }
+            } else {
+                let tempHidGradeVal = $('#grade_edit_hidden').val();
+                if (tempHidGradeVal != '') {
+                    $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
+                } else {
+                    $("#grade_edit option[value='-1']").attr("selected", 'selected');
+                }                 
+                $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
+                $("#grade_edit").attr('onclick', 'return false;');
+                $("#grade_edit").attr('onkeydown', 'return false;');                
+            }
+        },
+        error: function () {
+            $('#grade_edit').val('');
+        }
+    });
+}
