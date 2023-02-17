@@ -260,6 +260,7 @@ function loadSingleAssignmentData(id) {
                     $.each(data, function (key, item) {
                         $('#grade_edit').append(`<option value='${item.GradeId}'>${item.GradeName}</option>`);
                     });                                        
+                    //var tempGradeIdWithSalaryType = $("#hid_gradeIdWithSalaryType").val();
                     var tempGradeIdWithSalaryType = $("#hid_gradeIdWithSalaryType").val();
 
                     if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {
@@ -301,30 +302,73 @@ function loadAssignmentRowData(id) {
     $('#namelist_inactive_rowid').val(id);
 }
 
-//save edit information : new validation add.
-$('#add_name_edit').on('click', function () {
+
+function GetGradeSalaryTypeId(gradeId,departmentId,year){    
+    var salaryGradeTypeId = "";
+    $.ajax({
+        url: `/api/utilities/GetGradeSalaryTypeId/`,
+        type: 'GET',
+        dataType: 'json',        
+        data:'gradeId='+gradeId+"&departmentId="+departmentId,
+        success: function (data) {
+            salaryGradeTypeId = data.Id;
+            console.log("salaryGradeTypeId: "+salaryGradeTypeId);
+            $("#hid_gradeSalaryTypeId").val(salaryGradeTypeId);
+            console.log("salaryGradeTypeId_2: "+salaryGradeTypeId);
+        },
+        error: function () {           
+        }
+    });   
+}
+
+function EditEmployeeInformations(){
     var sectionId = $('#section_edit').find(":selected").val();
+    var _sectionName = $('#section_edit').find(":selected").text();
     var inchargeId = $('#incharge_edit').find(":selected").val();
     var departmentId = $('#department_edit').find(":selected").val();
     var roleId = $('#role_edit').find(":selected").val();
     var companyId = $('#company_edit').find(":selected").val();
+    var _companyName = $('#company_edit').find(":selected").text();
+
     var explanationId = $('#explanation_edit').find(":selected").val();
-    var unitPrice = $('#unitprice_edit').val();    
-    var gradeId = $('#grade_edit').find(":selected").val();
+    var unitPrice = $('#unitprice_edit').val();  
+
+    var gradeId = $('#grade_edit').find(":selected").val();    
+
     if(gradeId =='' && gradeId == null){
         var gradeId = $('#grade_edit_hidden').val();
-    }    
+    }  
+    
     var rowId = $('#row_id_hidden_edit').val();
     var remarks = $('#memo_edit').val();
-    if(departmentId==''){
-        alert("please select department");
-        return false;        
-    }
-    if(departmentId==''){
-        alert("please select department");
-        return false;        
-    }
+    var isGradeShow = IsGradeShow(_companyName,_sectionName);
 
+    var salaryYear = $("#year_edit").val();
+
+
+    console.log("departmentId: "+departmentId);
+    console.log("salaryYear: "+salaryYear);
+    console.log("gradeId: "+gradeId);
+
+
+    if(isGradeShow){
+        if(departmentId=='' || departmentId<0){
+            alert("please select department!");
+            return false;        
+        }
+        if(salaryYear =='' || salaryYear<0){
+            alert("please select year!");
+            return false;        
+        }
+        if(gradeId=='' || gradeId<0){
+            alert("please select grade!");
+            return false;        
+        }
+    }
+    
+    GetGradeSalaryTypeId(gradeId,departmentId,salaryYear);
+    var gradeSalaryTypeId = $("#hid_gradeSalaryTypeId").val();
+    console.log("gradeSalaryTypeId: "+gradeSalaryTypeId);    
 
     var dataSingleAssignmentUpdate = {
         Id: rowId,
@@ -335,7 +379,8 @@ $('#add_name_edit').on('click', function () {
         ExplanationId: explanationId,
         CompanyId: companyId,
         UnitPrice: unitPrice,
-        GradeId: gradeId,
+        // GradeId: gradeId,
+        GradeId: gradeSalaryTypeId,
         Remarks: remarks,
     };
 
@@ -346,28 +391,29 @@ $('#add_name_edit').on('click', function () {
         dataType: 'json',
         data: dataSingleAssignmentUpdate,
         success: function (data) {
-            //ToastMessageSuccess(data);
+            ToastMessageSuccess(data);
             alert("success");
             $('#modal_edit_name').modal('hide');
             GetMultiSearch_AjaxData();
-            //SetFilterValueOnHiddenField();
-            //location.reload();
         },
         error: function (data) {
             alert(data.responseJSON.Message);
         }
     });
-
+}
+//save edit information : new validation add.
+$('#add_name_edit').on('click', function () {
+    EditEmployeeInformations();
 });
 
 //edit employee assignment: compare grade with company name
 $('#company_edit').on('change', function () {
-    EditCompanyOnChange();
+    CompanySectionOnChange_EditInfo();
 });
 
 //change section and compare with grade and unit price
 $('#section_edit').on('change', function () {
-    EditCompanyOnChange();
+    CompanySectionOnChange_EditInfo();
 });
 
 function GetAssignedGradeId(salaryTypeId){
@@ -496,6 +542,7 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
                 } else {
                     tr += `<td><input type='text' class=" col-12" id='addname_gradepoint${count}' rowCount='${count}' value='' readonly style='width: 55px;' /></td>`;
                 }
+                tr += `<td><input type='text' class="col-12" id="add_name_year_${count}" style='width: 72px;' value='${2022}' readonly /></td>`;
                 tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
                 if (count == 1) {
                     $("#unit_price_first_project_hid").val(item.UnitPrice);
@@ -515,8 +562,8 @@ function loadSingleAssignmentDataForExistingEmployee(employeeName) {
         }
     });
 }
+
 function addNew() {
-    //
     previousAssignmentRow++;
     var text = "";
     text = `<tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
@@ -530,7 +577,6 @@ function addNew() {
         async: false,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             text += '<td>';
             text += `<select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onchange="LoadGradeValue(this);"><option value=''>Select Section</option>`;
             $.each(data, function (key, item) {
@@ -547,7 +593,6 @@ function addNew() {
         async: false,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             text += '<td>';
             text += `<select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(this);"><option value=''>Select Company</option>`;
             $.each(data, function (key, item) {
@@ -564,7 +609,6 @@ function addNew() {
         async: false,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             text += '<td>';
             text += `<select id="department_row_${previousAssignmentRow}" class=" col-12"><option value=''>Select Department</option>`;
             $.each(data, function (key, item) {
@@ -581,7 +625,6 @@ function addNew() {
         async: false,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             text += '<td>';
             text += `<select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12"><option value=''>Select Allocation</option>`;
             $.each(data, function (key, item) {
@@ -592,34 +635,32 @@ function addNew() {
         error: function () {
 
         }
+    });    
+                            
+    //grade dropdown
+    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;                      
+    $.ajax({
+        url: '/api/Utilities/GetAllSalaries/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            console.log("gradelist: "+data);
+            text += '<td>';
+            text += `<select id="grade_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12"><option value=''>Select Grade</option>`;
+            $.each(data, function (key, item) {
+                text += `<option value = '${item.GradeId}'> ${item.GradeName}</option>`;
+            });
+            text += '</select></td>';
+        },
+        error: function () {
+
+        }
     });
     
+    text += `<td><select id='year_row_${previousAssignmentRow}' class='col-12'><option value='-1'>Select Year</option><option value='2022'>2022</option></select>`;
+    
     //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
-    $.getJSON('/api/Salaries/')
-        .done(function (data) {
-            
-            $('#grade_edit').empty();
-            $('#grade_edit').append(`<option value='-1'>Select Grade</option>`);
-            $.each(data, function (key, item) {
-                $('#grade_edit').append(`<option value='${item.Id}'>${item.GradeName}</option>`);
-            });
-
-            if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {
-                if (assignmentData.CompanyName.toLowerCase() == "mw" || assignmentData.SectionName.toLowerCase() == 'mw') {
-                    $("#grade_edit option[value=" + assignmentData.GradeId + "]").attr("selected", "selected");
-                } else {
-                    $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                    $("#grade_edit").attr('onclick', 'return false;');
-                    $("#grade_edit").attr('onkeydown', 'return false;');
-                }
-            } else {
-                $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
-                $("#grade_edit").attr('onclick', 'return false;');
-                $("#grade_edit").attr('onkeydown', 'return false;');
-            }
-        });
-    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
-
     //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
     text += `<td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
                 <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
@@ -672,9 +713,6 @@ function onSave() {
             SubCode: subCode,
 
         };
-
-        console.log(data);
-
         $.ajax({
             url: '/api/Employees',
             type: 'POST',
@@ -761,7 +799,6 @@ function unitPriceChange(rowId, element) {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             $('#grade_edit_hidden').val(data.Id);
             if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw") > 0) {
                 $('#grade_row_' + rowId).attr('data-id', data.Id);
@@ -807,6 +844,8 @@ function changeVal(rowId, element) {
 }
 
 function LoadGradeValue(sel) {
+    CompanySectionOnChange_AddName(sel);
+
     var _rowId = $("#add_name_row_no_hidden").val();
     var _companyName = $('#company_row_' + _rowId).find(":selected").text();
     var _seactionName = $('#section_row_' + _rowId).find(":selected").text();
@@ -1028,9 +1067,9 @@ function IsGradeShow(ajax_companyName,ajax_sectionName){
     return isGradeShow;
 }
 $('#grade_edit').on('change', function () {
-    EditCompanyOnChange();
+    CompanySectionOnChange_EditInfo();
 });
-function EditCompanyOnChange(){
+function CompanySectionOnChange_EditInfo(){
     var _companyName = $("#company_edit option:selected").text();
     var _sectionName = $("#section_edit option:selected").text();
     var _unitPrice = $("#unitprice_edit").val();
@@ -1133,4 +1172,81 @@ function EditCompanyOnChange(){
             $('#grade_edit').val('');
         }
     });
+}
+
+function CompanySectionOnChange_AddName(sel){
+    var _rowId = $("#add_name_row_no_hidden").val();
+    var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
+    var _unitPrice = $("#add_name_unit_price_hidden").val();
+    var _gradePoint = $("#grade_row_" + _rowId).val();
+    var _selectDepartment = $("#department_row_"+ _rowId).val();
+    var _selectYear = $("#year_row_"+ _rowId).val();
+    if(_selectYear == '' || _selectYear <0){
+        _selectYear = 2022;
+    }
+    var isGradeShow = IsGradeShow(_companyName,_sectionName);
+    var selectGradeId = "";
+    var selectGradeLowPoints = "";
+
+    var tempHidGradeVal = $('#grade_addname_hidden').val();
+
+    $.ajax({
+        url: `/api/utilities/GetUnitPrice`,
+        type: 'GET',
+        dataType: 'json',        
+        data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year="+_selectYear,
+        success: function (data) {
+            if (isGradeShow) {                
+                if(data.Id != '' && data.Id >0){
+                    selectGradeId = data.Id;
+                    selectGradeLowPoints = data.GradeLowPoints;                    
+                }else{
+                    selectGradeId = -1;
+                    selectGradeLowPoints = '';
+                }                
+                $('#unitprice_row_'+ _rowId).val(selectGradeLowPoints);                 
+
+                $('#unitprice_row_'+ _rowId).attr("readonly",true);
+                $('#unitprice_row_'+ _rowId).css('opacity', '0.6');
+
+                $("#grade_row_"+ _rowId).attr('style', '');
+                $("#grade_row_"+ _rowId).attr('onclick', '');
+                $("#grade_row_"+ _rowId).attr('onkeydown', '');
+
+                // if(tempHidGradeVal >0){
+                //     $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
+                // }
+
+                $("#grade_row_"+_rowId+" option[value=" + selectGradeId + "]").attr("selected", "selected");
+            } else {                                                    
+                $("#grade_row_"+_rowId+" option").attr("selected", false);
+                $("#grade_row_"+_rowId+" option[value='-1']").attr("selected", "selected");
+
+                $('#unitprice_row_'+ _rowId).attr("readonly",false);
+                $('#unitprice_row_'+ _rowId).css('opacity', '');
+                
+                $("#grade_row_"+ _rowId).attr('style', 'pointer-events: none;opacity:.7;');
+                $("#grade_row_"+ _rowId).attr('onclick', 'return false;');
+                $("#grade_row_"+ _rowId).attr('onkeydown', 'return false;');
+            }
+            $('#grade_edit_hidden').val(data.Id);
+
+            
+            if (_companyName.toLowerCase().indexOf("mw") > 0 | _seactionName.toLowerCase().indexOf("mw") > 0) {
+                $('#grade_row_' + _rowId).attr('data-id', data.Id);
+                $('#grade_row_' + _rowId).val(data.SalaryGrade);
+                $('#grade_row_new_' + _rowId).val(data.Id);
+            } else {
+                $('#grade_row_' + _rowId).attr('data-id', '');
+                $('#grade_row_' + _rowId).val('');
+                $('#grade_row_new_' + _rowId).val('');
+            }
+        },
+        error: function () {
+            $('#grade_row_' + _rowId).attr('data-id', '');
+            $('#grade_row_' + _rowId).val('');
+            $('#grade_row_new_' + _rowId).val('');
+        }
+    });            
 }

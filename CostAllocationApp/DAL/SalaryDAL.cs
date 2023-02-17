@@ -487,5 +487,43 @@ namespace CostAllocationApp.DAL
                 return _salaryTypeViewModel;
             }
         }
+        public GradeSalaryTypeViewModel GetGradeSalaryTypeId(string gradeId, string departmentId)
+        {
+            GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
+            string query = "";
+            query = "select gst.id,gst.gradeid,gst.departmentid,g.gradename,gst.gradelowpoints ";
+            query = query + "from GradeSalarlyTypes gst ";
+            query = query + "    join grades g on gst.gradeid = g.id ";
+            query = query + "where gst.gradeid = "+ gradeId + " and gst.departmentid = "+ departmentId +" and gst.year = 2022 and salarytypeid = 2 ";
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            _salaryTypeViewModel.Id = Convert.ToInt32(rdr["id"]);
+                            _salaryTypeViewModel.GradeId = Convert.ToInt32(rdr["gradeid"]);
+                            _salaryTypeViewModel.DepartmentId = Convert.ToInt32(rdr["departmentid"]);
+                            _salaryTypeViewModel.GradeName = rdr["gradename"].ToString();
+                            _salaryTypeViewModel.GradeLowPoints = Convert.ToInt32(rdr["gradelowpoints"]);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return _salaryTypeViewModel;
+            }
+        }
+
     }
 }

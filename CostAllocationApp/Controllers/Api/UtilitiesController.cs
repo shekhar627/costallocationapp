@@ -325,6 +325,15 @@ namespace CostAllocationApp.Controllers.Api
             return Ok(_salaryTypeViewModel);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetGradeSalaryTypeId(string gradeId, string departmentId)
+        {
+            GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
+
+            _salaryTypeViewModel = salaryBLL.GetGradeSalaryTypeId(gradeId, departmentId);
+            return Ok(_salaryTypeViewModel);
+        }
+
         [Route("api/utilities/GetEmployeesByName/{employeeName}")]
         [HttpGet]
         public IHttpActionResult GetEmployeesByName(string employeeName)
