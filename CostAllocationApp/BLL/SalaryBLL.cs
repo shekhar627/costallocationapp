@@ -109,5 +109,9 @@ namespace CostAllocationApp.BLL
         {
             return salaryDAL.GetUnitPrice(gradeId, departmentId, year);
         }
+        public GradeSalaryTypeViewModel GetGradeSalaryTypeId(string gradeId, string departmentId)
+        {
+            return salaryDAL.GetGradeSalaryTypeId(gradeId, departmentId);
+        }
     }
 }

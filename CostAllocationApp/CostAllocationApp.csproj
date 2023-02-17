@@ -297,6 +297,7 @@
     <Content Include="Content\sections.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\style_ver02.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
