@@ -78,7 +78,7 @@ namespace CostAllocationApp.DAL
                                 salary.SalaryHighPoint = Convert.ToDecimal(rdr["GradeHighPoints"]);
                                 salary.SalaryHighPointWithComma = Convert.ToInt32(rdr["GradeHighPoints"]).ToString("N0");
                             }
-                                                        
+
                             salary.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             salary.CreatedBy = rdr["CreatedBy"].ToString();
 
@@ -127,7 +127,7 @@ namespace CostAllocationApp.DAL
                             salary.SalaryTypeId = Convert.ToInt32(rdr["SalaryTypeId"]);
                             salary.SalaryTypeName = rdr["SalaryTypeName"].ToString();
                             salary.Year = Convert.ToInt32(rdr["Year"]);
-                            
+
                             salaries.Add(salary);
                         }
                     }
@@ -138,6 +138,72 @@ namespace CostAllocationApp.DAL
                 }
 
                 return salaries;
+            }
+        }
+        public List<GradeSalaryTypeViewModel> GetAllSalaries()
+        {
+            List<GradeSalaryTypeViewModel> salaries = new List<GradeSalaryTypeViewModel>();
+            string query = "";
+            query = query + "select id,gradename from grades ";
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            GradeSalaryTypeViewModel salary = new GradeSalaryTypeViewModel();
+                            salary.GradeId = Convert.ToInt32(rdr["Id"]);
+                            salary.GradeName = rdr["gradename"].ToString();
+
+                            salaries.Add(salary);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return salaries;
+            }
+        }
+        public int GetGradeId(string salaryTypeId)
+        {
+            List<GradeSalaryTypeViewModel> salaries = new List<GradeSalaryTypeViewModel>();
+            GradeSalaryTypeViewModel salary = new GradeSalaryTypeViewModel();
+            string query = "";
+            query = query + "select id,gradeid from GradeSalarlyTypes where id=" + salaryTypeId;
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {                            
+                            salary.Id = Convert.ToInt32(rdr["Id"]);
+                            salary.GradeId = Convert.ToInt32(rdr["gradeid"]);
+
+                            salaries.Add(salary);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return salary.GradeId;
             }
         }
 
@@ -278,7 +344,7 @@ namespace CostAllocationApp.DAL
 
         }
 
-        public GradeSalaryType GetGradeSalaryType(int departmentId,int salaryTypeId,int year,int gradeId)
+        public GradeSalaryType GetGradeSalaryType(int departmentId, int salaryTypeId, int year, int gradeId)
         {
             GradeSalaryType gradeSalaryType = new GradeSalaryType(); ;
             string query = $@"select * from GradeSalarlyTypes where GradeId = {gradeId} and DepartmentId={departmentId} and year={year} and SalaryTypeId = {salaryTypeId    }";
@@ -307,14 +373,14 @@ namespace CostAllocationApp.DAL
                 }
                 catch (Exception ex)
                 {
-                    
+
                 }
 
                 return gradeSalaryType;
             }
         }
 
-        public List<GradeSalaryType> GetGradeSalaryTypeByYear_SalaryTypeId_GradeId(int salaryTypeId, int year,int gradeId)
+        public List<GradeSalaryType> GetGradeSalaryTypeByYear_SalaryTypeId_GradeId(int salaryTypeId, int year, int gradeId)
         {
             List<GradeSalaryType> gradeSalaryTypes = new List<GradeSalaryType>();
             string query = $@"select * from GradeSalarlyTypes join Grades on GradeSalarlyTypes.GradeId = Grades.Id where GradeSalarlyTypes.year={year} and GradeSalarlyTypes.SalaryTypeId = {salaryTypeId} and GradeSalarlyTypes.GradeId={gradeId} order by GradeSalarlyTypes.DepartmentId ASC";
@@ -339,6 +405,8 @@ namespace CostAllocationApp.DAL
                             gradeSalaryType.DepartmentId = Convert.ToInt32(rdr["DepartmentId"]);
                             gradeSalaryType.Year = Convert.ToInt32(rdr["Year"]);
                             gradeSalaryType.SalaryTypeId = Convert.ToInt32(rdr["SalaryTypeId"]);
+                            gradeSalaryType.GradeLowWithCommaSeperate = gradeSalaryType.GradeLowPoints.ToString("N0");
+                            gradeSalaryType.GradeHighWithCommaSeperate = gradeSalaryType.GradeHighPoints.ToString("N0");
 
                             gradeSalaryTypes.Add(gradeSalaryType);
                         }
@@ -380,6 +448,43 @@ namespace CostAllocationApp.DAL
                 }
 
                 return salaryTypeIds;
+            }
+        }
+        public GradeSalaryTypeViewModel GetUnitPrice(string gradeId, string departmentId, string year)
+        {
+            GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
+            string query = "";
+            query = "select gst.id,gst.gradeid,gst.departmentid,g.gradename,gst.gradelowpoints ";
+            query = query + " from GradeSalarlyTypes gst ";
+            query = query + "    join grades g on gst.gradeid = g.id ";
+            query = query + "where gst.id =" + gradeId; //+ " and gst.departmentid=" + departmentId + " and gst.year=" + year + " and salarytypeid=2 ";
+
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            _salaryTypeViewModel.Id = Convert.ToInt32(rdr["id"]);
+                            _salaryTypeViewModel.GradeId = Convert.ToInt32(rdr["gradeid"]);
+                            _salaryTypeViewModel.DepartmentId = Convert.ToInt32(rdr["departmentid"]);
+                            _salaryTypeViewModel.GradeName = rdr["gradename"].ToString();
+                            _salaryTypeViewModel.GradeLowPoints = Convert.ToInt32(rdr["gradelowpoints"]);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return _salaryTypeViewModel;
             }
         }
     }

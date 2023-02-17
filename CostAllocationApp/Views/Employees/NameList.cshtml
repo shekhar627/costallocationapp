@@ -181,6 +181,7 @@
                             <th>Role</th>
                             <th>Explanation</th>*@
                         <th>Grade</th>
+                        <th>Year</th>
                         <th>Unit Price</th>
                     </tr>
                 </thead>
@@ -209,8 +210,14 @@
 
                         </td>
                         <td>
-                            <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
+                            <select id="year_edit" class=" col-12">
+                                <option value="-1">Select Year</option>
+                                <option value="2022">2022</option>
+                            </select>
                         </td>
+                        <td>
+                            <input type="text" class=" col-12" id="unitprice_edit" placeholder="unit price">
+                        </td>                        
                     </tr>
                 </tbody>
             </table>
@@ -221,9 +228,11 @@
         </div>
     </div>
     <input type="hidden" id="grade_edit_hidden" />
+    <input type="hidden" id="hidGradeLowPoints" />
     <input type="hidden" id="grade_new_hidden" />
     <input type="hidden" id="hidGradePoints" />
     <input type="hidden" id="page_load_after_modal_close" />
+
 </div>
 </div>
 
@@ -239,6 +248,8 @@
 <input type="hidden" id="hid_grade" />
 <input type="hidden" id="hid_gradeId" />
 <input type="hidden" id="hid_unitPrice" />
+
+<input type="hidden" id="hid_gradeIdWithSalaryType" />
 
 <!-- NameList: Delete Employee Assignment Modal -->
 <div class="modal custom-modal fade" id="namelist_delete" role="dialog">

@@ -18,5 +18,7 @@ namespace CostAllocationApp.Models
 
         // for other usages
         public string GradeName { get; set; }
+        public string GradeLowWithCommaSeperate { get; set; }
+        public string GradeHighWithCommaSeperate { get; set; }
     }
 }

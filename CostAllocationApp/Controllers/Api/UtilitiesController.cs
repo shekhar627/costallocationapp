@@ -315,6 +315,16 @@ namespace CostAllocationApp.Controllers.Api
             }
         }
 
+        //[Route("api/utilities/GetUnitPrice/{unitPrice}")]
+        [HttpGet]
+        public IHttpActionResult GetUnitPrice(string gradeId,string departmentId,string year)
+        {
+            GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
+
+            _salaryTypeViewModel = salaryBLL.GetUnitPrice(gradeId, departmentId, year);            
+            return Ok(_salaryTypeViewModel);
+        }
+
         [Route("api/utilities/GetEmployeesByName/{employeeName}")]
         [HttpGet]
         public IHttpActionResult GetEmployeesByName(string employeeName)
@@ -762,7 +772,41 @@ namespace CostAllocationApp.Controllers.Api
             return Ok(explanationsBLL.GetAllExplanationsByDepartmentId(departmentId));
         }
 
+        public IHttpActionResult GetSalaryMasterList()
+        {
+            GradeBLL _gradeBll = new GradeBLL();
+            SalaryBLL _salaryBLL = new SalaryBLL();
 
+            List<Grade> grades = _gradeBll.GetAllGrade();
+            List<SalaryMasterExportDto> salaryMasterExportDtos = new List<SalaryMasterExportDto>();
+
+            var salaryTypeIds = _salaryBLL.GetSalaryTypeIdByYear(2022);
+            foreach (var salaryTypeId in salaryTypeIds)
+            {
+                foreach (var grade in grades)
+                {
+                    salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(2022, grade.Id, salaryTypeId));
+                }
+            }
+            
+            return Ok(salaryMasterExportDtos);
+        }
+        [Route("api/utilities/GetAllSalaries/")]
+        [HttpGet]
+        public IHttpActionResult GetAllSalaries()
+        {
+            List<GradeSalaryTypeViewModel> salaries = salaryBLL.GetAllSalaries();
+            return Ok(salaries);
+
+        }
+        [Route("api/utilities/GetGradeId/{salaryTypeId}")]
+        [HttpGet]
+        public int GetGradeId(string salaryTypeId)
+        {
+            int gradeId = salaryBLL.GetGradeId(salaryTypeId);
+            return gradeId;
+
+        }
 
     }
 }
