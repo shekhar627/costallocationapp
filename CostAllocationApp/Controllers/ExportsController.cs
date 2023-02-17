@@ -916,50 +916,43 @@ namespace CostAllocationApp.Controllers
                     rowCount++;
                 }
                 #endregion
+
                 rowCount++;
-                #region grade entities
-                //foreach (var item in GetAllGradeEntities())
-                //{
-                //    sheet.Cells[rowCount, 1].Value = item;
-                //    sheet.Cells[rowCount, 3].Value = 0;
-                //    sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 4].Value = 0;
-                //    sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 5].Value = 0;
-                //    sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 6].Value = 0;
-                //    sheet.Cells[rowCount, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 7].Value = 0;
-                //    sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 8].Value = 0;
-                //    sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 9].Value = 0;
-                //    sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 10].Value = 0;
-                //    sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 11].Value = 0;
-                //    sheet.Cells[rowCount, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 12].Value = 0;
-                //    sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 13].Value = 0;
-                //    sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    sheet.Cells[rowCount, 14].Value = 0;
-                //    sheet.Cells[rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    sheet.Cells[rowCount, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
-                //    rowCount++;
-                //}
-                #endregion
+
+                int rowCountForFuture = rowCount;
+                rowCount += 12;
+
+                #region variables for salary types.
+
+                // 2. regular total
+                double regularSalaryTotalOct = 0, regularSalaryTotalNov = 0, regularSalaryTotalDec = 0, regularSalaryTotalJan = 0, regularSalaryTotalFeb = 0, regularSalaryTotalMar = 0, regularSalaryTotalApr = 0, regularSalaryTotalMay = 0, regularSalaryTotalJun = 0, regularSalaryTotalJul = 0, regularSalaryTotalAug = 0, regularSalaryTotalSep = 0;
+                // 3. fixed total
+                double fixedSalaryTotalOct = 0, fixedSalaryTotalNov = 0, fixedSalaryTotalDec = 0, fixedSalaryTotalJan = 0, fixedSalaryTotalFeb = 0, fixedSalaryTotalMar = 0, fixedSalaryTotalApr = 0, fixedSalaryTotalMay = 0, fixedSalaryTotalJun = 0, fixedSalaryTotalJul = 0, fixedSalaryTotalAug = 0, fixedSalaryTotalSep = 0;
+                // 4. over time
+                double overTimeSalaryTotalOct = 0, overTimeSalaryTotalNov = 0, overTimeSalaryTotalDec = 0, overTimeSalaryTotalJan = 0, overTimeSalaryTotalFeb = 0, overTimeSalaryTotalMar = 0, overTimeSalaryTotalApr = 0, overTimeSalaryTotalMay = 0, overTimeSalaryTotalJun = 0, overTimeSalaryTotalJul = 0, overTimeSalaryTotalAug = 0, overTimeSalaryTotalSep = 0;
+                // 5. total Salary
+                double salaryTotalOct = 0, salaryTotalNov = 0, salaryTotalDec = 0, salaryTotalJan = 0, salaryTotalFeb = 0, salaryTotalMar = 0, salaryTotalApr = 0, salaryTotalMay = 0, salaryTotalJun = 0, salaryTotalJul = 0, salaryTotalAug = 0, salaryTotalSep = 0;
+                // 6. Miscellaneous Wages
+                double mwTotalOct = 0, mwTotalNov = 0, mwTotalDec = 0, mwTotalJan = 0, mwTotalFeb = 0, mwTotalMar = 0, mwTotalApr = 0, mwTotalMay = 0, mwTotalJun = 0, mwTotalJul = 0, mwTotalAug = 0, mwTotalSep = 0;
+                // 7. Dispatch Fee
+                double dispatchFeeTotalOct = 0, dispatchFeeTotalNov = 0, dispatchFeeTotalDec = 0, dispatchFeeTotalJan = 0, dispatchFeeTotalFeb = 0, dispatchFeeTotalMar = 0, dispatchFeeTotalApr = 0, dispatchFeeTotalMay = 0, dispatchFeeTotalJun = 0, dispatchFeeTotalJul = 0, dispatchFeeTotalAug = 0, dispatchFeeTotalSep = 0;
+                // 8. Provision for Employee Bonus
+                double employeeBonusTotalOct = 0, employeeBonusTotalNov = 0, employeeBonusTotalDec = 0, employeeBonusTotalJan = 0, employeeBonusTotalFeb = 0, employeeBonusTotalMar = 0, employeeBonusTotalApr = 0, employeeBonusTotalMay = 0, employeeBonusTotalJun = 0, employeeBonusTotalJul = 0, employeeBonusTotalAug = 0, employeeBonusTotalSep = 0;
+                // 9. Commuting Expenses
+                double commutingExpensesTotalOct = 0, commutingExpensesTotalNov = 0, commutingExpensesTotalDec = 0, commutingExpensesTotalJan = 0, commutingExpensesTotalFeb = 0, commutingExpensesTotalMar = 0, commutingExpensesTotalApr = 0, commutingExpensesTotalMay = 0, commutingExpensesTotalJun = 0, commutingExpensesTotalJul = 0, commutingExpensesTotalAug = 0, commutingExpensesTotalSep = 0;
+                // 10. Salary Statutory Welfare Expenses
+                double welfareExpensesTotalOct = 0, welfareExpensesTotalNov = 0, welfareExpensesTotalDec = 0, welfareExpensesTotalJan = 0, welfareExpensesTotalFeb = 0, welfareExpensesTotalMar = 0, welfareExpensesTotalApr = 0, welfareExpensesTotalMay = 0, welfareExpensesTotalJun = 0, welfareExpensesTotalJul = 0, welfareExpensesTotalAug = 0, welfareExpensesTotalSep = 0;
+                // 11. Provision for Statotory Welfare Expenses for Bonus
+                double welfareExpensesBonusTotalOct = 0, welfareExpensesBonusTotalNov = 0, welfareExpensesBonusTotalDec = 0, welfareExpensesBonusTotalJan = 0, welfareExpensesBonusTotalFeb = 0, welfareExpensesBonusTotalMar = 0, welfareExpensesBonusTotalApr = 0, welfareExpensesBonusTotalMay = 0, welfareExpensesBonusTotalJun = 0, welfareExpensesBonusTotalJul = 0, welfareExpensesBonusTotalAug = 0, welfareExpensesBonusTotalSep = 0;
+                // 12. Total Statutory Benefites
+                double statutoryTotalOct = 0, statutoryTotalNov = 0, statutoryTotalDec = 0, statutoryTotalJan = 0, statutoryTotalFeb = 0, statutoryTotalMar = 0, statutoryTotalApr = 0, statutoryTotalMay = 0, statutoryTotalJun = 0, statutoryTotalJul = 0, statutoryTotalAug = 0, statutoryTotalSep = 0;
+                // 13. Total Expenses
+                double expensesTotalOct = 0, expensesTotalNov = 0, expensesTotalDec = 0, expensesTotalJan = 0, expensesTotalFeb = 0, expensesTotalMar = 0, expensesTotalApr = 0, expensesTotalMay = 0, expensesTotalJun = 0, expensesTotalJul = 0, expensesTotalAug = 0, expensesTotalSep = 0;
+
+            #endregion
+
+
+                
 
                 #region other grade with entities
                 rowCount++;
@@ -1245,7 +1238,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularOct += manpointOct * beginningValue * commonValue;
-                            
+                            regularSalaryTotalOct += totalRegularOct;
 
                             if (count % 2 == 0)
                             {
@@ -1264,7 +1257,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (manpointNov * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularNov += manpointNov * beginningValue * commonValue;
-                            
+                            regularSalaryTotalNov += totalRegularNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1282,7 +1275,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (manpointDec* beginningValue* commonValue).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularDec += manpointDec * beginningValue * commonValue;
-                            
+                            regularSalaryTotalDec += totalRegularDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1300,7 +1293,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (manpointJan* beginningValue* commonValue).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularJan += manpointJan * beginningValue * commonValue;
-                            
+                            regularSalaryTotalJan += totalRegularJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1318,7 +1311,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (manpointFeb* beginningValue* commonValue).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularFeb += manpointFeb * beginningValue * commonValue;
-                            
+                            regularSalaryTotalFeb += totalRegularFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1336,7 +1329,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (manpointMar* beginningValue* commonValue).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularMar += manpointMar * beginningValue * commonValue;
-                            
+                            regularSalaryTotalMar += totalRegularMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1354,7 +1347,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (manpointApr* beginningValue* commonValue).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularApr += manpointApr * beginningValue * commonValue;
-                            
+                            regularSalaryTotalApr += totalRegularApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1372,7 +1365,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (manpointMay*beginningValue*commonValue).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularMay += manpointMay * beginningValue * commonValue;
-                            
+                            regularSalaryTotalMay += totalRegularMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1390,7 +1383,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (manpointJun*beginningValue*commonValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularJun += manpointJun * beginningValue * commonValue;
-                            
+                            regularSalaryTotalJun += totalRegularJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1410,7 +1403,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (manpointJul* beginningValue* commonValue).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularJul += manpointJul * beginningValue * commonValue;
-                            
+                            regularSalaryTotalJul += totalRegularJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1429,7 +1422,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (manpointAug* beginningValue*commonValue).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularAug += manpointAug * beginningValue * commonValue;
-                            
+                            regularSalaryTotalAug += totalRegularAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1448,7 +1441,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (manpointSep*beginningValue*commonValue).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalRegularSep += manpointSep * beginningValue * commonValue;
-                            
+                            regularSalaryTotalSep += totalRegularSep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1475,7 +1468,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedOct += manpointOct * beginningValue * commonValue;
-                            
+                            fixedSalaryTotalOct += totalFixedOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1493,7 +1486,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (manpointNov * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedNov += manpointNov * beginningValue * commonValue;
-                            
+                            fixedSalaryTotalNov += totalFixedNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1511,7 +1504,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (manpointDec * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedDec += manpointDec * beginningValue * commonValue;
-                            
+                            fixedSalaryTotalDec += totalFixedDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1529,7 +1522,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (manpointJan * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedJan += manpointJan * beginningValue * commonValue;
-                            
+                            fixedSalaryTotalJan += totalFixedJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1547,7 +1540,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (manpointFeb * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedFeb += manpointFeb * beginningValue * commonValue;
-                            
+                            fixedSalaryTotalFeb += totalFixedFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1565,6 +1558,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (manpointMar * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedMar += manpointMar * beginningValue * commonValue;
+                            fixedSalaryTotalMar += totalFixedMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1582,6 +1576,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (manpointApr * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedApr += manpointApr * beginningValue * commonValue;
+                            fixedSalaryTotalApr += totalFixedApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1599,6 +1594,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (manpointMay * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedMay += manpointMay * beginningValue * commonValue;
+                            fixedSalaryTotalMay += totalFixedMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1616,6 +1612,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (manpointJun * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedJun += manpointJun * beginningValue * commonValue;
+                            fixedSalaryTotalJun += totalFixedJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1635,6 +1632,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (manpointJul * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedJul += manpointJul * beginningValue * commonValue;
+                            fixedSalaryTotalJul += totalFixedJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1653,6 +1651,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (manpointAug * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedAug += manpointAug * beginningValue * commonValue;
+                            fixedSalaryTotalAug += totalFixedAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1671,6 +1670,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (manpointSep * beginningValue * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalFixedSep += manpointSep * beginningValue * commonValue;
+                            fixedSalaryTotalSep += totalFixedSep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1878,7 +1878,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (totalRegularOct+totalFixedOct+totalOverOct).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryOct += totalRegularOct + totalFixedOct + totalOverOct;
-
+                            salaryTotalOct += totalSalaryOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1895,6 +1895,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (totalRegularNov + totalFixedNov + totalOverNov).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryNov += totalRegularNov + totalFixedNov + totalOverNov;
+                            salaryTotalNov += totalSalaryNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1911,6 +1912,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (totalRegularDec + totalFixedDec + totalOverDec).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryDec += totalRegularDec + totalFixedDec + totalOverDec;
+                            salaryTotalDec += totalSalaryDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1927,6 +1929,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (totalRegularJan + totalFixedJan + totalOverJan).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryJan += totalRegularJan + totalFixedJan + totalOverJan;
+                            salaryTotalJan += totalSalaryJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1944,6 +1947,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (totalRegularFeb + totalFixedFeb + totalOverFeb).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryFeb += totalRegularFeb + totalFixedFeb + totalOverFeb;
+                            salaryTotalFeb += totalSalaryFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1960,6 +1964,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (totalRegularMar + totalFixedMar + totalOverMar).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryMar += totalRegularMar + totalFixedMar + totalOverMar;
+                            salaryTotalMar += totalSalaryMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1976,6 +1981,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (totalRegularApr + totalFixedApr + totalOverApr).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryApr += totalRegularApr + totalFixedApr + totalOverApr;
+                            salaryTotalApr += totalSalaryApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -1992,6 +1998,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (totalRegularMay + totalFixedMay + totalOverMay).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryMay += totalRegularMay + totalFixedMay + totalOverMay;
+                            salaryTotalMay += totalSalaryMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2008,6 +2015,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (totalRegularJun + totalFixedJun + totalOverJun).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryJun += totalRegularJun + totalFixedJun + totalOverJun;
+                            salaryTotalJun += totalSalaryJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2025,6 +2033,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (totalRegularJul + totalFixedJul + totalOverJul).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryJul += totalRegularJul + totalFixedJul + totalOverJul;
+                            salaryTotalJul += totalSalaryJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2041,6 +2050,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (totalRegularAug + totalFixedAug + totalOverAug).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalaryAug += totalRegularAug + totalFixedAug + totalOverAug;
+                            salaryTotalAug += totalSalaryAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2058,6 +2068,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (totalRegularSep + totalFixedSep + totalOverSep).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalSalarySep += totalRegularSep + totalFixedSep + totalOverSep;
+                            salaryTotalSep += totalSalarySep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2084,7 +2095,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesOct += manpointOct * beginningValue;
-
+                            mwTotalOct += mWagesOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2102,6 +2113,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (manpointNov * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesNov += manpointNov * beginningValue;
+                            mwTotalNov += mWagesNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2119,6 +2131,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (manpointDec * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesDec += manpointDec * beginningValue;
+                            mwTotalDec += mWagesDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2136,6 +2149,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (manpointJan * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesJan += manpointJan * beginningValue;
+                            mwTotalJan += mWagesJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2153,6 +2167,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (manpointFeb * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesFeb += manpointFeb * beginningValue;
+                            mwTotalFeb += mWagesFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2170,6 +2185,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (manpointMar * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesMar += manpointMar * beginningValue;
+                            mwTotalMar += mWagesMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2187,6 +2203,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (manpointApr * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesApr += manpointApr * beginningValue;
+                            mwTotalApr += mWagesApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2204,6 +2221,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (manpointMay * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesMay += manpointMay * beginningValue;
+                            mwTotalMay += mWagesMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2221,6 +2239,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (manpointJun * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesJun += manpointJun * beginningValue;
+                            mwTotalJun += mWagesJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2240,6 +2259,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (manpointJul * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesJul += manpointJul * beginningValue;
+                            mwTotalJul += mWagesJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2258,6 +2278,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (manpointAug * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesAug += manpointAug * beginningValue;
+                            mwTotalAug += mWagesAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2276,6 +2297,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (manpointSep * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             mWagesSep += manpointSep * beginningValue;
+                            mwTotalSep += mWagesSep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2302,7 +2324,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeOct += manpointOct * beginningValue;
-
+                            dispatchFeeTotalOct += dispatchFeeOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2320,6 +2342,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (manpointNov * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeNov += manpointNov * beginningValue;
+                            dispatchFeeTotalNov += dispatchFeeNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2337,6 +2360,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (manpointDec * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeDec += manpointDec * beginningValue;
+                            dispatchFeeTotalDec += dispatchFeeDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2354,6 +2378,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (manpointJan * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeJan += manpointJan * beginningValue;
+                            dispatchFeeTotalJan += dispatchFeeJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2371,6 +2396,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (manpointFeb * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeFeb += manpointFeb * beginningValue;
+                            dispatchFeeTotalFeb += dispatchFeeFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2388,6 +2414,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (manpointMar * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeMar += manpointMar * beginningValue;
+                            dispatchFeeTotalMar += dispatchFeeMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2405,6 +2432,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (manpointApr * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeApr += manpointApr * beginningValue;
+                            dispatchFeeTotalApr += dispatchFeeApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2422,6 +2450,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (manpointMay * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeMay += manpointMay * beginningValue;
+                            dispatchFeeTotalMay += dispatchFeeMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2439,6 +2468,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (manpointJun * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeJun += manpointJun * beginningValue;
+                            dispatchFeeTotalJun += dispatchFeeJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2458,6 +2488,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (manpointJul * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeJul += manpointJul * beginningValue;
+                            dispatchFeeTotalJul += dispatchFeeJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2476,6 +2507,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (manpointAug * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeAug += manpointAug * beginningValue;
+                            dispatchFeeTotalAug += dispatchFeeAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2494,6 +2526,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (manpointSep * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             dispatchFeeSep += manpointSep * beginningValue;
+                            dispatchFeeTotalSep += dispatchFeeSep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2511,7 +2544,15 @@ namespace CostAllocationApp.Controllers
                         // Provision for Employee Bonus
                         if (salaryTypeCount == 8)
                         {
-                            sheet.Cells[rowCount, 3].Value = 0.ToString("N0");
+                            double overWorkFixedTime = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).OverWorkFixedTime);
+                            double bonusReserveConstant = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).BonusReserveConstant);
+
+                            double valueOct = (totalRegularOct * overWorkFixedTime) / bonusReserveConstant;
+                            valueOct = Double.IsNaN(valueOct) ? 0 : valueOct;
+                            valueOct = Double.IsInfinity(valueOct) ? 0 : valueOct;
+                            employeeBonusOct += valueOct;
+                            employeeBonusTotalOct += employeeBonusOct;
+                            sheet.Cells[rowCount, 3].Value = valueOct.ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2525,8 +2566,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 4].Value = 0.ToString("N0");
+                            double valueNov = (totalRegularNov * overWorkFixedTime) / bonusReserveConstant;
+                            valueNov = Double.IsNaN(valueNov) ? 0 : valueNov;
+                            valueNov = Double.IsInfinity(valueNov) ? 0 : valueNov;
+                            employeeBonusNov += valueNov;
+                            employeeBonusTotalNov += employeeBonusNov;
+                            sheet.Cells[rowCount, 4].Value = valueNov.ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2540,8 +2585,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 5].Value = 0.ToString("N0");
+                            double valueDec = (totalRegularDec * overWorkFixedTime) / bonusReserveConstant;
+                            valueDec = Double.IsNaN(valueDec) ? 0 : valueDec;
+                            valueDec = Double.IsInfinity(valueDec) ? 0 : valueDec;
+                            employeeBonusDec += valueDec;
+                            employeeBonusTotalDec += employeeBonusDec;
+                            sheet.Cells[rowCount, 5].Value = valueDec.ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2555,8 +2604,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 6].Value = 0.ToString("N0");
+                            double valueJan = (totalRegularJan * overWorkFixedTime) / bonusReserveConstant;
+                            valueJan = Double.IsNaN(valueJan) ? 0 : valueJan;
+                            valueJan = Double.IsInfinity(valueJan) ? 0 : valueJan;
+                            employeeBonusJan += valueJan;
+                            employeeBonusTotalJan += employeeBonusJan;
+                            sheet.Cells[rowCount, 6].Value = valueJan.ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2571,8 +2624,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
-                            sheet.Cells[rowCount, 7].Value = 0.ToString("N0");
+                            double valueFeb = (totalRegularFeb * overWorkFixedTime) / bonusReserveConstant;
+                            valueFeb = Double.IsNaN(valueFeb) ? 0 : valueFeb;
+                            valueFeb = Double.IsInfinity(valueFeb) ? 0 : valueFeb;
+                            employeeBonusFeb += valueFeb;
+                            employeeBonusTotalFeb += employeeBonusFeb;
+                            sheet.Cells[rowCount, 7].Value = valueFeb.ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2586,8 +2643,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 8].Value = 0.ToString("N0");
+                            double valueMar = (totalRegularMar * overWorkFixedTime) / bonusReserveConstant;
+                            valueMar = Double.IsNaN(valueMar) ? 0 : valueMar;
+                            valueMar = Double.IsInfinity(valueMar) ? 0 : valueMar;
+                            employeeBonusMar += valueMar;
+                            employeeBonusTotalMar += employeeBonusMar;
+                            sheet.Cells[rowCount, 8].Value = valueMar.ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2601,8 +2662,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 9].Value = 0.ToString("N0");
+                            double valueApr = (totalRegularApr * overWorkFixedTime) / bonusReserveConstant;
+                            valueApr = Double.IsNaN(valueApr) ? 0 : valueApr;
+                            valueApr = Double.IsInfinity(valueApr) ? 0 : valueApr;
+                            employeeBonusApr += valueApr;
+                            employeeBonusTotalApr += employeeBonusApr;
+                            sheet.Cells[rowCount, 9].Value = valueApr.ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2616,8 +2681,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 10].Value = 0.ToString("N0");
+                            double valueMay = (totalRegularMay * overWorkFixedTime) / bonusReserveConstant;
+                            valueMay = Double.IsNaN(valueMay) ? 0 : valueMay;
+                            valueMay = Double.IsInfinity(valueMay) ? 0 : valueMay;
+                            employeeBonusMay += valueMay;
+                            employeeBonusTotalMay += employeeBonusMay;
+                            sheet.Cells[rowCount, 10].Value = valueMay.ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2631,8 +2700,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 11].Value = 0.ToString("N0");
+                            double valueJun = (totalRegularJun * overWorkFixedTime) / bonusReserveConstant;
+                            valueJun = Double.IsNaN(valueJun) ? 0 : valueJun;
+                            valueJun = Double.IsInfinity(valueJun) ? 0 : valueJun;
+                            employeeBonusJun += valueJun;
+                            employeeBonusTotalJun += employeeBonusJun;
+                            sheet.Cells[rowCount, 11].Value = valueJun.ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2647,8 +2720,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
-                            sheet.Cells[rowCount, 12].Value = 0.ToString("N0");
+                            double valueJul = (totalRegularJul * overWorkFixedTime) / bonusReserveConstant;
+                            valueJul = Double.IsNaN(valueJul) ? 0 : valueJul;
+                            valueJul = Double.IsInfinity(valueJul) ? 0 : valueJul;
+                            employeeBonusJul += valueJul;
+                            employeeBonusTotalJul += employeeBonusJul;
+                            sheet.Cells[rowCount, 12].Value = valueJul.ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2662,8 +2739,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
-                            sheet.Cells[rowCount, 13].Value = 0.ToString("N0");
+                            double valueAug = (totalRegularAug * overWorkFixedTime) / bonusReserveConstant;
+                            valueAug = Double.IsNaN(valueAug) ? 0 : valueAug;
+                            valueAug = Double.IsInfinity(valueAug) ? 0 : valueAug;
+                            employeeBonusAug += valueAug;
+                            employeeBonusTotalAug += employeeBonusAug;
+                            sheet.Cells[rowCount, 13].Value = valueAug.ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2678,8 +2759,12 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
-                            sheet.Cells[rowCount, 14].Value = 0.ToString("N0");
+                            double valueSep = (totalRegularSep * overWorkFixedTime) / bonusReserveConstant;
+                            valueSep = Double.IsNaN(valueSep) ? 0 : valueSep;
+                            valueSep = Double.IsInfinity(valueSep) ? 0 : valueSep;
+                            employeeBonusSep += valueSep;
+                            employeeBonusTotalSep += employeeBonusSep;
+                            sheet.Cells[rowCount, 14].Value = valueSep.ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -2707,7 +2792,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesOct += manpointOct * beginningValue;
-
+                            commutingExpensesTotalOct += commutingExpensesOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2725,6 +2810,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (manpointNov * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesNov += manpointNov * beginningValue;
+                            commutingExpensesTotalNov += commutingExpensesNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2742,6 +2828,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (manpointDec * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesDec += manpointDec * beginningValue;
+                            commutingExpensesTotalDec += commutingExpensesDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2759,6 +2846,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (manpointJan * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesJan += manpointJan * beginningValue;
+                            commutingExpensesTotalJan += commutingExpensesJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2776,6 +2864,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (manpointFeb * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesFeb += manpointFeb * beginningValue;
+                            commutingExpensesTotalFeb += commutingExpensesFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2793,6 +2882,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (manpointMar * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesMar += manpointMar * beginningValue;
+                            commutingExpensesTotalMar += commutingExpensesMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2810,6 +2900,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (manpointApr * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesApr += manpointApr * beginningValue;
+                            commutingExpensesTotalApr += commutingExpensesApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2827,6 +2918,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (manpointMay * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesMay += manpointMay * beginningValue;
+                            commutingExpensesTotalMay += commutingExpensesMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2844,6 +2936,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (manpointJun * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesJun += manpointJun * beginningValue;
+                            commutingExpensesTotalJun += commutingExpensesJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2863,6 +2956,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (manpointJul * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesJul += manpointJul * beginningValue;
+                            commutingExpensesTotalJul += commutingExpensesJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2881,6 +2975,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (manpointAug * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesAug += manpointAug * beginningValue;
+                            commutingExpensesTotalAug += commutingExpensesAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2899,6 +2994,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (manpointSep * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             commutingExpensesSep += manpointSep * beginningValue;
+                            commutingExpensesTotalSep += commutingExpensesSep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2920,6 +3016,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = ((totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesOct += (totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue;
+                            welfareExpensesTotalOct += wExpensesOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2936,6 +3033,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = ((totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesNov += (totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue;
+                            welfareExpensesTotalNov += wExpensesNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2952,6 +3050,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = ((totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesDec += (totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue;
+                            welfareExpensesTotalDec += wExpensesDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2968,6 +3067,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = ((totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesJan += (totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue;
+                            welfareExpensesTotalJan += wExpensesJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -2985,6 +3085,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = ((totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesFeb += (totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue;
+                            welfareExpensesTotalFeb += wExpensesFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3001,7 +3102,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = ((totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesMar += (totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue;
-
+                            welfareExpensesTotalMar += wExpensesMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3018,6 +3119,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = ((totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesApr += (totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue;
+                            welfareExpensesTotalApr += wExpensesApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3034,6 +3136,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = ((totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesMay += (totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue;
+                            welfareExpensesTotalMay += wExpensesMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3050,6 +3153,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = ((totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesJun += (totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue;
+                            welfareExpensesTotalJun += wExpensesJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3067,6 +3171,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = ((totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesJul += (totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue;
+                            welfareExpensesTotalJul += wExpensesJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3083,6 +3188,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = ((totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesAug += (totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue;
+                            welfareExpensesTotalAug += wExpensesAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3100,6 +3206,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = ((totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             wExpensesSep += (totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue;
+                            welfareExpensesTotalSep += wExpensesSep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3307,7 +3414,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Value = (wExpensesOct+wExpBonusOct).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryOct += wExpensesOct + wExpBonusOct;
-
+                            statutoryTotalOct += totalStatutoryOct;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3324,6 +3431,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Value = (wExpensesNov + wExpBonusNov).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryNov += wExpensesNov + wExpBonusNov;
+                            statutoryTotalNov += totalStatutoryNov;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3340,6 +3448,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Value = (wExpensesDec + wExpBonusDec).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryDec += wExpensesDec + wExpBonusDec;
+                            statutoryTotalDec += totalStatutoryDec;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3356,6 +3465,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Value = (wExpensesJan + wExpBonusJan).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryJan += wExpensesJan + wExpBonusJan;
+                            statutoryTotalJan += totalStatutoryJan;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3373,6 +3483,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Value = (wExpensesFeb + wExpBonusFeb).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryFeb += wExpensesFeb + wExpBonusFeb;
+                            statutoryTotalFeb += totalStatutoryFeb;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3389,6 +3500,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Value = (wExpensesMar + wExpBonusMar).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryMar += wExpensesMar + wExpBonusMar;
+                            statutoryTotalMar += totalStatutoryMar;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3405,6 +3517,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Value = (wExpensesApr + wExpBonusApr).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryApr += wExpensesApr + wExpBonusApr;
+                            statutoryTotalApr += totalStatutoryApr;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3421,6 +3534,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Value = (wExpensesMay + wExpBonusMay).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryMay += wExpensesMay + wExpBonusMay;
+                            statutoryTotalMay += totalStatutoryMay;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3437,6 +3551,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Value = (wExpensesJun + wExpBonusJun).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryJun += wExpensesJun + wExpBonusJun;
+                            statutoryTotalJun += totalStatutoryJun;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3454,6 +3569,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Value = (wExpensesJul + wExpBonusJul).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryJul += wExpensesJul + wExpBonusJul;
+                            statutoryTotalJul += totalStatutoryJul;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3470,6 +3586,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Value = (wExpensesAug + wExpBonusAug).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutoryAug += wExpensesAug + wExpBonusAug;
+                            statutoryTotalAug += totalStatutoryAug;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3487,6 +3604,7 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 14].Value = (wExpensesSep + wExpBonusSep).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             totalStatutorySep += wExpensesSep + wExpBonusSep;
+                            statutoryTotalSep += totalStatutorySep;
                             if (count % 2 == 0)
                             {
                                 // even
@@ -3504,6 +3622,7 @@ namespace CostAllocationApp.Controllers
                         // total expenses
                         if (salaryTypeCount == 13)
                         {
+                            expensesTotalOct += totalSalaryOct + mWagesOct + dispatchFeeOct + employeeBonusOct + commutingExpensesOct + totalSalaryOct;
                             sheet.Cells[rowCount, 3].Value = (totalSalaryOct + mWagesOct + dispatchFeeOct + employeeBonusOct + commutingExpensesOct + totalSalaryOct).ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3519,6 +3638,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
+                            expensesTotalNov += totalSalaryNov + mWagesNov + dispatchFeeNov + employeeBonusNov + commutingExpensesNov + totalSalaryNov;
                             sheet.Cells[rowCount, 4].Value = (totalSalaryNov + mWagesNov + dispatchFeeNov + employeeBonusNov + commutingExpensesNov + totalSalaryNov).ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3533,7 +3653,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalDec += totalSalaryDec + mWagesDec + dispatchFeeDec + employeeBonusDec + commutingExpensesDec + totalSalaryDec;
                             sheet.Cells[rowCount, 5].Value = (totalSalaryDec + mWagesDec + dispatchFeeDec + employeeBonusDec + commutingExpensesDec + totalSalaryDec).ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3548,7 +3668,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalJan += totalSalaryJan + mWagesJan + dispatchFeeJan + employeeBonusJan + commutingExpensesJan + totalSalaryJan;
                             sheet.Cells[rowCount, 6].Value = (totalSalaryJan + mWagesJan + dispatchFeeJan + employeeBonusJan + commutingExpensesJan + totalSalaryJan).ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3564,7 +3684,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
+                            expensesTotalFeb += totalSalaryFeb + mWagesFeb + dispatchFeeFeb + employeeBonusFeb + commutingExpensesFeb + totalSalaryFeb;
                             sheet.Cells[rowCount, 7].Value = (totalSalaryFeb + mWagesFeb + dispatchFeeFeb + employeeBonusFeb + commutingExpensesFeb + totalSalaryFeb).ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3579,7 +3699,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalMar += totalSalaryMar + mWagesMar + dispatchFeeMar + employeeBonusMar + commutingExpensesMar + totalSalaryMar;
                             sheet.Cells[rowCount, 8].Value = (totalSalaryMar + mWagesMar + dispatchFeeMar + employeeBonusMar + commutingExpensesMar + totalSalaryMar).ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3594,7 +3714,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalApr += totalSalaryApr + mWagesApr + dispatchFeeApr + employeeBonusApr + commutingExpensesApr + totalSalaryApr;
                             sheet.Cells[rowCount, 9].Value = (totalSalaryApr + mWagesApr + dispatchFeeApr + employeeBonusApr + commutingExpensesApr + totalSalaryApr).ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3609,7 +3729,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalMay += totalSalaryMay + mWagesMay + dispatchFeeMay + employeeBonusMay + commutingExpensesMay + totalSalaryMay;
                             sheet.Cells[rowCount, 10].Value = (totalSalaryMay + mWagesMay + dispatchFeeMay + employeeBonusMay + commutingExpensesMay + totalSalaryMay).ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3624,7 +3744,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalJun += totalSalaryJun + mWagesJun + dispatchFeeJun + employeeBonusJun + commutingExpensesJun + totalSalaryJun;
                             sheet.Cells[rowCount, 11].Value = (totalSalaryJun + mWagesJun + dispatchFeeJun + employeeBonusJun + commutingExpensesJun + totalSalaryJun).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3640,7 +3760,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
+                            expensesTotalJul += totalSalaryJul + mWagesJul + dispatchFeeJul + employeeBonusJul + commutingExpensesJul + totalSalaryJul;
                             sheet.Cells[rowCount, 12].Value = (totalSalaryJul + mWagesJul + dispatchFeeJul + employeeBonusJul + commutingExpensesJul + totalSalaryJul).ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3655,7 +3775,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
-
+                            expensesTotalAug += totalSalaryAug + mWagesAug + dispatchFeeAug + employeeBonusAug + commutingExpensesAug + totalSalaryAug;
                             sheet.Cells[rowCount, 13].Value = (totalSalaryAug + mWagesAug + dispatchFeeAug + employeeBonusAug + commutingExpensesAug + totalSalaryAug).ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3671,7 +3791,7 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
+                            expensesTotalSep += totalSalarySep + mWagesSep + dispatchFeeSep + employeeBonusSep + commutingExpensesSep + totalSalarySep;
                             sheet.Cells[rowCount, 14].Value = (totalSalarySep + mWagesSep + dispatchFeeSep + employeeBonusSep + commutingExpensesSep + totalSalarySep).ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
@@ -3699,6 +3819,543 @@ namespace CostAllocationApp.Controllers
 
                 }
                 #endregion
+
+
+                #region salary types total
+                int salaryTypeSummeryCount = 1;
+                foreach (var item in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+                {
+                    sheet.Cells[rowCountForFuture, 1].Value = item.SalaryTypeName;
+                    // executive
+                    if (salaryTypeSummeryCount == 1)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = 0;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = 0;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = 0;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = 0;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = 0;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = 0;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = 0;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = 0;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = 0;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = 0;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = 0;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = 0;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // regular
+                    if (salaryTypeSummeryCount == 2)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = regularSalaryTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = regularSalaryTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = regularSalaryTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = regularSalaryTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = regularSalaryTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = regularSalaryTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = regularSalaryTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = regularSalaryTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = regularSalaryTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = regularSalaryTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = regularSalaryTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = regularSalaryTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // fixed
+                    if (salaryTypeSummeryCount == 3)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = fixedSalaryTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = fixedSalaryTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = fixedSalaryTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = fixedSalaryTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = fixedSalaryTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = fixedSalaryTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = fixedSalaryTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = fixedSalaryTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = fixedSalaryTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = fixedSalaryTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = fixedSalaryTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = fixedSalaryTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // overtime
+                    if (salaryTypeSummeryCount == 4)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = overTimeSalaryTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = overTimeSalaryTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = overTimeSalaryTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = overTimeSalaryTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = overTimeSalaryTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = overTimeSalaryTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = overTimeSalaryTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = overTimeSalaryTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = overTimeSalaryTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = overTimeSalaryTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = overTimeSalaryTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = overTimeSalaryTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // total salary
+                    if (salaryTypeSummeryCount == 5)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = salaryTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = salaryTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = salaryTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = salaryTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = salaryTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = salaryTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = salaryTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = salaryTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = salaryTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = salaryTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = salaryTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = salaryTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // miscellaneous wages
+                    if (salaryTypeSummeryCount == 6)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = mwTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = mwTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = mwTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = mwTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = mwTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = mwTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = mwTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = mwTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = mwTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = mwTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = mwTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = mwTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // dispatch fee
+                    if (salaryTypeSummeryCount == 7)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = dispatchFeeTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = dispatchFeeTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = dispatchFeeTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = dispatchFeeTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = dispatchFeeTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = dispatchFeeTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = dispatchFeeTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = dispatchFeeTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = dispatchFeeTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = dispatchFeeTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = dispatchFeeTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = dispatchFeeTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // provision for employee bonus
+                    if (salaryTypeSummeryCount == 8)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = employeeBonusTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = employeeBonusTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = employeeBonusTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = employeeBonusTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = employeeBonusTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = employeeBonusTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = employeeBonusTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = employeeBonusTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = employeeBonusTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = employeeBonusTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = employeeBonusTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = employeeBonusTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // commuting expenses
+                    if (salaryTypeSummeryCount == 9)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = commutingExpensesTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = commutingExpensesTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = commutingExpensesTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = commutingExpensesTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = commutingExpensesTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = commutingExpensesTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = commutingExpensesTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = commutingExpensesTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = commutingExpensesTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = commutingExpensesTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = commutingExpensesTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = commutingExpensesTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // salary statutory welfare expenses
+                    if (salaryTypeSummeryCount == 10)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = welfareExpensesTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = welfareExpensesTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = welfareExpensesTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = welfareExpensesTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = welfareExpensesTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = welfareExpensesTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = welfareExpensesTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = welfareExpensesTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = welfareExpensesTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = welfareExpensesTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = welfareExpensesTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = welfareExpensesTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // provision for statotory welfare expenses for bonus
+                    if (salaryTypeSummeryCount == 11)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = welfareExpensesBonusTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = welfareExpensesBonusTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = welfareExpensesBonusTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = welfareExpensesBonusTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = welfareExpensesBonusTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = welfareExpensesBonusTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = welfareExpensesBonusTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = welfareExpensesBonusTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = welfareExpensesBonusTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = welfareExpensesBonusTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = welfareExpensesBonusTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = welfareExpensesBonusTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // total statutory benefites
+                    if (salaryTypeSummeryCount == 12)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = statutoryTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = statutoryTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = statutoryTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = statutoryTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = statutoryTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = statutoryTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = statutoryTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = statutoryTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = statutoryTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = statutoryTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = statutoryTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = statutoryTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+                    // total expenses
+                    if (salaryTypeSummeryCount == 13)
+                    {
+                        sheet.Cells[rowCountForFuture, 3].Value = expensesTotalOct;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 3].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 4].Value = expensesTotalNov;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 4].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 5].Value = expensesTotalDec;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 5].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 6].Value = expensesTotalJan;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 6].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 7].Value = expensesTotalFeb;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 7].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 8].Value = expensesTotalMar;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 8].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 9].Value = expensesTotalApr;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 9].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 10].Value = expensesTotalMay;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 10].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 11].Value = expensesTotalJun;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 11].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 12].Value = expensesTotalJul;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 12].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 13].Value = expensesTotalAug;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 13].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                        sheet.Cells[rowCountForFuture, 14].Value = expensesTotalSep;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells[rowCountForFuture, 14].Style.Fill.BackgroundColor.SetColor(1, 216, 228, 188);
+                    }
+
+
+
+
+                    //rowCount++;
+                    rowCountForFuture++;
+                    salaryTypeSummeryCount++;
+                }
+                #endregion
+
 
 
                 rowCount = rowCount + 2;
