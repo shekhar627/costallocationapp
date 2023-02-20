@@ -109,6 +109,15 @@
                                     {
                                         <li><a href="/Exports/DataExportByAllocation" title="割り当てによるエクスポート (Export by Allocation)">割り当てによるエクスポート (Export by Allocation)</a></li>
                                     }
+                                    if (url.ToLower().Contains("exportalldata"))
+                                    {
+                                        <li><a href="/Exports/ExportAllData" class="active" title="Export All Data">Export All Data</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/ExportAllData" title="Export All Data">Export All Data</a></li>
+                                    }
+
                                 }
                             </ul>
                         </li>
