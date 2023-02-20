@@ -1901,7 +1901,7 @@ function AddNameSearchResult(){
                     {
                         data: 'Id',
                         render: function (id) {
-                            return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`;
+                            return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">追加 (add name)</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">編集 (edit)</a></td>`;
                         },
                         searching: false,
                         orderable: false,
