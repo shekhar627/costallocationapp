@@ -48,6 +48,7 @@
                 e.preventDefault();
             }
         });
+        
         $('#department').on('change', function () {
             var departmentId = $(this).val();
             $.getJSON('/api/Utilities/GetAllExplanationsByDepartmentId?departmentId=' + departmentId)

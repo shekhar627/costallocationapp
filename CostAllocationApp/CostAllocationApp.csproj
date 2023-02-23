@@ -736,6 +736,7 @@
     <Content Include="Views\Grades\CreateGrade.cshtml" />
     <Content Include="Views\CommonMasters\CreateCommonMaster.cshtml" />
     <Content Include="Views\Salaries\SalaryMaster.cshtml" />
+    <Content Include="Views\Exports\DataExports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

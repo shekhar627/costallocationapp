@@ -43,8 +43,8 @@ namespace CostAllocationApp.Controllers
             List<ForecastAssignmentViewModel> forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
             using (var client = new HttpClient())
             {
-                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -193,8 +193,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId="+departmentId+"&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -514,8 +514,8 @@ namespace CostAllocationApp.Controllers
             // get data from API
             using (var client = new HttpClient())
             {
-                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -9286,6 +9286,57 @@ namespace CostAllocationApp.Controllers
 
             return points;
         }
+        public ActionResult DataExports()
+        {
+            return View(new ExportViewModel { Departments = _departmentBLL.GetAllDepartments() });
+        }
 
+        public JsonResult ViewDataByDepartment(int departmentId)
+        {
+            List<ForecastAssignmentViewModel> forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
+            var _department = _departmentBLL.GetDepartmentByDepartemntId(departmentId);
+
+            using (var client = new HttpClient())
+            {
+                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                client.BaseAddress = new Uri(uri);
+                //HTTP GET
+                var responseTask = client.GetAsync("");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<List<ForecastAssignmentViewModel>>();
+                    readTask.Wait();
+
+                    forecastAssignmentViewModels = readTask.Result;
+                }
+                else //web api sent error response 
+                {
+                    //log response status here..
+
+                    forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
+
+                    // ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+            foreach (var forecastItem in forecastAssignmentViewModels)
+            {
+                if (forecastItem.CompanyName.ToLower() != "mw" || forecastItem.SectionName.ToLower() != "mw")
+                {
+                    forecastItem.GradePoint = "";
+                }
+            }
+            
+
+            return Json(forecastAssignmentViewModels, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetAllExplanationsByDepartmentId(int departmentId)
+        {
+            return Json(_explanationsBLL.GetAllExplanationsByDepartmentId(departmentId), JsonRequestBehavior.AllowGet);
+        }
     }
 }

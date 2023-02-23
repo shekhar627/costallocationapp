@@ -1,0 +1,112 @@
+/*---------------------------create data export view--------------------------------*/
+#add_name_search_button {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 7px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 23px;
+}
+.salary_year_err, .salary_department_name_err, .salary_salaryType_err, .salary_gradeId_name_err, .salary_beginning_name_err, .salary_revision_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+#department_wise_export{
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+    height: 85px;
+    padding-top: 19px;
+}
+#department_wise_export_header{
+    color: #333;
+    font-size: 18px;
+    font-weight: normal;
+    margin: -14px;
+    line-height: 2;
+}
+#allocation_wise_export{
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+    height: 85px;
+    padding-top: 19px;
+}
+#allocation_wise_export_header{
+    color: #333;
+    font-size: 18px;
+    font-weight: normal;
+    margin: -14px;
+    line-height: 2;
+}
+#export_all_data{
+    margin-left: -11px;
+}
+#btn_export_all_data{
+    background-color: #009ef7;
+}
+#btn_export_departmentwisedata{
+    background-color: darkcyan;
+}
+
+/*---------------department wise view: list----------------------*/
+/****** show list *******/
+#department_wise_view_list td, th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+
+    #department_wise_view_list td, th:nth-of-type(9) {
+        text-align: center;
+        width: 20px;
+    }
+
+        #department_wise_view_list td:nth-of-type(2) {
+            border: 1px solid;
+            padding: 2px !important;
+            text-align: left;
+            text-indent: 1em;
+        }
+
+#commonmaster_list_tbody {
+    text-align: center;
+}
+
+#grade_name_lbl {
+    padding-top: 10px;
+}
+
+#grade_body {
+    width: 59% !important;
+}
+
+#department_wise_view_list {
+    width: 85%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+
+#department_wise_view_list thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+
+#department_wise_view_list thead th:nth-of-type(2) {
+    width: 200px
+}
+
+#department_wise_view_list thead th:nth-of-type(3) {
+    width: 100px
+}
+
+#department_wise_view_list thead th:nth-of-type(1) {
+    width: 45px;
+}

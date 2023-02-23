@@ -16,7 +16,7 @@ namespace CostAllocationApp.Controllers.Api
         DepartmentBLL departmentBLL = null;
         EmployeeAssignmentBLL employeeAssignmentBLL = null;
         SalaryBLL salaryBLL = null;
-        SectionBLL sectionBLL = null;       
+        SectionBLL sectionBLL = null;
         CompanyBLL companyBLL = new CompanyBLL();
         InChargeBLL inChargeBLL = null;
         RoleBLL roleBLL = null;
@@ -292,7 +292,7 @@ namespace CostAllocationApp.Controllers.Api
                 Salary salary = salaryBLL.CompareSalary(tempVal);
                 if (tempVal > 0)
                 {
-                    
+
                     if (salary != null)
                     {
                         return Ok(salary);
@@ -317,11 +317,21 @@ namespace CostAllocationApp.Controllers.Api
 
         //[Route("api/utilities/GetUnitPrice/{unitPrice}")]
         [HttpGet]
-        public IHttpActionResult GetUnitPrice(string gradeId,string departmentId,string year)
+        public IHttpActionResult GetUnitPrice(string gradeId, string departmentId, string year)
         {
             GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
 
-            _salaryTypeViewModel = salaryBLL.GetUnitPrice(gradeId, departmentId, year);            
+            _salaryTypeViewModel = salaryBLL.GetUnitPrice(gradeId, departmentId, year);
+            return Ok(_salaryTypeViewModel);
+        }
+
+        [HttpGet]
+        public IHttpActionResult ViewDataByDepartment(string departmentId)
+        {
+            string gradeId = "";
+            GradeSalaryTypeViewModel _salaryTypeViewModel = new GradeSalaryTypeViewModel();
+
+            //_salaryTypeViewModel = salaryBLL.GetGradeSalaryTypeId(gradeId, departmentId);
             return Ok(_salaryTypeViewModel);
         }
 
@@ -333,7 +343,6 @@ namespace CostAllocationApp.Controllers.Api
             _salaryTypeViewModel = salaryBLL.GetGradeSalaryTypeId(gradeId, departmentId);
             return Ok(_salaryTypeViewModel);
         }
-
         [Route("api/utilities/GetEmployeesByName/{employeeName}")]
         [HttpGet]
         public IHttpActionResult GetEmployeesByName(string employeeName)
@@ -645,7 +654,7 @@ namespace CostAllocationApp.Controllers.Api
                 {
                     return BadRequest("Invalid Data");
                 }
-            } 
+            }
             else
             {
                 return BadRequest("Invalid Data");
@@ -797,7 +806,7 @@ namespace CostAllocationApp.Controllers.Api
                     salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(2022, grade.Id, salaryTypeId));
                 }
             }
-            
+
             return Ok(salaryMasterExportDtos);
         }
         [Route("api/utilities/GetAllSalaries/")]
@@ -817,5 +826,6 @@ namespace CostAllocationApp.Controllers.Api
 
         }
 
+            
     }
 }
