@@ -313,6 +313,30 @@ namespace CostAllocationApp.DAL
             }
         }
 
+        public bool CheckGradeSalaryType(int gradeId,int salaryTypeId, int departmentId, int year)
+        {
+            string query = $@"select * from GradeSalarlyTypes where gradeId = {gradeId} and salaryTypeId={salaryTypeId} and departmentId={departmentId} and year={year} "; ;
+            bool result = false;
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+
+                return result;
+            }
+        }
+
         public int CreateGradeSalaryType(GradeSalaryType gradeSalaryType)
         {
             int result = 0;

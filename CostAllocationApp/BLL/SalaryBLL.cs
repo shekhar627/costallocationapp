@@ -113,5 +113,9 @@ namespace CostAllocationApp.BLL
         {
             return salaryDAL.GetGradeSalaryTypeId(gradeId, departmentId);
         }
+        public bool CheckGradeSalaryType(int gradeId, int salaryTypeId, int departmentId, int year)
+        {
+            return salaryDAL.CheckGradeSalaryType(gradeId, salaryTypeId, departmentId, year);
+        }
     }
 }

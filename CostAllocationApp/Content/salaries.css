@@ -15,6 +15,12 @@
     margin-top: 10px;
     display: inline-block;
 }
+#salary_confirm {
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+}
 /*#salary_inactive_btn {
     background: indianred;
     color: white;

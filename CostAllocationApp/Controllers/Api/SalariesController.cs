@@ -66,19 +66,26 @@ namespace CostAllocationApp.Controllers.Api
 
             gradeSalaryType.CreatedBy = "";
             gradeSalaryType.CreatedDate = DateTime.Now;
-                //salary.IsActive = true;
+            //salary.IsActive = true;
 
-
-
-            int result = salaryBLL.CreateGradeSalaryType(gradeSalaryType);
-            if (result > 0)
+            var checkResult =  salaryBLL.CheckGradeSalaryType(gradeSalaryType.GradeId, gradeSalaryType.SalaryTypeId, gradeSalaryType.DepartmentId, gradeSalaryType.Year);
+            if (!checkResult)
             {
-                return Ok("Data Saved Successfully!");
+                int result = salaryBLL.CreateGradeSalaryType(gradeSalaryType);
+                if (result > 0)
+                {
+                    return Ok("Data Saved Successfully!");
+                }
+                else
+                {
+                    return BadRequest("Something Went Wrong!!!");
+                }
             }
             else
             {
-                return BadRequest("Something Went Wrong!!!");
+                return BadRequest("Data Already Exists!!!");
             }
+
 
 
         }
