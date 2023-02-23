@@ -47,6 +47,8 @@ $(document).ready(function () {
     //    }
     //});
 
+    
+
 
     $.getJSON('/api/departments/')
         .done(function (data) {
@@ -73,6 +75,9 @@ $(document).ready(function () {
             });
         });
 
+
+
+
 });
 //function GetSalaries(){
 //    $.getJSON('/api/Salaries/')
@@ -94,13 +99,18 @@ $(document).ready(function () {
 //            $('#salary_list_tbody').append(`<tr><td><input type="checkbox" class="salary_list_chk" data-id='${item.Id}' /></td><td>${tempLowVal} ～ ${tempHighVal}</td><td>${item.SalaryGrade}</td></tr>`);
 //        });
 //    });
-//}    
+//}   
+
+var temporaryDataArray = [];
+
 function CreateGradeSalaryType() {
-    var apiurl = "/api/Salaries/";
     let year = $('#salary_year').val();
     let departmentId = $('#salary_department').val();
+    let departmentName = $('#salary_department option:selected').text();
     let salaryTypeId = $('#salary_salaryType').val();
+    var salaryTypeName = $('#salary_salaryType option:selected').text();
     let gradeId = $('#salary_gradeId').val();
+    let gradeName = $('#salary_gradeId option:selected').text();
     let beginning = $('#salary_beginning').val();
     let revision = $('#salary_revision').val();
 
@@ -153,28 +163,100 @@ function CreateGradeSalaryType() {
 
     var data = {
         GradeId: gradeId,
+        GradeName: gradeName,
         GradeLowPoints: beginning,
         GradeHighPoints: revision,
         DepartmentId: departmentId,
+        DepartmentName: departmentName,
         Year: year,
         SalaryTypeId: salaryTypeId,
+        SalaryTypeName: salaryTypeName
     };
+    temporaryDataArray.push(data);
 
-    $.ajax({
-        url: apiurl,
-        type: 'POST',
-        dataType: 'json',
-        data: data,
-        success: function (data) {
-
-            ToastMessageSuccess(data);
-            GetAllSalaryTypes();
-        },
-        error: function (data) {
-            //ToastMessageFailed(data);
-        }
+    $('#temp_table tbody').empty();
+    let count = 1;
+    $.each(temporaryDataArray, function (index, item) {
+        $('#temp_table tbody').append(`<tr><td>${count}</td><td>${item.Year}</td><td>${item.SalaryTypeName}</td><td>${item.DepartmentName}</td><td>${item.GradeName}</td><td>${item.GradeLowPoints}-${item.GradeHighPoints}</td><td><a href='javascript:void(0);' class='remove_item' onclick="onRemoveClick(this,${index});"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td></tr>`);
+        count++;
     });
+
+    //$.ajax({
+    //    url: apiurl,
+    //    type: 'POST',
+    //    dataType: 'json',
+    //    data: data,
+    //    success: function (data) {
+
+    //        ToastMessageSuccess(data);
+    //        GetAllSalaryTypes();
+    //    },
+    //    error: function (data) {
+    //        //ToastMessageFailed(data);
+    //    }
+    //});
     
+}
+
+
+function confirmToSave() {
+    if (temporaryDataArray.length > 0) {
+        var apiurl = "/api/Salaries/";
+        var confirmResult = confirm("Do you want to save?");
+        let count = 0;
+        let failedCount = 0;
+        if (confirmResult == true) {
+            $.each(temporaryDataArray, (index, item) => {
+                $.ajax({
+                    url: apiurl,
+                    type: 'POST',
+                    async: false,
+                    dataType: 'json',
+                    data: { GradeId: item.GradeId, GradeLowPoints: item.GradeLowPoints, GradeHighPoints: item.GradeHighPoints, DepartmentId: item.DepartmentId, Year: item.Year, SalaryTypeId: item.SalaryTypeId },
+                    success: (data) => {
+                        count++;
+                        console.log(count);
+                    },
+                    error: (data) => {
+                        failedCount++;
+                    }
+                });
+            });
+
+            temporaryDataArray = [];
+            $('#temp_table tbody').empty();
+            ToastMessageSuccess(count + " Data Saved Successfully!!!");
+            ToastMessageFailed({ responseText: failedCount + " Data Cound Not Saved!!!" });
+        }
+    }
+    else {
+        ToastMessageFailed({ responseText: "No data found to saved!!!" });
+    }
+
+}
+
+function clearData() {
+    temporaryDataArray = [];
+    $('#temp_table tbody').empty();
+}
+
+function onRemoveClick(element,arrayIndex) {
+    
+    var closestRow = $(element).closest('tr');
+    var confirmResult = confirm('Do you want to remove?');
+    if (confirmResult == true) {
+        //removing element from table row
+        closestRow.remove();
+        // removing element from array
+        temporaryDataArray.splice(arrayIndex, 1);
+        // re-print the table
+        $('#temp_table tbody').empty();
+        let count = 1;
+        $.each(temporaryDataArray, function (index, item) {
+            $('#temp_table tbody').append(`<tr><td>${count}</td><td>${item.Year}</td><td>${item.SalaryTypeName}</td><td>${item.DepartmentName}</td><td>${item.GradeName}</td><td>${item.GradeLowPoints}-${item.GradeHighPoints}</td><td><a href='javascript:void(0);' class='remove_item' onclick="onRemoveClick(this,${index});"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td></tr>`);
+            count++;
+        });
+    }
 }
 
 //Get grade list
@@ -197,7 +279,7 @@ $('#add_name_search_button').on('click', function (event) {
     var selectYear = $('#salary_year_list').val();
     if(selectYear >0){
         $.getJSON('/api/utilities/GetSalaryMasterList/')
-        .done(function (data) {
+            .done(function (data) {
             $('#salary_master_list_tbl').empty();
             // <tr>
             //     <td rowspan="3">給与単価 (Salary Allowance Regular)</td>
@@ -210,7 +292,7 @@ $('#add_name_search_button').on('click', function (event) {
             var prevSalaryTypeId = 0;
             var tempCount = 0;
             $.each(data, function(key, item) {
-                if(item.GradeSalaryTypes.length > 1){
+                if(item.GradeSalaryTypes.length > 0){
                     $('#salary_master_list_tbl').append(`<tr>`);                
                     if (prevSalaryTypeId != item.SalaryType.Id){                        
                         $('#salary_master_list_tbl').append(`<td>${item.SalaryType.SalaryTypeName}</td>`);  
