@@ -1832,6 +1832,7 @@ function AddNameSearchResult(){
                             redMark = markedAsRed;
                             return null;
                         }
+                        ,visible: false
                     },
                     {
                         data: 'EmployeeName',

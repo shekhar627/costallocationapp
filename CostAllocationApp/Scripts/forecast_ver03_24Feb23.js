@@ -479,14 +479,8 @@ function checkPoint(element) {
         $(element).val(globalPreviousValue);
     }
     else {
-        // if ((pointValue > 1 || pointValue < 0)) {
-        //     alert('total month point can not be grater than 1 Or less than 0');
-        //     $(element).val(globalPreviousValue);
-        // }
-        // else {
-        //     $(element).val(pointValue);
-        // }
-        if ((pointValue < 0)) {
+        if ((pointValue > 1 || pointValue < 0)) {
+            alert('total month point can not be grater than 1 Or less than 0');
             $(element).val(globalPreviousValue);
         }
         else {
@@ -517,10 +511,10 @@ function checkPoint(element) {
             sameNameTr.push(value);
         }
     });
-    // if (totalMonthPoint > 1) {
-    //     alert('total month point can not be grater than 1');
-    //     $(element).val(globalPreviousValue);
-    // }
+    if (totalMonthPoint > 1) {
+        alert('total month point can not be grater than 1');
+        $(element).val(globalPreviousValue);
+    }
 }
 function LoaderShow() {
     $("#forecast_table_wrapper").css("display", "none");

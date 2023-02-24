@@ -87,12 +87,22 @@
                         <li class="submenu">
                             <a href="javascript:void(0);">
                                 <i class="la la-files-o"></i>
-                                <span title="データエクスポート (Data Export)">データエクスポート (Export)</span>
+                                @* <span title="データエクスポート (Data Export)">データエクスポート (Export)</span> *@
+                                <span title="データ作成(Data Create)">データ作成(Data Create)</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul style="display: none;">
 
                                 @{
+                                    if (url.ToLower().Contains("dataexports"))
+                                    {
+                                        <li><a href="/Exports/DataExports" class="active" title="データ作成(Data Create)">データ作成(Data Create)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/DataExports" title="データ作成(Data Create)">データ作成(Data Create)</a></li>
+                                    }
+@*                                     
                                     if (url.ToLower().Contains("dataexportbydepartment"))
                                     {
                                         <li><a href="/Exports/DataExportByDepartment" class="active" title="部門別エクスポート (Export by Department)">部門別エクスポート (Export by Department)</a></li>
@@ -116,7 +126,7 @@
                                     else
                                     {
                                         <li><a href="/Exports/ExportAllData" title="全てのデータエクスポート (Export All Data)">全てのデータエクスポート (Export All Data)</a></li>
-                                    }
+                                    } *@
 
                                 }
                             </ul>

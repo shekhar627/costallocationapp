@@ -39,10 +39,11 @@ namespace CostAllocationApp.Controllers.Api
                 decimal tempPoint = 0;
                 if (Decimal.TryParse(temp[1],out tempPoint))
                 {
-                    if (tempPoint<0)
+                    if (tempPoint>1 || tempPoint<0)
                     {
                         forecast.Points = 0;
                         forecast.Total = 0;
+
                     }
                     else
                     {
@@ -106,7 +107,7 @@ namespace CostAllocationApp.Controllers.Api
                 decimal tempPoint = 0;
                 if (Decimal.TryParse(temp[1], out tempPoint))
                 {
-                    if (tempPoint < 0)
+                    if (tempPoint > 1 || tempPoint < 0)
                     {
                         forecast.Points = 0;
                         forecast.Total = 0;
