@@ -1711,3 +1711,18 @@ table.dataTable > thead .sorting .sorting_desc, {
     text-decoration: underline;
     cursor: pointer;
 }
+#data_import {
+    font-size: 13px;
+    height: 51px;
+    margin: 17px;
+}
+#inputState {
+    box-shadow: none;
+    font-size: 13px;
+    height: 34px;
+}
+#import_data_btn {
+    box-shadow: none;
+    font-size: 13px;
+    height: 34px;
+}

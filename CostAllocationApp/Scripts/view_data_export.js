@@ -95,23 +95,35 @@ $('#department_wise_search_btn').on('click', function () {
     }
     $("#alocation_wise_list").css("display", "none");
     LoaderShow('department_wise_list');
-    GetExportDataForView(departmentId);            
+    GetExportDataForView(departmentId);              
 });
+
 $('#allocation_wise_search_btn').on('click', function () {
     var departmentId = $('#department_allocation_wise').val();
     var explanationId = $('#explanation').val();
 
+    var isDepeartmentEmpty = false; 
+    var isAllocationEmpty = false; 
+
     if (departmentId == undefined || departmentId == null || departmentId == "") {
+        isDepeartmentEmpty = true;
+    }
+
+    if (explanationId == undefined || explanationId == null || explanationId == "") {
+        isAllocationEmpty = true; 
+    }
+    if (isDepeartmentEmpty) {
         alert("Select Department");
         return false;
-    }
-    if (explanationId == undefined || explanationId == null || explanationId == "") {
-        alert("Select Allocation");
-        return false;
-    }
-    $("#department_wise_list").css("display", "none");
-    LoaderShow('alocation_wise_list');
-    AllocationWiseDataView(departmentId,explanationId);            
+    } else if (!isDepeartmentEmpty && isAllocationEmpty) {
+        $("#alocation_wise_list").css("display", "none");
+        LoaderShow('department_wise_list');
+        GetExportDataForView(departmentId);
+    } else if (!isDepeartmentEmpty && !isAllocationEmpty) {
+        $("#department_wise_list").css("display", "none");
+        LoaderShow('alocation_wise_list');
+        AllocationWiseDataView(departmentId, explanationId); 
+    }          
 });
 function LoaderShow(tableId) {
     $("#"+tableId).css("display", "none");
@@ -178,7 +190,7 @@ function LoaderHide_AllData() {
         $("#btn_export_all_data").prop("disabled",false);
         $("#all_data_loader").css("display", "none");    
 
-    }, 3000);
+    }, 6000);
 
     // $("#all_data_loader").delay(3000).queue(function() {
     //     $("#department_allocation_export").css("display", "block");
