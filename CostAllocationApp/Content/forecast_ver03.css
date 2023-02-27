@@ -1726,3 +1726,8 @@ table.dataTable > thead .sorting .sorting_desc, {
     font-size: 13px;
     height: 34px;
 }
+.forecast_allocation {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}

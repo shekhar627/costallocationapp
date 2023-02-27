@@ -646,7 +646,7 @@ function LoadForecastData() {
                             data: 'ExplanationId',
                             render: function (explanationId) {
                                 var selectElement = '';
-                                selectElement += `<select id='allocation_dropdown_${_id}'>`;
+                                selectElement += `<select class='forecast_allocation' id='allocation_dropdown_${_id}'>`;
 
                                 selectElement += `<option value=''>Select One</option>`;
                                 $.each(allocations, function (key, item) {
@@ -2072,7 +2072,7 @@ $(document).ready(function () {
                             data: 'ExplanationId',
                             render: function (explanationId) {
                                 var selectElement = '';
-                                selectElement += `<select id='allocation_dropdown_${_id}'>`;
+                                selectElement += `<select class='forecast_allocation' id='allocation_dropdown_${_id}'>`;
 
                                 selectElement += `<option value=''>Select One</option>`;
                                 $.each(allocations, function (key, item) {

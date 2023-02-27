@@ -1852,10 +1852,10 @@ function AddNameSearchResult(){
                         data: 'AddNameSubCode',
                         render: function (subCode) {
                             if (redMark) {
-                                return `<span style='color:red;'>${subCode}</span></td>`;
+                                return `<span style='text-align:center ;display:block;padding-right:2px;color:red;'>${subCode}</span></td>`;
                             }
                             else {
-                                return `<span >${subCode}</span>`;
+                                return `<span style='text-align:center ;display:block;padding-right:2px;'>${subCode}</span>`;
                             }
                         },
                         searching: false,

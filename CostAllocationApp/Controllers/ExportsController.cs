@@ -515,8 +515,8 @@ namespace CostAllocationApp.Controllers
             // get data from API
             using (var client = new HttpClient())
             {
-                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -9302,7 +9302,7 @@ namespace CostAllocationApp.Controllers
                 //HTTP GET
                 var responseTask = client.GetAsync("");
                 responseTask.Wait();
-
+                 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
@@ -9535,7 +9535,7 @@ namespace CostAllocationApp.Controllers
             foreach (var item in salaryAssignmentDtos)
             {
                 strOtherGradeTd = strOtherGradeTd + "<tr>";
-                strOtherGradeTd = strOtherGradeTd + "<td>" + item.Grade.GradeName + "</td>";
+                strOtherGradeTd = strOtherGradeTd + "<td rowspan='14'>" + item.Grade.GradeName + "</td>";
                 strOtherGradeTd = strOtherGradeTd + "</tr>";
 
                 //salary allow regular
@@ -9573,18 +9573,18 @@ namespace CostAllocationApp.Controllers
                     // executives
                     if (salaryTypeCount == 1)
                     {
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
                     }
 
                     // salary allowance (regular)
@@ -9594,73 +9594,73 @@ namespace CostAllocationApp.Controllers
                         double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
                         double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularOct += manpointOct * beginningValue * commonValue;
                         regularSalaryTotalOct += totalRegularOct;
                         double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularNov += manpointNov * beginningValue * commonValue;
                         regularSalaryTotalNov += totalRegularNov;
                         double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointDec * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointDec * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularDec += manpointDec * beginningValue * commonValue;
                         regularSalaryTotalDec += totalRegularDec;
                         double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJan * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJan * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularJan += manpointJan * beginningValue * commonValue;
                         regularSalaryTotalJan += totalRegularJan;
                         double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointFeb * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointFeb * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularFeb += manpointFeb * beginningValue * commonValue;
                         regularSalaryTotalFeb += totalRegularFeb;
 
                         double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMar * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMar * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularMar += manpointMar * beginningValue * commonValue;
                         regularSalaryTotalMar += totalRegularMar;
 
                         double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointApr * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointApr * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularApr += manpointApr * beginningValue * commonValue;
                         regularSalaryTotalApr += totalRegularApr;
 
                         double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMay * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMay * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularMay += manpointMay * beginningValue * commonValue;
                         regularSalaryTotalMay += totalRegularMay;
 
                         double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJun * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJun * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularJun += manpointJun * beginningValue * commonValue;
                         regularSalaryTotalJun += totalRegularJun;
 
                         double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJul * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJul * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularJul += manpointJul * beginningValue * commonValue;
                         regularSalaryTotalJul += totalRegularJul;
 
                         double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointAug * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointAug * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularAug += manpointAug * beginningValue * commonValue;
                         regularSalaryTotalAug += totalRegularAug;
 
                         double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointSep * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointSep * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalRegularSep += manpointSep * beginningValue * commonValue;
                         regularSalaryTotalSep += totalRegularSep;
@@ -9673,75 +9673,75 @@ namespace CostAllocationApp.Controllers
                         double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
                         double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedOct += manpointOct * beginningValue * commonValue;
                         fixedSalaryTotalOct += totalFixedOct;
 
                         double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointNov * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointNov * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedNov += manpointNov * beginningValue * commonValue;
                         fixedSalaryTotalNov += totalFixedNov;
 
                         double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointDec * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointDec * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedDec += manpointDec * beginningValue * commonValue;
                         fixedSalaryTotalDec += totalFixedDec;
 
                         double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJan * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJan * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedJan += manpointJan * beginningValue * commonValue;
                         fixedSalaryTotalJan += totalFixedJan;
 
 
                         double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointFeb * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointFeb * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedFeb += manpointFeb * beginningValue * commonValue;
                         fixedSalaryTotalFeb += totalFixedFeb;
 
                         double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMar * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMar * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedMar += manpointMar * beginningValue * commonValue;
                         fixedSalaryTotalMar += totalFixedMar;
 
 
                         double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointApr * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointApr * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedApr += manpointApr * beginningValue * commonValue;
                         fixedSalaryTotalApr += totalFixedApr;
 
                         double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMay * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMay * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedMay += manpointMay * beginningValue * commonValue;
                         fixedSalaryTotalMay += totalFixedMay;
 
                         double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJun * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJun * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedJun += manpointJun * beginningValue * commonValue;
                         fixedSalaryTotalJun += totalFixedJun;
 
                         double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJul * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJul * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedJul += manpointJul * beginningValue * commonValue;
                         fixedSalaryTotalJul += totalFixedJul;
 
                         double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointAug * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointAug * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedAug += manpointAug * beginningValue * commonValue;
                         fixedSalaryTotalAug += totalFixedAug;
 
                         double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointSep * beginningValue * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointSep * beginningValue * commonValue).ToString("N0") + "</td>";
 
                         totalFixedSep += manpointSep * beginningValue * commonValue;
                         fixedSalaryTotalSep += totalFixedSep;
@@ -9751,79 +9751,79 @@ namespace CostAllocationApp.Controllers
                     // salary allowance (overtime)
                     if (salaryTypeCount == 4)
                     {
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
 
                     }
 
                     // salary allowance (total)
                     if (salaryTypeCount == 5)
                     {
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularOct + totalFixedOct + totalOverOct).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularOct + totalFixedOct + totalOverOct).ToString("N0") + "</td>";
 
                         totalSalaryOct += totalRegularOct + totalFixedOct + totalOverOct;
                         salaryTotalOct += totalSalaryOct;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularNov + totalFixedNov + totalOverNov).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularNov + totalFixedNov + totalOverNov).ToString("N0") + "</td>";
 
                         totalSalaryNov += totalRegularNov + totalFixedNov + totalOverNov;
                         salaryTotalNov += totalSalaryNov;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularDec + totalFixedDec + totalOverDec).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularDec + totalFixedDec + totalOverDec).ToString("N0") + "</td>";
 
                         totalSalaryDec += totalRegularDec + totalFixedDec + totalOverDec;
                         salaryTotalDec += totalSalaryDec;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularJan + totalFixedJan + totalOverJan).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularJan + totalFixedJan + totalOverJan).ToString("N0") + "</td>";
 
                         totalSalaryJan += totalRegularJan + totalFixedJan + totalOverJan;
                         salaryTotalJan += totalSalaryJan;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularFeb + totalFixedFeb + totalOverFeb).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularFeb + totalFixedFeb + totalOverFeb).ToString("N0") + "</td>";
 
                         totalSalaryFeb += totalRegularFeb + totalFixedFeb + totalOverFeb;
                         salaryTotalFeb += totalSalaryFeb;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularMar + totalFixedMar + totalOverMar).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularMar + totalFixedMar + totalOverMar).ToString("N0") + "</td>";
 
                         totalSalaryMar += totalRegularMar + totalFixedMar + totalOverMar;
                         salaryTotalMar += totalSalaryMar;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularApr + totalFixedApr + totalOverApr).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularApr + totalFixedApr + totalOverApr).ToString("N0") + "</td>";
 
                         totalSalaryApr += totalRegularApr + totalFixedApr + totalOverApr;
                         salaryTotalApr += totalSalaryApr;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularMay + totalFixedMay + totalOverMay).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularMay + totalFixedMay + totalOverMay).ToString("N0") + "</td>";
 
                         totalSalaryMay += totalRegularMay + totalFixedMay + totalOverMay;
                         salaryTotalMay += totalSalaryMay;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularJun + totalFixedJun + totalOverJun).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularJun + totalFixedJun + totalOverJun).ToString("N0") + "</td>";
 
                         totalSalaryJun += totalRegularJun + totalFixedJun + totalOverJun;
                         salaryTotalJun += totalSalaryJun;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularJul + totalFixedJul + totalOverJul).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularJul + totalFixedJul + totalOverJul).ToString("N0") + "</td>";
 
                         totalSalaryJul += totalRegularJul + totalFixedJul + totalOverJul;
                         salaryTotalJul += totalSalaryJul;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularAug + totalFixedAug + totalOverAug).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularAug + totalFixedAug + totalOverAug).ToString("N0") + "</td>";
 
                         totalSalaryAug += totalRegularAug + totalFixedAug + totalOverAug;
                         salaryTotalAug += totalSalaryAug;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalRegularSep + totalFixedSep + totalOverSep).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalRegularSep + totalFixedSep + totalOverSep).ToString("N0") + "</td>";
 
                         totalSalarySep += totalRegularSep + totalFixedSep + totalOverSep;
                         salaryTotalSep += totalSalarySep;
@@ -9835,73 +9835,73 @@ namespace CostAllocationApp.Controllers
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
                         double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
 
                         mWagesOct += manpointOct * beginningValue;
                         mwTotalOct += mWagesOct;
 
                         double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointNov * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointNov * beginningValue).ToString("N0") + "</td>";
 
                         mWagesNov += manpointNov * beginningValue;
                         mwTotalNov += mWagesNov;
 
                         double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointDec * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointDec * beginningValue).ToString("N0") + "</td>";
 
                         mWagesDec += manpointDec * beginningValue;
                         mwTotalDec += mWagesDec;
 
                         double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJan * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJan * beginningValue).ToString("N0") + "</td>";
 
                         mWagesJan += manpointJan * beginningValue;
                         mwTotalJan += mWagesJan;
 
                         double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointFeb * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointFeb * beginningValue).ToString("N0") + "</td>";
 
                         mWagesFeb += manpointFeb * beginningValue;
                         mwTotalFeb += mWagesFeb;
 
                         double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMar * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMar * beginningValue).ToString("N0") + "</td>";
 
                         mWagesMar += manpointMar * beginningValue;
                         mwTotalMar += mWagesMar;
 
                         double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointApr * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointApr * beginningValue).ToString("N0") + "</td>";
 
                         mWagesApr += manpointApr * beginningValue;
                         mwTotalApr += mWagesApr;
 
                         double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMay * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMay * beginningValue).ToString("N0") + "</td>";
 
                         mWagesMay += manpointMay * beginningValue;
                         mwTotalMay += mWagesMay;
 
                         double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJun * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJun * beginningValue).ToString("N0") + "</td>";
 
                         mWagesJun += manpointJun * beginningValue;
                         mwTotalJun += mWagesJun;
 
                         double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJul * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJul * beginningValue).ToString("N0") + "</td>";
 
                         mWagesJul += manpointJul * beginningValue;
                         mwTotalJul += mWagesJul;
 
                         double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointAug * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointAug * beginningValue).ToString("N0") + "</td>";
 
                         mWagesAug += manpointAug * beginningValue;
                         mwTotalAug += mWagesAug;
 
                         double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointSep * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointSep * beginningValue).ToString("N0") + "</td>";
 
                         mWagesSep += manpointSep * beginningValue;
                         mwTotalSep += mWagesSep;
@@ -9912,73 +9912,73 @@ namespace CostAllocationApp.Controllers
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
                         double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeOct += manpointOct * beginningValue;
                         dispatchFeeTotalOct += dispatchFeeOct;
 
                         double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointNov * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointNov * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeNov += manpointNov * beginningValue;
                         dispatchFeeTotalNov += dispatchFeeNov;
 
                         double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointDec * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointDec * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeDec += manpointDec * beginningValue;
                         dispatchFeeTotalDec += dispatchFeeDec;
 
                         double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJan * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJan * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeJan += manpointJan * beginningValue;
                         dispatchFeeTotalJan += dispatchFeeJan;
 
                         double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointFeb * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointFeb * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeFeb += manpointFeb * beginningValue;
                         dispatchFeeTotalFeb += dispatchFeeFeb;
 
                         double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMar * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMar * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeMar += manpointMar * beginningValue;
                         dispatchFeeTotalMar += dispatchFeeMar;
 
                         double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointApr * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointApr * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeApr += manpointApr * beginningValue;
                         dispatchFeeTotalApr += dispatchFeeApr;
 
                         double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMay * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMay * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeMay += manpointMay * beginningValue;
                         dispatchFeeTotalMay += dispatchFeeMay;
 
                         double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJun * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJun * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeJun += manpointJun * beginningValue;
                         dispatchFeeTotalJun += dispatchFeeJun;
 
                         double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJul * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJul * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeJul += manpointJul * beginningValue;
                         dispatchFeeTotalJul += dispatchFeeJul;
 
                         double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointAug * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointAug * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeAug += manpointAug * beginningValue;
                         dispatchFeeTotalAug += dispatchFeeAug;
 
                         double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointSep * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointSep * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeSep += manpointSep * beginningValue;
                         dispatchFeeTotalSep += dispatchFeeSep;
@@ -9995,7 +9995,7 @@ namespace CostAllocationApp.Controllers
                         employeeBonusOct += valueOct;
                         employeeBonusTotalOct += employeeBonusOct;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueOct.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueOct.ToString("N0") + "</td>";
 
                         double valueNov = (totalRegularNov * overWorkFixedTime) / bonusReserveConstant;
                         valueNov = Double.IsNaN(valueNov) ? 0 : valueNov;
@@ -10003,7 +10003,7 @@ namespace CostAllocationApp.Controllers
                         employeeBonusNov += valueNov;
                         employeeBonusTotalNov += employeeBonusNov;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueNov.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueNov.ToString("N0") + "</td>";
 
                         double valueDec = (totalRegularDec * overWorkFixedTime) / bonusReserveConstant;
                         valueDec = Double.IsNaN(valueDec) ? 0 : valueDec;
@@ -10011,49 +10011,49 @@ namespace CostAllocationApp.Controllers
                         employeeBonusDec += valueDec;
                         employeeBonusTotalDec += employeeBonusDec;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueDec.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueDec.ToString("N0") + "</td>";
 
                         double valueJan = (totalRegularJan * overWorkFixedTime) / bonusReserveConstant;
                         valueJan = Double.IsNaN(valueJan) ? 0 : valueJan;
                         valueJan = Double.IsInfinity(valueJan) ? 0 : valueJan;
                         employeeBonusJan += valueJan;
                         employeeBonusTotalJan += employeeBonusJan;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueJan.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueJan.ToString("N0") + "</td>";
 
                         double valueFeb = (totalRegularFeb * overWorkFixedTime) / bonusReserveConstant;
                         valueFeb = Double.IsNaN(valueFeb) ? 0 : valueFeb;
                         valueFeb = Double.IsInfinity(valueFeb) ? 0 : valueFeb;
                         employeeBonusFeb += valueFeb;
                         employeeBonusTotalFeb += employeeBonusFeb;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueFeb.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueFeb.ToString("N0") + "</td>";
 
                         double valueMar = (totalRegularMar * overWorkFixedTime) / bonusReserveConstant;
                         valueMar = Double.IsNaN(valueMar) ? 0 : valueMar;
                         valueMar = Double.IsInfinity(valueMar) ? 0 : valueMar;
                         employeeBonusMar += valueMar;
                         employeeBonusTotalMar += employeeBonusMar;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueMar.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueMar.ToString("N0") + "</td>";
 
                         double valueApr = (totalRegularApr * overWorkFixedTime) / bonusReserveConstant;
                         valueApr = Double.IsNaN(valueApr) ? 0 : valueApr;
                         valueApr = Double.IsInfinity(valueApr) ? 0 : valueApr;
                         employeeBonusApr += valueApr;
                         employeeBonusTotalApr += employeeBonusApr;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueApr.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueApr.ToString("N0") + "</td>";
 
                         double valueMay = (totalRegularMay * overWorkFixedTime) / bonusReserveConstant;
                         valueMay = Double.IsNaN(valueMay) ? 0 : valueMay;
                         valueMay = Double.IsInfinity(valueMay) ? 0 : valueMay;
                         employeeBonusMay += valueMay;
                         employeeBonusTotalMay += employeeBonusMay;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueMay.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueMay.ToString("N0") + "</td>";
 
                         double valueJun = (totalRegularJun * overWorkFixedTime) / bonusReserveConstant;
                         valueJun = Double.IsNaN(valueJun) ? 0 : valueJun;
                         valueJun = Double.IsInfinity(valueJun) ? 0 : valueJun;
                         employeeBonusJun += valueJun;
                         employeeBonusTotalJun += employeeBonusJun;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueJun.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueJun.ToString("N0") + "</td>";
 
                         double valueJul = (totalRegularJul * overWorkFixedTime) / bonusReserveConstant;
                         valueJul = Double.IsNaN(valueJul) ? 0 : valueJul;
@@ -10061,21 +10061,21 @@ namespace CostAllocationApp.Controllers
                         employeeBonusJul += valueJul;
                         employeeBonusTotalJul += employeeBonusJul;
 
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueJul.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueJul.ToString("N0") + "</td>";
 
                         double valueAug = (totalRegularAug * overWorkFixedTime) / bonusReserveConstant;
                         valueAug = Double.IsNaN(valueAug) ? 0 : valueAug;
                         valueAug = Double.IsInfinity(valueAug) ? 0 : valueAug;
                         employeeBonusAug += valueAug;
                         employeeBonusTotalAug += employeeBonusAug;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueAug.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueAug.ToString("N0") + "</td>";
 
                         double valueSep = (totalRegularSep * overWorkFixedTime) / bonusReserveConstant;
                         valueSep = Double.IsNaN(valueSep) ? 0 : valueSep;
                         valueSep = Double.IsInfinity(valueSep) ? 0 : valueSep;
                         employeeBonusSep += valueSep;
                         employeeBonusTotalSep += employeeBonusSep;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + valueSep.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + valueSep.ToString("N0") + "</td>";
                     }
 
 
@@ -10084,70 +10084,70 @@ namespace CostAllocationApp.Controllers
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
                         double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesOct += manpointOct * beginningValue;
                         commutingExpensesTotalOct += commutingExpensesOct;
                         double manpointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointNov * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointNov * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesNov += manpointNov * beginningValue;
                         commutingExpensesTotalNov += commutingExpensesNov;
 
                         double manpointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointDec * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointDec * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesDec += manpointDec * beginningValue;
                         commutingExpensesTotalDec += commutingExpensesDec;
 
                         double manpointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJan * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJan * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesJan += manpointJan * beginningValue;
                         commutingExpensesTotalJan += commutingExpensesJan;
 
                         double manpointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointFeb * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointFeb * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesFeb += manpointFeb * beginningValue;
                         commutingExpensesTotalFeb += commutingExpensesFeb;
 
                         double manpointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMar * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMar * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesMar += manpointMar * beginningValue;
                         commutingExpensesTotalMar += commutingExpensesMar;
 
                         double manpointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointApr * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointApr * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesApr += manpointApr * beginningValue;
                         commutingExpensesTotalApr += commutingExpensesApr;
 
                         double manpointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointMay * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointMay * beginningValue).ToString("N0") + "</td>";
 
                         double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJun * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJun * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesJun += manpointJun * beginningValue;
                         commutingExpensesTotalJun += commutingExpensesJun;
 
                         double manpointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointJul * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointJul * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesJul += manpointJul * beginningValue;
                         commutingExpensesTotalJul += commutingExpensesJul;
 
                         double manpointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointAug * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointAug * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesAug += manpointAug * beginningValue;
                         commutingExpensesTotalAug += commutingExpensesAug;
 
 
                         double manpointSep = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (manpointSep * beginningValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointSep * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesSep += manpointSep * beginningValue;
                         commutingExpensesTotalSep += commutingExpensesSep;
@@ -10157,51 +10157,51 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 10)
                     {
                         double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).WelfareCostRatio);
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesOct += (totalSalaryOct + mWagesOct + commutingExpensesOct) * commonValue;
                         welfareExpensesTotalOct += wExpensesOct;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesNov += (totalSalaryNov + mWagesNov + commutingExpensesNov) * commonValue;
                         welfareExpensesTotalNov += wExpensesNov;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesDec += (totalSalaryDec + mWagesDec + commutingExpensesDec) * commonValue;
                         welfareExpensesTotalDec += wExpensesDec;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesJan += (totalSalaryJan + mWagesJan + commutingExpensesJan) * commonValue;
                         welfareExpensesTotalJan += wExpensesJan;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesFeb += (totalSalaryFeb + mWagesFeb + commutingExpensesFeb) * commonValue;
                         welfareExpensesTotalFeb += wExpensesFeb;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesMar += (totalSalaryMar + mWagesMar + commutingExpensesMar) * commonValue;
                         welfareExpensesTotalMar += wExpensesMar;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesApr += (totalSalaryApr + mWagesApr + commutingExpensesApr) * commonValue;
                         welfareExpensesTotalApr += wExpensesApr;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesMay += (totalSalaryMay + mWagesMay + commutingExpensesMay) * commonValue;
                         welfareExpensesTotalMay += wExpensesMay;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesJun += (totalSalaryJun + mWagesJun + commutingExpensesJun) * commonValue;
                         welfareExpensesTotalJun += wExpensesJun;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesJul += (totalSalaryJul + mWagesJul + commutingExpensesJul) * commonValue;
                         welfareExpensesTotalJul += wExpensesJul;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesAug += (totalSalaryAug + mWagesAug + commutingExpensesAug) * commonValue;
                         welfareExpensesTotalAug += wExpensesAug;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + ((totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + ((totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue).ToString("N0") + "</td>";
 
                         wExpensesSep += (totalSalarySep + mWagesSep + commutingExpensesSep) * commonValue;
                         welfareExpensesTotalSep += wExpensesSep;
@@ -10210,18 +10210,18 @@ namespace CostAllocationApp.Controllers
                     // welfare expenses bonus
                     if (salaryTypeCount == 11)
                     {
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
 
                     }
 
@@ -10229,51 +10229,51 @@ namespace CostAllocationApp.Controllers
                     // total statutory
                     if (salaryTypeCount == 12)
                     {
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesOct + wExpBonusOct).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesOct + wExpBonusOct).ToString("N0") + "</td>";
 
                         totalStatutoryOct += wExpensesOct + wExpBonusOct;
                         statutoryTotalOct += totalStatutoryOct;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesNov + wExpBonusNov).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesNov + wExpBonusNov).ToString("N0") + "</td>";
 
                         totalStatutoryNov += wExpensesNov + wExpBonusNov;
                         statutoryTotalNov += totalStatutoryNov;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesDec + wExpBonusDec).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesDec + wExpBonusDec).ToString("N0") + "</td>";
 
                         totalStatutoryDec += wExpensesDec + wExpBonusDec;
                         statutoryTotalDec += totalStatutoryDec;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesJan + wExpBonusJan).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesJan + wExpBonusJan).ToString("N0") + "</td>";
 
                         totalStatutoryJan += wExpensesJan + wExpBonusJan;
                         statutoryTotalJan += totalStatutoryJan;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesFeb + wExpBonusFeb).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesFeb + wExpBonusFeb).ToString("N0") + "</td>";
 
                         totalStatutoryFeb += wExpensesFeb + wExpBonusFeb;
                         statutoryTotalFeb += totalStatutoryFeb;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesMar + wExpBonusMar).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesMar + wExpBonusMar).ToString("N0") + "</td>";
 
                         totalStatutoryMar += wExpensesMar + wExpBonusMar;
                         statutoryTotalMar += totalStatutoryMar;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesApr + wExpBonusApr).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesApr + wExpBonusApr).ToString("N0") + "</td>";
 
                         totalStatutoryApr += wExpensesApr + wExpBonusApr;
                         statutoryTotalApr += totalStatutoryApr;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesMay + wExpBonusMay).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesMay + wExpBonusMay).ToString("N0") + "</td>";
 
                         totalStatutoryMay += wExpensesMay + wExpBonusMay;
                         statutoryTotalMay += totalStatutoryMay;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesJun + wExpBonusJun).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesJun + wExpBonusJun).ToString("N0") + "</td>";
 
                         totalStatutoryJun += wExpensesJun + wExpBonusJun;
                         statutoryTotalJun += totalStatutoryJun;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesJul + wExpBonusJul).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesJul + wExpBonusJul).ToString("N0") + "</td>";
 
                         totalStatutoryJul += wExpensesJul + wExpBonusJul;
                         statutoryTotalJul += totalStatutoryJul;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesAug + wExpBonusAug).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesAug + wExpBonusAug).ToString("N0") + "</td>";
 
                         totalStatutoryAug += wExpensesAug + wExpBonusAug;
                         statutoryTotalAug += totalStatutoryAug;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (wExpensesSep + wExpBonusSep).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (wExpensesSep + wExpBonusSep).ToString("N0") + "</td>";
 
                         totalStatutorySep += wExpensesSep + wExpBonusSep;
                         statutoryTotalSep += totalStatutorySep;
@@ -10284,40 +10284,40 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 13)
                     {
                         expensesTotalOct += totalSalaryOct + mWagesOct + dispatchFeeOct + employeeBonusOct + commutingExpensesOct + totalSalaryOct;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryOct + mWagesOct + dispatchFeeOct + employeeBonusOct + commutingExpensesOct + totalSalaryOct).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryOct + mWagesOct + dispatchFeeOct + employeeBonusOct + commutingExpensesOct + totalSalaryOct).ToString("N0") + "</td>";
 
                         expensesTotalNov += totalSalaryNov + mWagesNov + dispatchFeeNov + employeeBonusNov + commutingExpensesNov + totalSalaryNov;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryNov + mWagesNov + dispatchFeeNov + employeeBonusNov + commutingExpensesNov + totalSalaryNov).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryNov + mWagesNov + dispatchFeeNov + employeeBonusNov + commutingExpensesNov + totalSalaryNov).ToString("N0") + "</td>";
 
                         expensesTotalDec += totalSalaryDec + mWagesDec + dispatchFeeDec + employeeBonusDec + commutingExpensesDec + totalSalaryDec;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryDec + mWagesDec + dispatchFeeDec + employeeBonusDec + commutingExpensesDec + totalSalaryDec).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryDec + mWagesDec + dispatchFeeDec + employeeBonusDec + commutingExpensesDec + totalSalaryDec).ToString("N0") + "</td>";
 
                         expensesTotalJan += totalSalaryJan + mWagesJan + dispatchFeeJan + employeeBonusJan + commutingExpensesJan + totalSalaryJan;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryJan + mWagesJan + dispatchFeeJan + employeeBonusJan + commutingExpensesJan + totalSalaryJan).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryJan + mWagesJan + dispatchFeeJan + employeeBonusJan + commutingExpensesJan + totalSalaryJan).ToString("N0") + "</td>";
 
                         expensesTotalFeb += totalSalaryFeb + mWagesFeb + dispatchFeeFeb + employeeBonusFeb + commutingExpensesFeb + totalSalaryFeb;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryFeb + mWagesFeb + dispatchFeeFeb + employeeBonusFeb + commutingExpensesFeb + totalSalaryFeb).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryFeb + mWagesFeb + dispatchFeeFeb + employeeBonusFeb + commutingExpensesFeb + totalSalaryFeb).ToString("N0") + "</td>";
 
                         expensesTotalMar += totalSalaryMar + mWagesMar + dispatchFeeMar + employeeBonusMar + commutingExpensesMar + totalSalaryMar;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryMar + mWagesMar + dispatchFeeMar + employeeBonusMar + commutingExpensesMar + totalSalaryMar).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryMar + mWagesMar + dispatchFeeMar + employeeBonusMar + commutingExpensesMar + totalSalaryMar).ToString("N0") + "</td>";
 
                         expensesTotalApr += totalSalaryApr + mWagesApr + dispatchFeeApr + employeeBonusApr + commutingExpensesApr + totalSalaryApr;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryApr + mWagesApr + dispatchFeeApr + employeeBonusApr + commutingExpensesApr + totalSalaryApr).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryApr + mWagesApr + dispatchFeeApr + employeeBonusApr + commutingExpensesApr + totalSalaryApr).ToString("N0") + "</td>";
 
                         expensesTotalMay += totalSalaryMay + mWagesMay + dispatchFeeMay + employeeBonusMay + commutingExpensesMay + totalSalaryMay;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryMay + mWagesMay + dispatchFeeMay + employeeBonusMay + commutingExpensesMay + totalSalaryMay).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryMay + mWagesMay + dispatchFeeMay + employeeBonusMay + commutingExpensesMay + totalSalaryMay).ToString("N0") + "</td>";
 
                         expensesTotalJun += totalSalaryJun + mWagesJun + dispatchFeeJun + employeeBonusJun + commutingExpensesJun + totalSalaryJun;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryJun + mWagesJun + dispatchFeeJun + employeeBonusJun + commutingExpensesJun + totalSalaryJun).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryJun + mWagesJun + dispatchFeeJun + employeeBonusJun + commutingExpensesJun + totalSalaryJun).ToString("N0") + "</td>";
 
                         expensesTotalJul += totalSalaryJul + mWagesJul + dispatchFeeJul + employeeBonusJul + commutingExpensesJul + totalSalaryJul;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryJul + mWagesJul + dispatchFeeJul + employeeBonusJul + commutingExpensesJul + totalSalaryJul).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryJul + mWagesJul + dispatchFeeJul + employeeBonusJul + commutingExpensesJul + totalSalaryJul).ToString("N0") + "</td>";
 
                         expensesTotalAug += totalSalaryAug + mWagesAug + dispatchFeeAug + employeeBonusAug + commutingExpensesAug + totalSalaryAug;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalaryAug + mWagesAug + dispatchFeeAug + employeeBonusAug + commutingExpensesAug + totalSalaryAug).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalaryAug + mWagesAug + dispatchFeeAug + employeeBonusAug + commutingExpensesAug + totalSalaryAug).ToString("N0") + "</td>";
 
                         expensesTotalSep += totalSalarySep + mWagesSep + dispatchFeeSep + employeeBonusSep + commutingExpensesSep + totalSalarySep;
-                        strOtherGradeTd = strOtherGradeTd + "<td>" + (totalSalarySep + mWagesSep + dispatchFeeSep + employeeBonusSep + commutingExpensesSep + totalSalarySep).ToString("N0") + "</td>";
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (totalSalarySep + mWagesSep + dispatchFeeSep + employeeBonusSep + commutingExpensesSep + totalSalarySep).ToString("N0") + "</td>";
                     }
                     rowCount++;
                     innerCount++;
@@ -10341,223 +10341,223 @@ namespace CostAllocationApp.Controllers
                 if (salaryTypeSummeryCount == 1)
                 {
                     salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + 0 + "</td>";
                 }
 
                 // regular
                 if (salaryTypeSummeryCount == 2)
                 {
                     salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + regularSalaryTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + regularSalaryTotalSep.ToString("N0") + "</td>";
                 }
                 // fixed
                 if (salaryTypeSummeryCount == 3)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + fixedSalaryTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + fixedSalaryTotalSep.ToString("N0") + "</td>";
                 }
                 // overtime
                 if (salaryTypeSummeryCount == 4)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + overTimeSalaryTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + overTimeSalaryTotalSep.ToString("N0") + "</td>";
 
                 }
                 // total salary
                 if (salaryTypeSummeryCount == 5)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + salaryTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + salaryTotalSep.ToString("N0") + "</td>";
                 }
                 // miscellaneous wages
                 if (salaryTypeSummeryCount == 6)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + mwTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + mwTotalSep.ToString("N0") + "</td>";
                 }
                 // dispatch fee
                 if (salaryTypeSummeryCount == 7)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + dispatchFeeTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + dispatchFeeTotalSep.ToString("N0") + "</td>";
                 }
                 // provision for employee bonus
                 if (salaryTypeSummeryCount == 8)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + employeeBonusTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + employeeBonusTotalSep.ToString("N0") + "</td>";
                 }
                 // commuting expenses
                 if (salaryTypeSummeryCount == 9)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + commutingExpensesTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + commutingExpensesTotalSep.ToString("N0") + "</td>";
                 }
                 // salary statutory welfare expenses
                 if (salaryTypeSummeryCount == 10)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesTotalSep.ToString("N0") + "</td>";
                 }
                 // provision for statotory welfare expenses for bonus
                 if (salaryTypeSummeryCount == 11)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + welfareExpensesBonusTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + welfareExpensesBonusTotalSep.ToString("N0") + "</td>";
                 }
                 // total statutory benefites
                 if (salaryTypeSummeryCount == 12)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + statutoryTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + statutoryTotalSep.ToString("N0") + "</td>";
                 }
                 // total expenses
                 if (salaryTypeSummeryCount == 13)
                 {
-                    salaryTypeTd = salaryTypeTd + "<td></td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalOct.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalNov.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalDec.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalJan.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalFeb.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalMar.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalApr.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalMay.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalJun.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalJul.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalAug.ToString("N0") + "</td>";
-                    salaryTypeTd = salaryTypeTd + "<td>" + expensesTotalSep.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'></td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalOct.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalNov.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalDec.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalJan.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalFeb.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalMar.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalApr.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalMay.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalJun.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalJul.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalAug.ToString("N0") + "</td>";
+                    salaryTypeTd = salaryTypeTd + "<td style='text-align:right;'>" + expensesTotalSep.ToString("N0") + "</td>";
                 }
                 salaryTypeTd = salaryTypeTd + "</tr>";
                 rowCountForFuture++;
@@ -10565,30 +10565,288 @@ namespace CostAllocationApp.Controllers
             }
             //endregion
 
+            rowCount = rowCount + 2;
+            string strAllocationCostingBody = "";
+            strAllocationCostingBody = strAllocationCostingBody + "<tr>";
+            strAllocationCostingBody = strAllocationCostingBody + "<td rowspan='16'>Costing</td>";
+            strAllocationCostingBody = strAllocationCostingBody + "</tr>";
+            rowCount++;
+
+            octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
+            int indexCount = 1;
+            // costing
+            foreach (var item in salaryAssignmentDtos)
+            {
+                strAllocationCostingBody = strAllocationCostingBody + "<tr>";
+                if(indexCount == 15)
+                {
+                    strAllocationCostingBody = strAllocationCostingBody + "<td>合計</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>"+ octTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + novTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + decTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + janTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + febTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + marTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + aprTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + mayTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + junTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + julTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + augTotal.ToString("N0") + "</td>";
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + sepTotal.ToString("N0") + "</td>";
+                    rowCount++;
+                }
+                else
+                {
+                    strAllocationCostingBody = strAllocationCostingBody + "<td>" + item.Grade.GradeName + "</td>";
+                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    {
+                        oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+                        nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+                        dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+                        jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+                        feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+                        mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+                        apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+                        may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+                        jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+                        jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+                        aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+                        sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+                    }
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + oct.ToString("N0") + "</td>";
+                    octTotal += oct;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + nov.ToString("N0") + "</td>";
+                    novTotal += nov;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + dec.ToString("N0") + "</td>";
+                    decTotal += dec;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jan.ToString("N0") + "</td>";
+                    janTotal += jan;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + feb.ToString("N0") + "</td>";
+                    febTotal += feb;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + mar.ToString("N0") + "</td>";
+                    marTotal += mar;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + apr.ToString("N0") + "</td>";
+                    aprTotal += apr;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + may.ToString("N0") + "</td>";
+                    mayTotal += may;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jun.ToString("N0") + "</td>";
+                    junTotal += jun;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jul.ToString("N0") + "</td>";
+                    julTotal += jul;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + aug.ToString("N0") + "</td>";
+                    augTotal += aug;
+                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + sep.ToString("N0") + "</td>";
+                    sepTotal += sep;
+                }                
+
+
+                
+
+                indexCount +=1;                
+                strAllocationCostingBody = strAllocationCostingBody + "</tr>";
+                oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                rowCount++;
+            }
+            rowCount = rowCount + 2;
+            string strCompanyWiseAllocationBody = "";
+            strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";
+            strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='font-weight: bold;'>工数</td>";
+            strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "</tr>";
+
+            if (assignmentsWithSectionAndCompany.Count > 0)
+            {
+                List<ForecastAssignmentViewModel> customizedList = assignmentsWithSectionAndCompany.ToList();
+                List<ForecastAssignmentViewModel> tempList = null;
+                octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
+
+                foreach (var item in assignmentsWithSectionAndCompany)
+                {
+                    strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";                    
+
+                    tempList = customizedList.Where(l => l.SectionId == item.SectionId && l.CompanyId == item.CompanyId).ToList();
+                    if (tempList.Count > 0)
+                    {
+                        foreach (var removableItem in tempList)
+                        {
+                            customizedList.Remove(removableItem);
+                        }
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:left;'>" + tempList[0].SectionName + "</td>";
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:left;'>" + tempList[0].CompanyName + "</td>";
+                        foreach (var tempItem in tempList)
+                        {
+                            oct += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 10).Points);
+                            nov += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 11).Points);
+                            dec += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 12).Points);
+                            jan += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 1).Points);
+                            feb += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 2).Points);
+                            mar += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 3).Points);
+                            apr += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 4).Points);
+                            may += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 5).Points);
+                            jun += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 6).Points);
+                            jul += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 7).Points);
+                            aug += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 8).Points);
+                            sep += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 9).Points);
+                        }
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + oct + "</td>";                        
+                        octTotal += oct;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + nov + "</td>";                        
+                        novTotal += nov;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + dec + "</td>";                        
+                        decTotal += dec;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + jan + "</td>";                        
+                        janTotal += jan;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + feb + "</td>";                        
+                        febTotal += feb;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + mar + "</td>";                        
+                        marTotal += mar;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + apr + "</td>";                        
+                        aprTotal += apr;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + may + "</td>";                       
+                        mayTotal += may;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + jun + "</td>";                        
+                        junTotal += jun;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + jul + "</td>";                        
+                        julTotal += jul;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + aug + "</td>";                        
+                        augTotal += aug;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + sep + "</td>";                        
+                        sepTotal += sep;
+
+                        oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                        rowCount++;
+                    }
+                    strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "</tr>";
+                }
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td></td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:left;'>合計</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + octTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + novTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + decTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + janTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + febTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + marTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + aprTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + mayTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + junTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + julTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + augTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td>" + sepTotal + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "</tr>";
+                rowCount++;
+
+                rowCount = rowCount + 2;
+
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='font-weight: bold;'>金額</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "</tr>";
+                rowCount++;
+
+                customizedList = assignmentsWithSectionAndCompany.ToList();
+                octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
+                foreach (var item in assignmentsWithSectionAndCompany)
+                {
+                    strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";                    
+                    tempList = customizedList.Where(l => l.SectionId == item.SectionId && l.CompanyId == item.CompanyId).ToList();
+                    if (tempList.Count > 0)
+                    {
+                        foreach (var removableItem in tempList)
+                        {
+                            customizedList.Remove(removableItem);
+                        }
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:left;'>" + tempList[0].SectionName + "</td>";
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:left;'>" + tempList[0].CompanyName + "</td>";
+
+                        foreach (var tempItem in tempList)
+                        {
+
+                            oct += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+                            nov += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+                            dec += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+                            jan += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+                            feb += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+                            mar += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+                            apr += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+                            may += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+                            jun += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+                            jul += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+                            aug += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+                            sep += Convert.ToDecimal(tempItem.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+                        }
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + oct.ToString("N0") + "</td>";                        
+                        octTotal += oct;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + nov.ToString("N0") + "</td>";                        
+                        novTotal += nov;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + dec.ToString("N0") + "</td>";                        
+                        decTotal += dec;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + jan.ToString("N0") + "</td>";                        
+                        janTotal += jan;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + feb.ToString("N0") + "</td>";                        
+                        febTotal += feb;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + mar.ToString("N0") + "</td>";                        
+                        marTotal += mar;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + apr.ToString("N0") + "</td>";                        
+                        aprTotal += apr;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + may.ToString("N0") + "</td>";                        
+                        mayTotal += may;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + jun.ToString("N0") + "</td>";                        
+                        junTotal += jun;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + jul.ToString("N0") + "</td>";                        
+                        julTotal += jul;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + aug.ToString("N0") + "</td>";                        
+                        augTotal += aug;
+                        strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + sep.ToString("N0") + "</td>";                        
+                        sepTotal += sep;                        
+
+                        oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                        rowCount++;
+                    }
+                    strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "</tr>";
+                }
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td></td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:left;'>合計</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + octTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + novTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + decTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + janTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + febTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + marTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + aprTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + mayTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + junTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + julTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + augTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='text-align:right;'>" + sepTotal.ToString("N0") + "</td>";
+                strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "</tr>";              
+                rowCount++;
+            }
+
+
             //get the allocation list table
             string allocationList = "";
             allocationList = allocationList + "<table class='' id='allocation_wise_view_list'> ";
-            allocationList = allocationList + "    <thead>";
+            allocationList = allocationList + "    <thead id='allocation_wise_tbl_header'>";
             allocationList = allocationList + "        <tr>";
             allocationList = allocationList + "            <th></th>";
             allocationList = allocationList + "            <th></th>";
-            allocationList = allocationList + "            <th>10</th>";
-            allocationList = allocationList + "            <th>11</th>";
-            allocationList = allocationList + "            <th>12</th>";
-            allocationList = allocationList + "            <th>1</th>";
-            allocationList = allocationList + "            <th>2</th>";
-            allocationList = allocationList + "            <th>3</th>";
-            allocationList = allocationList + "            <th>4</th>";
-            allocationList = allocationList + "            <th>5</th>";
-            allocationList = allocationList + "            <th>6</th>";
-            allocationList = allocationList + "            <th>7</th>";
-            allocationList = allocationList + "            <th>8</th>";
-            allocationList = allocationList + "            <th>9</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>10</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>11</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>12</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>1</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>2</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>3</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>4</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>5</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>6</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>7</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>8</th>";
+            allocationList = allocationList + "            <th class='man_month_cost_allocation'>9</th>";
             allocationList = allocationList + "        </tr>";
             allocationList = allocationList + "    </thead>";
-            allocationList = allocationList + "    <tbody id='view_data_department_wise'>";
+            allocationList = allocationList + "    <tbody id='view_data_allocation_wise'>";
 
-            allocationList = allocationList + allocaionTableBodyTd + salaryTypeTd+ strOtherGradeTd;
+            allocationList = allocationList + allocaionTableBodyTd + salaryTypeTd+ strOtherGradeTd+ strAllocationCostingBody+ strCompanyWiseAllocationBody;
 
             allocationList = allocationList + "    </tbody>";
             allocationList = allocationList + "</table> ";

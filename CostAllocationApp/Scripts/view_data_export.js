@@ -21,10 +21,13 @@ function GetExportDataForView(departmentId){
                                    
                     $.each(data, function (key, item) {      
                         $('#view_data_department_wise').append(`<tr>`);                               
-                        $('#view_data_department_wise').append(`<td>${item.EmployeeName}</td><td>${item.SectionName}</td><td>${item.CompanyName}</td><td>${item.DepartmentName}</td><td>${item.GradePoint}</td><td>${item.UnitPrice}</td>`);                
+                        $('#view_data_department_wise').append(`<td style='text-align:left;'>${item.EmployeeName}</td><td style='text-align:center;'>${item.SectionName}</td><td>${item.CompanyName}</td><td>${item.DepartmentName}</td><td>${item.GradePoint}</td><td class='department_wise_list_unit_price'>${item.UnitPrice}</td>`);                
                         if(item.forecasts.length>0)   {
                             for(var i=0;i<item.forecasts.length;i++){
                                 $('#view_data_department_wise').append(`<td>${item.forecasts[i].Points}</td>`);                                                    
+                            }
+                            for (var i = 0; i < item.forecasts.length; i++) {
+                                $('#view_data_department_wise').append(`<td style='text-align:right;'>${item.forecasts[i].Total}</td>`);
                             }
                         }
                         $('#view_data_department_wise').append(`</tr>`);                
@@ -207,7 +210,7 @@ $('#btn_export_all_data').click(function(){
  })
 
  function ExportByDepartment(){
-    var departmentId = $('#view_export_department').val();
+    var departmentId = $('#department_allocation_wise').val();
     $('#department').val(departmentId).attr("selected", "selected");
     $('#frmDepartmentWiseExport').submit();
  }
