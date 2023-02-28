@@ -1,0 +1,295 @@
+﻿@model CostAllocationApp.ViewModels.ForecastViewModal
+
+@{
+    ViewBag.Title = "Create Forecast";
+}
+@section Styles {
+    @* <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" /> *@
+    <link href="/Content/common.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/forecast_ver03.css" rel="stylesheet" type="text/css" />       
+}
+
+<div class="content container-fluid" style="position:relative">
+    <!-- Page Header -->
+    <div class="page-header" id="data_import">
+        <div class="row align-items-center">
+            <div class="col">
+                <h5>Forecast Creation</h5>
+            </div>
+        </div>
+        <div class="row">
+            @*<div class="col">
+                <a href="/Home/Index"><i class="fa fa-upload" aria-hidden="true"></i> Upload Excel</a>
+            </div>*@
+
+            <div class="col">
+                @using (Html.BeginForm("Index", "Forecasts", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+                {
+                <div class="form-group mb-2">
+                    <input type="file" class="form-control-file" name="uploaded_file">
+                    <input type="hidden" value="@Model.Department.Id" name="department_id" />
+                </div>
+                    
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select id="inputState" class="form-control" name="upload_year">
+                            <option value="0">Select Year</option>
+                            <option value="2022">2022</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success mb-2" id="import_data_btn"><i class="fa fa-upload" aria-hidden="true"></i> Upload Excel</button>
+                    @Html.AntiForgeryToken()
+
+
+                }
+                @if ((Int32)ViewBag.ErrorCount > 0)
+                {
+                    <div class="alert alert-danger col-4">
+                        @Html.ValidationSummary()
+                    </div>
+                }
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alert alert-success col-4">
+                        @ViewBag.Success
+                    </div>
+                }
+            </div>
+        </div>        
+    </div>
+    <!-- /Page Header -->
+    <div class="row">       
+        <div class="col-md-12">
+            <section class="container" tabIndex="1">
+                <div>
+                    <table id="forecast_search">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Section</th>
+                                <th>Department</th>
+                                @*<th>In-Charge</th>
+                                <th>Role</th>*@
+                                <th>Allocation</th>
+                                <th>Company</th>
+                                <th>Period</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" value="" id="identity_search" class="create_forecast name_search" />
+                                    <input type="hidden" value="@Model.Department.Id" id="pre_selected_department_id" />
+                                </td>
+
+                                <td class="create_forecast section_search">
+                                    <div class="forecast_multiselect">
+                                        <div class="forecast_checkbox section" onclick="SectionCheck()">
+                                            <select id="section_search">
+                                                <option>All</option>
+                                            </select>
+                                            <div></div>
+                                        </div>
+
+                                        <div id="sectionChks" class="commonselect">
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="create_forecast department_search">
+                                    @*<div class="forecast_multiselect">
+                                        <div class="forecast_checkbox department" onclick="DepartmentCheck()">
+                                            <select id="department_search">
+                                                <option>All</option>
+                                            </select>
+                                            <div></div>
+                                        </div>
+                                        <div id="departmentChks" class="commonselect">
+
+                                        </div>
+                                    </div>*@
+                                    <input type="text" value="@Model.Department.DepartmentName" readonly />
+                                </td>
+
+                                @*<td class="create_forecast incharge_search">
+                                    <div class="forecast_multiselect">
+                                        <div class="forecast_checkbox incharge" onclick="InchargeCheck()">
+                                            <select id="incharge_search">
+                                                <option>All</option>
+                                            </select>
+                                            <div></div>
+                                        </div>
+                                        <div id="inchargeChks" class="commonselect">
+
+                                        </div>
+                                    </div>
+                                </td>*@
+
+                                @*<td class="create_forecast role_search">
+                                    <div class="forecast_multiselect">
+                                        <div class="forecast_checkbox role" onclick="RoleCheck()">
+                                            <select id="role_search">
+                                                <option>All</option>
+                                            </select>
+                                            <div></div>
+                                        </div>
+                                        <div id="RoleChks" class="commonselect">
+
+                                        </div>
+                                    </div>
+                                </td>*@
+
+                                <td class="create_forecast explanation_search">
+                                    <div class="forecast_multiselect">
+                                        <div class="forecast_checkbox explanation" onclick="ExplanationCheck()">
+                                            <select id="explanation_search">
+                                                <option>All</option>
+                                            </select>
+                                            <div></div>
+                                        </div>
+                                        <div id="ExplanationChks" class="commonselect">
+
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="create_forecast company_search">
+                                    <div class="forecast_multiselect">
+                                        <div class="forecast_checkbox company" onclick="CompanyCheck()">
+                                            <select id="company_search">
+                                                <option>All</option>
+                                            </select>
+                                            <div></div>
+                                        </div>
+                                        <div id="CompanyChks" class="commonselect">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select id="period_search" class="create_forecast period_search">
+                                        <option value="">Select Period</option>
+                                        <option value="2022">2022</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            @*<tr>
+                                    <td>
+                                        <input type="text" class="form-control" id="identity_search" placeholder="name">
+                                    </td>
+                                    <td>
+                                        <select id="section_search" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="department_search" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="incharge_search" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="role_search" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="explanation_search" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="company_search" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="period_search" class="form-control col-12">
+                                            <option value="">Select Period</option>
+                                            <option value="2023">2023</option>
+
+                                        </select>
+                                    </td>
+                                </tr>*@
+                            <tr>
+                                <td colspan="7"></td>
+                                <td>
+                                    <a href="javascript:void(0);" class="" id="forecast_search_button">Search</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="forecast">
+                        <div id="loading" style="display:none;position:absolute;left:0;top:-147px;  width:100%;height:100%;">
+                            <center>
+                                <img src="~/img/forecast_loader.gif" height="250" width="250" style="margin-top:200px;">
+                                <br>
+                                <strong>Please wait a moment...</strong>
+                                <br>
+                                <br>
+                            </center>
+                        </div>
+                        <table class="" id="forecast_table">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="add_name_tbl_2_btn">
+                            <a href="javascript:void(0);" class="" id="cancel_forecast" onclick="onCancel()" style="display:none;">Cancel</a>
+                            <a href="javascript:void(0);" class="" id="save_forecast" onclick="onSave(event)" style="display:none;">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hidSectionId" />
+<input type="hidden" id="hidDepartmentId" />
+<input type="hidden" id="hidInChargeId" />
+<input type="hidden" id="hidRoleId" />
+<input type="hidden" id="hidExplanationId" />
+<input type="hidden" id="hidCompanyid" />
+
+@section Scripts{
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/forecast_ver03.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("table1").DataTable();
+        });
+        function bs_input_file() {
+            $(".input-file").before(
+                function () {
+                    if (!$(this).prev().hasClass('input-ghost')) {
+                        var element = $("<input type='file' id='dataFile' name='upload' class='input-ghost' style='visibility:hidden; height:0'>");
+                        element.attr("name", $(this).attr("name"));
+                        element.change(function () {
+                            element.next(element).find('input').val((element.val()).split('\\').pop());
+                        });
+                        $(this).find("button.btn-choose").click(function () {
+                            element.click();
+                        });
+                        $(this).find("button.btn-reset").click(function () {
+                            element.val(null);
+                            $(this).parents(".input-file").find('input').val('');
+                        });
+                        $(this).find('input').css("cursor", "pointer");
+                        $(this).find('input').mousedown(function () {
+                            $(this).parents('.input-file').prev().click();
+                            return false;
+                        });
+                        return element;
+                    }
+                }
+            );
+        }
+
+        function clear() {
+            var input = $("#dataFile").val('');
+        };
+        $(function () {
+            clear();
+            bs_input_file();
+        });
+    </script>
+}
+
+

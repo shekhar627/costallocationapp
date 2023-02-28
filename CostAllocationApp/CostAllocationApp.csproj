@@ -280,6 +280,7 @@
     <Content Include="Content\forecast.css" />
     <Content Include="Content\forecast_ver02.css" />
     <Content Include="Content\forecast_ver03.css" />
+    <Content Include="Content\forecast_ver04.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\grade.css" />
     <Content Include="Content\incharge.css" />
@@ -656,6 +657,7 @@
     <Content Include="Scripts\forecast.js" />
     <Content Include="Scripts\forecast_ver02.js" />
     <Content Include="Scripts\forecast_ver03.js" />
+    <Content Include="Scripts\forecast_ver04.js" />
     <Content Include="Scripts\form-validation.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\glimpse.js" />

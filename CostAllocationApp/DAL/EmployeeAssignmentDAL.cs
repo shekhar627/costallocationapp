@@ -505,7 +505,7 @@ namespace CostAllocationApp.DAL
             if (!string.IsNullOrEmpty(employeeAssignment.SectionId))
             {
                 string tempSectionIds = "";
-                if (employeeAssignment.SectionId.IndexOf("##") >= 0)
+                if (employeeAssignment.SectionId.IndexOf(",") >= 0)
                 {
                     string[] arrSectionIds = employeeAssignment.SectionId.Split(new[] { "##" }, StringSplitOptions.None);
                     
@@ -530,9 +530,9 @@ namespace CostAllocationApp.DAL
             if (!string.IsNullOrEmpty(employeeAssignment.DepartmentId))
             {
                 string tempDepartmentIds = "";
-                if (employeeAssignment.DepartmentId.IndexOf("##") >= 0)
+                if (employeeAssignment.DepartmentId.IndexOf(",") >= 0)
                 {
-                    string[] arrDepartmentIds = employeeAssignment.DepartmentId.Split(new[] { "##" }, StringSplitOptions.None);
+                    string[] arrDepartmentIds = employeeAssignment.DepartmentId.Split(new[] { "," }, StringSplitOptions.None);
 
                     for (int i = 0; i < arrDepartmentIds.Length; i++)
                     {
@@ -556,9 +556,9 @@ namespace CostAllocationApp.DAL
             if (!string.IsNullOrEmpty(employeeAssignment.InchargeId))
             {
                 string tempInchargeIdIds = "";
-                if (employeeAssignment.InchargeId.IndexOf("##") >= 0)
+                if (employeeAssignment.InchargeId.IndexOf(",") >= 0)
                 {
-                    string[] arrInchargeIds = employeeAssignment.InchargeId.Split(new[] { "##" }, StringSplitOptions.None);
+                    string[] arrInchargeIds = employeeAssignment.InchargeId.Split(new[] { "," }, StringSplitOptions.None);
 
                     for (int i = 0; i < arrInchargeIds.Length; i++)
                     {
@@ -582,9 +582,9 @@ namespace CostAllocationApp.DAL
             if (!string.IsNullOrEmpty(employeeAssignment.RoleId))
             {
                 string tempRoleIds = "";
-                if (employeeAssignment.RoleId.IndexOf("##") >= 0)
+                if (employeeAssignment.RoleId.IndexOf(",") >= 0)
                 {
-                    string[] arrRoleIdss = employeeAssignment.RoleId.Split(new[] { "##" }, StringSplitOptions.None);
+                    string[] arrRoleIdss = employeeAssignment.RoleId.Split(new[] { "," }, StringSplitOptions.None);
 
                     for (int i = 0; i < arrRoleIdss.Length; i++)
                     {
@@ -608,9 +608,9 @@ namespace CostAllocationApp.DAL
             if (!String.IsNullOrEmpty(employeeAssignment.ExplanationId))
             {
                 string tempExplanationIds = "";
-                if (employeeAssignment.ExplanationId.IndexOf("##") >= 0)
+                if (employeeAssignment.ExplanationId.IndexOf(",") >= 0)
                 {
-                    string[] arrtempExplanationIds = employeeAssignment.ExplanationId.Split(new[] { "##" }, StringSplitOptions.None);
+                    string[] arrtempExplanationIds = employeeAssignment.ExplanationId.Split(new[] { "," }, StringSplitOptions.None);
 
                     for (int i = 0; i < arrtempExplanationIds.Length; i++)
                     {
@@ -633,9 +633,9 @@ namespace CostAllocationApp.DAL
             if (!string.IsNullOrEmpty(employeeAssignment.CompanyId))
             {
                 string tempCompanyIds = "";
-                if (employeeAssignment.CompanyId.IndexOf("##") >= 0)
+                if (employeeAssignment.CompanyId.IndexOf(",") >= 0)
                 {
-                    string[] arrCompanyIds = employeeAssignment.CompanyId.Split(new[] { "##" }, StringSplitOptions.None);
+                    string[] arrCompanyIds = employeeAssignment.CompanyId.Split(new[] { "," }, StringSplitOptions.None);
 
                     for (int i = 0; i < arrCompanyIds.Length; i++)
                     {

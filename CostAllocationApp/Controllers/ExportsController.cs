@@ -44,8 +44,8 @@ namespace CostAllocationApp.Controllers
             List<ForecastAssignmentViewModel> forecastAssignmentViewModels = new List<ForecastAssignmentViewModel>();
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=" + sectionId + "&departmentId=&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -194,8 +194,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -515,8 +515,8 @@ namespace CostAllocationApp.Controllers
             // get data from API
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + department.Id + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
@@ -9296,8 +9296,8 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
-                string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                string uri = "http://198.38.92.119:8081/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
+                //string uri = "http://localhost:59198/api/utilities/SearchForecastEmployee?employeeName=&sectionId=&departmentId=" + departmentId + "&inchargeId=&roleId=&explanationId=&companyId=&status=&year=";
                 client.BaseAddress = new Uri(uri);
                 //HTTP GET
                 var responseTask = client.GetAsync("");
