@@ -1423,7 +1423,8 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            // salary type id 2 means regular
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, 2, 2022, item.Grade.Id).GradeLowPoints;
                             double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
@@ -1653,7 +1654,8 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            // salary type id 2 means regular
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, 2, 2022, item.Grade.Id).GradeLowPoints;
                             double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
@@ -2280,7 +2282,8 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            // salary type id 2 means regular
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, 2, 2022, item.Grade.Id).GradeLowPoints;
                             //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -2425,7 +2428,10 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
+                            if (item.Grade.Id==6)
+                            {
 
+                            }
                             double manpointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
                             sheet.Cells[rowCount, 11].Value = (manpointJun * beginningValue).ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
@@ -2509,7 +2515,8 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            // salary type id 2 means regular
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, 2, 2022, item.Grade.Id).GradeLowPoints;
 
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -2977,7 +2984,8 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            // salary type id 9 means commuting
+                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, 9, 2022, item.Grade.Id).GradeLowPoints;
                             //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -9275,6 +9283,7 @@ namespace CostAllocationApp.Controllers
 
             foreach (var item in salaryAssignmentDtos)
             {
+    
                 if (item.Grade.Id==gradeId)
                 {
                     foreach (var singleAssignment in item.ForecastAssignmentViewModels)
