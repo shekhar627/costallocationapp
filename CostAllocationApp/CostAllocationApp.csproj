@@ -694,6 +694,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\roles.js" />
     <Content Include="Scripts\salaries.js" />
+    <Content Include="Scripts\salaries_ver02.js" />
     <Content Include="Scripts\sections.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\task.js" />
