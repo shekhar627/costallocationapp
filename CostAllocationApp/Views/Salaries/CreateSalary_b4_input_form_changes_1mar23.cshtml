@@ -1,0 +1,315 @@
+﻿@model CostAllocationApp.ViewModels.SalaryViewModel
+@{
+    ViewBag.Title = "Grade Salary Type Registration";
+}
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/salaries.css" />
+}
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-1">
+                <select>
+                    <option>year</option>
+                    <option>2022</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <select>
+                    <option>salary type</option>
+                    <option>executive</option>
+                    <option>regular</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <select>
+                    <option>select department</option>
+                    <option>development</option>
+                    <option>planing</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <select>
+                    <option>select grades</option>
+                    <option>g10</option>
+                    <option>g9</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="text" value="" id="grade_low_amount" placeholder="initial amount" />
+            </div>
+            <div class="col-2">
+                <input type="text" value="" id="grade_low_amount" placeholder="end amount" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="modal-content col-5" id="salary_body">
+                <div class="modal-body">
+                    <form>
+                        <div id="main-div">
+                            <div class="row">
+                                <div class="col-4 module-label-txt">
+                                    <label for="salary_year">Year <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <select class="form-control" id="salary_year">
+                                            <option value="">select one</option>
+                                            <option value="2022">2022</option>
+                                        </select>
+                                        <div class="salary_year_err">
+                                            Select Year
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4 module-label-txt">
+                                    <label for="salary_salaryType">Salary Types <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <select class="form-control" id="salary_salaryType"></select>
+                                        <div class="salary_salaryType_err">
+                                            Select Salary Type
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4 module-label-txt">
+                                    <label for="salary_department">Departments <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <select class="form-control" id="salary_department"></select>
+                                        <div class="salary_department_name_err">
+                                            Select Department
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4 module-label-txt">
+                                    <label for="salary_gradeId">Grades <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <select class="form-control" id="salary_gradeId"></select>
+                                        <div class="salary_gradeId_name_err">
+                                            Select Grade
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4 module-label-txt">
+                                    <label for="salary_salaryType">Amount <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="salary_beginning" />
+                                        <div class="salary_beginning_name_err">
+                                            Enter Beginning Target
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="salary_revision" />
+                                        <div class="salary_revision_name_err">
+                                            Enter Downward Revision target
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <a href="javascript:void(0);" id="salary_confirm" class="btn btn-success" onclick="confirmToSave();">Confirm</a>
+                            <div class="custom_button_group_salary">
+                                <a href="javascript:void(0);" id="salary_cancel" onclick="clearData();">Cancel</a>
+                                <a href="javascript:void(0);" id="salary_registration" onclick="CreateGradeSalaryType();">Add</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6 table-responsive">
+                <table class="table table-bordered" id="temp_table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Salary Type</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group">
+                    <select class="form-control" id="salary_year_list">
+                        <option value="">select year</option>
+                        <option value="2022">2022</option>
+                    </select>
+                    <div class="salary_year_err">
+                        Select Year
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <a href="javascript:void(0);" class="" id="add_name_search_button">Show List</a>
+                </div>
+            </div>
+
+        </div>
+        <div id="salary_master_list" style="display: none;">
+            <h4 style="text-align:left;">List</h4>
+            <div class="row">            
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="" id="grade_table">
+                            <thead>
+                                <tr>
+                                    <th colspan="6">FY2022</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>期初目標 (Low)</th>
+                                    <th>下修目標 (High)</th>
+                                    <th>期初目標 (Low)</th>
+                                    <th>下修目標 (High)</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <th>グレード (Grade)</th>
+                                    <th colspan="2">企画 (Planing)</th>
+                                    <th colspan="2">開発 (Development)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salary_master_list_tbl">
+                                <!-- <tr>
+                                    <td rowspan="3">給与単価 (Salary Allowance Regular)</td>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">固定時間外単価 (Salary Allowance Fixed)</td>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">残業手当分単価 (Salary Allowance Overtime)</td>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">通勤費単価 (Commuting Expenses)</td>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr>
+                                <tr>
+                                    <td>G10</td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                    <td>1,250,000 </td>
+                                </tr> -->
+                                
+                            </tbody>
+                        </table>
+
+                        @* <label id="grade_delete_btn">
+                            <a id="grade_inactive_btn" href="javascript:void();" data-toggle="modal" data-target="#delete_grade" onClick="ongradeInactiveClick()">Delete</a>
+                        </label> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br><br>
+    <br><br>
+<input type="hidden" id="salary_warning_text" />
+
+@section Scripts{
+    <script src="/Scripts/common.js"></script>
+    <script src="/Scripts/salaries.js"></script>
+}

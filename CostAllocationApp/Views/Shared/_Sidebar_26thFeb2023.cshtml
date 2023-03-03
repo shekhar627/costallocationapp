@@ -64,11 +64,11 @@
                                 @foreach (var item in Model.Departments)
                                 {
                                     string forecastMenuName = "";
-                                    if (item.DepartmentName.ToLower() == "企画")
+                                    if(item.DepartmentName.ToLower() == "企画")
                                     {
                                         forecastMenuName = "企画配置 (Planning Allocation)";
                                     }
-                                    else if (item.DepartmentName.ToLower() == "開発")
+                                    else if(item.DepartmentName.ToLower() == "開発")
                                     {
                                         forecastMenuName = "開発配置 (Dev Allocation)";
                                     }
@@ -83,19 +83,55 @@
                                 }
                             </ul>
                         </li>
+                        
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <i class="la la-files-o"></i>
+                                @* <span title="データエクスポート (Data Export)">データエクスポート (Export)</span> *@
+                                <span title="データ作成(Data Create)">データ作成(Data Create)</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: none;">
 
-                        if (url.ToLower().Contains("dataexports"))
-                        {
-                            <li>
-                                <a href="/Exports/DataExports" class="active"><i class="la la-cube"></i> <span title="データ作成(Data Create)">データ作成(Data Create)</span></a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="/Exports/DataExports" class=""><i class="la la-cube"></i> <span title="データ作成(Data Create)">データ作成(Data Create)</span></a>
-                            </li>
-                        }
+                                @{
+                                    if (url.ToLower().Contains("dataexports"))
+                                    {
+                                        <li><a href="/Exports/DataExports" class="active" title="データ作成(Data Create)">データ作成(Data Create)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/DataExports" title="データ作成(Data Create)">データ作成(Data Create)</a></li>
+                                    }
+@*                                     
+                                    if (url.ToLower().Contains("dataexportbydepartment"))
+                                    {
+                                        <li><a href="/Exports/DataExportByDepartment" class="active" title="部門別エクスポート (Export by Department)">部門別エクスポート (Export by Department)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/DataExportByDepartment" title="部門別エクスポート (Export by Department)">部門別エクスポート (Export by Department)</a></li>
+                                    }
+                                    if (url.ToLower().Contains("dataexportbyallocation"))
+                                    {
+                                        <li><a href="/Exports/DataExportByAllocation" class="active" title="アロケーション別エクスポート (Export by Allocation)">アロケーション別エクスポート (Export by Allocation)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/DataExportByAllocation" title="アロケーション別エクスポート (Export by Allocation)">アロケーション別エクスポート (Export by Allocation)</a></li>
+                                    }
+                                    if (url.ToLower().Contains("exportalldata"))
+                                    {
+                                        <li><a href="/Exports/ExportAllData" class="active" title="全てのデータエクスポート (Export All Data)"> 全てのデータエクスポート (Export All Data)</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Exports/ExportAllData" title="全てのデータエクスポート (Export All Data)">全てのデータエクスポート (Export All Data)</a></li>
+                                    } *@
+
+                                }
+                            </ul>
+                        </li>
+                        
                         <li class="submenu">
                             <a href="javascript:void(0);">
                                 <i class="la la-files-o"></i>

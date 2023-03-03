@@ -48,14 +48,11 @@
     <Reference Include="EPPlus, Version=6.1.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.6.1.2\lib\net35\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus.Interfaces">
-      <HintPath>..\..\bin\EPPlus.Interfaces.dll</HintPath>
-    </Reference>
     <Reference Include="EPPlus.System.Drawing">
-      <HintPath>..\..\bin\EPPlus.System.Drawing.dll</HintPath>
+      <HintPath>..\..\EPPlus.System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="ExcelDataReader">
-      <HintPath>..\..\bin\ExcelDataReader.dll</HintPath>
+      <HintPath>..\..\ExcelDataReader.dll</HintPath>
     </Reference>
     <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
@@ -253,6 +250,7 @@
     <Compile Include="ViewModels\EmployeeAssignmentViewModel.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\ExplanationViewModel.cs" />
+    <Compile Include="ViewModels\ExportDepartmentAllocationViewModel.cs" />
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModal.cs" />
     <Compile Include="ViewModels\ForecastAssignmentViewModel.cs" />
@@ -271,6 +269,7 @@
     <Content Include="Content\common-master.css" />
     <Content Include="Content\common.css" />
     <Content Include="Content\companies.css" />
+    <Content Include="Content\create_data_export.css" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\data_export_by_allocation.css" />
     <Content Include="Content\data_export_by_department.css" />
@@ -280,6 +279,8 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\forecast.css" />
     <Content Include="Content\forecast_ver02.css" />
+    <Content Include="Content\forecast_ver03.css" />
+    <Content Include="Content\forecast_ver04.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\grade.css" />
     <Content Include="Content\incharge.css" />
@@ -633,6 +634,7 @@
     <Content Include="img\video-call.jpg" />
     <Content Include="Scripts\addname.js" />
     <Content Include="Scripts\addname_ver02.js" />
+    <Content Include="Scripts\addname_ver03.js" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -655,6 +657,7 @@
     <Content Include="Scripts\forecast.js" />
     <Content Include="Scripts\forecast_ver02.js" />
     <Content Include="Scripts\forecast_ver03.js" />
+    <Content Include="Scripts\forecast_ver04.js" />
     <Content Include="Scripts\form-validation.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\glimpse.js" />
@@ -691,11 +694,13 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\roles.js" />
     <Content Include="Scripts\salaries.js" />
+    <Content Include="Scripts\salaries_ver02.js" />
     <Content Include="Scripts\sections.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\task.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\view_data_export.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -735,6 +740,7 @@
     <Content Include="Views\Grades\CreateGrade.cshtml" />
     <Content Include="Views\CommonMasters\CreateCommonMaster.cshtml" />
     <Content Include="Views\Salaries\SalaryMaster.cshtml" />
+    <Content Include="Views\Exports\DataExports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

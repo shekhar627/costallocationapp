@@ -473,4 +473,24 @@ select[multiple].input-group-lg>.form-control,select[multiple].input-group-lg>.i
 select[multiple].input-group-sm>.form-control,select[multiple].input-group-sm>.input-group-addon,select[multiple].input-group-sm>.input-group-btn>.btn,textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon,textarea.input-group-sm>.input-group-btn>.btn{
     height:auto !important;
 }
+#name_search::placeholder {
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+}
+.multiselect-selected-text{
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+}
+.multiselect-container.dropdown-menu{
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+}
+.form-control.multiselect-search::placeholder {
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+}
 /*----------------------------------------------Name List: END----------------------------------------------*/

@@ -532,6 +532,16 @@ function LoaderHide() {
 }
 
 function LoadForecastData() {
+    var employeeName = $('#name_search').val();
+    var sectionId = $('#section_multi_search').val();        
+    var companyId = $('#company_multi_search').val();
+    // var departmentId = $('#dept_multi_search').val();
+    var departmentId = $('#hid_departmentId').val();
+    var explanationId = $('#allocation_multi_search').val();
+    var year = $('#period_multi_search').val();
+    var inchargeId = "";
+    var roleId = ""
+
     var allocations = [];
 
     $.getJSON('/api/Explanations/')
@@ -550,7 +560,8 @@ function LoadForecastData() {
             type: 'GET',
             async: true,
             dataType: 'json',
-            data: globalSearchObject,
+            // data: globalSearchObject,
+            data: "employeeName="+employeeName+"&sectionId="+sectionId+"&departmentId="+departmentId+"&inchargeId="+inchargeId+"&roleId="+roleId+"&explanationId="+explanationId+"&companyId="+companyId+"&status="+year+"&year="+year,
             success: function (data) {
                 LoaderHide();
                 $('#forecast_table>thead').empty();
@@ -1043,7 +1054,7 @@ function ForecastDataSave() {
 
     $.each(rows, function (index, data) {
         var rowId = $(this).closest('tr').find('td').eq(0).children('input').val();
-        var year = $('#period_search').find(":selected").val();
+        var year = $('#period_multi_search').val();
         var assignmentId = $('#row_id_' + rowId).val();
 
         var oct_point = $('#oct_' + rowId).val().replace(/,/g, '');
@@ -1124,6 +1135,64 @@ $(document).on("click", function (event) {
     }
 });
 $(document).ready(function () {
+    var count = 1;
+    $('#forecast_search tbody tr:eq(0) th').each(function () {
+        if (count == 1) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" class="" Id="name_search"/>');
+        }
+        count = count + 1;
+    });
+    // //section multi search
+    $('#section_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select 区分(section)',
+    });
+    //company multi search
+    $('#company_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select 会社(company)',
+    });
+    //department multi search
+    // $('#dept_multi_search').multiselect({
+    //     includeSelectAllOption: true,
+    //     enableFiltering: true,
+    //     nonSelectedText: 'select 企画/開発(dept.)',
+    // });
+    //allocation multi search
+    $('#allocation_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select 配置作成(allocation)',
+    });
+    //allocation multi search
+    $('#period_multi_search').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        nonSelectedText: 'select 期間(period)',
+    });
+    //incharge multi search
+    //$('#incharge_multi_search').multiselect({
+    //    includeSelectAllOption: true,
+    //    enableFiltering: true,
+    //    nonSelectedText: 'select incharge',
+    //});
+    ////role multi search
+    //$('#role_multi_search').multiselect({
+    //    includeSelectAllOption: true,
+    //    enableFiltering: true,
+    //    nonSelectedText: 'select role',
+    //});
+    ////explanation multi search
+    //$('#explanation_multi_search').multiselect({
+    //    includeSelectAllOption: true,
+    //    enableFiltering: true,
+    //    nonSelectedText: 'select explanation',
+    //});
+
+
     $('#forecast_name').click(function () {
         NameListSort("name_asc", "name_desc");
     });
@@ -1150,8 +1219,9 @@ $(document).ready(function () {
     });
     $('#forecast_unitprice').click(function () {
         NameListSort("unit_asc", "unit_desc");
+        var temp = "";
     });
-
+    
     // multiple search by section
     $(document).on('click', '#sectionChks input[type="checkbox"]', function () {
         let isSectionAllChk = $("#chk_sec_all").is(':checked');
@@ -1758,7 +1828,8 @@ $(document).ready(function () {
     //     }
     // });
 
-    ForecastSearchDropdownInLoad();
+    //ForecastSearchDropdownInLoad();
+    GetListDropdownValue();
     // $('.container').blur(function (e) {
     //     $('.commonselect').fadeOut(100);
     // });
@@ -1828,130 +1899,30 @@ $(document).ready(function () {
 
 
     $('#forecast_search_button').on('click', function () {
-        var sectionId = $('#section_search').find(":selected").val();
-        //var sectionId = $('#pre_selected_section_id').val()
-        var inchargeId = $('#incharge_search').find(":selected").val();
-        var departmentId = $('#pre_selected_department_id').val();
-        var roleId = $('#role_search').find(":selected").val();
-        var companyId = $('#company_search').find(":selected").val();
-        var explanationId = $('#explanation_search').find(":selected").val();
-        var employeeName = $('#identity_search').val();
-
-        var year = $('#period_search').find(":selected").val();
-
+        var employeeName = $('#name_search').val();
+        var sectionId = $('#section_multi_search').val();        
+        var companyId = $('#company_multi_search').val();
+        // var departmentId = $('#dept_multi_search').val();
+        var departmentId = $('#hid_departmentId').val();
+        var explanationId = $('#allocation_multi_search').val();
+        var year = $('#period_multi_search').val();
+        
         if (year == '' || year == undefined) {
-
             alert('select year');
             return false;
         }
         LoaderShow();
-
         $('#cancel_forecast').css('display', 'inline-block');
         $('#save_forecast').css('display', 'inline-block');
 
-        //if (departmentId == undefined) {
-        //    departmentId = '';
-        //}
-        let isSectionAllChk = $("#chk_sec_all").is(':checked');
-        var isDepartmentAllCheck = $("#chk_dept_all").is(':checked');
-        var isInChargeAllCheck = $("#chk_incharge_all").is(':checked');
-        var isRoleAllCheck = $("#chk_role_all").is(':checked');
-        var isExplanationAllCheck = $("#chk_explanation_all").is(':checked');
-        var isCompanytAllCheck = $("#chk_comopany_all").is(':checked');
-
-        //var employeeName = "";
-        var sectionCheck = [];
-        var departmentCheck = [];
-        var inchargeCheck = [];
-        var roleCheck = [];
-        var explanationCheck = [];
-        var companyCheck = [];
-        var allocations = [];
-
-        var sectionCheckedBoxes = $('#sectionChks input[type="checkbox"]:checked');
-        //var departmentCheckedBoxes = $('#departmentChks input[type="checkbox"]:checked');
-        var inchargeCheckedBoxes = $('#inchargeChks input[type="checkbox"]:checked');
-        var roleCheckedBoxes = $('#RoleChks input[type="checkbox"]:checked');
-        var explanationCheckedBoxes = $('#ExplanationChks input[type="checkbox"]:checked');
-        var companyCheckedBoxes = $('#CompanyChks input[type="checkbox"]:checked');
-
-        sectionId = "";
-        if (!isSectionAllChk) {
-            $.each(sectionCheckedBoxes, function (index, item) {
-                //sectionCheck.push(item.value);
-                if (sectionId == "") {
-                    sectionId = item.value;
-                } else {
-                    sectionId = sectionId + "##" + item.value;
-                }
-            });
-        }
-
-        //departmentId = "";
-        //if (!isDepartmentAllCheck) {
-        //    $.each(departmentCheckedBoxes, function (index, item) {
-        //        //departmentCheck.push(item.value);
-        //        if (departmentId == "") {
-        //            departmentId = item.value;
-        //        } else {
-        //            departmentId = departmentId + "##" + item.value;
-        //        }
-        //    });
-        //}
-
-        inchargeId = "";
-        if (!isInChargeAllCheck) {
-            $.each(inchargeCheckedBoxes, function (index, item) {
-                //inchargeCheck.push(item.value);
-                if (inchargeId == "") {
-                    inchargeId = item.value;
-                } else {
-                    inchargeId = inchargeId + "##" + item.value;
-                }
-            });
-        }
-        roleId = "";
-        if (!isRoleAllCheck) {
-            $.each(roleCheckedBoxes, function (index, item) {
-                //roleCheck.push(item.value);
-                if (roleId == "") {
-                    roleId = item.value;
-                } else {
-                    roleId = roleId + "##" + item.value;
-                }
-            });
-        }
-        explanationId = "";
-        if (!isExplanationAllCheck) {
-            $.each(explanationCheckedBoxes, function (index, item) {
-                //explanationCheck.push(item.value);
-                if (explanationId == "") {
-                    explanationId = item.value;
-                } else {
-                    explanationId = explanationId + "##" + item.value;
-                }
-            });
-        }
-        companyId = "";
-        if (!isCompanytAllCheck) {
-            $.each(companyCheckedBoxes, function (index, item) {
-                //companyCheck.push(item.value);
-                if (companyId == "") {
-                    companyId = item.value;
-                } else {
-                    companyId = companyId + "##" + item.value;
-                }
-            });
-        }
-
-
+        //alert("employeeName: "+employeeName);
+        //return false;
+        var inchargeId = "";
+        var roleId = ""
         $.getJSON('/api/Explanations/')
             .done(function (data) {
                 allocations = data;
             });
-
-
-
         var data_info = {
             employeeName: employeeName,
             sectionId: sectionId,
@@ -1966,19 +1937,13 @@ $(document).ready(function () {
         console.log(data_info);
         globalSearchObject = data_info;
 
-
-
-
         $.ajax({
-            //url: `/api/utilities/SearchForecastEmployee`,
-            //type: 'GET',
-            //dataType: 'json',
-            //data: data_info,
             url: `/api/utilities/SearchForecastEmployee`,
             contentType: 'application/json',
             type: 'GET',
             dataType: 'json',
-            data: data_info,
+            // data: data_info,
+            data: "employeeName="+employeeName+"&sectionId="+sectionId+"&departmentId="+departmentId+"&inchargeId="+inchargeId+"&roleId="+roleId+"&explanationId="+explanationId+"&companyId="+companyId+"&status="+year+"&year="+year,
             success: function (data) {
                 LoaderHide();
 
@@ -1986,40 +1951,40 @@ $(document).ready(function () {
                 $('#forecast_table>tbody').empty();
                 $('#forecast_table>thead').append(`
 
-                                                <tr>
-                                                    <th id="forecast_name">Name </th>
-                                                    <th id="forecast_section">Section </th>
-                                                    <th id="forecast_department">Department </th>
-                                                    <th id="forecast_explanation">Allocation</th>
-                                                    <th id="forecast_company">Company Name </i></th>
-                                                    <th id="forecast_grade">Grade </th>
-                                                    <th id="forecast_unitprice"><span>Unit Price</span> </th>
-                                                    <th>10月</th>
-                                                    <th>11月</th>
-                                                    <th>12月</th>
-                                                    <th>1月</th>
-                                                    <th>2月</th>
-                                                    <th>3月</th>
-                                                    <th>4月</th>
-                                                    <th>5月</th>
-                                                    <th>6月</th>
-                                                    <th>7月</th>
-                                                    <th>8月</th>
-                                                    <th>9月</th>
-                                                    <th>Oct</th>
-                                                    <th>Nov</th>
-                                                    <th>Dec</th>
-                                                    <th>Jan</th>
-                                                    <th>Feb</th>
-                                                    <th>Mar</th>
-                                                    <th>Apr</th>
-                                                    <th>May</th>
-                                                    <th>Jun</th>
-                                                    <th>Jul</th>
-                                                    <th>Aug</th>
-                                                    <th>Sep</th>
-                                                </tr>
-                                            `);
+                    <tr>
+                        <th id="forecast_name">Name </th>
+                        <th id="forecast_section">Section </th>
+                        <th id="forecast_department">Department </th>
+                        <th id="forecast_explanation">Allocation</th>
+                        <th id="forecast_company">Company Name </i></th>
+                        <th id="forecast_grade">Grade </th>
+                        <th id="forecast_unitprice"><span>Unit Price</span> </th>
+                        <th>10月</th>
+                        <th>11月</th>
+                        <th>12月</th>
+                        <th>1月</th>
+                        <th>2月</th>
+                        <th>3月</th>
+                        <th>4月</th>
+                        <th>5月</th>
+                        <th>6月</th>
+                        <th>7月</th>
+                        <th>8月</th>
+                        <th>9月</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dec</th>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                        <th>May</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Aug</th>
+                        <th>Sep</th>
+                    </tr>
+                `);
                 //Forecast_DatatableLoad(data);
                 var _id = 0;
                 var _companyName = '';
@@ -2464,4 +2429,47 @@ function DeleteRecords() {
             //    $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
             //});
         });
+}
+function GetListDropdownValue() {
+    $.getJSON('/api/sections/')
+        .done(function (data) {
+            $('#section_multi_search').empty();
+            $.each(data, function (key, item) {
+                $('#section_multi_search').append(`<option class='section_checkbox' id="section_checkbox_${item.Id}" value='${item.Id}' >${item.SectionName}</option>`)
+            });
+            $('#section_multi_search').multiselect('rebuild');
+        });
+    // var tempDepartmentId = $("#hid_departmentId").val();
+    // $.getJSON('/api/Departments/')
+        
+    //     .done(function (data) {
+    //         $('#dept_multi_search').empty();
+    //         $.each(data, function (key, item) {
+    //             if(item.Id == tempDepartmentId){
+    //                 $('#dept_multi_search').attr("disabled", true); 
+    //                 $('#dept_multi_search').append(`<option selected readonly class='department_checkbox' id="department_checkbox_${item.Id}" value='${item.Id}'>${item.DepartmentName}</option>`)   
+    //             }                
+    //         });
+    //         $('#dept_multi_search').multiselect('rebuild');
+    //     });    
+    $.getJSON('/api/Explanations/')
+        .done(function (data) {
+            $('#allocation_multi_search').empty();
+            $.each(data, function (key, item) {
+                $('#allocation_multi_search').append(`<option class='explanation_checkbox' id="explanation_checkbox_${item.Id}" value='${item.Id}'>${item.ExplanationName}</option>`)
+            });
+            $('#allocation_multi_search').multiselect('rebuild');
+        });
+    $.getJSON('/api/Companies/')
+        .done(function (data) {
+            $('#company_multi_search').empty();
+            $.each(data, function (key, item) {
+                $('#company_multi_search').append(`<option class='comopany_checkbox' id="comopany_checkbox_${item.Id}" value='${item.Id}'>${item.CompanyName}</option>`)
+            });
+            $('#company_multi_search').multiselect('rebuild');
+        });
+    
+        $('#period_multi_search').empty();
+        $('#period_multi_search').append(`<option class='period_checkbox' id="period_checkbox" value='2022'>2022</option>`)
+        $('#period_multi_search').multiselect('rebuild');
 }

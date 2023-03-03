@@ -1,0 +1,216 @@
+/*---------------------------create data export view--------------------------------*/
+.export_data_search_btn {
+    background-color: #3c4b5d;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 2px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 23px;
+    font-size:13px;
+}
+.salary_year_err, .salary_department_name_err, .salary_salaryType_err, .salary_gradeId_name_err, .salary_beginning_name_err, .salary_revision_name_err {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 100%;
+    color: #dc3545;
+}
+#department_wise_export{
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+    height: 85px;
+    padding-top: 19px;
+}
+#department_wise_export_header{
+    color: #333;
+    font-size: 18px;
+    font-weight: normal;
+    margin: -14px;
+    line-height: 2;
+}
+#allocation_wise_export {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+    height: 67px;
+    padding-top: 13px;
+}
+
+#allocation_wise_export_header{
+    color: #333;
+    font-size: 13px;
+    font-weight: normal;
+    margin: -14px;
+    line-height: 2;
+}
+#export_all_data{
+    /* margin-left: -11px; */
+}
+#btn_export_all_data {
+    background-color: #009ef7;
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: -1;
+    height: 33px;
+    white-space: nowrap !important;
+    padding-top: 4px;
+}
+#btn_export_departmentwisedata{
+    background-color: darkcyan;
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    line-height: -1;
+    height: 33px;
+    white-space: nowrap !important;
+}
+
+/*---------------department wise view: list----------------------*/
+/****** show list *******/
+#department_wise_view_list td, th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+
+    /* #department_wise_view_list td, th:nth-of-type(9) {
+        text-align: center;
+        width: 20px;
+    } */
+
+    
+#commonmaster_list_tbody {
+    text-align: center;
+}
+
+#grade_name_lbl {
+    padding-top: 10px;
+}
+
+#grade_body {
+    width: 59% !important;
+}
+
+#department_wise_view_list {
+    width: 135%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+}
+/*----------allocation wise view------------*/
+/* 
+#allocation_wise_view_list td, th:nth-of-type(9) {
+    text-align: center;
+    width: 20px;
+}
+#allocation_wise_view_list td:nth-of-type(2) {
+    border: 1px solid;
+    padding: 2px !important;
+    text-align: left;
+    text-indent: 1em;
+} */
+#allocation_wise_view_list td, th {
+    border: 1px solid;
+    padding: 0px !important;
+    text-align: center;
+}
+/* #allocation_wise_view_list {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid;
+} */
+#allocation_wise_view_list td:nth-of-type(1) {
+    /* border: 1px solid;
+    padding: 2px !important;    
+    text-indent: 1em; */
+    text-align: left;
+}
+
+
+/* #allocation_wise_view_list thead tr:nth-of-type(1) {
+    background-color: #3c4b5d;
+    color: white;
+    text-align: center;
+}
+#allocation_wise_view_list thead th:nth-of-type(2) {
+    width: 200px
+} */
+/* #allocation_wise_view_list thead th:nth-of-type(3) {
+    width: 100px
+} */
+/* #allocation_wise_view_list thead th:nth-of-type(1) {
+    width: 45px;
+} */
+#department_allocation_wise {
+    border-color: #e3e3e3 !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    height: 33px !important;
+}
+#explanation {
+    border-color: #e3e3e3 !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    height: 33px !important;
+}
+#view_data_department_wise {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    /* line-height: 0; */
+    white-space: nowrap !important;
+}
+#department_wise_thead {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    /* line-height: 0; */
+    white-space: nowrap !important;
+    background-color: #3c4b5d;
+    color: white;
+}
+#search_for_export{
+    margin: 2px;
+}
+.department_wise_list_unit_price {
+    text-align: right !important;
+    /* border: 1px solid;
+    padding: 2px !important;        
+    text-indent: 1em; */
+}
+.department_man_month{
+    width: 29px !important;
+}
+.department_manmonth_unit{
+    width: 52px !important;
+}
+
+#allocation_wise_tbl_header {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    /* line-height: 0; */
+    white-space: nowrap !important;
+    background-color: #3c4b5d;
+    color: white;
+}
+.man_month_cost_allocation{
+    width: 52px !important;
+}
+#view_data_allocation_wise {
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    /* line-height: 0; */
+    white-space: nowrap !important;
+}
+#view_data_allocation_wise,td {
+    border: 1px solid #ccc !important;    
+    border-spacing: 4px;
+}
+

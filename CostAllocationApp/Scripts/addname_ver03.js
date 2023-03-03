@@ -718,31 +718,32 @@ function AddSalary() {
         });
     }
 }
-function LoadGradeValue(sel) {
-    var _rowId = $("#add_name_row_no_hidden").val();
-    var _companyName = $('#company_row_' + _rowId).find(":selected").text();
-    var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
-    var _unitPrice = $("#add_name_unit_price_hidden").val();
+function LoadGradeValue(rowId,sel) {
+    CompanySectionOnChange_AddName(rowId,sel);
+    // var _rowId = $("#add_name_row_no_hidden").val();
+    // var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    // var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
+    // var _unitPrice = $("#add_name_unit_price_hidden").val();
 
-    $.ajax({
-        url: `/api/utilities/CompareGrade/${_unitPrice}`,
-        type: 'GET',
-        dataType: 'json',
-        //data: {
-        //    unitPrice: _unitPrice
-        //},
-        success: function (data) {
-            $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw")>0) {
-                $('#grade_row_' + _rowId).val(data.SalaryGrade);
-            } else {
-                $('#grade_row_' + _rowId).val('');
-            }
-        },
-        error: function () {
-            $('#grade_row_' + _rowId).val('');
-        }
-    });
+    // $.ajax({
+    //     url: `/api/utilities/CompareGrade/${_unitPrice}`,
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     //data: {
+    //     //    unitPrice: _unitPrice
+    //     //},
+    //     success: function (data) {
+    //         $('#grade_edit_hidden').val(data.Id);
+    //         if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw")>0) {
+    //             $('#grade_row_' + _rowId).val(data.SalaryGrade);
+    //         } else {
+    //             $('#grade_row_' + _rowId).val('');
+    //         }
+    //     },
+    //     error: function () {
+    //         $('#grade_row_' + _rowId).val('');
+    //     }
+    // });
 }
 
 function NameListSort(sort_asc, sort_desc) {
@@ -984,703 +985,745 @@ function LoaderHide() {
 }
 
 let previousAssignmentRow = 0;
-        let unitPrices = [];
+let unitPrices = [];
 
-        function loadSingleAssignmentData(id) {
+function loadSingleAssignmentData(id) {    
+    var ajax_companyName = "";
+    var ajax_sectionName = "";   
 
-            $.ajax({
-                url: '/api/Utilities/AssignmentById/' + id,
-                type: 'GET',
-                dataType: 'json',
-                success: function (assignmentData) {
-                    $('#edit_model_span').html(assignmentData.EmployeeName);
-                    $('#memo_edit').val(assignmentData.Remarks);
-                    $('#row_id_hidden_edit').val(id);
-                    $.getJSON('/api/sections/')
-                        .done(function (data) {
-                            $('#section_edit').empty();
-                            $('#section_edit').append(`<option value=''>Select Section</option>`);
-                            $.each(data, function (key, item) {
-                                if (item.Id == assignmentData.SectionId) {
-                                    $('#section_edit').append(`<option value='${item.Id}' selected>${item.SectionName}</option>`);
-                                }
-                                else {
-                                    $('#section_edit').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
-                                }
-
-                            });
-                        });
-
-                    $.getJSON(`/api/departments`)
-                        .done(function (data) {
-                            $('#department_edit').empty();
-                            $('#department_edit').append(`<option value=''>Select Department</option>`);
-                            $.each(data, function (key, item) {
-                                if (item.Id == assignmentData.DepartmentId) {
-                                    $('#department_edit').append(`<option value='${item.Id}' selected>${item.DepartmentName}</option>`);
-                                }
-                                else {
-                                    $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                                }
-
-                            });
-                        });
-
-                    $.getJSON('/api/Explanations/')
-                        .done(function (data) {
-                            $('#explanation_edit').empty();
-                            $('#explanation_edit').append(`<option value=''>Select Allocation</option>`);
-                            $.each(data, function (key, item) {
-                                if (item.Id == assignmentData.ExplanationId) {
-                                    $('#explanation_edit').append(`<option value='${item.Id}' selected>${item.ExplanationName}</option>`);
-                                }
-                                else {
-                                    $('#explanation_edit').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
-                                }
-
-                            });
-                        });
-
-                    $.getJSON('/api/Companies/')
-                        .done(function (data) {
-                            $('#company_edit').empty();
-                            $('#company_edit').append(`<option value=''>Select Company</option>`);
-                            $.each(data, function (key, item) {
-                                if (item.Id == assignmentData.CompanyId) {
-                                    $('#company_edit').append(`<option value='${item.Id}' selected>${item.CompanyName}</option>`);
-                                }
-                                else {
-                                    $('#company_edit').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
-                                }
-
-                            });
-                        });
-                    $('#unitprice_edit').val(assignmentData.UnitPrice);
-                    if (assignmentData.CompanyName.toLowerCase() == "mw") {
-                        $('#grade_edit').val(assignmentData.GradePoint);
-                    } else {
-                        $('#grade_edit').val("");
-                    }
-                    $('#grade_edit_hidden').val(assignmentData.GradeId);
-
-                },
-                error: function () {
-                }
-            });
-
-
-
-        }
-
-
-        function loadSingleAssignmentDataForExistingEmployee(employeeName) {
-            $('#add_name_table_2 thead .sub_thead').remove();
-            $('#add_name_table_2 tbody').empty();
-            $('#add_name_add').css('display', 'inline-block');
-            $.ajax({
-                url: `/api/Utilities/GetEmployeesByName/${employeeName}`,
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (assignmentData) {
-                    $('#fixed_hidden_name').val(assignmentData[0].EmployeeName);
-
-                    var count = 1;
-                    var firstRowUnitPrice = '';
-
-                    $.each(assignmentData, function (index, item) {
-                        unitPrices.push(item.UnitPrice);
-                        previousAssignmentRow = item.SubCode;
-                        if (count == 1) {
-                            firstRowUnitPrice = item.UnitPrice;
-                        }
-
-                        tr += '<tr class="sub_thead">';
-                        tr += `<td>${item.SubCode}</td>`;
-                        var colorMark = '';
-                        if (firstRowUnitPrice.toString() == item.UnitPrice.toString()) {
-                            tr += `<td><input type='text' class=" col-12" style='width: 141px;' value='${item.EmployeeName}' readonly/></td>`;
-                            tr += `<td><input type='text' class=" col-12" style='width: 47px;' value='${item.SubCode}' readonly /></td>`;
+    $.ajax({
+        url: '/api/Utilities/AssignmentById/' + id,
+        type: 'GET',
+        dataType: 'json',
+        success: function (assignmentData) {
+            $('#edit_model_span').html(assignmentData.EmployeeName);
+            $('#name_edit').val(assignmentData.EmployeeName);
+            $('#memo_edit').val(assignmentData.Remarks);
+            $('#row_id_hidden_edit').val(assignmentData.Id);
+            $.getJSON('/api/sections/')
+                .done(function (data) { 
+                    $('#section_edit').empty();   
+                    $('#section_edit').append(`<option value=''>Select Section</option>`);
+                    $.each(data, function (key, item) {
+                        if (item.Id == assignmentData.SectionId) {
+                            $('#section_edit').append(`<option value='${item.Id}' selected>${item.SectionName}</option>`);
                         } else {
-                            tr += `<td><input type='text' class=" col-12" style='width: 141px;color:red;' value='${item.EmployeeName}' readonly/></td>`;
-                            tr += `<td><input type='text' class=" col-12" style='width: 47px;color:red;' value='${item.SubCode}' readonly /></td>`;
+                            $('#section_edit').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
                         }
 
-
-                        tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.Remarks}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" style='width: 87px;' value='${item.SectionName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.DepartmentName}' readonly /></td>`;                        
-                        tr += `<td><input type='text' class=" col-12" style='width: 190px;' value='${item.ExplanationName}' readonly /></td>`;
-                        tr += `<td><input type='text' class=" col-12" style='width:81px;'   value='${item.CompanyName}' readonly /></td>`;
-                        if (item.CompanyName.toLowerCase() == "mw") {
-                            tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly style='width: 55px;' /></td>`;
-                        }
-                        else {
-                            tr += `<td><input type='text' class=" col-12" value='' readonly style='width: 55px;' /></td>`;
-                        }
-                        tr += `<td><input type='text' class="col-12" id="add_name_year_${count}" style='width: 72px;' value='${2022}' readonly /></td>`;
-                        tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
-                        if (count == 1) {
-                            $("#unit_price_first_project_hid").val(item.UnitPrice);
-                            tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
-                        }
-
-                        tr += '</tr>';
-                        count++;
-                        $('#add_name_table_2 thead').append(tr);
-                        var tr = "";
-                    });
-
-                },
-                error: function () {
-
-                }
-            });
-        }
-
-
-        function addNew() {
-            //
-            previousAssignmentRow++;
-            var text = `
-                        <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
-                            <td>${previousAssignmentRow}</td>
-                            <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" style='width: 141px;' value="${$('#fixed_hidden_name').val()}" readonly /></td>
-                            <td><input class="" value="${previousAssignmentRow}"  style='width: 47px;' id='sub_code_row_${previousAssignmentRow}' readonly /></td>
-                            <td><input class=" col-12" style='width: 89px;' id="memo_row_${previousAssignmentRow}" /></td>`;
-
-            // for add new
-            $.ajax({
-                url: '/api/Sections/',
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    text += '<td>';
-                    text += `
-                                           <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onchange="LoadGradeValue(this);">
-                                                <option value=''>Select Section</option>
-                                        `;
-                    $.each(data, function (key, item) {
-                        text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
-                    });
-                    text += '</select></td>';
-                },
-                error: function () {
-
-                }
-            });
-
-            $.ajax({
-                url: '/api/departments/',
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    text += '<td>';
-                    text += `
-                                       <select id="department_row_${previousAssignmentRow}" class=" col-12">
-                                            <option value=''>Select Department</option>
-                                    `;
-                    $.each(data, function (key, item) {
-                        text += `<option value = '${item.Id}'> ${item.DepartmentName}</option>`;
-                    });
-                    text += '</select></td>';
-                },
-                error: function () {
-
-                }
-            });            
-            $.ajax({
-                url: '/api/Explanations/',
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    text += '<td>';
-                    text += `
-                                           <select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12">
-                                                <option value=''>Select Allocation</option>
-                                        `;
-                    $.each(data, function (key, item) {
-                        text += `<option value = '${item.Id}'> ${item.ExplanationName}</option>`;
-                    });
-                    text += '</select></td>';
-                },
-                error: function () {
-
-                }
-            });
-
-            $.ajax({
-                url: '/api/Companies/',
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    text += '<td>';
-                    text += `
-                                           <select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(this);">
-                                                <option value=''>Select Company</option>
-                                        `;
-                    $.each(data, function (key, item) {
-                        text += `<option value = '${item.Id}'> ${item.CompanyName}</option>`;
-                    });
-                    text += '</select></td>';
-                },
-                error: function () {
-
-                }
-            });
-            $.ajax({
-                url: '/api/Utilities/GetAllSalaries/',
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    console.log("gradelist: "+data);
-                    text += '<td>';
-                    text += `<select id="grade_row_${previousAssignmentRow}" style='width: 113px;' class=" col-12"><option value=''>Select Grade</option>`;
-                    $.each(data, function (key, item) {
-                        text += `<option value = '${item.GradeId}'> ${item.GradeName}</option>`;
-                    });
-                    text += '</select></td>';
-                },
-                error: function () {
-        
-                }
-            });
-            text += `<td><select id='year_row_${previousAssignmentRow}' class='col-12'><option value='-1'>Select Year</option><option value='2022'>2022</option></select>`;
-            //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
-            //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
-            text += `<td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
-                    <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-                    </tr>`;            
-            // text += `
-            //                  <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>
-            //                  <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
-            //                  <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-            //             </tr>
-
-            //             `;
-
-            $(`#remove_row_${previousAssignmentRow - 1}`).css('display', 'none');
-
-            $('#add_name_table_2 tbody').append(text);
-
-        }
-
-        $('.add_company').on('change', function () {
-            var _companyName = $(this).val();
-            var _unitPrice = $("#unitprice_edit").val();            
-        });
-
-        function removeTr(rowId) {
-            var rowElement = $('#row_' + rowId);
-            rowElement.remove();
-            previousAssignmentRow--;
-            $(`#remove_row_${previousAssignmentRow}`).css('display', 'block');
-        }
-
-        function unitPriceChange(rowId, element) {
-            let _unitPrice = $(element).val();
-            $("#add_name_unit_price_hidden").val(_unitPrice);
-            $("#add_name_row_no_hidden").val(rowId);
-            let _unitPrideFirstProject = $("#unit_price_first_project_hid").val();
-            let _unitPrideFirstProjectWithComma = $("#add_name_unit_price_1").val();
-
-            var _rowId = $("#add_name_row_no_hidden").val();
-            var _companyName = $('#company_row_' + _rowId).find(":selected").text();
-            var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
-            console.log("_sectionName: "+_sectionName);
-
-            if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
-                $('#identity_row_' + rowId).css('color', 'red');
-                $('#sub_code_row_' + rowId).css('color', 'red');
-            } else {
-                $('#identity_row_' + rowId).css('color', '');
-                $('#sub_code_row_' + rowId).css('color', '');
-            }
-
-            $.ajax({
-                url: `/api/utilities/CompareGrade/${_unitPrice}`,
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    $('#grade_edit_hidden').val(data.Id);
-                    
-                    if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw")> 0) {
-                        $('#grade_row_' + rowId).attr('data-id', data.Id);
-                        $('#grade_row_new_' + rowId).val(data.Id);
-                        $('#grade_row_' + _rowId).val(data.SalaryGrade);
-                    } else {
-                        $('#grade_row_' + rowId).attr('data-id', data.Id);
-                        $('#grade_row_new_' + rowId).val(data.Id);
-                        $('#grade_row_' + _rowId).val('');
-                    }
-                },
-                error: function () {
-                    $('#grade_row_' + rowId).attr('data-id', '');
-                    $('#grade_row_' + rowId).val('');
-                    $('#grade_row_new_' + rowId).val('');
-                }
-            });
-        }
-
-
-        $(document).ready(function () {
-            $('#add_name_name').click(function () {
-                NameListSort("name_asc", "name_desc");
-            });
-            $('#add_name_subcode').click(function () {
-                NameListSort("subcode_asc", "subcode_desc");
-            });
-            $('#add_name_memo').click(function () {
-                NameListSort("memo_asc", "memo_desc");
-            });
-            $('#add_name_section').click(function () {
-                NameListSort("section_asc", "section_desc");
-            });
-            $('#add_name_department').click(function () {
-                NameListSort("department_asc", "department_desc");
-            });
-            $('#add_name_incharge').click(function () {
-                NameListSort("incharge_asc", "incharge_desc");
-            });
-            $('#add_name_role').click(function () {
-                NameListSort("role_asc", "role_desc");
-            });
-            $('#add_name_explanation').click(function () {
-                NameListSort("explanation_asc", "explanation_desc");
-            });
-            $('#add_name_company').click(function () {
-                NameListSort("company_asc", "company_desc");
-            });
-            $('#add_name_grade').click(function () {
-                NameListSort("grade_asc", "grade_desc");
-            });
-            $('#add_name_unit').click(function () {
-                NameListSort("unit_asc", "unit_desc");
-            });            
-            // for add new
-            $.getJSON('/api/Explanations/')
-                .done(function (data) {
-                    $('#explanation_new').empty();
-                    $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
-                    $.each(data, function (key, item) {
-                        $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
                     });
                 });
-            // for search
-            $.getJSON('/api/Explanations/')
-                .done(function (data) {
-                    $('#explanation_search').empty();
-                    $('#explanation_search').append(`<option value=''>Select Allocation</option>`);
-                    $.each(data, function (key, item) {
-                        $('#explanation_search').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
-                    });
-                });
-            // for add new
-            $.getJSON('/api/Companies/')
-                .done(function (data) {
-                    $('#company_new').empty();
-                    $('#company_new').append(`<option value=''>Select Company</option>`);
-                    $.each(data, function (key, item) {
-                        $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
-                    });
-                });
-            // for search
-            $.getJSON('/api/Companies/')
-                .done(function (data) {
-                    $('#company_search').empty();
-                    $('#company_search').append(`<option value=''>Select Company</option>`);
-                    $.each(data, function (key, item) {
-                        $('#company_search').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
-                    });
-                });
-            // for add new
-            $.getJSON('/api/sections/')
-                .done(function (data) {
-                    $('#section_new').empty();
-                    $('#section_new').append(`<option value=''>Select Section</option>`);
-                    $.each(data, function (key, item) {
-                        $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
-                    });
-                });
-            // for search
-            $.getJSON('/api/sections/')
-                .done(function (data) {
-                    $('#section_search').empty();
-                    $('#section_search').append(`<option value=''>Select Section</option>`);
-                    $.each(data, function (key, item) {
-                        $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
-                    });
-                });
-            // for search
-            $.getJSON('/api/Departments/')
-                .done(function (data) {
-                    $('#department_search').empty();
-                    $('#department_search').append(`<option value=''>Select Departments</option>`);
-                    $.each(data, function (key, item) {
-                        $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                    });
-                });
+            ajax_companyName = assignmentData.CompanyName;
+            ajax_sectionName = assignmentData.SectionName;
+            GetAssignedGradeId(assignmentData.GradeId);
+            var isGradeShow = IsGradeShow(ajax_companyName,ajax_sectionName);
 
-            // for new
-            $.getJSON('/api/Departments/')
-                .done(function (data) {
-                    $('#department_new').empty();
-                    $('#department_new').append(`<option value=''>Select Departments</option>`);
-                    $.each(data, function (key, item) {
-                        $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
-                    });
-                });
-
-            // for edit
-            $.getJSON('/api/Departments/')
+            $.getJSON(`/api/departments`)
                 .done(function (data) {
                     $('#department_edit').empty();
-                    $('#department_edit').append(`<option value=''>Select Departments</option>`);
+                    $('#department_edit').append(`<option value=''>Select Department</option>`);
                     $.each(data, function (key, item) {
-                        $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                        if (item.Id == assignmentData.DepartmentId) {
+                            $('#department_edit').append(`<option value='${item.Id}' selected>${item.DepartmentName}</option>`);
+                        } else {
+                            $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+                        }
+
+                    });
+                });            
+
+            $.getJSON('/api/Explanations/')
+                .done(function (data) {
+                    $('#explanation_edit').empty();
+                    $('#explanation_edit').append(`<option value=''>Select Explanation</option>`);
+                    $.each(data, function (key, item) {
+                        if (item.Id == assignmentData.ExplanationId) {
+                            $('#explanation_edit').append(`<option value='${item.Id}' selected>${item.ExplanationName}</option>`);
+                        } else {
+                            $('#explanation_edit').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+                        }
+
                     });
                 });
 
-            $('#unitprice_new').on('change', function () {
-                var _unitPrice = $(this).val();
-
-                $.ajax({
-                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
-                    type: 'GET',
-                    dataType: 'json',
-                    //data: {
-                    //    unitPrice: _unitPrice
-                    //},
-                    success: function (data) {
-                        $('#grade_new_hidden').val(data.Id);
-                        $('#grade_new').val(data.SalaryGrade);
-                    },
-                    error: function () {
-                        $('#grade_new_hidden').val('');
-                        $('#grade_new').val('');
-                    }
-                });
-            });
-            
-            $('#unitprice_edit').on('change', function () {
-                var _unitPrice = $(this).val();
-                var _companyName = $("#company_edit option:selected").text();
-                var _sectionName = $("#section_edit option:selected").text();
-                console.log("_companyName: "+_companyName);
-                console.log("_sectionName: "+_sectionName);
-
-                $.ajax({
-                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
-                    type: 'GET',
-                    dataType: 'json',                   
-                    success: function (data) {                        
-                        if (data != null) {
-                            $('#grade_edit_hidden').val(data.Id);
-                            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
-                                $('#grade_edit').val(data.SalaryGrade);
-                            } else {
-                                $('#grade_edit').val('');
-                            }
+            $.getJSON('/api/Companies/')
+                .done(function (data) {
+                    $('#company_edit').empty();
+                    $('#company_edit').append(`<option value=''>Select Company</option>`);
+                    $.each(data, function (key, item) {
+                        if (item.Id == assignmentData.CompanyId) {
+                            $('#company_edit').append(`<option value='${item.Id}' selected>${item.CompanyName}</option>`);
                         } else {
-                            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
-                                $('#grade_edit').val();
-                            } else {
-                                $('#grade_edit').val('');
-                            }
-                        }   
-                    },
-                    error: function () {
-                        $('#grade_edit').val('');
-                        $('#grade_edit_hidden').val('');
-                    }
-                });
-            });
-
-            $('#company_edit').on('change', function () {
-                var _companyName = $("#company_edit option:selected").text();
-                var _sectionName = $("#section_edit option:selected").text();
-                var _unitPrice = $("#unitprice_edit").val();
-
-                $.ajax({
-                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data != null) {
-                            $('#grade_edit_hidden').val(data.Id);
-                            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
-                                $('#grade_edit').val(data.SalaryGrade);
-                            } else {
-                                $('#grade_edit').val('');
-                            }
-                        } else {
-                            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
-                                $('#grade_edit').val();
-                            } else {
-                                $('#grade_edit').val('');
-                            }
-                        } 
-
-                    },
-                    error: function () {
-                        $('#grade_edit').val('');
-                        $('#grade_edit_hidden').val('');
-                    }
-                });
-            });
-            $('#section_edit').on('change', function () {
-                var _companyName = $("#company_edit option:selected").text();
-                var _sectionName = $("#section_edit option:selected").text();
-                var _unitPrice = $("#unitprice_edit").val();
-
-                $.ajax({
-                    url: `/api/utilities/CompareGrade/${_unitPrice}`,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data != null) {
-                            $('#grade_edit_hidden').val(data.Id);
-                            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
-                                $('#grade_edit').val(data.SalaryGrade);
-                            } else {
-                                $('#grade_edit').val('');
-                            }
-                        } else {
-                            if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
-                                $('#grade_edit').val();
-                            } else {
-                                $('#grade_edit').val('');
-                            }
-                        } 
-                    },
-                    error: function () {
-                        $('#grade_edit').val('');
-                        $('#grade_edit_hidden').val('');
-                    }
-                });
-            });
-            $('#add_name_search_button').on('click', function () {
-                AddNameSearchResult();             
-            });
-
-            $('#add_name_add_new').on('click', function () {
-                var employeeName = $('#identity_new').val();
-                var sectionId = $('#section_new').find(":selected").val();
-                var inchargeId = $('#incharge_new').find(":selected").val();
-                var departmentId = $('#department_new').find(":selected").val();
-                var roleId = $('#role_new').find(":selected").val();
-                var companyId = $('#company_new').find(":selected").val();
-                var explanationId = $('#explanation_new').find(":selected").val();
-                var unitPrice = $('#unitprice_new').val();
-                var gradeId = $('#grade_new_hidden').val();
-                var remarks = $('#memo_new').val();
-
-                var data = {
-                    EmployeeName: employeeName,
-                    SectionId: sectionId,
-                    DepartmentId: departmentId,
-                    InchargeId: inchargeId,
-                    RoleId: roleId,
-                    ExplanationId: explanationId,
-                    CompanyId: companyId,
-                    UnitPrice: unitPrice,
-                    GradeId: gradeId,
-                    Remarks: remarks,
-                    SubCode: 1
-                };
-                $.ajax({
-                    url: '/api/Employees',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (data) {
-
-                        Command: toastr["success"](data, "Success")
-
-                        toastr.options = {
-                            "closeButton": false,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "3000",
-                            "hideDuration": "1000",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
+                            $('#company_edit').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
                         }
-                        alert('Success');
-                        location.reload();
-                    },
-                    error: function (data) {
-                        alert(data.responseJSON.Message);
+
+                    });
+                });                        
+                            
+            if(isGradeShow){                
+                $('#unitprice_edit').attr("readonly",true);
+                $('#unitprice_edit').css('opacity', '0.6');
+                $('#unitprice_edit').val(assignmentData.UnitPrice);
+            }else{                
+                $('#unitprice_edit').attr("readonly",false) 
+                $('#unitprice_edit').css('opacity', '');
+                $('#unitprice_edit').val(assignmentData.UnitPrice);
+            }            
+
+            $.getJSON(`/api/Utilities/GetAllSalaries/`)
+                .done(function (data) {
+                    $('#grade_edit').empty();
+                    $('#grade_edit').append(`<option value='-1'>Select Grade</option>`);
+                    $.each(data, function (key, item) {
+                        $('#grade_edit').append(`<option value='${item.GradeId}'>${item.GradeName}</option>`);
+                    });                                        
+                    //var tempGradeIdWithSalaryType = $("#hid_gradeIdWithSalaryType").val();
+                    var tempGradeIdWithSalaryType = $("#hid_gradeIdWithSalaryType").val();
+
+                    if ((assignmentData.CompanyName != '' && assignmentData.CompanyName != null) || assignmentData.SectionName != '' && assignmentData.SectionName != null) {
+                        if (isGradeShow) {
+                            $("#grade_edit option[value=" + tempGradeIdWithSalaryType + "]").attr("selected", "selected");
+                        } else {
+                            $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
+                            $("#grade_edit").attr('onclick', 'return false;');
+                            $("#grade_edit").attr('onkeydown', 'return false;');
+                        }
+                    } else {
+                        $("#grade_edit").attr('style', 'pointer-events: none;opacity:.7;');
+                        $("#grade_edit").attr('onclick', 'return false;');
+                        $("#grade_edit").attr('onkeydown', 'return false;');
                     }
                 });
+            $('#grade_edit_hidden').val(assignmentData.GradeId);
+            //$('#unitprice_edit').val(assignmentData.GradeId);
+            //if (assignmentData.CompanyName != '' && assignmentData.CompanyName != null) {
+            //    if (assignmentData.CompanyName.toLowerCase() == "mw" || assignmentData.SectionName.toLowerCase() == 'mw') {
+            //        $('#grade_edit').val(assignmentData.GradePoint);
+            //    } else {
+            //        $('#grade_edit').val("");
+            //    }
+            //} else {
+            //    $('#grade_edit').val("");
+            //}
 
+
+
+        },
+        error: function () {
+            //$('#add_name_table_1 tbody').empty();
+        }
+    });
+}
+
+function loadSingleAssignmentDataForExistingEmployee(employeeName) {
+    $('#add_name_table_2 thead .sub_thead').remove();
+    $('#add_name_table_2 tbody').empty();
+    $('#add_name_add').css('display', 'inline-block');
+    $.ajax({
+        url: `/api/Utilities/GetEmployeesByName/${employeeName}`,
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (assignmentData) {
+            $('#fixed_hidden_name').val(assignmentData[0].EmployeeName);
+
+            var count = 1;
+            var firstRowUnitPrice = '';
+
+            $.each(assignmentData, function (index, item) {
+                unitPrices.push(item.UnitPrice);
+                previousAssignmentRow = item.SubCode;
+                if (count == 1) {
+                    firstRowUnitPrice = item.UnitPrice;
+                }
+
+                tr += '<tr class="sub_thead">';
+                tr += `<td>${item.SubCode}</td>`;
+                var colorMark = '';
+                if (firstRowUnitPrice.toString() == item.UnitPrice.toString()) {
+                    tr += `<td><input type='text' class=" col-12" style='width: 141px;' value='${item.EmployeeName}' readonly/></td>`;
+                    tr += `<td><input type='text' class=" col-12" style='width: 47px;' value='${item.SubCode}' readonly /></td>`;
+                } else {
+                    tr += `<td><input type='text' class=" col-12" style='width: 141px;color:red;' value='${item.EmployeeName}' readonly/></td>`;
+                    tr += `<td><input type='text' class=" col-12" style='width: 47px;color:red;' value='${item.SubCode}' readonly /></td>`;
+                }
+
+
+                tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.Remarks}' readonly /></td>`;
+                tr += `<td><input type='text' class=" col-12" style='width: 87px;' value='${item.SectionName}' readonly /></td>`;
+                tr += `<td><input type='text' class=" col-12" style='width: 89px;' value='${item.DepartmentName}' readonly /></td>`;                        
+                tr += `<td><input type='text' class=" col-12" style='width: 190px;' value='${item.ExplanationName}' readonly /></td>`;
+                tr += `<td><input type='text' class=" col-12" style='width:81px;'   value='${item.CompanyName}' readonly /></td>`;
+                if (item.CompanyName.toLowerCase() == "mw") {
+                    tr += `<td><input type='text' class=" col-12" value='${item.GradePoint}' readonly style='width: 55px;' /></td>`;
+                }
+                else {
+                    tr += `<td><input type='text' class=" col-12" value='' readonly style='width: 55px;' /></td>`;
+                }
+                tr += `<td><input type='text' class="col-12" id="add_name_year_${count}" style='width: 72px;' value='${2022}' readonly /></td>`;
+                tr += `<td><input type='text' class="col-12" id="add_name_unit_price_${count}" style='width: 72px;' value='${item.UnitPrice}' readonly /></td>`;
+                if (count == 1) {
+                    $("#unit_price_first_project_hid").val(item.UnitPrice);
+                    tr += `<td rowspan='${assignmentData.length}' style='text-align:center;'><a href='javascript:void(0);' onClick="addNew()"> <i class="fa fa-plus" aria-hidden="true"></i></a></td>`;
+                }
+
+                tr += '</tr>';
+                count++;
+                $('#add_name_table_2 thead').append(tr);
+                var tr = "";
             });
 
-            $('#add_name_edit').on('click', function () {
+        },
+        error: function () {
 
-                var sectionId = $('#section_edit').find(":selected").val();
-                var inchargeId = $('#incharge_edit').find(":selected").val();
-                var departmentId = $('#department_edit').find(":selected").val();
-                var roleId = $('#role_edit').find(":selected").val();
-                var companyId = $('#company_edit').find(":selected").val();
-                var explanationId = $('#explanation_edit').find(":selected").val();
-                var unitPrice = $('#unitprice_edit').val();
-                var gradeId = $('#grade_edit_hidden').val();
-                var rowId = $('#row_id_hidden_edit').val();
-                var remarks = $('#memo_edit').val();
+        }
+    });
+}
 
-                var dataSingleAssignmentUpdate = {
-                    Id: rowId,
-                    SectionId: sectionId,
-                    DepartmentId: departmentId,
-                    InchargeId: inchargeId,
-                    RoleId: roleId,
-                    ExplanationId: explanationId,
-                    CompanyId: companyId,
-                    UnitPrice: unitPrice,
-                    GradeId: gradeId,
-                    Remarks: remarks,
-                };
+function addNew() {
+    //
+    previousAssignmentRow++;
+    var text = `
+                <tr data-id="${previousAssignmentRow}" id="row_${previousAssignmentRow}">
+                    <td>${previousAssignmentRow}</td>
+                    <td><input class=" col-12" id="identity_row_${previousAssignmentRow}" style='width: 141px;' value="${$('#fixed_hidden_name').val()}" readonly /></td>
+                    <td><input class="" value="${previousAssignmentRow}"  style='width: 47px;' id='sub_code_row_${previousAssignmentRow}' readonly /></td>
+                    <td><input class=" col-12" style='width: 89px;' id="memo_row_${previousAssignmentRow}" /></td>`;
 
-                $.ajax({
-                    url: '/api/Employees',
-                    type: 'PUT',
-                    dataType: 'json',
-                    data: dataSingleAssignmentUpdate,
-                    success: function (data) {
+    // for add new
+    $.ajax({
+        url: '/api/Sections/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            text += '<td>';
+            text += `
+                                    <select id="section_row_${previousAssignmentRow}" style='width: 87px;'class=" col-12 section_row" onchange="LoadGradeValue(${previousAssignmentRow},this);">
+                                        <option value=''>Select Section</option>
+                                `;
+            $.each(data, function (key, item) {
+                text += `<option value = '${item.Id}'> ${item.SectionName}</option>`;
+            });
+            text += '</select></td>';
+        },
+        error: function () {
 
-                        //ToastMessageSuccess(data);
-                        alert('Success');
-                        $('#modal_edit_name').modal('hide');
-                        AddNameSearchResult();
-                    },
-                    error: function (data) {
-                        alert(data.responseJSON.Message);
-                    }
-                });
+        }
+    });
+
+    $.ajax({
+        url: '/api/departments/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            text += '<td>';
+            text += `
+                                <select id="department_row_${previousAssignmentRow}" class=" col-12">
+                                    <option value=''>Select Department</option>
+                            `;
+            $.each(data, function (key, item) {
+                text += `<option value = '${item.Id}'> ${item.DepartmentName}</option>`;
+            });
+            text += '</select></td>';
+        },
+        error: function () {
+
+        }
+    });            
+    $.ajax({
+        url: '/api/Explanations/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            text += '<td>';
+            text += `
+                                    <select id="explain_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12">
+                                        <option value=''>Select Allocation</option>
+                                `;
+            $.each(data, function (key, item) {
+                text += `<option value = '${item.Id}'> ${item.ExplanationName}</option>`;
+            });
+            text += '</select></td>';
+        },
+        error: function () {
+
+        }
+    });
+
+    $.ajax({
+        url: '/api/Companies/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            text += '<td>';
+            text += `
+                                    <select id="company_row_${previousAssignmentRow}" style='width:81px;' class=" col-12 add_company" onchange="LoadGradeValue(${previousAssignmentRow},this);">
+                                        <option value=''>Select Company</option>
+                                `;
+            $.each(data, function (key, item) {
+                text += `<option value = '${item.Id}'> ${item.CompanyName}</option>`;
+            });
+            text += '</select></td>';
+        },
+        error: function () {
+
+        }
+    });
+    $.ajax({
+        url: '/api/Utilities/GetAllSalaries/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            text += '<td>';
+            text += `<select id="grade_row_${previousAssignmentRow}" style='width: 113px;' class=" col-12" onchange="LoadGradeValue(${previousAssignmentRow},this);"><option value=''>Select Grade</option>`;
+            $.each(data, function (key, item) {
+                text += `<option value = '${item.GradeId}'> ${item.GradeName}</option>`;
+            });
+            text += '</select></td>';
+        },
+        error: function () {
+
+        }
+    });
+    text += `<td><select id='year_row_${previousAssignmentRow}' class='col-12'><option value='-1'>Select Year</option><option value='2022'>2022</option></select>`;
+    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
+    //text += `<td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>`;
+    text += `<td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+            <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+            </tr>`;            
+    // text += `
+    //                  <td><input class=" col-12" id="grade_row_${previousAssignmentRow}" readonly style='width: 55px;'/><input type='hidden' id='grade_row_new_${previousAssignmentRow}' /></td>
+    //                  <td><input class=" col-12" id="unitprice_row_${previousAssignmentRow}" style='width: 72px;' onChange="unitPriceChange(${previousAssignmentRow},this)"/></td>
+    //                  <td style='text-align:center;'><a href='javascript:void(0);' id='remove_row_${previousAssignmentRow}' onClick="removeTr(${previousAssignmentRow})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+    //             </tr>
+
+    //             `;
+
+    $(`#remove_row_${previousAssignmentRow - 1}`).css('display', 'none');
+
+    $('#add_name_table_2 tbody').append(text);
+
+}
+
+$('.add_company').on('change', function () {
+    var _companyName = $(this).val();
+    var _unitPrice = $("#unitprice_edit").val();            
+});
+
+function removeTr(rowId) {
+    var rowElement = $('#row_' + rowId);
+    rowElement.remove();
+    previousAssignmentRow--;
+    $(`#remove_row_${previousAssignmentRow}`).css('display', 'block');
+}
+
+function unitPriceChange(rowId, element) {
+    let _unitPrice = $(element).val();
+    $("#add_name_unit_price_hidden").val(_unitPrice);
+    $("#add_name_row_no_hidden").val(rowId);
+    let _unitPrideFirstProject = $("#unit_price_first_project_hid").val();
+    let _unitPrideFirstProjectWithComma = $("#add_name_unit_price_1").val();
+
+    var _rowId = $("#add_name_row_no_hidden").val();
+    var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
+    console.log("_sectionName: "+_sectionName);
+
+    if (_unitPrideFirstProject != _unitPrice && _unitPrideFirstProjectWithComma != _unitPrice) {
+        $('#identity_row_' + rowId).css('color', 'red');
+        $('#sub_code_row_' + rowId).css('color', 'red');
+    } else {
+        $('#identity_row_' + rowId).css('color', '');
+        $('#sub_code_row_' + rowId).css('color', '');
+    }
+
+    $.ajax({
+        url: `/api/utilities/CompareGrade/${_unitPrice}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            $('#grade_edit_hidden').val(data.Id);
+            
+            if (_companyName.toLowerCase().indexOf("mw") > 0 || _sectionName.toLowerCase().indexOf("mw")> 0) {
+                $('#grade_row_' + rowId).attr('data-id', data.Id);
+                $('#grade_row_new_' + rowId).val(data.Id);
+                $('#grade_row_' + _rowId).val(data.SalaryGrade);
+            } else {
+                $('#grade_row_' + rowId).attr('data-id', data.Id);
+                $('#grade_row_new_' + rowId).val(data.Id);
+                $('#grade_row_' + _rowId).val('');
+            }
+        },
+        error: function () {
+            $('#grade_row_' + rowId).attr('data-id', '');
+            $('#grade_row_' + rowId).val('');
+            $('#grade_row_new_' + rowId).val('');
+        }
+    });
+}
+
+
+$(document).ready(function () {
+    $('#add_name_name').click(function () {
+        NameListSort("name_asc", "name_desc");
+    });
+    $('#add_name_subcode').click(function () {
+        NameListSort("subcode_asc", "subcode_desc");
+    });
+    $('#add_name_memo').click(function () {
+        NameListSort("memo_asc", "memo_desc");
+    });
+    $('#add_name_section').click(function () {
+        NameListSort("section_asc", "section_desc");
+    });
+    $('#add_name_department').click(function () {
+        NameListSort("department_asc", "department_desc");
+    });
+    $('#add_name_incharge').click(function () {
+        NameListSort("incharge_asc", "incharge_desc");
+    });
+    $('#add_name_role').click(function () {
+        NameListSort("role_asc", "role_desc");
+    });
+    $('#add_name_explanation').click(function () {
+        NameListSort("explanation_asc", "explanation_desc");
+    });
+    $('#add_name_company').click(function () {
+        NameListSort("company_asc", "company_desc");
+    });
+    $('#add_name_grade').click(function () {
+        NameListSort("grade_asc", "grade_desc");
+    });
+    $('#add_name_unit').click(function () {
+        NameListSort("unit_asc", "unit_desc");
+    });            
+    // for add new
+    $.getJSON('/api/Explanations/')
+        .done(function (data) {
+            $('#explanation_new').empty();
+            $('#explanation_new').append(`<option value=''>Select Explanation</option>`);
+            $.each(data, function (key, item) {
+                $('#explanation_new').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
             });
         });
+    // for search
+    $.getJSON('/api/Explanations/')
+        .done(function (data) {
+            $('#explanation_search').empty();
+            $('#explanation_search').append(`<option value=''>Select Allocation</option>`);
+            $.each(data, function (key, item) {
+                $('#explanation_search').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`);
+            });
+        });
+    // for add new
+    $.getJSON('/api/Companies/')
+        .done(function (data) {
+            $('#company_new').empty();
+            $('#company_new').append(`<option value=''>Select Company</option>`);
+            $.each(data, function (key, item) {
+                $('#company_new').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+            });
+        });
+    // for search
+    $.getJSON('/api/Companies/')
+        .done(function (data) {
+            $('#company_search').empty();
+            $('#company_search').append(`<option value=''>Select Company</option>`);
+            $.each(data, function (key, item) {
+                $('#company_search').append(`<option value='${item.Id}'>${item.CompanyName}</option>`);
+            });
+        });
+    // for add new
+    $.getJSON('/api/sections/')
+        .done(function (data) {
+            $('#section_new').empty();
+            $('#section_new').append(`<option value=''>Select Section</option>`);
+            $.each(data, function (key, item) {
+                $('#section_new').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+            });
+        });
+    // for search
+    $.getJSON('/api/sections/')
+        .done(function (data) {
+            $('#section_search').empty();
+            $('#section_search').append(`<option value=''>Select Section</option>`);
+            $.each(data, function (key, item) {
+                $('#section_search').append(`<option value='${item.Id}'>${item.SectionName}</option>`);
+            });
+        });
+    // for search
+    $.getJSON('/api/Departments/')
+        .done(function (data) {
+            $('#department_search').empty();
+            $('#department_search').append(`<option value=''>Select Departments</option>`);
+            $.each(data, function (key, item) {
+                $('#department_search').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            });
+        });
+
+    // for new
+    $.getJSON('/api/Departments/')
+        .done(function (data) {
+            $('#department_new').empty();
+            $('#department_new').append(`<option value=''>Select Departments</option>`);
+            $.each(data, function (key, item) {
+                $('#department_new').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            });
+        });
+
+    // for edit
+    $.getJSON('/api/Departments/')
+        .done(function (data) {
+            $('#department_edit').empty();
+            $('#department_edit').append(`<option value=''>Select Departments</option>`);
+            $.each(data, function (key, item) {
+                $('#department_edit').append(`<option value='${item.Id}'>${item.DepartmentName}</option>`);
+            });
+        });
+
+    $('#unitprice_new').on('change', function () {
+        var _unitPrice = $(this).val();
+
+        $.ajax({
+            url: `/api/utilities/CompareGrade/${_unitPrice}`,
+            type: 'GET',
+            dataType: 'json',
+            //data: {
+            //    unitPrice: _unitPrice
+            //},
+            success: function (data) {
+                $('#grade_new_hidden').val(data.Id);
+                $('#grade_new').val(data.SalaryGrade);
+            },
+            error: function () {
+                $('#grade_new_hidden').val('');
+                $('#grade_new').val('');
+            }
+        });
+    });
+    
+    $('#unitprice_edit').on('change', function () {
+        var _unitPrice = $(this).val();
+        var _companyName = $("#company_edit option:selected").text();
+        var _sectionName = $("#section_edit option:selected").text();
+        console.log("_companyName: "+_companyName);
+        console.log("_sectionName: "+_sectionName);
+
+        $.ajax({
+            url: `/api/utilities/CompareGrade/${_unitPrice}`,
+            type: 'GET',
+            dataType: 'json',                   
+            success: function (data) {                        
+                if (data != null) {
+                    $('#grade_edit_hidden').val(data.Id);
+                    if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
+                        $('#grade_edit').val(data.SalaryGrade);
+                    } else {
+                        $('#grade_edit').val('');
+                    }
+                } else {
+                    if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
+                        $('#grade_edit').val();
+                    } else {
+                        $('#grade_edit').val('');
+                    }
+                }   
+            },
+            error: function () {
+                $('#grade_edit').val('');
+                $('#grade_edit_hidden').val('');
+            }
+        });
+    });
+
+    $('#company_edit').on('change', function () {
+        var _companyName = $("#company_edit option:selected").text();
+        var _sectionName = $("#section_edit option:selected").text();
+        var _unitPrice = $("#unitprice_edit").val();
+
+        $.ajax({
+            url: `/api/utilities/CompareGrade/${_unitPrice}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    $('#grade_edit_hidden').val(data.Id);
+                    if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
+                        $('#grade_edit').val(data.SalaryGrade);
+                    } else {
+                        $('#grade_edit').val('');
+                    }
+                } else {
+                    if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
+                        $('#grade_edit').val();
+                    } else {
+                        $('#grade_edit').val('');
+                    }
+                } 
+
+            },
+            error: function () {
+                $('#grade_edit').val('');
+                $('#grade_edit_hidden').val('');
+            }
+        });
+    });
+    $('#section_edit').on('change', function () {
+        var _companyName = $("#company_edit option:selected").text();
+        var _sectionName = $("#section_edit option:selected").text();
+        var _unitPrice = $("#unitprice_edit").val();
+
+        $.ajax({
+            url: `/api/utilities/CompareGrade/${_unitPrice}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    $('#grade_edit_hidden').val(data.Id);
+                    if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
+                        $('#grade_edit').val(data.SalaryGrade);
+                    } else {
+                        $('#grade_edit').val('');
+                    }
+                } else {
+                    if (_companyName.toLowerCase() == "mw" || _sectionName.toLowerCase() == "mw") {
+                        $('#grade_edit').val();
+                    } else {
+                        $('#grade_edit').val('');
+                    }
+                } 
+            },
+            error: function () {
+                $('#grade_edit').val('');
+                $('#grade_edit_hidden').val('');
+            }
+        });
+    });
+    $('#add_name_search_button').on('click', function () {
+        AddNameSearchResult();             
+    });
+
+    $('#add_name_add_new').on('click', function () {
+        var employeeName = $('#identity_new').val();
+        var sectionId = $('#section_new').find(":selected").val();
+        var inchargeId = $('#incharge_new').find(":selected").val();
+        var departmentId = $('#department_new').find(":selected").val();
+        var roleId = $('#role_new').find(":selected").val();
+        var companyId = $('#company_new').find(":selected").val();
+        var explanationId = $('#explanation_new').find(":selected").val();
+        var unitPrice = $('#unitprice_new').val();
+        var gradeId = $('#grade_new_hidden').val();
+        var remarks = $('#memo_new').val();
+
+        var data = {
+            EmployeeName: employeeName,
+            SectionId: sectionId,
+            DepartmentId: departmentId,
+            InchargeId: inchargeId,
+            RoleId: roleId,
+            ExplanationId: explanationId,
+            CompanyId: companyId,
+            UnitPrice: unitPrice,
+            GradeId: gradeId,
+            Remarks: remarks,
+            SubCode: 1
+        };
+        $.ajax({
+            url: '/api/Employees',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+
+                Command: toastr["success"](data, "Success")
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                alert('Success');
+                location.reload();
+            },
+            error: function (data) {
+                alert(data.responseJSON.Message);
+            }
+        });
+
+    });
+
+    $('#add_name_edit').on('click', function () {
+
+        var sectionId = $('#section_edit').find(":selected").val();
+        var inchargeId = $('#incharge_edit').find(":selected").val();
+        var departmentId = $('#department_edit').find(":selected").val();
+        var roleId = $('#role_edit').find(":selected").val();
+        var companyId = $('#company_edit').find(":selected").val();
+        var explanationId = $('#explanation_edit').find(":selected").val();
+        var unitPrice = $('#unitprice_edit').val();
+        var gradeId = $('#grade_edit_hidden').val();
+        var rowId = $('#row_id_hidden_edit').val();
+        var remarks = $('#memo_edit').val();
+
+        var dataSingleAssignmentUpdate = {
+            Id: rowId,
+            SectionId: sectionId,
+            DepartmentId: departmentId,
+            InchargeId: inchargeId,
+            RoleId: roleId,
+            ExplanationId: explanationId,
+            CompanyId: companyId,
+            UnitPrice: unitPrice,
+            GradeId: gradeId,
+            Remarks: remarks,
+        };
+
+        $.ajax({
+            url: '/api/Employees',
+            type: 'PUT',
+            dataType: 'json',
+            data: dataSingleAssignmentUpdate,
+            success: function (data) {
+
+                //ToastMessageSuccess(data);
+                alert('Success');
+                $('#modal_edit_name').modal('hide');
+                AddNameSearchResult();
+            },
+            error: function (data) {
+                alert(data.responseJSON.Message);
+            }
+        });
+    });
+});
 
 function onSave() {
     const rows = document.querySelectorAll("#add_name_table_2 > tbody > tr");
+    //$('#add_name_add').css('display','none');
+    console.log(rows);
     $.each(rows, function (index, data) {
         var rowId = data.dataset.id;
 
         var employeeName = $('#identity_row_' + rowId).val();
         var sectionId = $('#section_row_' + rowId).find(":selected").val();
+        var sectionId = $('#section_row_' + rowId).find(":selected").text();
         var departmentId = $('#department_row_' + rowId).find(":selected").val();
         var inchargeId = $('#incharge_row_' + rowId).find(":selected").val();
         var roleId = $('#role_row_' + rowId).find(":selected").val();
@@ -1690,7 +1733,8 @@ function onSave() {
         var gradeId = $('#grade_row_new_' + rowId).val();
         var remarks = $('#memo_row_' + rowId).val();
         var subCode = $('#sub_code_row_' + rowId).val();
-
+        
+        var isGradeShow = IsGradeShow();
 
 
         var data = {
@@ -1707,7 +1751,6 @@ function onSave() {
             SubCode: subCode,
 
         };
-
         $.ajax({
             url: '/api/Employees',
             type: 'POST',
@@ -1716,16 +1759,36 @@ function onSave() {
             data: data,
             success: function (data) {
 
-                //ToastMessageSuccess(data);
+                Command: toastr["success"](data, "Success")
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
                 alert('Success');
-                $('#modal_add_name').modal('hide');
-                AddNameSearchResult();
+                location.reload();
+                //$('#modal_add_name_new').modal('toggle');
             },
             error: function () {
                 alert("Error please try again");
+                //$('#modal_add_name_new').modal('toggle');
             }
         });
     });
+
 }
 function AddNameSearchResult(){
     LoaderShow();
@@ -1769,6 +1832,7 @@ function AddNameSearchResult(){
                             redMark = markedAsRed;
                             return null;
                         }
+                        ,visible: false
                     },
                     {
                         data: 'EmployeeName',
@@ -1788,10 +1852,10 @@ function AddNameSearchResult(){
                         data: 'AddNameSubCode',
                         render: function (subCode) {
                             if (redMark) {
-                                return `<span style='color:red;'>${subCode}</span></td>`;
+                                return `<span style='text-align:center ;display:block;padding-right:2px;color:red;'>${subCode}</span></td>`;
                             }
                             else {
-                                return `<span >${subCode}</span>`;
+                                return `<span style='text-align:center ;display:block;padding-right:2px;'>${subCode}</span>`;
                             }
                         },
                         searching: false,
@@ -1838,7 +1902,7 @@ function AddNameSearchResult(){
                     {
                         data: 'Id',
                         render: function (id) {
-                            return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">add name</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">edit</a></td>`;
+                            return `<td class="add_name_btn_group"><a href="javascript:void(0);" onClick="loadSingleAssignmentDataForExistingEmployee('${employeeNameTemp}')" class="link_add" data-toggle="modal" data-target="#modal_add_name">追加 (add name)</a> <a href="javascript:void(0);" onClick="loadSingleAssignmentData(${id})" class="link_edit" data-toggle="modal" data-target="#modal_edit_name">編集 (edit)</a></td>`;
                         },
                         searching: false,
                         orderable: false,
@@ -1852,4 +1916,107 @@ function AddNameSearchResult(){
             $('#add_name_table_1 tbody').empty();
         }
     });
+}
+function CompanySectionOnChange_AddName(rowId,sel){
+    $("#add_name_row_no_hidden").val(rowId);
+    var _rowId = $("#add_name_row_no_hidden").val();
+    console.log("_rowId: "+_rowId);
+
+    
+    var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
+    var _unitPrice = $("#add_name_unit_price_hidden").val();
+    var _gradePoint = $("#grade_row_" + _rowId).val();
+    var _selectDepartment = $("#department_row_"+ _rowId).val();
+    var _selectYear = $("#year_row_"+ _rowId).val();
+    if(_selectYear == '' || _selectYear <0){
+        _selectYear = 2022;
+    }
+    var isGradeShow = IsGradeShow(_companyName,_sectionName);
+    var selectGradeId = "";
+    var selectGradeLowPoints = "";
+
+    var tempHidGradeVal = $('#grade_addname_hidden').val();
+
+    $.ajax({
+        url: `/api/utilities/GetUnitPrice`,
+        type: 'GET',
+        dataType: 'json',        
+        data:'gradeId='+_gradePoint+"&departmentId="+_selectDepartment+"&year="+_selectYear,
+        success: function (data) {
+            if (isGradeShow) {                
+                if(data.Id != '' && data.Id >0){
+                    selectGradeId = data.Id;
+                    selectGradeLowPoints = data.GradeLowPoints;                    
+                }else{
+                    selectGradeId = -1;
+                    selectGradeLowPoints = '';
+                }                
+                $('#unitprice_row_'+ _rowId).val(selectGradeLowPoints);                 
+
+                $('#unitprice_row_'+ _rowId).attr("readonly",true);
+                $('#unitprice_row_'+ _rowId).css('opacity', '0.6');
+
+                $("#grade_row_"+ _rowId).attr('style', '');
+                $("#grade_row_"+ _rowId).attr('onclick', '');
+                $("#grade_row_"+ _rowId).attr('onkeydown', '');
+
+                // if(tempHidGradeVal >0){
+                //     $("#grade_edit option[value=" + tempHidGradeVal + "]").attr("selected", false);
+                // }
+
+                $("#grade_row_"+_rowId+" option[value=" + selectGradeId + "]").attr("selected", "selected");
+            } else {                                                    
+                $("#grade_row_"+_rowId+" option").attr("selected", false);
+                $("#grade_row_"+_rowId+" option[value='-1']").attr("selected", "selected");
+
+                $('#unitprice_row_'+ _rowId).attr("readonly",false);
+                $('#unitprice_row_'+ _rowId).css('opacity', '');
+                
+                $("#grade_row_"+ _rowId).attr('style', 'pointer-events: none;opacity:.7;');
+                $("#grade_row_"+ _rowId).attr('onclick', 'return false;');
+                $("#grade_row_"+ _rowId).attr('onkeydown', 'return false;');
+            }
+            $('#grade_edit_hidden').val(data.Id);
+
+            
+            if (_companyName.toLowerCase().indexOf("mw") > 0 | _sectionName.toLowerCase().indexOf("mw") > 0) {
+                $('#grade_row_' + _rowId).attr('data-id', data.Id);
+                $('#grade_row_' + _rowId).val(data.SalaryGrade);
+                $('#grade_row_new_' + _rowId).val(data.Id);
+            } else {
+                $('#grade_row_' + _rowId).attr('data-id', '');
+                $('#grade_row_' + _rowId).val('');
+                $('#grade_row_new_' + _rowId).val('');
+            }
+        },
+        error: function () {
+            $('#grade_row_' + _rowId).attr('data-id', '');
+            $('#grade_row_' + _rowId).val('');
+            $('#grade_row_new_' + _rowId).val('');
+        }
+    });            
+}
+function IsGradeShow(ajax_companyName,ajax_sectionName){
+    var isGradeShow = false;
+    if(ajax_companyName.toLowerCase() == 'mw' || ajax_sectionName.toLowerCase() == 'mw'){
+        isGradeShow = true;
+    }
+    return isGradeShow;
+}
+function GetAssignedGradeId(salaryTypeId){
+    var returnGradeId = "";
+    $.ajax({
+        url: `/api/utilities/GetGradeId/${salaryTypeId}`,
+        type: 'GET',
+        dataType: 'text',
+        success: function (data) {
+            if (data != null) {
+                returnGradeId = data;
+                $("#hid_gradeIdWithSalaryType").val(returnGradeId);
+            } 
+        },
+        error: function () {
+        }
+    });    
 }

@@ -1,35 +1,10 @@
-﻿/*-----------------Add Name-----------------------*/
-#add_name_table_1 > thead > tr > th:before, #add_name_table_1 > thead > tr > th:after {
-    content: none !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(3) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(4) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(5) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(6) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(7) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(8) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(9) {
-    text-align: center !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(10) {
-    text-align: right !important;
-}
-#add_name_table_1 > tbody > tr > td:nth-of-type(11) {
-    text-align: center !important;
-}
+﻿/*-----------------
+	1. General
+-----------------------*/
 
+body {
+    overflow-x: auto;
+}
 
 .pagination > .active > a,
 .pagination > .active > a:focus,
@@ -46,11 +21,28 @@
     color: black !important;
 }
 
+/*-----------------
+	Export Links
+-----------------------*/
+.export_links {
+    margin-bottom: 20px;
+}
+.export_links ul {
+    list-style: none;
+    
+}
+.export_links ul li{}
+.export_links ul li a{
+    padding:10px;
+    background-color:#0056b3;
+    float:left;
+    margin:5px;
+    color:white;
+}
 
 /*-----------------
 	2. Name List
 -----------------------*/
-
 #name-list td,
 th {
     border: 1px solid;
@@ -467,7 +459,26 @@ th {
     width: 1px !important;
     white-space: nowrap !important;
 }
-
+#forecast_table tbody tr td {
+    border: 1px solid;
+    text-align: center;
+}
+#forecast_table tbody tr td:nth-of-type(1) {
+    border: 1px solid;
+    text-align: left !important;
+}
+#forecast_table tbody tr td:nth-of-type(4) {
+    border: 1px solid;
+    text-align: left !important;
+}
+#forecast_table tbody tr td:nth-of-type(6) {
+    border: 1px solid;
+    text-align: center;
+}
+#forecast_table tbody tr td:nth-of-type(7) {
+    border: 1px solid;
+    text-align: right;
+}
 
 /*-----------------
 	7. Forecast Search
@@ -563,7 +574,7 @@ td {
         text-align: center;
         background-color: #3c4b5d;
         color: white;
-    }    
+    }
 
     #add_name_table_1 thead tr:nth-of-type(2) select,
     input {
@@ -1417,7 +1428,7 @@ td {
 }
 
 #grade_edit {
-    width: 115px;
+    width: 46px;
 }
 
 #unitprice_edit {
@@ -1692,11 +1703,75 @@ table.dataTable > thead .sorting .sorting_desc, {
 
 /*---------------------------------------name list: search filter: auto width--------------------------*/
 
-#name_search {
-    min-width: 100%;
-}
+
 
 .namelist_addname {
     text-decoration: underline;
     cursor: pointer;
+}
+#data_import {
+    font-size: 13px;
+    height: 58px;
+    margin: 17px;
+}
+#inputState {
+    box-shadow: none;
+    font-size: 13px;
+    height: 34px;
+}
+#import_data_btn {
+    box-shadow: none;
+    font-size: 13px;
+    height: 34px;
+}
+.forecast_allocation {
+    border: 1px solid #ccc !important;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+/*-----------------------------forecast multi search --------------------------------------*/
+#forecast_search_thead{
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: Yu Gothic;
+    /* line-height: 0; */
+    white-space: nowrap !important;
+}
+#forecast_search_tbody{
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: Yu Gothic;
+    /* line-height: 0; */
+    white-space: nowrap !important;
+}
+#name_search {
+    min-width: 100%;
+    width: 100px;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+    border: 1px solid #ccc !important;
+    /* border-collapse: separate; */
+    border-spacing: 4px;
+}
+#dept_multi_search {
+    min-width: 100%;
+    width: 100px;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+    border: 1px solid #ccc !important;
+    /* border-collapse: separate; */
+    border-spacing: 4px;
+}
+#name_search::placeholder {
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+}
+.multiselect-selected-text{
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
 }

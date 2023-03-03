@@ -378,7 +378,7 @@ function EditEmployeeInformations(){
         RoleId: roleId,
         ExplanationId: explanationId,
         CompanyId: companyId,
-        UnitPrice: unitPrice,
+        UnitPrice: unitPrice,  
         // GradeId: gradeId,
         GradeId: gradeSalaryTypeId,
         Remarks: remarks,
@@ -647,7 +647,7 @@ function addNew() {
         success: function (data) {
             console.log("gradelist: "+data);
             text += '<td>';
-            text += `<select id="grade_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12"><option value=''>Select Grade</option>`;
+            text += `<select id="grade_row_${previousAssignmentRow}" style='width: 190px;' class=" col-12" onchange="LoadGradeValue(this);"><option value=''>Select Grade</option>`;
             $.each(data, function (key, item) {
                 text += `<option value = '${item.GradeId}'> ${item.GradeName}</option>`;
             });
@@ -846,33 +846,33 @@ function changeVal(rowId, element) {
 function LoadGradeValue(sel) {
     CompanySectionOnChange_AddName(sel);
 
-    var _rowId = $("#add_name_row_no_hidden").val();
-    var _companyName = $('#company_row_' + _rowId).find(":selected").text();
-    var _seactionName = $('#section_row_' + _rowId).find(":selected").text();
-    var _unitPrice = $("#add_name_unit_price_hidden").val();
+    // var _rowId = $("#add_name_row_no_hidden").val();
+    // var _companyName = $('#company_row_' + _rowId).find(":selected").text();
+    // var _sectionName = $('#section_row_' + _rowId).find(":selected").text();
+    // var _unitPrice = $("#add_name_unit_price_hidden").val();
 
-    $.ajax({
-        url: `/api/utilities/CompareGrade/${_unitPrice}`,
-        type: 'GET',
-        dataType: 'json',        
-        success: function (data) {
-            $('#grade_edit_hidden').val(data.Id);
-            if (_companyName.toLowerCase().indexOf("mw") > 0 | _seactionName.toLowerCase().indexOf("mw") > 0) {
-                $('#grade_row_' + _rowId).attr('data-id', data.Id);
-                $('#grade_row_' + _rowId).val(data.SalaryGrade);
-                $('#grade_row_new_' + _rowId).val(data.Id);
-            } else {
-                $('#grade_row_' + _rowId).attr('data-id', '');
-                $('#grade_row_' + _rowId).val('');
-                $('#grade_row_new_' + _rowId).val('');
-            }
-        },
-        error: function () {
-            $('#grade_row_' + _rowId).attr('data-id', '');
-            $('#grade_row_' + _rowId).val('');
-            $('#grade_row_new_' + _rowId).val('');
-        }
-    });
+    // $.ajax({
+    //     url: `/api/utilities/CompareGrade/${_unitPrice}`,
+    //     type: 'GET',
+    //     dataType: 'json',        
+    //     success: function (data) {
+    //         $('#grade_edit_hidden').val(data.Id);
+    //         if (_companyName.toLowerCase().indexOf("mw") > 0 | _sectionName.toLowerCase().indexOf("mw") > 0) {
+    //             $('#grade_row_' + _rowId).attr('data-id', data.Id);
+    //             $('#grade_row_' + _rowId).val(data.SalaryGrade);
+    //             $('#grade_row_new_' + _rowId).val(data.Id);
+    //         } else {
+    //             $('#grade_row_' + _rowId).attr('data-id', '');
+    //             $('#grade_row_' + _rowId).val('');
+    //             $('#grade_row_new_' + _rowId).val('');
+    //         }
+    //     },
+    //     error: function () {
+    //         $('#grade_row_' + _rowId).attr('data-id', '');
+    //         $('#grade_row_' + _rowId).val('');
+    //         $('#grade_row_new_' + _rowId).val('');
+    //     }
+    // });
 }
 function GetMultiSearch_AjaxData() {
     var employeeName = $('#name_search').val();
@@ -1233,7 +1233,7 @@ function CompanySectionOnChange_AddName(sel){
             $('#grade_edit_hidden').val(data.Id);
 
             
-            if (_companyName.toLowerCase().indexOf("mw") > 0 | _seactionName.toLowerCase().indexOf("mw") > 0) {
+            if (_companyName.toLowerCase().indexOf("mw") > 0 | _sectionName.toLowerCase().indexOf("mw") > 0) {
                 $('#grade_row_' + _rowId).attr('data-id', data.Id);
                 $('#grade_row_' + _rowId).val(data.SalaryGrade);
                 $('#grade_row_new_' + _rowId).val(data.Id);

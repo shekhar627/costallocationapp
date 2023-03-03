@@ -4,14 +4,15 @@
     ViewBag.Title = "Create Forecast";
 }
 @section Styles {
-    @* <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" /> *@
     <link href="/Content/common.css" rel="stylesheet" type="text/css" />
-    <link href="/Content/forecast_ver03.css" rel="stylesheet" type="text/css" />       
+    <link href="/Content/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/forecast_ver04.css" rel="stylesheet" type="text/css" />  
+    <link href="/Content/namelist-responsive.css" rel="stylesheet" type="text/css" />      
 }
 
 <div class="content container-fluid" style="position:relative">
     <!-- Page Header -->
-    <div class="page-header">
+    <div class="page-header" id="data_import">
         <div class="row align-items-center">
             <div class="col">
                 <h5>Forecast Creation</h5>
@@ -36,7 +37,7 @@
                             <option value="2022">2022</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success mb-2"><i class="fa fa-upload" aria-hidden="true"></i> Upload Excel</button>
+                    <button type="submit" class="btn btn-success mb-2" id="import_data_btn"><i class="fa fa-upload" aria-hidden="true"></i> Upload Excel</button>
                     @Html.AntiForgeryToken()
 
 
@@ -56,155 +57,65 @@
             </div>
         </div>        
     </div>
+    
     <!-- /Page Header -->
     <div class="row">       
         <div class="col-md-12">
             <section class="container" tabIndex="1">
                 <div>
                     <table id="forecast_search">
-                        <thead>
+                        <thead id="forecast_search_thead">
                             <tr>
                                 <th>Name</th>
                                 <th>Section</th>
-                                <th>Department</th>
-                                @*<th>In-Charge</th>
-                                <th>Role</th>*@
-                                <th>Allocation</th>
                                 <th>Company</th>
+                                <th>Department</th>
+                                <th>Allocation</th>                                
                                 <th>Period</th>
-                            </tr>
+                            </tr>                            
                         </thead>
-                        <tbody>
+                        <tbody id="forecast_search_tbody">                            
                             <tr>
-                                <td>
-                                    <input type="text" value="" id="identity_search" class="create_forecast name_search" />
-                                    <input type="hidden" value="@Model.Department.Id" id="pre_selected_department_id" />
-                                </td>
-
-                                <td class="create_forecast section_search">
-                                    <div class="forecast_multiselect">
-                                        <div class="forecast_checkbox section" onclick="SectionCheck()">
-                                            <select id="section_search">
-                                                <option>All</option>
-                                            </select>
-                                            <div></div>
-                                        </div>
-
-                                        <div id="sectionChks" class="commonselect">
+                                <th class="namelist_td name">氏名(Name)</th>
+                                <th class="namelist_td section">
+                                    <div class="form-group mb-0">
+                                        <div class="col-sm-10">
+                                            <select id="section_multi_search" name="multiselect[]" multiple="multiple"></select>
                                         </div>
                                     </div>
-                                </td>
-
-                                <td class="create_forecast department_search">
-                                    @*<div class="forecast_multiselect">
-                                        <div class="forecast_checkbox department" onclick="DepartmentCheck()">
-                                            <select id="department_search">
-                                                <option>All</option>
-                                            </select>
-                                            <div></div>
-                                        </div>
-                                        <div id="departmentChks" class="commonselect">
-
-                                        </div>
-                                    </div>*@
-                                    <input type="text" value="@Model.Department.DepartmentName" readonly />
-                                </td>
-
-                                @*<td class="create_forecast incharge_search">
-                                    <div class="forecast_multiselect">
-                                        <div class="forecast_checkbox incharge" onclick="InchargeCheck()">
-                                            <select id="incharge_search">
-                                                <option>All</option>
-                                            </select>
-                                            <div></div>
-                                        </div>
-                                        <div id="inchargeChks" class="commonselect">
-
+                                </th>
+                                <th class="namelist_td company">
+                                    <div class="form-group mb-0">
+                                        <div class="col-sm-10">
+                                            <select id="company_multi_search" name="multiselect[]" multiple="multiple"></select>
                                         </div>
                                     </div>
-                                </td>*@
-
-                                @*<td class="create_forecast role_search">
-                                    <div class="forecast_multiselect">
-                                        <div class="forecast_checkbox role" onclick="RoleCheck()">
-                                            <select id="role_search">
-                                                <option>All</option>
-                                            </select>
-                                            <div></div>
-                                        </div>
-                                        <div id="RoleChks" class="commonselect">
-
+                                </th>
+                                <th class="namelist_td department">
+                                    <div class="form-group mb-0">
+                                        <div class="col-sm-10">
+                                            <input type="text" value="@Model.Department.DepartmentName" readonly="" id="dept_multi_search">
+                                            @* <select id="dept_multi_search" name="multiselect[]" multiple="multiple"></select> *@
                                         </div>
                                     </div>
-                                </td>*@
-
-                                <td class="create_forecast explanation_search">
-                                    <div class="forecast_multiselect">
-                                        <div class="forecast_checkbox explanation" onclick="ExplanationCheck()">
-                                            <select id="explanation_search">
-                                                <option>All</option>
-                                            </select>
-                                            <div></div>
-                                        </div>
-                                        <div id="ExplanationChks" class="commonselect">
-
+                                </th>
+                                <th class="namelist_td allocation">
+                                    <div class="form-group mb-0">
+                                        <div class="col-sm-10">
+                                            <select id="allocation_multi_search" name="multiselect[]" multiple="multiple"></select>
                                         </div>
                                     </div>
-                                </td>
-
-                                <td class="create_forecast company_search">
-                                    <div class="forecast_multiselect">
-                                        <div class="forecast_checkbox company" onclick="CompanyCheck()">
-                                            <select id="company_search">
-                                                <option>All</option>
-                                            </select>
-                                            <div></div>
-                                        </div>
-                                        <div id="CompanyChks" class="commonselect">
+                                </th>
+                                <th class="namelist_td period">
+                                    <div class="form-group mb-0">
+                                        <div class="col-sm-10">
+                                            <select id="period_multi_search" name="multiselect[]" multiple="multiple"></select>
                                         </div>
                                     </div>
-                                </td>
-                                <td>
-                                    <select id="period_search" class="create_forecast period_search">
-                                        <option value="">Select Period</option>
-                                        <option value="2022">2022</option>
-
-                                    </select>
-                                </td>
-                            </tr>
-
-                            @*<tr>
-                                    <td>
-                                        <input type="text" class="form-control" id="identity_search" placeholder="name">
-                                    </td>
-                                    <td>
-                                        <select id="section_search" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="department_search" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="incharge_search" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="role_search" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="explanation_search" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="company_search" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="period_search" class="form-control col-12">
-                                            <option value="">Select Period</option>
-                                            <option value="2023">2023</option>
-
-                                        </select>
-                                    </td>
-                                </tr>*@
+                                </th>
+                            </tr>                            
                             <tr>
-                                <td colspan="7"></td>
+                                <td colspan="5"></td>
                                 <td>
                                     <a href="javascript:void(0);" class="" id="forecast_search_button">Search</a>
                                 </td>
@@ -248,9 +159,17 @@
 <input type="hidden" id="hidExplanationId" />
 <input type="hidden" id="hidCompanyid" />
 
+<input type="hidden" id="hid_departmentId" value="@Model.Department.Id"/>
+
 @section Scripts{
+
+    <script src="/Scripts/bootstrap-3.3.2.min.js"></script>
     <script src="/Scripts/common.js"></script>
-    <script src="/Scripts/forecast_ver03.js"></script>
+    <script src="/Scripts/forecast_ver04.js"></script>
+    @* <script src="/Scripts/namelist_modal_registrations.js"></script> *@
+    <script src="/Scripts/bootstrap-multiselect.js"></script>
+
+
     <script>
         $(document).ready(function () {
             $("table1").DataTable();

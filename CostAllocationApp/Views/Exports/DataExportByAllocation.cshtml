@@ -48,7 +48,8 @@
                 e.preventDefault();
             }
         });
-        $('#department').on('change', function () {
+        
+        @* $('#department').on('change', function () {
             var departmentId = $(this).val();
             $.getJSON('/api/Utilities/GetAllExplanationsByDepartmentId?departmentId=' + departmentId)
                 .done(function (data) {
@@ -58,6 +59,24 @@
                         $('#explanation').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`)
                     });
                 });
+        }); *@
+        $('#department').on('change', function () {
+            var departmentId = $(this).val();
+            $.ajax({
+                url: `/exports/GetAllExplanationsByDepartmentId/`,
+                type: 'GET',
+                dataType: 'json',        
+                data:"departmentId="+departmentId,
+                success: function (data) {
+                    $('#explanation').empty();
+                    $('#explanation').append(`<option value=''>select allocation</option>`)
+                    $.each(data, function (key, item) {
+                        $('#explanation').append(`<option value='${item.Id}'>${item.ExplanationName}</option>`)
+                    });
+                },
+                error: function () {           
+                }
+            });   
         });
     </script>
     
