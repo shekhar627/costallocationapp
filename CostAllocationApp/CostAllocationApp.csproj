@@ -295,6 +295,7 @@
     <Content Include="Content\responsive.css" />
     <Content Include="Content\roles.css" />
     <Content Include="Content\salaries.css" />
+    <Content Include="Content\salaries_ver03.css" />
     <Content Include="Content\sections.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\style.css" />
@@ -695,6 +696,7 @@
     <Content Include="Scripts\roles.js" />
     <Content Include="Scripts\salaries.js" />
     <Content Include="Scripts\salaries_ver02.js" />
+    <Content Include="Scripts\salaries_ver03.js" />
     <Content Include="Scripts\sections.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\task.js" />

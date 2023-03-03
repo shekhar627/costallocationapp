@@ -1,0 +1,46 @@
+﻿table.salary_grade_type_list_tbl tbody,table.salary_grade_type_list_tbl thead tr { display: block; }
+
+table.salary_grade_type_list_tbl {
+    /* 140px * 5 column + 16px scrollbar width */
+    /* width: 100%; */
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Yu Gothic;
+    white-space: nowrap !important;
+    border: 1px solid #ccc !important;
+    border-spacing: 4px;
+    
+}
+table.salary_grade_type_list_tbl tbody {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.list_header_1 {     
+    /* width: 140px; */
+    line-height: 2;
+    text-align: center;
+    border: 1px solid #ccc !important;
+    border-spacing: 4px;
+}
+table.salary_grade_type_list_tbl .list_tbody_1 td {
+    /* width: 140px; */
+    border: 1px solid #ccc !important;
+    border-spacing: 4px;
+}
+
+table.salary_grade_type_list_tbl thead th:last-child {
+    /* 140px + 16px scrollbar width */
+    /* width: 156px;  */
+}
+
+/* tbody td:last-child, thead th:last-child {
+    border-right: none !important;
+} */
+
+
+/*datatable scroll*/
+div.dataTables_wrapper {
+    width: 800px;
+    margin: 0 auto;
+}

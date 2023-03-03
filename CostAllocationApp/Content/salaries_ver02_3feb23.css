@@ -236,8 +236,7 @@
 }
 
 #grade_table thead th:nth-of-type(1) {
-    /* width: 45px; */
-    width: 10%;
+    width: 45px;
 }
 
 /*--------------save button design-----------------*/
@@ -290,7 +289,7 @@ tbody {
 } */
 
 /* #grade_table #gradelist_thead, #salary_master_list_tbl { display: block; } */
-/* #grade_table #gradelist_thead, #salary_master_list_tbl { 
+#grade_table #gradelist_thead, #salary_master_list_tbl { 
     display: block; 
 }
 #grade_table tbody {
@@ -298,7 +297,4 @@ tbody {
     height: 100px;       
     overflow-y: auto;    
     overflow-x: hidden; 
-} */
-
-
-/*scroll purpose*/
+}/* */
