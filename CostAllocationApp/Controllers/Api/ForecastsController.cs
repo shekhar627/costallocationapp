@@ -43,17 +43,20 @@ namespace CostAllocationApp.Controllers.Api
                     {
                         forecast.Points = 0;
                         forecast.Total = 0;
+                        forecast.Overtime = 0;
                     }
                     else
                     {
                         forecast.Points = tempPoint;
                         forecast.Total = Convert.ToDecimal(temp[2]);
+                        forecast.Overtime = Convert.ToDecimal(temp[3]);
                     }
                 }
                 else
                 {
                     forecast.Points = tempPoint;
                     forecast.Total = 0;
+                    forecast.Overtime = 0;
                 }
 
                 forecast.Month = Convert.ToInt32(temp[0]);

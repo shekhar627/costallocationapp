@@ -192,47 +192,70 @@ namespace CostAllocationApp.Controllers
                             }
 
                             decimal octInput = 0;
+                            decimal octOver = 0;
                             decimal.TryParse(dt_.Rows[i][7].ToString(), out octInput);
+                            decimal.TryParse(dt_.Rows[i][33].ToString(), out octOver);
 
                             decimal novInput = 0;
+                            decimal novOver = 0;
                             decimal.TryParse(dt_.Rows[i][8].ToString(), out novInput);
+                            decimal.TryParse(dt_.Rows[i][34].ToString(), out novOver);
 
                             decimal decInput = 0;
+                            decimal decOver = 0;
                             decimal.TryParse(dt_.Rows[i][9].ToString(), out decInput);
+                            decimal.TryParse(dt_.Rows[i][35].ToString(), out decOver);
 
                             decimal janInput = 0;
+                            decimal janOver = 0;
                             decimal.TryParse(dt_.Rows[i][10].ToString(), out janInput);
+                            decimal.TryParse(dt_.Rows[i][36].ToString(), out janOver);
 
                             decimal febInput = 0;
+                            decimal febOver = 0;
                             decimal.TryParse(dt_.Rows[i][11].ToString(), out febInput);
+                            decimal.TryParse(dt_.Rows[i][37].ToString(), out febOver);
 
                             decimal marInput = 0;
+                            decimal marOver = 0;
                             decimal.TryParse(dt_.Rows[i][12].ToString(), out marInput);
+                            decimal.TryParse(dt_.Rows[i][38].ToString(), out marOver);
 
                             decimal aprInput = 0;
+                            decimal aprOver = 0;
                             decimal.TryParse(dt_.Rows[i][13].ToString(), out aprInput);
+                            decimal.TryParse(dt_.Rows[i][39].ToString(), out aprOver);
 
                             decimal mayInput = 0;
+                            decimal mayOver = 0;
                             decimal.TryParse(dt_.Rows[i][14].ToString(), out mayInput);
+                            decimal.TryParse(dt_.Rows[i][40].ToString(), out mayOver);
 
                             decimal junInput = 0;
+                            decimal junOver = 0;
                             decimal.TryParse(dt_.Rows[i][15].ToString(), out junInput);
+                            decimal.TryParse(dt_.Rows[i][41].ToString(), out junOver);
 
                             decimal julInput = 0;
+                            decimal julOver = 0;
                             decimal.TryParse(dt_.Rows[i][16].ToString(), out julInput);
+                            decimal.TryParse(dt_.Rows[i][42].ToString(), out julOver);
 
                             decimal augInput = 0;
+                            decimal augOver = 0;
                             decimal.TryParse(dt_.Rows[i][17].ToString(), out augInput);
+                            decimal.TryParse(dt_.Rows[i][43].ToString(), out augOver);
 
                             decimal septInput = 0;
+                            decimal septOver = 0;
                             decimal.TryParse(dt_.Rows[i][18].ToString(), out septInput);
+                            decimal.TryParse(dt_.Rows[i][44].ToString(), out septOver);
 
-                            tempRow = $@"10_{octInput}_{octInput * _uploadExcel.UnitPrice},11_{novInput}_{novInput * _uploadExcel.UnitPrice},12_{decInput}_{decInput * _uploadExcel.UnitPrice},1_{janInput}_{janInput * _uploadExcel.UnitPrice},2_{febInput}_{febInput * _uploadExcel.UnitPrice},3_{marInput}_{marInput * _uploadExcel.UnitPrice},4_{aprInput}_{aprInput * _uploadExcel.UnitPrice},5_{mayInput}_{mayInput * _uploadExcel.UnitPrice},6_{junInput}_{junInput * _uploadExcel.UnitPrice},7_{julInput}_{julInput * _uploadExcel.UnitPrice},8_{augInput}_{augInput * _uploadExcel.UnitPrice},9_{septInput}_{septInput * _uploadExcel.UnitPrice}";
+                            //tempRow = $@"10_{octInput}_{octInput * _uploadExcel.UnitPrice},11_{novInput}_{novInput * _uploadExcel.UnitPrice},12_{decInput}_{decInput * _uploadExcel.UnitPrice},1_{janInput}_{janInput * _uploadExcel.UnitPrice},2_{febInput}_{febInput * _uploadExcel.UnitPrice},3_{marInput}_{marInput * _uploadExcel.UnitPrice},4_{aprInput}_{aprInput * _uploadExcel.UnitPrice},5_{mayInput}_{mayInput * _uploadExcel.UnitPrice},6_{junInput}_{junInput * _uploadExcel.UnitPrice},7_{julInput}_{julInput * _uploadExcel.UnitPrice},8_{augInput}_{augInput * _uploadExcel.UnitPrice},9_{septInput}_{septInput * _uploadExcel.UnitPrice}";                            
+                            tempRow = $@"10_{octInput}_{octInput * _uploadExcel.UnitPrice}_{octOver},11_{novInput}_{novInput * _uploadExcel.UnitPrice}_{novOver},12_{decInput}_{decInput * _uploadExcel.UnitPrice}_{decOver},1_{janInput}_{janInput * _uploadExcel.UnitPrice}_{janOver},2_{febInput}_{febInput * _uploadExcel.UnitPrice}_{febOver},3_{marInput}_{marInput * _uploadExcel.UnitPrice}_{marOver},4_{aprInput}_{aprInput * _uploadExcel.UnitPrice}_{aprOver},5_{mayInput}_{mayInput * _uploadExcel.UnitPrice}_{mayOver},6_{junInput}_{junInput * _uploadExcel.UnitPrice}_{junOver},7_{julInput}_{julInput * _uploadExcel.UnitPrice}_{julOver},8_{augInput}_{augInput * _uploadExcel.UnitPrice}_{augOver},9_{septInput}_{septInput * _uploadExcel.UnitPrice}_{septOver}";
 
                             SendToApi(tempAssignmentId, tempRow, tempYear, _uploadExcel.ExplanationId);
                         }
-
-
                     }
                     catch (Exception ex)
                     {

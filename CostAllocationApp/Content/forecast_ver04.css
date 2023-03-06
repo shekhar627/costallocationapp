@@ -1703,15 +1703,13 @@ table.dataTable > thead .sorting .sorting_desc, {
 
 /*---------------------------------------name list: search filter: auto width--------------------------*/
 
-
-
 .namelist_addname {
     text-decoration: underline;
     cursor: pointer;
 }
 #data_import {
     font-size: 13px;
-    height: 58px;
+    height: 95px;
     margin: 17px;
 }
 #inputState {

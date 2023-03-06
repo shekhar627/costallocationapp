@@ -13,6 +13,7 @@ namespace CostAllocationApp.Models
         public decimal Points { get; set; }
         public decimal Total { get; set; }
         public int EmployeeAssignmentId { get; set; }
+        public decimal Overtime { get; set; }
 
     }
 }

@@ -13,7 +13,7 @@ namespace CostAllocationApp.DAL
         public int CreateForecast(Forecast forecast)
         {
             int result = 0;
-            string query = $@"insert into Costs(Year,MonthId,Points,Total,EmployeeAssignmentsId,CreatedBy,CreatedDate) values(@year,@monthId,@points,@total,@employeeAssignmentsId,@createdBy,@createdDate)";
+            string query = $@"insert into Costs(Year,MonthId,Points,Total,Overtime,EmployeeAssignmentsId,CreatedBy,CreatedDate) values(@year,@monthId,@points,@total,@overtime,@employeeAssignmentsId,@createdBy,@createdDate)";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -22,6 +22,7 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@monthId", forecast.Month);
                 cmd.Parameters.AddWithValue("@points", forecast.Points);
                 cmd.Parameters.AddWithValue("@total", forecast.Total);
+                cmd.Parameters.AddWithValue("@overtime", forecast.Overtime);
                 cmd.Parameters.AddWithValue("@employeeAssignmentsId", forecast.EmployeeAssignmentId);
                 cmd.Parameters.AddWithValue("@createdBy", forecast.CreatedBy);
                 cmd.Parameters.AddWithValue("@createdDate", forecast.CreatedDate);
@@ -41,7 +42,7 @@ namespace CostAllocationApp.DAL
         public int UpdateForecast(Forecast forecast)
         {
             int result = 0;
-            string query = $@"update costs set Points = @points, Total= @total, UpdatedBy=@updatedBy, UpdatedDate=@updatedDate where Year=@year and EmployeeAssignmentsId=@employeeAssignmentsId and MonthId=@monthId";
+            string query = $@"update costs set Points = @points, Total= @total,Overtime= @overtime, UpdatedBy=@updatedBy, UpdatedDate=@updatedDate where Year=@year and EmployeeAssignmentsId=@employeeAssignmentsId and MonthId=@monthId";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -51,6 +52,7 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@points", forecast.Points);
                 cmd.Parameters.AddWithValue("@total", forecast.Total);
                 cmd.Parameters.AddWithValue("@year", forecast.Year);
+                cmd.Parameters.AddWithValue("@overtime", forecast.Overtime);
                 cmd.Parameters.AddWithValue("@employeeAssignmentsId", forecast.EmployeeAssignmentId);
                 cmd.Parameters.AddWithValue("@monthId", forecast.Month);
                 
