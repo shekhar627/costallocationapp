@@ -77,9 +77,9 @@ namespace CostAllocationApp.BLL
         {
             return _uploadExcelDAL.GetGradeIdByGradePoints(gradePoints);
         }
-        public GradeSalaryType GetGradeSalaryTypeIdByGradeId(int? gradeId, int? departmentId,int year,int salaryTypeId)
+        public GradeUnitPriceType GetGradeUnitPriceType(int? gradeId, int? departmentId,int year,int unitPriceTypeId)
         {
-            return _uploadExcelDAL.GetGradeSalaryTypeIdByGradeId(gradeId, departmentId, year, salaryTypeId);
+            return _uploadExcelDAL.GetGradeUnitPriceType(gradeId, departmentId, year, unitPriceTypeId);
         }
     }
 }

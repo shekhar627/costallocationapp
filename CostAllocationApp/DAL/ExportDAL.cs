@@ -13,10 +13,10 @@ namespace CostAllocationApp.DAL
     {
         public List<ForecastAssignmentViewModel> AssignmentsByAllocation(int departnmentId,int explanationId)
         {
-            string query = $@"select EmployeesAssignments.Id as AssignmentId, GradeSalarlyTypes.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
+            string query = $@"select EmployeesAssignments.Id as AssignmentId, GradeUnitPriceTypes.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
                             EmployeesAssignments.CompanyId,Companies.Name as CompanyName
                             from EmployeesAssignments
-                            left join GradeSalarlyTypes on GradeSalarlyTypes.Id = EmployeesAssignments.GradeId
+                            left join GradeUnitPriceTypes on GradeUnitPriceTypes.Id = EmployeesAssignments.GradeId
                             join Companies on Companies.Id = EmployeesAssignments.CompanyId
                             join Sections on Sections.Id = EmployeesAssignments.SectionId
                             where EmployeesAssignments.DepartmentId=@departmentId and ExplanationId=@allocationId order by SectionId";
@@ -85,10 +85,10 @@ namespace CostAllocationApp.DAL
 
         public List<ForecastAssignmentViewModel> AssignmentsByAllocationForSection(int departnmentId, int explanationId)
         {
-            string query = $@"select EmployeesAssignments.Id as AssignmentId, GradeSalarlyTypes.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
+            string query = $@"select EmployeesAssignments.Id as AssignmentId, GradeUnitPriceTypes.GradeId, EmployeesAssignments.SectionId,Sections.Name as SectionName,
                             EmployeesAssignments.CompanyId,Companies.Name as CompanyName
                             from EmployeesAssignments
-                            left join GradeSalarlyTypes on GradeSalarlyTypes.Id = EmployeesAssignments.GradeId
+                            left join GradeUnitPriceTypes on GradeUnitPriceTypes.Id = EmployeesAssignments.GradeId
                             join Companies on Companies.Id = EmployeesAssignments.CompanyId
                             join Sections on Sections.Id = EmployeesAssignments.SectionId
                             where DepartmentId=@departmentId and ExplanationId=@allocationId and GradeId is not null and SectionId is not null and CompanyId is not null";
@@ -144,10 +144,10 @@ namespace CostAllocationApp.DAL
             return employeeAssignments;
         }
 
-        public List<GradeSalaryType> GetGradeSalaryTypes(int gradeId,int departmentId,int year,int salaryTypeId)
+        public List<GradeUnitPriceType> GetGradeUnitPriceTypes(int gradeId,int departmentId,int year,int unitPriceTypeId)
         {
-            string query = $@"select * from GradeSalarlyTypes where DepartmentId=@departmentId and GradeId=@gradeId and year=@year and SalaryTypeId=@salaryTypeId";
-            List<GradeSalaryType> gradeSalaryTypes = new List<GradeSalaryType>();
+            string query = $@"select * from GradeUnitPriceTypes where DepartmentId=@departmentId and GradeId=@gradeId and year=@year and UnitPriceTypeId=@unitPriceTypeId";
+            List<GradeUnitPriceType> gradeSalaryTypes = new List<GradeUnitPriceType>();
 
             using (SqlConnection sqlConnection = this.GetConnection())
             {
@@ -156,7 +156,7 @@ namespace CostAllocationApp.DAL
                 cmd.Parameters.AddWithValue("@departmentId", departmentId);
                 cmd.Parameters.AddWithValue("@gradeId", gradeId);
                 cmd.Parameters.AddWithValue("@year", year);
-                cmd.Parameters.AddWithValue("@salaryTypeId", salaryTypeId);
+                cmd.Parameters.AddWithValue("@unitPriceTypeId", unitPriceTypeId);
                 try
                 {
                     SqlDataReader rdr = cmd.ExecuteReader();
@@ -164,9 +164,10 @@ namespace CostAllocationApp.DAL
                     {
                         while (rdr.Read())
                         {
-                            GradeSalaryType gradeSalaryType = new GradeSalaryType();
+                            GradeUnitPriceType gradeSalaryType = new GradeUnitPriceType();
                             gradeSalaryType.Id = Convert.ToInt32(rdr["Id"]);
                             gradeSalaryType.GradeId = Convert.ToInt32(rdr["GradeId"]);
+                            gradeSalaryType.GradeLowPoints = Convert.ToDouble(rdr["GradeLowPoints"]);
 
                             gradeSalaryTypes.Add(gradeSalaryType);
                         }

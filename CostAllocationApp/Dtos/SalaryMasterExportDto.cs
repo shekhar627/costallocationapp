@@ -8,8 +8,8 @@ namespace CostAllocationApp.Dtos
 {
     public class SalaryMasterExportDto
     {
-        public SalaryType SalaryType { get; set; }
-        public List<GradeSalaryType> GradeSalaryTypes { get; set; }
+        public UnitPriceType UnitPriceType { get; set; }
+        public List<GradeUnitPriceType> GradeSalaryTypes { get; set; }
 
     }
 }

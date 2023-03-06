@@ -61,17 +61,28 @@ namespace CostAllocationApp.Controllers.Api
         //}
 
         [HttpPost]
-        public IHttpActionResult CreateGradeSalaryType(GradeSalaryType gradeSalaryType)
+        public IHttpActionResult CreateGradeSalaryType(GradeUnitPriceType gradeUnitPriceType)
         {
 
-            gradeSalaryType.CreatedBy = "";
-            gradeSalaryType.CreatedDate = DateTime.Now;
+            gradeUnitPriceType.CreatedBy = "";
+            gradeUnitPriceType.CreatedDate = DateTime.Now;
             //salary.IsActive = true;
 
-            var checkResult =  salaryBLL.CheckGradeSalaryType(gradeSalaryType.GradeId, gradeSalaryType.SalaryTypeId, gradeSalaryType.DepartmentId, gradeSalaryType.Year);
+            var checkResult = salaryBLL.CheckGradeUnitPriceType(gradeUnitPriceType.GradeId, gradeUnitPriceType.UnitPriceTypeId, gradeUnitPriceType.DepartmentId, gradeUnitPriceType.Year);
             if (!checkResult)
             {
-                int result = salaryBLL.CreateGradeSalaryType(gradeSalaryType);
+                int result = salaryBLL.CreateGradeUnitPriceType(gradeUnitPriceType);
+                if (gradeUnitPriceType.UnitPriceTypeId == 1)
+                {
+                    // auto save 固定時間外単価 
+                    double calculationForSecondUnitPriceType = (gradeUnitPriceType.GradeLowPoints / 160) * 1.25 * 45;
+                    salaryBLL.CreateGradeUnitPriceType(new GradeUnitPriceType { GradeId = gradeUnitPriceType.GradeId, UnitPriceTypeId = 2, DepartmentId = gradeUnitPriceType.DepartmentId, Year = gradeUnitPriceType.Year, GradeLowPoints = calculationForSecondUnitPriceType, GradeHighPoints = calculationForSecondUnitPriceType, CreatedBy = "", CreatedDate = DateTime.Now });
+                    // auto save 残業手当分単価 
+                    double calculationForThirdUnitPriceType = gradeUnitPriceType.GradeLowPoints / 160;
+                    salaryBLL.CreateGradeUnitPriceType(new GradeUnitPriceType { GradeId = gradeUnitPriceType.GradeId, UnitPriceTypeId = 3, DepartmentId = gradeUnitPriceType.DepartmentId, Year = gradeUnitPriceType.Year, GradeLowPoints = calculationForThirdUnitPriceType, GradeHighPoints = calculationForThirdUnitPriceType, CreatedBy = "", CreatedDate = DateTime.Now });
+
+                }
+
                 if (result > 0)
                 {
                     return Ok("Data Saved Successfully!");
@@ -89,7 +100,7 @@ namespace CostAllocationApp.Controllers.Api
 
 
         }
-        
+
         [HttpGet]
         public IHttpActionResult Salaries()
         {

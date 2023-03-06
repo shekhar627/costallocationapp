@@ -83,27 +83,28 @@ namespace CostAllocationApp.BLL
             return (a <= number && number <= b);
         }
 
-        public int CreateGradeSalaryType(GradeSalaryType gradeSalaryType)
+        public int CreateGradeUnitPriceType(GradeUnitPriceType gradeSalaryType)
         {
-            return salaryDAL.CreateGradeSalaryType(gradeSalaryType);
+            return salaryDAL.CreateGradeUnitPriceType(gradeSalaryType);
         }
-        public GradeSalaryType GetGradeSalaryType(int departmentId, int salaryTypeId, int year, int gradeId)
+        public GradeUnitPriceType GetGradeUnitPriceType(int departmentId, int unitPriceType, int year, int gradeId)
         {
-            return salaryDAL.GetGradeSalaryType(departmentId, salaryTypeId, year, gradeId);
+            return salaryDAL.GetGradeUnitPriceType(departmentId, unitPriceType, year, gradeId);
         }
 
-        public List<int> GetSalaryTypeIdByYear(int year)
+        public List<int> GetUnitPriceTypeIdByYear(int year)
         {
-            return salaryDAL.GetSalaryTypeIdByYear(year);
+            return salaryDAL.GetUnitPriceTypeIdByYear(year);
         }
-        public SalaryMasterExportDto GetSalaryTypeWithGradeSalaryByYear(int year,int gradeId,int salaryTypeId)
+        public SalaryMasterExportDto GetUnitPriceTypeWithGradeSalaryByYear(int year, int gradeId, int unitPriceTypeId)
         {
 
-             return   new SalaryMasterExportDto {
-                    SalaryType = _unitPriceTypeBLL.GetUnitPriceTypeById(salaryTypeId),
-                    GradeSalaryTypes = salaryDAL.GetGradeSalaryTypeByYear_SalaryTypeId_GradeId(salaryTypeId, year, gradeId)
-                };
-            
+            return new SalaryMasterExportDto
+            {
+                UnitPriceType = _unitPriceTypeBLL.GetUnitPriceTypeById(unitPriceTypeId),
+                GradeSalaryTypes = salaryDAL.GetGradeSalaryTypeByYear_UnitPriceTypeId_GradeId(unitPriceTypeId, year, gradeId)
+            };
+
         }
         public GradeSalaryTypeViewModel GetUnitPrice(string gradeId, string departmentId, string year)
         {
@@ -113,9 +114,9 @@ namespace CostAllocationApp.BLL
         {
             return salaryDAL.GetGradeSalaryTypeId(gradeId, departmentId);
         }
-        public bool CheckGradeSalaryType(int gradeId, int salaryTypeId, int departmentId, int year)
+        public bool CheckGradeUnitPriceType(int gradeId, int unitPriceTypeId, int departmentId, int year)
         {
-            return salaryDAL.CheckGradeSalaryType(gradeId, salaryTypeId, departmentId, year);
+            return salaryDAL.CheckGradeUnitPriceType(gradeId, unitPriceTypeId, departmentId, year);
         }
     }
 }

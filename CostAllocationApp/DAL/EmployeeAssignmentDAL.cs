@@ -294,7 +294,7 @@ namespace CostAllocationApp.DAL
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id
                             left join Roles rl on ea.RoleId = rl.Id
-                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join GradeUnitPriceTypes gd on ea.GradeId = gd.Id
                             left join Grades g on gd.GradeId = g.Id
                             left join InCharges inc on ea.InChargeId = inc.Id where ea.Id={assignmentId}";
 
@@ -394,7 +394,7 @@ namespace CostAllocationApp.DAL
                             left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id
-                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join GradeUnitPriceTypes gd on ea.GradeId = gd.Id
                             left join Grades g on gd.GradeId = g.Id
                             left join Explanations ep on ea.ExplanationId = ep.Id
                             where {where}
@@ -675,7 +675,7 @@ namespace CostAllocationApp.DAL
                             left join Companies com on ea.CompanyId = com.Id
                             left join Roles rl on ea.RoleId = rl.Id
                             left join InCharges inc on ea.InChargeId = inc.Id 
-                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join GradeUnitPriceTypes gd on ea.GradeId = gd.Id
                             left join Grades g on gd.GradeId = g.Id
                             where {where}
                             order by ea.EmployeeName asc";
@@ -835,7 +835,7 @@ namespace CostAllocationApp.DAL
                             left join Sections sec on ea.SectionId = sec.Id
                             left join Departments dep on ea.DepartmentId = dep.Id
                             left join Companies com on ea.CompanyId = com.Id                                                        
-                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join GradeUnitPriceTypes gd on ea.GradeId = gd.Id
                             left join Grades g on gd.GradeId = g.Id
                             left join Explanations ep on ea.ExplanationId = ep.Id
                             where {where}";
@@ -922,7 +922,7 @@ namespace CostAllocationApp.DAL
                             left join Companies com on ea.CompanyId = com.Id
                             left join Roles rl on ea.RoleId = rl.Id
                             left join InCharges inc on ea.InChargeId = inc.Id 
-                            left join GradeSalarlyTypes gd on ea.GradeId = gd.Id
+                            left join GradeUnitPriceTypes gd on ea.GradeId = gd.Id
                             left join Grades g on gd.GradeId = g.Id	
                             where {where} order by ea.SubCode asc";
 
@@ -1039,6 +1039,7 @@ namespace CostAllocationApp.DAL
                             forecast.Year = Convert.ToInt32(rdr["Year"]);
                             forecast.Month = Convert.ToInt32(rdr["MonthId"]);
                             forecast.Points = Convert.ToDecimal(rdr["Points"]);
+                            forecast.OverTime = Convert.ToDecimal(rdr["OverTime"]);
                             //forecast.Total = Convert.ToDecimal(rdr["Total"]);
                             //forecast.Total = rdr["Total"].ToString();
                             //forecast.Total = Convert.ToDecimal(forecast.Total).ToString("#,#.##", CultureInfo.CreateSpecificCulture("hi-IN"));

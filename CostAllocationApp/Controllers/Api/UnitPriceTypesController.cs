@@ -52,7 +52,7 @@ namespace CostAllocationApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult UnitPriceTypes()
         {
-            List<SalaryType> unitPriceTypes = _unitPriceTypeBLL.GetAllUnitPriceTypes();
+            List<UnitPriceType> unitPriceTypes = _unitPriceTypeBLL.GetAllUnitPriceTypes();
             return Ok(unitPriceTypes);
         }
     }

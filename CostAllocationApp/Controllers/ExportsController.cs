@@ -802,7 +802,7 @@ namespace CostAllocationApp.Controllers
                 SalaryAssignmentDto salaryAssignmentDto = new SalaryAssignmentDto();
                 salaryAssignmentDto.Grade = item;
 
-                var gradeSalaryTypes = _exportBLL.GetGradeSalaryTypes(item.Id, department.Id, 2022, 2);
+                var gradeSalaryTypes = _exportBLL.GetGradeUnitPriceTypes(item.Id, department.Id, 2022, 1);
 
                 foreach (var gradeSalary in gradeSalaryTypes)
                 {
@@ -998,6 +998,20 @@ namespace CostAllocationApp.Controllers
             decimal aug = 0;
             decimal sep = 0;
 
+
+            decimal octOverTime = 0;
+            decimal novOverTime = 0;
+            decimal decOverTime = 0;
+            decimal janOverTime = 0;
+            decimal febOverTime = 0;
+            decimal marOverTime = 0;
+            decimal aprOverTime = 0;
+            decimal mayOverTime = 0;
+            decimal junOverTime = 0;
+            decimal julOverTime = 0;
+            decimal augOverTime = 0;
+            decimal sepOverTime = 0;
+
             decimal octTotal = 0;
             decimal novTotal = 0;
             decimal decTotal = 0;
@@ -1078,37 +1092,62 @@ namespace CostAllocationApp.Controllers
             sheet.Cells[rowCount, 14].Value = sepTotal;
             rowCount++;
 
-            #region common master
+            #region over time
             sheet.Cells[rowCount, 1].Value = "1人あたりの時間外勤務見込 \n (みなし時間（固定時間）\n を含む残業時間 \n を入力してください";
-            foreach (var item in _commonMasterBLL.GetCommonMasters())
+
+            //over time
+            foreach (var item in salaryAssignmentDtos)
             {
-                sheet.Cells[rowCount, 2].Value = item.GradeName;
-                sheet.Cells[rowCount, 3].Value = item.OverWorkFixedTime;
+                sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
-                sheet.Cells[rowCount, 4].Value = item.OverWorkFixedTime;
 
-                sheet.Cells[rowCount, 5].Value = item.OverWorkFixedTime;
 
-                sheet.Cells[rowCount, 6].Value = item.OverWorkFixedTime;
+                foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                {
+                    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
+                    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
+                    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
+                    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
+                    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
+                    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
+                    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
+                    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
+                    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
+                    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
+                    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
+                    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                }
+                sheet.Cells[rowCount, 3].Value = octOverTime;
+                
+                sheet.Cells[rowCount, 4].Value = novOverTime;
+              
+                sheet.Cells[rowCount, 5].Value = decOverTime;
+              
+                sheet.Cells[rowCount, 6].Value = janOverTime;
+              
+                sheet.Cells[rowCount, 7].Value = febOverTime;
+              
+                sheet.Cells[rowCount, 8].Value = marOverTime;
+              
+                sheet.Cells[rowCount, 9].Value = aprOverTime;
+              
+                sheet.Cells[rowCount, 10].Value = mayOverTime;
+              
+                sheet.Cells[rowCount, 11].Value = junOverTime;
+              
+                sheet.Cells[rowCount, 12].Value = julOverTime;
+              
+                sheet.Cells[rowCount, 13].Value = augOverTime;
+              
+                sheet.Cells[rowCount, 14].Value = sepOverTime;
+              
 
-                sheet.Cells[rowCount, 7].Value = item.OverWorkFixedTime;
 
-                sheet.Cells[rowCount, 8].Value = item.OverWorkFixedTime;
-
-                sheet.Cells[rowCount, 9].Value = item.OverWorkFixedTime;
-
-                sheet.Cells[rowCount, 10].Value = item.OverWorkFixedTime;
-
-                sheet.Cells[rowCount, 11].Value = item.OverWorkFixedTime;
-
-                sheet.Cells[rowCount, 12].Value = item.OverWorkFixedTime;
-
-                sheet.Cells[rowCount, 13].Value = item.OverWorkFixedTime;
-
-                sheet.Cells[rowCount, 14].Value = item.OverWorkFixedTime;
-
+                //valuesWithGrades.Add(new ValuesWithGrade { GradeId = item.Grade.Id,GradeName=item.Grade.GradeName,Point= octTotal,MonthId=10 });
+                octOverTime = 0; novOverTime = 0; decOverTime = 0; janOverTime = 0; febOverTime = 0; marOverTime = 0; aprOverTime = 0; mayOverTime = 0; junOverTime = 0; julOverTime = 0; augOverTime = 0; sepOverTime = 0;
                 rowCount++;
             }
+
             #endregion
 
             rowCount++;
@@ -1172,7 +1211,7 @@ namespace CostAllocationApp.Controllers
                 double totalRegularOct = 0, totalRegularNov = 0, totalRegularDec = 0, totalRegularJan = 0, totalRegularFeb = 0, totalRegularMar = 0, totalRegularApr = 0, totalRegularMay = 0, totalRegularJun = 0, totalRegularJul = 0, totalRegularAug = 0, totalRegularSep = 0;
                 // salary allow fixed
                 double totalFixedOct = 0, totalFixedNov = 0, totalFixedDec = 0, totalFixedJan = 0, totalFixedFeb = 0, totalFixedMar = 0, totalFixedApr = 0, totalFixedMay = 0, totalFixedJun = 0, totalFixedJul = 0, totalFixedAug = 0, totalFixedSep = 0;
-                // salary allow oertime
+                // salary allow overtime
                 double totalOverOct = 0, totalOverNov = 0, totalOverDec = 0, totalOverJan = 0, totalOverFeb = 0, totalOverMar = 0, totalOverApr = 0, totalOverMay = 0, totalOverJun = 0, totalOverJul = 0, totalOverAug = 0, totalOverSep = 0;
                 // total salary
                 double totalSalaryOct = 0, totalSalaryNov = 0, totalSalaryDec = 0, totalSalaryJan = 0, totalSalaryFeb = 0, totalSalaryMar = 0, totalSalaryApr = 0, totalSalaryMay = 0, totalSalaryJun = 0, totalSalaryJul = 0, totalSalaryAug = 0, totalSalarySep = 0;
@@ -1193,7 +1232,7 @@ namespace CostAllocationApp.Controllers
 
                 int innerCount = 1;
                 int salaryTypeCount = 1;
-                foreach (var salaryType in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+                foreach (var salaryType in _unitPriceTypeBLL.GetAllSalaryTypes())
                 {
                     if (innerCount > 1)
                     {
@@ -1424,7 +1463,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(department.Id,1, 2022, item.Grade.Id).GradeLowPoints;
                             double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                         sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
@@ -1654,7 +1693,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(department.Id, 2, 2022, item.Grade.Id).GradeLowPoints;
                             double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                         sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
@@ -1880,7 +1919,19 @@ namespace CostAllocationApp.Controllers
                     // salary allowance (overtime)
                     if (salaryTypeCount == 4)
                     {
-                        sheet.Cells[rowCount, 3].Value = 0.ToString("N0");
+                        CommonMaster commonMaster = _commonMasterBLL.GetCommonMasters().Where(cm => cm.GradeId == item.Grade.Id).SingleOrDefault();
+                        double salaryMasterOverTimeLowPoints = _exportBLL.GetGradeUnitPriceTypes(item.Grade.Id, department.Id, 2022, 3).SingleOrDefault().GradeLowPoints;
+
+                        double calculatedOverTimeOct = GetTotalOverTime(salaryAssignmentDtos, 10, item.Grade.Id);
+                        double manPointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                        //double overTimeOct = 0;
+                        if (calculatedOverTimeOct> Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverOct = manPointOct*(calculatedOverTimeOct- Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints* Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalOct += totalOverOct;
+
+                        sheet.Cells[rowCount, 3].Value = totalOverOct.ToString("N0");
                         sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1895,7 +1946,16 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 4].Value = 0.ToString("N0");
+                        double calculatedOverTimeNov = GetTotalOverTime(salaryAssignmentDtos, 11, item.Grade.Id);
+                        double manPointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+                        
+                        if (calculatedOverTimeNov > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverNov = manPointNov * (calculatedOverTimeNov - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalNov += totalOverNov;
+
+                        sheet.Cells[rowCount, 4].Value = totalOverNov.ToString("N0");
                         sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1910,7 +1970,16 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 5].Value = 0.ToString("N0");
+                        double calculatedOverTimeDec = GetTotalOverTime(salaryAssignmentDtos, 12, item.Grade.Id);
+                        double manPointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+                        
+                        if (calculatedOverTimeDec > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverDec = manPointDec * (calculatedOverTimeDec - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalDec += totalOverDec;
+
+                        sheet.Cells[rowCount, 5].Value = totalOverDec.ToString("N0");
                         sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1925,7 +1994,14 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 6].Value = 0.ToString("N0");
+                        double calculatedOverTimeJan = GetTotalOverTime(salaryAssignmentDtos, 1, item.Grade.Id);
+                        double manPointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                        if (calculatedOverTimeJan > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverJan = manPointJan * (calculatedOverTimeJan - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalJan += totalOverJan;
+                        sheet.Cells[rowCount, 6].Value = totalOverJan.ToString("N0");
                         sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1940,8 +2016,15 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-
-                        sheet.Cells[rowCount, 7].Value = 0.ToString("N0");
+                        double calculatedOverTimeFeb = GetTotalOverTime(salaryAssignmentDtos, 2, item.Grade.Id);
+                        double manPointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+                        
+                        if (calculatedOverTimeFeb > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverFeb = manPointFeb * (calculatedOverTimeFeb - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalFeb += totalOverFeb;
+                        sheet.Cells[rowCount, 7].Value = totalOverFeb.ToString("N0");
                         sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1956,7 +2039,15 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 8].Value = 0.ToString("N0");
+                        double calculatedOverTimeMar = GetTotalOverTime(salaryAssignmentDtos, 3, item.Grade.Id);
+                        double manPointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+                        
+                        if (calculatedOverTimeMar > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverMar = manPointMar * (calculatedOverTimeMar - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalMar += totalOverMar;
+                        sheet.Cells[rowCount, 8].Value = totalOverMar.ToString("N0");
                         sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1971,7 +2062,15 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 9].Value = 0.ToString("N0");
+                        double calculatedOverTimeApr = GetTotalOverTime(salaryAssignmentDtos, 4, item.Grade.Id);
+                        double manPointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+                        
+                        if (calculatedOverTimeApr > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverApr = manPointApr * (calculatedOverTimeApr - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalApr += totalOverApr;
+                        sheet.Cells[rowCount, 9].Value = totalOverApr.ToString("N0");
                         sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -1986,7 +2085,15 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 10].Value = 0.ToString("N0");
+                        double calculatedOverTimeMay = GetTotalOverTime(salaryAssignmentDtos, 5, item.Grade.Id);
+                        double manPointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+                        
+                        if (calculatedOverTimeMay > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverMay = manPointMay * (calculatedOverTimeMay - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalMay += totalOverMay;
+                        sheet.Cells[rowCount, 10].Value = totalOverMay.ToString("N0");
                         sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -2001,7 +2108,15 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 11].Value = 0.ToString("N0");
+                        double calculatedOverTimeJun = GetTotalOverTime(salaryAssignmentDtos, 6, item.Grade.Id);
+                        double manPointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+                        
+                        if (calculatedOverTimeJun > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverJun = manPointJun * (calculatedOverTimeJun - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalJun += totalOverJun;
+                        sheet.Cells[rowCount, 11].Value = totalOverJun.ToString("N0");
                         sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -2016,8 +2131,14 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-
-                        sheet.Cells[rowCount, 12].Value = 0.ToString("N0");
+                        double calculatedOverTimeJul = GetTotalOverTime(salaryAssignmentDtos, 7, item.Grade.Id);
+                        double manPointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                        if (calculatedOverTimeJul > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverJul = manPointJul * (calculatedOverTimeJul - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalJul += totalOverJul;
+                        sheet.Cells[rowCount, 12].Value = totalOverJul.ToString("N0");
                         sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -2032,7 +2153,15 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
 
-                        sheet.Cells[rowCount, 13].Value = 0.ToString("N0");
+                        double calculatedOverTimeAug = GetTotalOverTime(salaryAssignmentDtos, 8, item.Grade.Id);
+                        double manPointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+                       
+                        if (calculatedOverTimeAug > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverAug = manPointAug * (calculatedOverTimeAug - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalAug += totalOverAug;
+                        sheet.Cells[rowCount, 13].Value = totalOverAug.ToString("N0");
                         sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -2046,9 +2175,16 @@ namespace CostAllocationApp.Controllers
                             sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
                             sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                         }
+                        double calculatedOverTimeSept = GetTotalOverTime(salaryAssignmentDtos, 9, item.Grade.Id);
+                        double manPointSept = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+                        
+                        if (calculatedOverTimeSept > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverSep = manPointSept * (calculatedOverTimeSept - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalSep += totalOverSep;
 
-
-                        sheet.Cells[rowCount, 14].Value = 0.ToString("N0");
+                        sheet.Cells[rowCount, 14].Value = totalOverSep.ToString("N0");
                         sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         if (count % 2 == 0)
                         {
@@ -2281,7 +2417,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
                             //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                         sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -2510,7 +2646,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
 
 
                         sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -2978,7 +3114,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(department.Id, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(department.Id, 4, 2022, item.Grade.Id).GradeLowPoints;
                             //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                         sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -4015,7 +4151,7 @@ namespace CostAllocationApp.Controllers
 
             #region salary types total
             int salaryTypeSummeryCount = 1;
-            foreach (var item in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+            foreach (var item in _unitPriceTypeBLL.GetAllSalaryTypes())
             {
                 sheet.Cells[rowCountForFuture, 1].Value = item.SalaryTypeName;
                 // executive
@@ -4870,12 +5006,12 @@ namespace CostAllocationApp.Controllers
             sheetSalaryMaster.TabColor = Color.BlueViolet;
             List<Department> departments = _departmentBLL.GetAllDepartments().OrderBy(dep => dep.Id).ToList();
             List<SalaryMasterExportDto> salaryMasterExportDtos = new List<SalaryMasterExportDto>();
-            var salaryTypeIds = _salaryBLL.GetSalaryTypeIdByYear(2022);
-            foreach (var salaryTypeId in salaryTypeIds)
+            var unitPriceTypeIds = _salaryBLL.GetUnitPriceTypeIdByYear(2022);
+            foreach (var unitPriceType in unitPriceTypeIds)
             {
                 foreach (var grade in grades)
                 {
-                    salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(year, grade.Id, salaryTypeId));
+                    salaryMasterExportDtos.Add(_salaryBLL.GetUnitPriceTypeWithGradeSalaryByYear(year, grade.Id, unitPriceType));
                 }
             }
 
@@ -4931,16 +5067,16 @@ namespace CostAllocationApp.Controllers
             }
 
             rowCountSalaryMaster++;
-            int prevSalaryTypeId = 0;
+            int prevUnitPriceTypeId = 0;
 
             foreach (var item in salaryMasterExportDtos)
             {
                 if (item.GradeSalaryTypes.Count > 1)
                 {
-                    if (prevSalaryTypeId != item.SalaryType.Id)
+                    if (prevUnitPriceTypeId != item.UnitPriceType.Id)
                     {
-                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = item.SalaryType.SalaryTypeName;
-                        prevSalaryTypeId = item.SalaryType.Id;
+                        sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = item.UnitPriceType.TypeName;
+                        prevUnitPriceTypeId = item.UnitPriceType.Id;
                     }
 
                     // for grade name
@@ -5050,7 +5186,7 @@ namespace CostAllocationApp.Controllers
                 SalaryAssignmentDto salaryAssignmentDto = new SalaryAssignmentDto();
                 salaryAssignmentDto.Grade = item;
 
-                var gradeSalaryTypes = _exportBLL.GetGradeSalaryTypes(item.Id, departmentId, 2022, 2);
+                var gradeSalaryTypes = _exportBLL.GetGradeUnitPriceTypes(item.Id, departmentId, 2022, 1);
 
                 foreach (var gradeSalary in gradeSalaryTypes)
                 {
@@ -5240,6 +5376,20 @@ namespace CostAllocationApp.Controllers
                 decimal aug = 0;
                 decimal sep = 0;
 
+                decimal octOverTime = 0;
+                decimal novOverTime = 0;
+                decimal decOverTime = 0;
+                decimal janOverTime = 0;
+                decimal febOverTime = 0;
+                decimal marOverTime = 0;
+                decimal aprOverTime = 0;
+                decimal mayOverTime = 0;
+                decimal junOverTime = 0;
+                decimal julOverTime = 0;
+                decimal augOverTime = 0;
+                decimal sepOverTime = 0;
+
+
                 decimal octTotal = 0;
                 decimal novTotal = 0;
                 decimal decTotal = 0;
@@ -5320,37 +5470,62 @@ namespace CostAllocationApp.Controllers
                 sheet.Cells[rowCount, 14].Value = sepTotal;
                 rowCount++;
 
-                #region common master
+                #region over time
                 sheet.Cells[rowCount, 1].Value = "1人あたりの時間外勤務見込 \n (みなし時間（固定時間）\n を含む残業時間 \n を入力してください";
-                foreach (var item in _commonMasterBLL.GetCommonMasters())
+
+                //over time
+                foreach (var item in salaryAssignmentDtos)
                 {
-                    sheet.Cells[rowCount, 2].Value = item.GradeName;
-                    sheet.Cells[rowCount, 3].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
-                    sheet.Cells[rowCount, 4].Value = item.OverWorkFixedTime;
 
-                    sheet.Cells[rowCount, 5].Value = item.OverWorkFixedTime;
 
-                    sheet.Cells[rowCount, 6].Value = item.OverWorkFixedTime;
+                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    {
+                        octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
+                        novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
+                        decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
+                        janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
+                        febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
+                        marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
+                        aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
+                        mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
+                        junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
+                        julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
+                        augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
+                        sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                    }
+                    sheet.Cells[rowCount, 3].Value = octOverTime;
 
-                    sheet.Cells[rowCount, 7].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 4].Value = novOverTime;
 
-                    sheet.Cells[rowCount, 8].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 5].Value = decOverTime;
 
-                    sheet.Cells[rowCount, 9].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 6].Value = janOverTime;
 
-                    sheet.Cells[rowCount, 10].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 7].Value = febOverTime;
 
-                    sheet.Cells[rowCount, 11].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 8].Value = marOverTime;
 
-                    sheet.Cells[rowCount, 12].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 9].Value = aprOverTime;
 
-                    sheet.Cells[rowCount, 13].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 10].Value = mayOverTime;
 
-                    sheet.Cells[rowCount, 14].Value = item.OverWorkFixedTime;
+                    sheet.Cells[rowCount, 11].Value = junOverTime;
 
+                    sheet.Cells[rowCount, 12].Value = julOverTime;
+
+                    sheet.Cells[rowCount, 13].Value = augOverTime;
+
+                    sheet.Cells[rowCount, 14].Value = sepOverTime;
+
+
+
+                    //valuesWithGrades.Add(new ValuesWithGrade { GradeId = item.Grade.Id,GradeName=item.Grade.GradeName,Point= octTotal,MonthId=10 });
+                    octOverTime = 0; novOverTime = 0; decOverTime = 0; janOverTime = 0; febOverTime = 0; marOverTime = 0; aprOverTime = 0; mayOverTime = 0; junOverTime = 0; julOverTime = 0; augOverTime = 0; sepOverTime = 0;
                     rowCount++;
                 }
+
                 #endregion
 
                 rowCount++;
@@ -5432,7 +5607,7 @@ namespace CostAllocationApp.Controllers
 
                     int innerCount = 1;
                     int salaryTypeCount = 1;
-                    foreach (var salaryType in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+                    foreach (var salaryType in _unitPriceTypeBLL.GetAllSalaryTypes())
                     {
                         if (innerCount > 1)
                         {
@@ -5663,7 +5838,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, 1, 2022, item.Grade.Id).GradeLowPoints;
                             double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
@@ -5893,7 +6068,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, 2, 2022, item.Grade.Id).GradeLowPoints;
                             double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue * commonValue).ToString("N0");
@@ -6119,7 +6294,19 @@ namespace CostAllocationApp.Controllers
                         // salary allowance (overtime)
                         if (salaryTypeCount == 4)
                         {
-                            sheet.Cells[rowCount, 3].Value = 0.ToString("N0");
+                            CommonMaster commonMaster = _commonMasterBLL.GetCommonMasters().Where(cm => cm.GradeId == item.Grade.Id).SingleOrDefault();
+                            double salaryMasterOverTimeLowPoints = _exportBLL.GetGradeUnitPriceTypes(item.Grade.Id, department.Id, 2022, 3).SingleOrDefault().GradeLowPoints;
+
+                            double calculatedOverTimeOct = GetTotalOverTime(salaryAssignmentDtos, 10, item.Grade.Id);
+                            double manPointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                            //double overTimeOct = 0;
+                            if (calculatedOverTimeOct > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverOct = manPointOct * (calculatedOverTimeOct - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalOct += totalOverOct;
+
+                            sheet.Cells[rowCount, 3].Value = totalOverOct.ToString("N0");
                             sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6134,7 +6321,16 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 3].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 4].Value = 0.ToString("N0");
+                            double calculatedOverTimeNov = GetTotalOverTime(salaryAssignmentDtos, 11, item.Grade.Id);
+                            double manPointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+
+                            if (calculatedOverTimeNov > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverNov = manPointNov * (calculatedOverTimeNov - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalNov += totalOverNov;
+
+                            sheet.Cells[rowCount, 4].Value = totalOverNov.ToString("N0");
                             sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6149,7 +6345,16 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 4].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 5].Value = 0.ToString("N0");
+                            double calculatedOverTimeDec = GetTotalOverTime(salaryAssignmentDtos, 12, item.Grade.Id);
+                            double manPointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+
+                            if (calculatedOverTimeDec > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverDec = manPointDec * (calculatedOverTimeDec - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalDec += totalOverDec;
+
+                            sheet.Cells[rowCount, 5].Value = totalOverDec.ToString("N0");
                             sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6164,7 +6369,14 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 5].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 6].Value = 0.ToString("N0");
+                            double calculatedOverTimeJan = GetTotalOverTime(salaryAssignmentDtos, 1, item.Grade.Id);
+                            double manPointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                            if (calculatedOverTimeJan > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverJan = manPointJan * (calculatedOverTimeJan - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalJan += totalOverJan;
+                            sheet.Cells[rowCount, 6].Value = totalOverJan.ToString("N0");
                             sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6179,8 +6391,15 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 6].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
+                            double calculatedOverTimeFeb = GetTotalOverTime(salaryAssignmentDtos, 2, item.Grade.Id);
+                            double manPointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
 
-                            sheet.Cells[rowCount, 7].Value = 0.ToString("N0");
+                            if (calculatedOverTimeFeb > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverFeb = manPointFeb * (calculatedOverTimeFeb - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalFeb += totalOverFeb;
+                            sheet.Cells[rowCount, 7].Value = totalOverFeb.ToString("N0");
                             sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6195,7 +6414,15 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 7].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 8].Value = 0.ToString("N0");
+                            double calculatedOverTimeMar = GetTotalOverTime(salaryAssignmentDtos, 3, item.Grade.Id);
+                            double manPointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+
+                            if (calculatedOverTimeMar > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverMar = manPointMar * (calculatedOverTimeMar - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalMar += totalOverMar;
+                            sheet.Cells[rowCount, 8].Value = totalOverMar.ToString("N0");
                             sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6210,7 +6437,15 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 8].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 9].Value = 0.ToString("N0");
+                            double calculatedOverTimeApr = GetTotalOverTime(salaryAssignmentDtos, 4, item.Grade.Id);
+                            double manPointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+
+                            if (calculatedOverTimeApr > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverApr = manPointApr * (calculatedOverTimeApr - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalApr += totalOverApr;
+                            sheet.Cells[rowCount, 9].Value = totalOverApr.ToString("N0");
                             sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6225,7 +6460,15 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 9].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 10].Value = 0.ToString("N0");
+                            double calculatedOverTimeMay = GetTotalOverTime(salaryAssignmentDtos, 5, item.Grade.Id);
+                            double manPointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+
+                            if (calculatedOverTimeMay > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverMay = manPointMay * (calculatedOverTimeMay - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalMay += totalOverMay;
+                            sheet.Cells[rowCount, 10].Value = totalOverMay.ToString("N0");
                             sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6240,7 +6483,15 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 10].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 11].Value = 0.ToString("N0");
+                            double calculatedOverTimeJun = GetTotalOverTime(salaryAssignmentDtos, 6, item.Grade.Id);
+                            double manPointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+
+                            if (calculatedOverTimeJun > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverJun = manPointJun * (calculatedOverTimeJun - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalJun += totalOverJun;
+                            sheet.Cells[rowCount, 11].Value = totalOverJun.ToString("N0");
                             sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6255,8 +6506,14 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 11].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-
-                            sheet.Cells[rowCount, 12].Value = 0.ToString("N0");
+                            double calculatedOverTimeJul = GetTotalOverTime(salaryAssignmentDtos, 7, item.Grade.Id);
+                            double manPointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                            if (calculatedOverTimeJul > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverJul = manPointJul * (calculatedOverTimeJul - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalJul += totalOverJul;
+                            sheet.Cells[rowCount, 12].Value = totalOverJul.ToString("N0");
                             sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6271,7 +6528,15 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 12].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
 
-                            sheet.Cells[rowCount, 13].Value = 0.ToString("N0");
+                            double calculatedOverTimeAug = GetTotalOverTime(salaryAssignmentDtos, 8, item.Grade.Id);
+                            double manPointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+
+                            if (calculatedOverTimeAug > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverAug = manPointAug * (calculatedOverTimeAug - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalAug += totalOverAug;
+                            sheet.Cells[rowCount, 13].Value = totalOverAug.ToString("N0");
                             sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6285,9 +6550,16 @@ namespace CostAllocationApp.Controllers
                                 sheet.Cells[rowCount, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
                                 sheet.Cells[rowCount, 13].Style.Fill.BackgroundColor.SetColor(1, 252, 213, 180);
                             }
+                            double calculatedOverTimeSept = GetTotalOverTime(salaryAssignmentDtos, 9, item.Grade.Id);
+                            double manPointSept = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
 
+                            if (calculatedOverTimeSept > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                            {
+                                totalOverSep = manPointSept * (calculatedOverTimeSept - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                            }
+                            overTimeSalaryTotalSep += totalOverSep;
 
-                            sheet.Cells[rowCount, 14].Value = 0.ToString("N0");
+                            sheet.Cells[rowCount, 14].Value = totalOverSep.ToString("N0");
                             sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                             if (count % 2 == 0)
                             {
@@ -6520,7 +6792,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
                             //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -6749,7 +7021,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
 
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -7217,7 +7489,7 @@ namespace CostAllocationApp.Controllers
 
 
                             double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                            double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                            double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, 4, 2022, item.Grade.Id).GradeLowPoints;
                             //double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                             sheet.Cells[rowCount, 3].Value = (manpointOct * beginningValue).ToString("N0");
@@ -8254,7 +8526,7 @@ namespace CostAllocationApp.Controllers
 
                 #region salary types total
                 int salaryTypeSummeryCount = 1;
-                foreach (var item in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+                foreach (var item in _unitPriceTypeBLL.GetAllSalaryTypes())
                 {
                     sheet.Cells[rowCountForFuture, 1].Value = item.SalaryTypeName;
                     // executive
@@ -9102,12 +9374,12 @@ namespace CostAllocationApp.Controllers
                 var sheetSalaryMaster = package.Workbook.Worksheets.Add("SalaryMaster");
                 List<Department> departments = _departmentBLL.GetAllDepartments().OrderBy(dep => dep.Id).ToList();
                 List<SalaryMasterExportDto> salaryMasterExportDtos = new List<SalaryMasterExportDto>();
-                var salaryTypeIds = _salaryBLL.GetSalaryTypeIdByYear(2022);
-                foreach (var salaryTypeId in salaryTypeIds)
+                var unitPriceTypeIds = _salaryBLL.GetUnitPriceTypeIdByYear(2022);
+                foreach (var unitPriceTypeId in unitPriceTypeIds)
                 {
                     foreach (var grade in grades)
                     {
-                        salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(2022, grade.Id, salaryTypeId));
+                        salaryMasterExportDtos.Add(_salaryBLL.GetUnitPriceTypeWithGradeSalaryByYear(2022, grade.Id, unitPriceTypeId));
                     }
                 }
 
@@ -9169,10 +9441,10 @@ namespace CostAllocationApp.Controllers
                 {
                     if (item.GradeSalaryTypes.Count > 1)
                     {
-                        if (prevSalaryTypeId != item.SalaryType.Id)
+                        if (prevSalaryTypeId != item.UnitPriceType.Id)
                         {
-                            sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = item.SalaryType.SalaryTypeName;
-                            prevSalaryTypeId = item.SalaryType.Id;
+                            sheetSalaryMaster.Cells[rowCountSalaryMaster, 4].Value = item.UnitPriceType.TypeName;
+                            prevSalaryTypeId = item.UnitPriceType.Id;
                         }
 
                         // for grade name
@@ -9284,6 +9556,23 @@ namespace CostAllocationApp.Controllers
 
             return points;
         }
+        public double GetTotalOverTime(List<SalaryAssignmentDto> salaryAssignmentDtos, int monthId, int gradeId)
+        {
+            double points = 0;
+
+            foreach (var item in salaryAssignmentDtos)
+            {
+                if (item.Grade.Id == gradeId)
+                {
+                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    {
+                        points += Convert.ToDouble(singleAssignment.forecasts.SingleOrDefault(f => f.Month == monthId).OverTime);
+                    }
+                }
+            }
+
+            return points;
+        }
         public ActionResult DataExports()
         {
             return View(new ExportViewModel { Departments = _departmentBLL.GetAllDepartments() });
@@ -9361,7 +9650,7 @@ namespace CostAllocationApp.Controllers
                 SalaryAssignmentDto salaryAssignmentDto = new SalaryAssignmentDto();
                 salaryAssignmentDto.Grade = item;
 
-                var gradeSalaryTypes = _exportBLL.GetGradeSalaryTypes(item.Id, departmentId, 2022, 2);
+                var gradeSalaryTypes = _exportBLL.GetGradeUnitPriceTypes(item.Id, departmentId, 2022, 1);
 
                 foreach (var gradeSalary in gradeSalaryTypes)
                 {
@@ -9478,26 +9767,63 @@ namespace CostAllocationApp.Controllers
             allocaionTableBodyTd = allocaionTableBodyTd + "<tr>";
             allocaionTableBodyTd = allocaionTableBodyTd + "<td rowspan='16'>1人あたりの時間外勤務見込<br>(みなし時間（固定時間）<br>を含む残業時間<br>を入力してください</td>";
             allocaionTableBodyTd = allocaionTableBodyTd + "</tr>";
-            foreach (var item in _commonMasterBLL.GetCommonMasters())
+
+            decimal octOverTime = 0;
+            decimal novOverTime = 0;
+            decimal decOverTime = 0;
+            decimal janOverTime = 0;
+            decimal febOverTime = 0;
+            decimal marOverTime = 0;
+            decimal aprOverTime = 0;
+            decimal mayOverTime = 0;
+            decimal junOverTime = 0;
+            decimal julOverTime = 0;
+            decimal augOverTime = 0;
+            decimal sepOverTime = 0;
+            //over time
+            foreach (var item in salaryAssignmentDtos)
             {
+               
+
+                foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                {
+                    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
+                    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
+                    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
+                    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
+                    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
+                    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
+                    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
+                    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
+                    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
+                    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
+                    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
+                    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                }
                 allocaionTableBodyTd = allocaionTableBodyTd + "<tr>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.GradeName + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
-                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.OverWorkFixedTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.Grade.GradeName +"</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + octOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + novOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + decOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + janOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + febOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + marOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + aprOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + mayOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + junOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + julOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + augOverTime + "</td>";
+                allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + sepOverTime + "</td>";
+
                 rowCount++;
                 allocaionTableBodyTd = allocaionTableBodyTd + "</tr>";
-            }
 
+
+
+                //valuesWithGrades.Add(new ValuesWithGrade { GradeId = item.Grade.Id,GradeName=item.Grade.GradeName,Point= octTotal,MonthId=10 });
+                octOverTime = 0; novOverTime = 0; decOverTime = 0; janOverTime = 0; febOverTime = 0; marOverTime = 0; aprOverTime = 0; mayOverTime = 0; junOverTime = 0; julOverTime = 0; augOverTime = 0; sepOverTime = 0;
+                rowCount++;
+            }
 
             rowCount++;
             int rowCountForFuture = rowCount;
@@ -9563,7 +9889,7 @@ namespace CostAllocationApp.Controllers
 
                 int innerCount = 1;
                 int salaryTypeCount = 1;
-                foreach (var salaryType in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+                foreach (var salaryType in _unitPriceTypeBLL.GetAllSalaryTypes())
                 {
                     strOtherGradeTd = strOtherGradeTd + "<tr>";
                     strOtherGradeTd = strOtherGradeTd + "<td>" + salaryType.SalaryTypeName + "</td>";
@@ -9591,7 +9917,7 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 2)
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                        double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                        double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, 1, 2022, item.Grade.Id).GradeLowPoints;
                         double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                         strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
@@ -9670,7 +9996,7 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 3)
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                        double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                        double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, 2, 2022, item.Grade.Id).GradeLowPoints;
                         double commonValue = Convert.ToDouble(_commonMasterBLL.GetCommonMasters().SingleOrDefault(cm => cm.GradeId == item.Grade.Id).SalaryIncreaseRate);
 
                         strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue * commonValue).ToString("N0") + "</td>";
@@ -9751,20 +10077,137 @@ namespace CostAllocationApp.Controllers
                     // salary allowance (overtime)
                     if (salaryTypeCount == 4)
                     {
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
-                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + 0.ToString("N0") + "</td>";
+                        if (item.Grade.Id==12)
+                        {
 
-                    }
+                        }
+                        CommonMaster commonMaster = _commonMasterBLL.GetCommonMasters().Where(cm => cm.GradeId == item.Grade.Id).SingleOrDefault();
+                        double salaryMasterOverTimeLowPoints = _exportBLL.GetGradeUnitPriceTypes(item.Grade.Id, department.Id, 2022, 3).SingleOrDefault().GradeLowPoints;
+
+                        double calculatedOverTimeOct = GetTotalOverTime(salaryAssignmentDtos, 10, item.Grade.Id);
+                        double manPointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
+                        
+                        if (calculatedOverTimeOct > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverOct = manPointOct * (calculatedOverTimeOct - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalOct += totalOverOct;
+
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverOct.ToString("N0") + "</td>";
+
+
+                        double calculatedOverTimeNov = GetTotalOverTime(salaryAssignmentDtos, 11, item.Grade.Id);
+                        double manPointNov = GetTotalManPoints(salaryAssignmentDtos, 11, item.Grade.Id);
+
+                        if (calculatedOverTimeNov > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverNov = manPointNov * (calculatedOverTimeNov - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalNov += totalOverNov;
+
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverNov.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeDec = GetTotalOverTime(salaryAssignmentDtos, 12, item.Grade.Id);
+                        double manPointDec = GetTotalManPoints(salaryAssignmentDtos, 12, item.Grade.Id);
+
+                        if (calculatedOverTimeDec > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverDec = manPointDec * (calculatedOverTimeDec - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalDec += totalOverDec;
+
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverDec.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeJan = GetTotalOverTime(salaryAssignmentDtos, 1, item.Grade.Id);
+                        double manPointJan = GetTotalManPoints(salaryAssignmentDtos, 1, item.Grade.Id);
+                        if (calculatedOverTimeJan > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverJan = manPointJan * (calculatedOverTimeJan - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalJan += totalOverJan;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverJan.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeFeb = GetTotalOverTime(salaryAssignmentDtos, 2, item.Grade.Id);
+                        double manPointFeb = GetTotalManPoints(salaryAssignmentDtos, 2, item.Grade.Id);
+
+                        if (calculatedOverTimeFeb > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverFeb = manPointFeb * (calculatedOverTimeFeb - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalFeb += totalOverFeb;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverFeb.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeMar = GetTotalOverTime(salaryAssignmentDtos, 3, item.Grade.Id);
+                        double manPointMar = GetTotalManPoints(salaryAssignmentDtos, 3, item.Grade.Id);
+
+                        if (calculatedOverTimeMar > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverMar = manPointMar * (calculatedOverTimeMar - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalMar += totalOverMar;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverMar.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeApr = GetTotalOverTime(salaryAssignmentDtos, 4, item.Grade.Id);
+                        double manPointApr = GetTotalManPoints(salaryAssignmentDtos, 4, item.Grade.Id);
+
+                        if (calculatedOverTimeApr > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverApr = manPointApr * (calculatedOverTimeApr - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalApr += totalOverApr;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverApr.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeMay = GetTotalOverTime(salaryAssignmentDtos, 5, item.Grade.Id);
+                        double manPointMay = GetTotalManPoints(salaryAssignmentDtos, 5, item.Grade.Id);
+
+                        if (calculatedOverTimeMay > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverMay = manPointMay * (calculatedOverTimeMay - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalMay += totalOverMay;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverMay.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeJun = GetTotalOverTime(salaryAssignmentDtos, 6, item.Grade.Id);
+                        double manPointJun = GetTotalManPoints(salaryAssignmentDtos, 6, item.Grade.Id);
+
+                        if (calculatedOverTimeJun > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverJun = manPointJun * (calculatedOverTimeJun - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalJun += totalOverJun;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverJun.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeJul = GetTotalOverTime(salaryAssignmentDtos, 7, item.Grade.Id);
+                        double manPointJul = GetTotalManPoints(salaryAssignmentDtos, 7, item.Grade.Id);
+                        if (calculatedOverTimeJul > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverJul = manPointJul * (calculatedOverTimeJul - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalJul += totalOverJul;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverJul.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeAug = GetTotalOverTime(salaryAssignmentDtos, 8, item.Grade.Id);
+                        double manPointAug = GetTotalManPoints(salaryAssignmentDtos, 8, item.Grade.Id);
+
+                        if (calculatedOverTimeAug > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverAug = manPointAug * (calculatedOverTimeAug - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalAug += totalOverAug;
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverAug.ToString("N0") + "</td>";
+
+                        double calculatedOverTimeSept = GetTotalOverTime(salaryAssignmentDtos, 9, item.Grade.Id);
+                        double manPointSept = GetTotalManPoints(salaryAssignmentDtos, 9, item.Grade.Id);
+
+                        if (calculatedOverTimeSept > Convert.ToDouble(commonMaster.OverWorkFixedTime))
+                        {
+                            totalOverSep = manPointSept * (calculatedOverTimeSept - Convert.ToDouble(commonMaster.OverWorkFixedTime)) * salaryMasterOverTimeLowPoints * Convert.ToDouble(commonMaster.SalaryIncreaseRate);
+                        }
+                        overTimeSalaryTotalSep += totalOverSep;
+
+                        strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + totalOverSep.ToString("N0") + "</td>";
+
+                    }                    
 
                     // salary allowance (total)
                     if (salaryTypeCount == 5)
@@ -9833,7 +10276,7 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 6)
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                        double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                        double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
 
                         strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
 
@@ -9911,7 +10354,7 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 7)
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                        double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                        double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
                         strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
 
                         dispatchFeeOct += manpointOct * beginningValue;
@@ -10083,7 +10526,7 @@ namespace CostAllocationApp.Controllers
                     if (salaryTypeCount == 9)
                     {
                         double manpointOct = GetTotalManPoints(salaryAssignmentDtos, 10, item.Grade.Id);
-                        double beginningValue = _salaryBLL.GetGradeSalaryType(departmentId, salaryType.Id, 2022, item.Grade.Id).GradeLowPoints;
+                        double beginningValue = _salaryBLL.GetGradeUnitPriceType(departmentId, 4, 2022, item.Grade.Id).GradeLowPoints;
                         strOtherGradeTd = strOtherGradeTd + "<td style='text-align:right;'>" + (manpointOct * beginningValue).ToString("N0") + "</td>";
 
                         commutingExpensesOct += manpointOct * beginningValue;
@@ -10332,7 +10775,7 @@ namespace CostAllocationApp.Controllers
             string salaryTypeTd = "";
             //region salary types total
             int salaryTypeSummeryCount = 1;
-            foreach (var item in _unitPriceTypeBLL.GetAllUnitPriceTypes())
+            foreach (var item in _unitPriceTypeBLL.GetAllSalaryTypes())
             {
                 salaryTypeTd = salaryTypeTd + "<tr>";
                 salaryTypeTd = salaryTypeTd + "<td>" + item.SalaryTypeName + "</td>";

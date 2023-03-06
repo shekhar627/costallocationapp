@@ -154,10 +154,10 @@ namespace CostAllocationApp.Controllers
                                 _salary = _uploadExcelBll.GetGradeIdByGradePoints(dt_.Rows[i][4].ToString());
                                 _uploadExcel.GradeId = _salary.GradeId;
 
-                                GradeSalaryType _salaryType = new GradeSalaryType();
+                                GradeUnitPriceType _salaryType = new GradeUnitPriceType();
                                 if (!string.IsNullOrEmpty(_uploadExcel.GradeId.ToString()) && !string.IsNullOrEmpty(_uploadExcel.DepartmentId.ToString()))
                                 {
-                                    _salaryType = _uploadExcelBll.GetGradeSalaryTypeIdByGradeId(_uploadExcel.GradeId, _uploadExcel.DepartmentId,2022,2);
+                                    _salaryType = _uploadExcelBll.GetGradeUnitPriceType(_uploadExcel.GradeId, _uploadExcel.DepartmentId,2022,1);
                                     _uploadExcel.GradeId = _salaryType.Id;
                                     _uploadExcel.UnitPrice = Convert.ToDecimal(_salaryType.GradeLowPoints) ;
                                 }

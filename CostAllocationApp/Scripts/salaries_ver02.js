@@ -61,9 +61,11 @@ $(document).ready(function () {
     $.getJSON('/api/UnitPriceTypes/')
         .done(function (data) {
             $('#salary_type_input').empty();
-            $('#salary_type_input').append(`<option value=''>Select Salary Type</option>`);
+            $('#salary_type_input').append(`<option value=''>Select Unit Price Type</option>`);
             $.each(data, function (key, item) {
-                $('#salary_type_input').append(`<option value='${item.Id}'>${item.SalaryTypeName}</option>`);
+                if (item.Id == 1 || item.Id == 4) {
+                    $('#salary_type_input').append(`<option value='${item.Id}'>${item.TypeName}</option>`);
+                }
             });
         });
     $.getJSON('/api/Grades/')
@@ -275,64 +277,125 @@ $(document).ready(function () {
     GetAllSalaryTypes();
 });
 
-function ShowGradeTable(){
+function ShowGradeTable() {
     $.getJSON('/api/utilities/GetSalaryMasterList/')
-    .done(function (data) {
-    $('#salary_master_list_tbl').empty();
-    // <tr>
-    //     <td rowspan="3">給与単価 (Salary Allowance Regular)</td>
-    //     <td>G10</td>
-    //     <td>1,250,000 </td>
-    //     <td>1,250,000 </td>
-    //     <td>1,250,000 </td>
-    //     <td>1,250,000 </td>
-    // </tr>
-    var prevSalaryTypeId = 0;
-    var tempCount = 0;
-    $.each(data, function(key, item) {
-        if(item.GradeSalaryTypes.length > 0){
-            $('#salary_master_list_tbl').append(`<tr>`);                
-            if (prevSalaryTypeId != item.SalaryType.Id){                        
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.SalaryType.SalaryTypeName}</td>`);  
-                prevSalaryTypeId = item.SalaryType.Id;
-            }else{
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'></td>`);  
-            }
-            var isDevelopmentOk = false;
-            var isPlanningOk = false;
+        .done(function (data) {
+            $('#salary_master_list_tbl').empty();
+            // <tr>
+            //     <td rowspan="3">給与単価 (Salary Allowance Regular)</td>
+            //     <td>G10</td>
+            //     <td>1,250,000 </td>
+            //     <td>1,250,000 </td>
+            //     <td>1,250,000 </td>
+            //     <td>1,250,000 </td>
+            // </tr>
+            var prevSalaryTypeId = 0;
+            var tempCount = 0;
+            console.log(data);
+            $.each(data, function (key, item) {
+                if (item.GradeSalaryTypes.length > 0) {
+                    $('#salary_master_list_tbl').append(`<tr>`);
+                    if (prevSalaryTypeId != item.UnitPriceType.Id) {
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.UnitPriceType.TypeName}</td>`);
+                        prevSalaryTypeId = item.UnitPriceType.Id;
+                    } else {
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'></td>`);
+                    }
+                    var isDevelopmentOk = false;
+                    var isPlanningOk = false;
 
-            try { 
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeName}</td>`); 
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`); 
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`); 
-                isPlanningOk = true;
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
-                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
-                isPlanningOk = true;
-              } catch (error) {     
-                if(isPlanningOk)       {
-                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
-                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
-                }   else{
-                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
-                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
-                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
-                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
-                }             
-              }
-            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeName}</td>`); 
-            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`); 
-            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`); 
-            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
-            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
+                    try {
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeName}</td>`);
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`);
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`);
+                        isPlanningOk = true;
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`);
+                        $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`);
+                        isPlanningOk = true;
+                    } catch (error) {
+                        if (isPlanningOk) {
+                            $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`);
+                            $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`);
+                        } else {
+                            $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`);
+                            $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`);
+                            $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`);
+                            $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`);
+                        }
+                    }
+                    // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeName}</td>`); 
+                    // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`); 
+                    // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`); 
+                    // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
+                    // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
 
-            $('#salary_master_list_tbl').append(`</tr>`);                
-        }
-    });  
-});
+                    $('#salary_master_list_tbl').append(`</tr>`);
+                }
+            });
+        });
 
-$("#salary_master_list").css("display", "block");
+    $("#salary_master_list").css("display", "block");
 }
+
+
+//function ShowGradeTable(){
+//    $.getJSON('/api/utilities/GetSalaryMasterList/')
+//    .done(function (data) {
+//    $('#salary_master_list_tbl').empty();
+//    // <tr>
+//    //     <td rowspan="3">給与単価 (Salary Allowance Regular)</td>
+//    //     <td>G10</td>
+//    //     <td>1,250,000 </td>
+//    //     <td>1,250,000 </td>
+//    //     <td>1,250,000 </td>
+//    //     <td>1,250,000 </td>
+//    // </tr>
+//    var prevSalaryTypeId = 0;
+//    var tempCount = 0;
+//    $.each(data, function(key, item) {
+//        if(item.GradeSalaryTypes.length > 0){
+//            $('#salary_master_list_tbl').append(`<tr>`);                
+//            if (prevSalaryTypeId != item.SalaryType.Id){                        
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.SalaryType.SalaryTypeName}</td>`);  
+//                prevSalaryTypeId = item.SalaryType.Id;
+//            }else{
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'></td>`);  
+//            }
+//            var isDevelopmentOk = false;
+//            var isPlanningOk = false;
+
+//            try { 
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeName}</td>`); 
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`); 
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`); 
+//                isPlanningOk = true;
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
+//                $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
+//                isPlanningOk = true;
+//              } catch (error) {     
+//                if(isPlanningOk)       {
+//                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
+//                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
+//                }   else{
+//                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
+//                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>0</td>`); 
+//                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
+//                    $('#salary_master_list_tbl').append(`<td class='gradelist_td'>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
+//                }             
+//              }
+//            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeName}</td>`); 
+//            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeLowWithCommaSeperate}</td>`); 
+//            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[0].GradeHighWithCommaSeperate}</td>`); 
+//            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeLowWithCommaSeperate}</td>`); 
+//            // $('#salary_master_list_tbl').append(`<td>${item.GradeSalaryTypes[1].GradeHighWithCommaSeperate}</td>`); 
+
+//            $('#salary_master_list_tbl').append(`</tr>`);                
+//        }
+//    });  
+//});
+
+//$("#salary_master_list").css("display", "block");
+//}
 
 $('#add_name_search_button').on('click', function (event) {
     
@@ -346,33 +409,32 @@ $('#add_name_search_button').on('click', function (event) {
         alert("please select year!");
     }
 });
-
-function SaveSalaryType(){
+function SaveSalaryType() {
     let year = $('#salary_year_input').val();
-    console.log("year: "+year)
+    console.log("year: " + year)
 
     let salaryTypeId = $('#salary_type_input').val();
-    console.log("salaryTypeId: "+salaryTypeId)    
+    console.log("salaryTypeId: " + salaryTypeId)
     var salaryTypeName = $('#salary_type_input option:selected').text();
 
     let departmentId = $('#salary_department_input').val();
-    console.log("departmentId: "+departmentId)    
-    let departmentName = $('#salary_department_input option:selected').text();    
+    console.log("departmentId: " + departmentId)
+    let departmentName = $('#salary_department_input option:selected').text();
 
     let gradeId = $('#salary_grade_input').val();
-    console.log("gradeId: "+gradeId)
+    console.log("gradeId: " + gradeId)
     let gradeName = $('#salary_grade_input option:selected').text();
 
     let beginning = $('#salary_amountlow_input').val();
-    console.log("beginning: "+beginning)
+    console.log("beginning: " + beginning)
 
     let revision = $('#salary_amounthigh_input').val();
-    console.log("revision: "+revision)
+    console.log("revision: " + revision)
 
     if (year == undefined || year == null || year == "") {
         alert("select year");
         return false;
-    }    
+    }
     if (salaryTypeId == undefined || salaryTypeId == null || salaryTypeId == "") {
         alert("select salary type");
         return false;
@@ -381,13 +443,13 @@ function SaveSalaryType(){
         alert("select department");
         return false;
     }
-    
+
     if (gradeId == undefined || gradeId == null || gradeId == "") {
         alert("select grade");
         return false;
     }
 
-    if (beginning<0) {
+    if (beginning < 0) {
         alert("input low points");
         return false;
     }
@@ -404,7 +466,7 @@ function SaveSalaryType(){
         DepartmentId: departmentId,
         DepartmentName: departmentName,
         Year: year,
-        SalaryTypeId: salaryTypeId,
+        UnitPriceTypeId: salaryTypeId,
         SalaryTypeName: salaryTypeName
     };
     var apiurl = "/api/Salaries/";
@@ -415,19 +477,19 @@ function SaveSalaryType(){
         type: 'POST',
         async: false,
         dataType: 'json',
-        data:data,
+        data: data,
         //data: { GradeId: item.GradeId, GradeLowPoints: item.GradeLowPoints, GradeHighPoints: item.GradeHighPoints, DepartmentId: item.DepartmentId, Year: item.Year, SalaryTypeId: item.SalaryTypeId },
-        success: function(data){
+        success: function (data) {
             alert("success");
             ShowGradeTable();
         },
-        error: function() {
+        error: function () {
             alert("failed");
         }
     });
 
     // if (temporaryDataArray.length > 0) {
-        
+
 
     //     // temporaryDataArray = [];
     //     // $('#temp_table tbody').empty();
@@ -438,6 +500,98 @@ function SaveSalaryType(){
     //     ToastMessageFailed({ responseText: "No data found to saved!!!" });
     // } 
 }
+
+//function SaveSalaryType(){
+//    let year = $('#salary_year_input').val();
+//    console.log("year: "+year)
+
+//    let salaryTypeId = $('#salary_type_input').val();
+//    console.log("salaryTypeId: "+salaryTypeId)    
+//    var salaryTypeName = $('#salary_type_input option:selected').text();
+
+//    let departmentId = $('#salary_department_input').val();
+//    console.log("departmentId: "+departmentId)    
+//    let departmentName = $('#salary_department_input option:selected').text();    
+
+//    let gradeId = $('#salary_grade_input').val();
+//    console.log("gradeId: "+gradeId)
+//    let gradeName = $('#salary_grade_input option:selected').text();
+
+//    let beginning = $('#salary_amountlow_input').val();
+//    console.log("beginning: "+beginning)
+
+//    let revision = $('#salary_amounthigh_input').val();
+//    console.log("revision: "+revision)
+
+//    if (year == undefined || year == null || year == "") {
+//        alert("select year");
+//        return false;
+//    }    
+//    if (salaryTypeId == undefined || salaryTypeId == null || salaryTypeId == "") {
+//        alert("select salary type");
+//        return false;
+//    }
+//    if (departmentId == undefined || departmentId == null || departmentId == "") {
+//        alert("select department");
+//        return false;
+//    }
+    
+//    if (gradeId == undefined || gradeId == null || gradeId == "") {
+//        alert("select grade");
+//        return false;
+//    }
+
+//    if (beginning<0) {
+//        alert("input low points");
+//        return false;
+//    }
+//    if (revision < 0) {
+//        alert("input high points");
+//        return false;
+//    }
+
+//    var data = {
+//        GradeId: gradeId,
+//        GradeName: gradeName,
+//        GradeLowPoints: beginning,
+//        GradeHighPoints: revision,
+//        DepartmentId: departmentId,
+//        DepartmentName: departmentName,
+//        Year: year,
+//        SalaryTypeId: salaryTypeId,
+//        SalaryTypeName: salaryTypeName
+//    };
+//    var apiurl = "/api/Salaries/";
+//    let count = 0;
+//    let failedCount = 0;
+//    $.ajax({
+//        url: apiurl,
+//        type: 'POST',
+//        async: false,
+//        dataType: 'json',
+//        data:data,
+//        //data: { GradeId: item.GradeId, GradeLowPoints: item.GradeLowPoints, GradeHighPoints: item.GradeHighPoints, DepartmentId: item.DepartmentId, Year: item.Year, SalaryTypeId: item.SalaryTypeId },
+//        success: function(data){
+//            alert("success");
+//            ShowGradeTable();
+//        },
+//        error: function() {
+//            alert("failed");
+//        }
+//    });
+
+//    // if (temporaryDataArray.length > 0) {
+        
+
+//    //     // temporaryDataArray = [];
+//    //     // $('#temp_table tbody').empty();
+//    //     // ToastMessageSuccess(count + " Data Saved Successfully!!!");
+//    //     // ToastMessageFailed({ responseText: failedCount + " Data Cound Not Saved!!!" });
+//    // }
+//    // else {
+//    //     ToastMessageFailed({ responseText: "No data found to saved!!!" });
+//    // } 
+//}
 
 //scroll purpose
 // Change the selector if needed

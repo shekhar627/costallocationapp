@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CostAllocationApp.Models
 {
-    public class GradeSalaryType:Common
+    public class GradeUnitPriceType:Common
     {
         public int Id { get; set; }
         public int GradeId { get; set; }
@@ -13,7 +13,7 @@ namespace CostAllocationApp.Models
         public double GradeHighPoints { get; set; }
         public int DepartmentId { get; set; }
         public int Year { get; set; }
-        public int SalaryTypeId { get; set; }
+        public int UnitPriceTypeId { get; set; }
 
 
         // for other usages

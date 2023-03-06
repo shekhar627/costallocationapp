@@ -60,9 +60,9 @@ namespace CostAllocationApp.DAL
             }
         }
 
-        public List<SalaryType> GetAllUnitPriceTypes()
+        public List<SalaryType> GetAllSalaryTypes()
         {
-            List<SalaryType> unitPriceTypes = new List<SalaryType>();
+            List<SalaryType> salaryTypes = new List<SalaryType>();
             string query = "select * from SalaryTypes";
             using (SqlConnection sqlConnection = this.GetConnection())
             {
@@ -75,9 +75,43 @@ namespace CostAllocationApp.DAL
                     {
                         while (rdr.Read())
                         {
-                            SalaryType unitPriceType = new SalaryType();
+                            SalaryType salaryType = new SalaryType();
+                            salaryType.Id = Convert.ToInt32(rdr["Id"]);
+                            salaryType.SalaryTypeName = rdr["SalaryTypeName"].ToString();
+                            salaryType.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
+                            salaryType.CreatedBy = rdr["CreatedBy"].ToString();
+                            //unitPriceType.IsActive = Convert.ToBoolean(rdr["IsActive"]);
+
+                            salaryTypes.Add(salaryType);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return salaryTypes;
+            }
+        }
+        public List<UnitPriceType> GetAllUnitPriceTypes()
+        {
+            List<UnitPriceType> unitPriceTypes = new List<UnitPriceType>();
+            string query = "select * from UnitPriceTypes";
+            using (SqlConnection sqlConnection = this.GetConnection())
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+                try
+                {
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            UnitPriceType unitPriceType = new UnitPriceType();
                             unitPriceType.Id = Convert.ToInt32(rdr["Id"]);
-                            unitPriceType.SalaryTypeName = rdr["SalaryTypeName"].ToString();
+                            unitPriceType.TypeName = rdr["TypeName"].ToString();
                             unitPriceType.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             unitPriceType.CreatedBy = rdr["CreatedBy"].ToString();
                             //unitPriceType.IsActive = Convert.ToBoolean(rdr["IsActive"]);
@@ -95,10 +129,10 @@ namespace CostAllocationApp.DAL
             }
         }
 
-        public SalaryType GetUnitPriceTypeById(int salaryTypeId)
+        public UnitPriceType GetUnitPriceTypeById(int unitPriceTypeId)
         {
-            SalaryType unitPriceType = new SalaryType();
-            string query = "select * from SalaryTypes where id = "+salaryTypeId;
+            UnitPriceType unitPriceType = new UnitPriceType();
+            string query = "select * from UnitPriceTypes where id = " + unitPriceTypeId;
             using (SqlConnection sqlConnection = this.GetConnection())
             {
                 sqlConnection.Open();
@@ -111,7 +145,7 @@ namespace CostAllocationApp.DAL
                         while (rdr.Read())
                         {
                             unitPriceType.Id = Convert.ToInt32(rdr["Id"]);
-                            unitPriceType.SalaryTypeName = rdr["SalaryTypeName"].ToString();
+                            unitPriceType.TypeName = rdr["TypeName"].ToString();
                             unitPriceType.CreatedDate = Convert.ToDateTime(rdr["CreatedDate"]);
                             unitPriceType.CreatedBy = rdr["CreatedBy"].ToString();
                         }

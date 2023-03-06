@@ -13,5 +13,6 @@ namespace CostAllocationApp.Dtos
         public decimal Points { get; set; }
         //public decimal Total { get; set; }
         public string Total { get; set; }
+        public decimal OverTime { get; set; }
     }
 }

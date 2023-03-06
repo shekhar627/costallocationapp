@@ -234,12 +234,13 @@
     <Compile Include="Models\EmployeeAssignment.cs" />
     <Compile Include="Models\Explanation.cs" />
     <Compile Include="Models\Grade.cs" />
-    <Compile Include="Models\GradeSalaryType.cs" />
+    <Compile Include="Models\GradeUnitPriceType.cs" />
     <Compile Include="Models\InCharge.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Salary.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\SalaryType.cs" />
+    <Compile Include="Models\UnitPriceType.cs" />
     <Compile Include="Models\UploadExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

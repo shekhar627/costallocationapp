@@ -24,14 +24,17 @@ namespace CostAllocationApp.BLL
         {
             return _unitPriceTypeDAL.CheckUnitPriceType(unitPriceTypeName);
         }
-
-        public List<SalaryType> GetAllUnitPriceTypes()
+        public List<SalaryType> GetAllSalaryTypes()
+        {
+            return _unitPriceTypeDAL.GetAllSalaryTypes();
+        }
+        public List<UnitPriceType> GetAllUnitPriceTypes()
         {
             return _unitPriceTypeDAL.GetAllUnitPriceTypes();
         }
-        public SalaryType GetUnitPriceTypeById(int salaryTypeId)
+        public UnitPriceType GetUnitPriceTypeById(int unitPriceTypeId)
         {
-            return _unitPriceTypeDAL.GetUnitPriceTypeById(salaryTypeId);
+            return _unitPriceTypeDAL.GetUnitPriceTypeById(unitPriceTypeId);
         }
     }
 }

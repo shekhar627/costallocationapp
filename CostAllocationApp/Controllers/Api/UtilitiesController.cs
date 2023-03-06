@@ -792,18 +792,19 @@ namespace CostAllocationApp.Controllers.Api
 
         public IHttpActionResult GetSalaryMasterList()
         {
+            int year = 2022;
             GradeBLL _gradeBll = new GradeBLL();
             SalaryBLL _salaryBLL = new SalaryBLL();
 
             List<Grade> grades = _gradeBll.GetAllGrade();
             List<SalaryMasterExportDto> salaryMasterExportDtos = new List<SalaryMasterExportDto>();
 
-            var salaryTypeIds = _salaryBLL.GetSalaryTypeIdByYear(2022);
-            foreach (var salaryTypeId in salaryTypeIds)
+            var unitPriceTypeIds = _salaryBLL.GetUnitPriceTypeIdByYear(year);
+            foreach (var unitPriceTypeId in unitPriceTypeIds)
             {
                 foreach (var grade in grades)
                 {
-                    salaryMasterExportDtos.Add(_salaryBLL.GetSalaryTypeWithGradeSalaryByYear(2022, grade.Id, salaryTypeId));
+                    salaryMasterExportDtos.Add(_salaryBLL.GetUnitPriceTypeWithGradeSalaryByYear(year, grade.Id, unitPriceTypeId));
                 }
             }
 

@@ -36,9 +36,9 @@ namespace CostAllocationApp.BLL
             return _assignments;
         }
 
-        public List<GradeSalaryType> GetGradeSalaryTypes(int gradeId, int departmentId, int year,int salaryTypeId)
+        public List<GradeUnitPriceType> GetGradeUnitPriceTypes(int gradeId, int departmentId, int year,int unitPriceTypeId)
         {
-            return _exportDal.GetGradeSalaryTypes(gradeId, departmentId,year, salaryTypeId);
+            return _exportDal.GetGradeUnitPriceTypes(gradeId, departmentId,year, unitPriceTypeId);
         }
     }
 }

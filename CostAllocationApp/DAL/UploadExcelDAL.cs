@@ -339,17 +339,17 @@ namespace CostAllocationApp.DAL
             }
             return _salary;
         }
-        public GradeSalaryType GetGradeSalaryTypeIdByGradeId(int? gradeId,int? departmentId,int year,int salaryTypeId)
+        public GradeUnitPriceType GetGradeUnitPriceType(int? gradeId,int? departmentId,int year,int unitPriceTypeId)
         {
-            GradeSalaryType _salaryType = new GradeSalaryType();
+            GradeUnitPriceType _salaryType = new GradeUnitPriceType();
 
             string where = "";
             string query = "";
             if (!string.IsNullOrEmpty(gradeId.ToString()) && !string.IsNullOrEmpty(departmentId.ToString()))
             {
-                where += $"GradeId = {gradeId} and DepartmentId = {departmentId} and Year={year} and SalaryTypeId={salaryTypeId}";
+                where += $"GradeId = {gradeId} and DepartmentId = {departmentId} and Year={year} and UnitPriceTypeId={unitPriceTypeId}";
 
-                query = $@"SELECt Id,GradeId,GradeLowPoints FROM GradeSalarlyTypes 
+                query = $@"SELECt Id,GradeId,GradeLowPoints FROM GradeUnitPriceTypes 
                         where {where}";
 
                 using (SqlConnection sqlConnection = this.GetConnection())
