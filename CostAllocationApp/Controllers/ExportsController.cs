@@ -5491,8 +5491,6 @@ namespace CostAllocationApp.Controllers
                 {
                     sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
-
-
                     //foreach (var singleAssignment in item.ForecastAssignmentViewModels)
                     //{
                     //    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
