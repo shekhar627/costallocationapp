@@ -24,6 +24,7 @@ namespace CostAllocationApp.Controllers
         char[] trimElements = { '\r', '\n', ' ' };
         SectionBLL sectionBLL = new SectionBLL();
         private DepartmentBLL _departmentBLL = new DepartmentBLL();
+        private Utility _utility = new Utility();
         // GET: Forecasts
         public ActionResult CreateForecast(string departmentId = "")
         {
@@ -295,8 +296,7 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //client.BaseAddress = new Uri("http://198.38.92.119:8081/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId + "&allocationId=" + allocationId);
-                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
+                client.BaseAddress = new Uri(""+ _utility.Address + "/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId+ "&allocationId=" + allocationId);
 
                 //HTTP POST
                 var postTask = client.GetAsync("");

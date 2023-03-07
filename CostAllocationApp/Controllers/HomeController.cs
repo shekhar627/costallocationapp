@@ -20,6 +20,7 @@ namespace CostAllocationApp.Controllers
         EmployeeAssignmentBLL employeeAssignmentBLL = new EmployeeAssignmentBLL();
         UploadExcelBLL _uploadExcelBll = new UploadExcelBLL();
         UploadExcel _uploadExcel;
+        Utility _utility = new Utility();
         char[] trimElements = { '\r', '\n', ' ' };
         // GET: Home
         public ActionResult Index()
@@ -297,8 +298,7 @@ namespace CostAllocationApp.Controllers
 
             using (var client = new HttpClient())
             {
-                //client.BaseAddress = new Uri("http://198.38.92.119:8081/api/For ecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId);
-                client.BaseAddress = new Uri("http://localhost:59198/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId);
+                client.BaseAddress = new Uri(""+_utility.Address+"/api/Forecasts?data=" + row + "&year=" + year + "&assignmentId=" + assignmentId);
 
                 //HTTP POST
                 var postTask = client.GetAsync("");
