@@ -1100,20 +1100,35 @@ namespace CostAllocationApp.Controllers
 
 
 
-                foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                //foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                //{
+                //    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
+                //    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
+                //    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
+                //    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
+                //    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
+                //    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
+                //    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
+                //    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
+                //    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
+                //    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
+                //    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
+                //    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                //}
+                if (item.Grade.Id == 10 || item.Grade.Id == 11 || item.Grade.Id == 12 || item.Grade.Id == 13 || item.Grade.Id == 14)
                 {
-                    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
-                    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
-                    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
-                    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
-                    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
-                    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
-                    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
-                    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
-                    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
-                    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
-                    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
-                    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                    octOverTime = 45;
+                    novOverTime = 45;
+                    decOverTime = 45;
+                    janOverTime = 45;
+                    febOverTime = 45;
+                    marOverTime = 45;
+                    aprOverTime = 45;
+                    mayOverTime = 45;
+                    junOverTime = 45;
+                    julOverTime = 45;
+                    augOverTime = 45;
+                    sepOverTime = 45;
                 }
                 sheet.Cells[rowCount, 3].Value = octOverTime;
                 
@@ -4690,105 +4705,105 @@ namespace CostAllocationApp.Controllers
             sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
             sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
-            sheet.Cells[rowCount, 1].Value = "Costing";
-            rowCount++;
+            // sheet.Cells[rowCount, 1].Value = "Costing";
+            // rowCount++;
 
-            octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
-            // costing
-            foreach (var item in salaryAssignmentDtos)
-            {
-                sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
-
-
-                foreach (var singleAssignment in item.ForecastAssignmentViewModels)
-                {
-                    oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
-                    nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
-                    dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
-                    jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
-                    feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
-                    mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
-                    apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
-                    may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
-                    jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
-                    jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
-                    aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
-                    sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
-                }
-                sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
-                octTotal += oct;
-                sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
-                novTotal += nov;
-                sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
-                decTotal += dec;
-                sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
-                janTotal += jan;
-                sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
-                febTotal += feb;
-                sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
-                marTotal += mar;
-                sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
-                aprTotal += apr;
-                sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 10].Value = may.ToString("N0");
-                mayTotal += may;
-                sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
-                junTotal += jun;
-                sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
-                julTotal += jul;
-                sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
-                augTotal += aug;
-                sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
-                sepTotal += sep;
-                sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-
-                oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
-                rowCount++;
-            }
+            // octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
+            // // costing
+            // foreach (var item in salaryAssignmentDtos)
+            // {
+            //     sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
 
-            sheet.Cells[rowCount, 2].Value = "合計";
-            sheet.Cells[rowCount, 3].Value = octTotal.ToString("N0");
-            sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 4].Value = novTotal.ToString("N0");
-            sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 5].Value = decTotal.ToString("N0");
-            sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 6].Value = janTotal.ToString("N0");
-            sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 7].Value = febTotal.ToString("N0");
-            sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 8].Value = marTotal.ToString("N0");
-            sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 9].Value = aprTotal.ToString("N0");
-            sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 10].Value = mayTotal.ToString("N0");
-            sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 11].Value = junTotal.ToString("N0");
-            sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 12].Value = julTotal.ToString("N0");
-            sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 13].Value = augTotal.ToString("N0");
-            sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            sheet.Cells[rowCount, 14].Value = sepTotal.ToString("N0");
-            sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-            rowCount++;
+            //     foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+            //     {
+            //         oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+            //         nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+            //         dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+            //         jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+            //         feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+            //         mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+            //         apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+            //         may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+            //         jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+            //         jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+            //         aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+            //         sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+            //     }
+            //     sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
+            //     octTotal += oct;
+            //     sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
+            //     novTotal += nov;
+            //     sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
+            //     decTotal += dec;
+            //     sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
+            //     janTotal += jan;
+            //     sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
+            //     febTotal += feb;
+            //     sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
+            //     marTotal += mar;
+            //     sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
+            //     aprTotal += apr;
+            //     sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 10].Value = may.ToString("N0");
+            //     mayTotal += may;
+            //     sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
+            //     junTotal += jun;
+            //     sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
+            //     julTotal += jul;
+            //     sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
+            //     augTotal += aug;
+            //     sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            //     sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
+            //     sepTotal += sep;
+            //     sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
-            rowCount = rowCount + 2;
+            //     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+            //     rowCount++;
+            // }
 
-            sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
-            sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+            // sheet.Cells[rowCount, 2].Value = "合計";
+            // sheet.Cells[rowCount, 3].Value = octTotal.ToString("N0");
+            // sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 4].Value = novTotal.ToString("N0");
+            // sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 5].Value = decTotal.ToString("N0");
+            // sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 6].Value = janTotal.ToString("N0");
+            // sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 7].Value = febTotal.ToString("N0");
+            // sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 8].Value = marTotal.ToString("N0");
+            // sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 9].Value = aprTotal.ToString("N0");
+            // sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 10].Value = mayTotal.ToString("N0");
+            // sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 11].Value = junTotal.ToString("N0");
+            // sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 12].Value = julTotal.ToString("N0");
+            // sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 13].Value = augTotal.ToString("N0");
+            // sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // sheet.Cells[rowCount, 14].Value = sepTotal.ToString("N0");
+            // sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            // rowCount++;
+
+            // rowCount = rowCount + 2;
+
+            // sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
+            // sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            // sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
             sheet.Cells[rowCount, 2].Value = "工数";
             rowCount++;
@@ -5478,20 +5493,35 @@ namespace CostAllocationApp.Controllers
 
 
 
-                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    //foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                    //{
+                    //    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
+                    //    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
+                    //    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
+                    //    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
+                    //    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
+                    //    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
+                    //    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
+                    //    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
+                    //    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
+                    //    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
+                    //    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
+                    //    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                    //}
+                    if (item.Grade.Id == 10 || item.Grade.Id == 11 || item.Grade.Id == 12 || item.Grade.Id == 13 || item.Grade.Id == 14)
                     {
-                        octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
-                        novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
-                        decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
-                        janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
-                        febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
-                        marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
-                        aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
-                        mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
-                        junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
-                        julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
-                        augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
-                        sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                        octOverTime = 45;
+                        novOverTime = 45;
+                        decOverTime = 45;
+                        janOverTime = 45;
+                        febOverTime = 45;
+                        marOverTime = 45;
+                        aprOverTime = 45;
+                        mayOverTime = 45;
+                        junOverTime = 45;
+                        julOverTime = 45;
+                        augOverTime = 45;
+                        sepOverTime = 45;
                     }
                     sheet.Cells[rowCount, 3].Value = octOverTime;
 
@@ -9065,105 +9095,105 @@ namespace CostAllocationApp.Controllers
                 sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
-                sheet.Cells[rowCount, 1].Value = "Costing";
-                rowCount++;
+                // sheet.Cells[rowCount, 1].Value = "Costing";
+                // rowCount++;
 
-                octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
-                // costing
-                foreach (var item in salaryAssignmentDtos)
-                {
-                    sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
-
-
-                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
-                    {
-                        oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
-                        nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
-                        dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
-                        jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
-                        feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
-                        mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
-                        apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
-                        may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
-                        jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
-                        jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
-                        aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
-                        sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
-                    }
-                    sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
-                    octTotal += oct;
-                    sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
-                    novTotal += nov;
-                    sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
-                    decTotal += dec;
-                    sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
-                    janTotal += jan;
-                    sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
-                    febTotal += feb;
-                    sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
-                    marTotal += mar;
-                    sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
-                    aprTotal += apr;
-                    sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 10].Value = may.ToString("N0");
-                    mayTotal += may;
-                    sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
-                    junTotal += jun;
-                    sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
-                    julTotal += jul;
-                    sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
-                    augTotal += aug;
-                    sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
-                    sepTotal += sep;
-                    sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-
-                    oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
-                    rowCount++;
-                }
+                // octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
+                // // costing
+                // foreach (var item in salaryAssignmentDtos)
+                // {
+                //     sheet.Cells[rowCount, 2].Value = item.Grade.GradeName;
 
 
-                sheet.Cells[rowCount, 2].Value = "合計";
-                sheet.Cells[rowCount, 3].Value = octTotal.ToString("N0");
-                sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 4].Value = novTotal.ToString("N0");
-                sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 5].Value = decTotal.ToString("N0");
-                sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 6].Value = janTotal.ToString("N0");
-                sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 7].Value = febTotal.ToString("N0");
-                sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 8].Value = marTotal.ToString("N0");
-                sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 9].Value = aprTotal.ToString("N0");
-                sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 10].Value = mayTotal.ToString("N0");
-                sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 11].Value = junTotal.ToString("N0");
-                sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 12].Value = julTotal.ToString("N0");
-                sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 13].Value = augTotal.ToString("N0");
-                sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                sheet.Cells[rowCount, 14].Value = sepTotal.ToString("N0");
-                sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                rowCount++;
+                //     foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                //     {
+                //         oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+                //         nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+                //         dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+                //         jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+                //         feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+                //         mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+                //         apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+                //         may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+                //         jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+                //         jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+                //         aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+                //         sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+                //     }
+                //     sheet.Cells[rowCount, 3].Value = oct.ToString("N0");
+                //     octTotal += oct;
+                //     sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 4].Value = nov.ToString("N0");
+                //     novTotal += nov;
+                //     sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 5].Value = dec.ToString("N0");
+                //     decTotal += dec;
+                //     sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 6].Value = jan.ToString("N0");
+                //     janTotal += jan;
+                //     sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 7].Value = feb.ToString("N0");
+                //     febTotal += feb;
+                //     sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 8].Value = mar.ToString("N0");
+                //     marTotal += mar;
+                //     sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 9].Value = apr.ToString("N0");
+                //     aprTotal += apr;
+                //     sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 10].Value = may.ToString("N0");
+                //     mayTotal += may;
+                //     sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 11].Value = jun.ToString("N0");
+                //     junTotal += jun;
+                //     sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 12].Value = jul.ToString("N0");
+                //     julTotal += jul;
+                //     sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 13].Value = aug.ToString("N0");
+                //     augTotal += aug;
+                //     sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //     sheet.Cells[rowCount, 14].Value = sep.ToString("N0");
+                //     sepTotal += sep;
+                //     sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
-                rowCount = rowCount + 2;
+                //     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+                //     rowCount++;
+                // }
 
-                sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
-                sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                // sheet.Cells[rowCount, 2].Value = "合計";
+                // sheet.Cells[rowCount, 3].Value = octTotal.ToString("N0");
+                // sheet.Cells[rowCount, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 4].Value = novTotal.ToString("N0");
+                // sheet.Cells[rowCount, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 5].Value = decTotal.ToString("N0");
+                // sheet.Cells[rowCount, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 6].Value = janTotal.ToString("N0");
+                // sheet.Cells[rowCount, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 7].Value = febTotal.ToString("N0");
+                // sheet.Cells[rowCount, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 8].Value = marTotal.ToString("N0");
+                // sheet.Cells[rowCount, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 9].Value = aprTotal.ToString("N0");
+                // sheet.Cells[rowCount, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 10].Value = mayTotal.ToString("N0");
+                // sheet.Cells[rowCount, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 11].Value = junTotal.ToString("N0");
+                // sheet.Cells[rowCount, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 12].Value = julTotal.ToString("N0");
+                // sheet.Cells[rowCount, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 13].Value = augTotal.ToString("N0");
+                // sheet.Cells[rowCount, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // sheet.Cells[rowCount, 14].Value = sepTotal.ToString("N0");
+                // sheet.Cells[rowCount, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                // rowCount++;
+
+                // rowCount = rowCount + 2;
+
+                // sheet.Cells[rowCount, 1, rowCount, 14].Style.Font.Bold = true;
+                // sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                // sheet.Cells[rowCount, 1, rowCount, 14].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
                 sheet.Cells[rowCount, 2].Value = "工数";
                 rowCount++;
@@ -9782,20 +9812,34 @@ namespace CostAllocationApp.Controllers
             {
                
 
-                foreach (var singleAssignment in item.ForecastAssignmentViewModels)
-                {
-                    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
-                    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
-                    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
-                    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
-                    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
-                    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
-                    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
-                    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
-                    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
-                    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
-                    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
-                    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                //foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+                //{
+                //    octOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).OverTime);
+                //    novOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).OverTime);
+                //    decOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).OverTime);
+                //    janOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).OverTime);
+                //    febOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).OverTime);
+                //    marOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).OverTime);
+                //    aprOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).OverTime);
+                //    mayOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).OverTime);
+                //    junOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).OverTime);
+                //    julOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).OverTime);
+                //    augOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).OverTime);
+                //    sepOverTime += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).OverTime);
+                //}
+                if(item.Grade.Id == 10 || item.Grade.Id == 11 || item.Grade.Id == 12 || item.Grade.Id == 13 || item.Grade.Id == 14) { 
+                    octOverTime = 45;
+                    novOverTime = 45;
+                    decOverTime = 45;
+                    janOverTime = 45;
+                    febOverTime = 45;
+                    marOverTime = 45;
+                    aprOverTime = 45;
+                    mayOverTime = 45; 
+                    junOverTime = 45;
+                    julOverTime = 45;
+                    augOverTime = 45;
+                    sepOverTime = 45;
                 }
                 allocaionTableBodyTd = allocaionTableBodyTd + "<tr>";
                 allocaionTableBodyTd = allocaionTableBodyTd + "<td>" + item.Grade.GradeName +"</td>";
@@ -11007,87 +11051,87 @@ namespace CostAllocationApp.Controllers
 
             rowCount = rowCount + 2;
             string strAllocationCostingBody = "";
-            strAllocationCostingBody = strAllocationCostingBody + "<tr>";
-            strAllocationCostingBody = strAllocationCostingBody + "<td rowspan='16'>Costing</td>";
-            strAllocationCostingBody = strAllocationCostingBody + "</tr>";
-            rowCount++;
+            // strAllocationCostingBody = strAllocationCostingBody + "<tr>";
+            // strAllocationCostingBody = strAllocationCostingBody + "<td rowspan='16'>Costing</td>";
+            // strAllocationCostingBody = strAllocationCostingBody + "</tr>";
+            // rowCount++;
 
-            octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
-            int indexCount = 1;
-            // costing
-            foreach (var item in salaryAssignmentDtos)
-            {
-                strAllocationCostingBody = strAllocationCostingBody + "<tr>";
-                if(indexCount == 15)
-                {
-                    strAllocationCostingBody = strAllocationCostingBody + "<td>合計</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>"+ octTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + novTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + decTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + janTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + febTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + marTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + aprTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + mayTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + junTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + julTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + augTotal.ToString("N0") + "</td>";
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + sepTotal.ToString("N0") + "</td>";
-                    rowCount++;
-                }
-                else
-                {
-                    strAllocationCostingBody = strAllocationCostingBody + "<td>" + item.Grade.GradeName + "</td>";
-                    foreach (var singleAssignment in item.ForecastAssignmentViewModels)
-                    {
-                        oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
-                        nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
-                        dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
-                        jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
-                        feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
-                        mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
-                        apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
-                        may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
-                        jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
-                        jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
-                        aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
-                        sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
-                    }
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + oct.ToString("N0") + "</td>";
-                    octTotal += oct;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + nov.ToString("N0") + "</td>";
-                    novTotal += nov;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + dec.ToString("N0") + "</td>";
-                    decTotal += dec;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jan.ToString("N0") + "</td>";
-                    janTotal += jan;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + feb.ToString("N0") + "</td>";
-                    febTotal += feb;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + mar.ToString("N0") + "</td>";
-                    marTotal += mar;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + apr.ToString("N0") + "</td>";
-                    aprTotal += apr;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + may.ToString("N0") + "</td>";
-                    mayTotal += may;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jun.ToString("N0") + "</td>";
-                    junTotal += jun;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jul.ToString("N0") + "</td>";
-                    julTotal += jul;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + aug.ToString("N0") + "</td>";
-                    augTotal += aug;
-                    strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + sep.ToString("N0") + "</td>";
-                    sepTotal += sep;
-                }                
+            // octTotal = 0; novTotal = 0; decTotal = 0; janTotal = 0; febTotal = 0; marTotal = 0; aprTotal = 0; mayTotal = 0; junTotal = 0; julTotal = 0; augTotal = 0; sepTotal = 0;
+            // int indexCount = 1;
+            // // costing
+            // foreach (var item in salaryAssignmentDtos)
+            // {
+            //     strAllocationCostingBody = strAllocationCostingBody + "<tr>";
+            //     if(indexCount == 15)
+            //     {
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td>合計</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>"+ octTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + novTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + decTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + janTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + febTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + marTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + aprTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + mayTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + junTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + julTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + augTotal.ToString("N0") + "</td>";
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + sepTotal.ToString("N0") + "</td>";
+            //         rowCount++;
+            //     }
+            //     else
+            //     {
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td>" + item.Grade.GradeName + "</td>";
+            //         foreach (var singleAssignment in item.ForecastAssignmentViewModels)
+            //         {
+            //             oct += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 10).Total);
+            //             nov += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 11).Total);
+            //             dec += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 12).Total);
+            //             jan += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 1).Total);
+            //             feb += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 2).Total);
+            //             mar += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 3).Total);
+            //             apr += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 4).Total);
+            //             may += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 5).Total);
+            //             jun += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 6).Total);
+            //             jul += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 7).Total);
+            //             aug += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 8).Total);
+            //             sep += Convert.ToDecimal(singleAssignment.forecasts.SingleOrDefault(f => f.Month == 9).Total);
+            //         }
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + oct.ToString("N0") + "</td>";
+            //         octTotal += oct;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + nov.ToString("N0") + "</td>";
+            //         novTotal += nov;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + dec.ToString("N0") + "</td>";
+            //         decTotal += dec;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jan.ToString("N0") + "</td>";
+            //         janTotal += jan;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + feb.ToString("N0") + "</td>";
+            //         febTotal += feb;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + mar.ToString("N0") + "</td>";
+            //         marTotal += mar;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + apr.ToString("N0") + "</td>";
+            //         aprTotal += apr;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + may.ToString("N0") + "</td>";
+            //         mayTotal += may;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jun.ToString("N0") + "</td>";
+            //         junTotal += jun;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + jul.ToString("N0") + "</td>";
+            //         julTotal += jul;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + aug.ToString("N0") + "</td>";
+            //         augTotal += aug;
+            //         strAllocationCostingBody = strAllocationCostingBody + "<td style='text-align:right;'>" + sep.ToString("N0") + "</td>";
+            //         sepTotal += sep;
+            //     }                
 
 
                 
 
-                indexCount +=1;                
-                strAllocationCostingBody = strAllocationCostingBody + "</tr>";
-                oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
-                rowCount++;
-            }
-            rowCount = rowCount + 2;
+            //     indexCount +=1;                
+            //     strAllocationCostingBody = strAllocationCostingBody + "</tr>";
+            //     oct = 0; nov = 0; dec = 0; jan = 0; feb = 0; mar = 0; apr = 0; may = 0; jun = 0; jul = 0; aug = 0; sep = 0;
+            //     rowCount++;
+            // }
+            // rowCount = rowCount + 2;
             string strCompanyWiseAllocationBody = "";
             strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<tr>";
             strCompanyWiseAllocationBody = strCompanyWiseAllocationBody + "<td style='font-weight: bold;'>工数</td>";
