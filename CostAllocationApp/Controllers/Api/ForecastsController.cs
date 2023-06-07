@@ -7,7 +7,6 @@ using System.Web.Http;
 using CostAllocationApp.Models;
 using CostAllocationApp.BLL;
 
-
 namespace CostAllocationApp.Controllers.Api
 {
     public class ForecastsController : ApiController
